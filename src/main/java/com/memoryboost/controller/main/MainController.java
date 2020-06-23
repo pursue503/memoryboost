@@ -16,50 +16,10 @@ public class MainController {
 
     @GetMapping("/")
     public String mainPage(HttpServletRequest request, Model model){
-
-        ServletContext path = request.getSession().getServletContext();
-
-        model.addAttribute("path",path);
+        log.info("로그");
 
         return "main";
     }
 
-    @GetMapping("/test")
-    public String test(){
-
-        String path = "/home/ec2-user/upload/name";
-
-        File folder = new File(path);
-
-        if(!folder.exists()) {
-            try{
-                folder.mkdirs();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return "redirect:/";
-    }
-
-    @GetMapping("/test3")
-    public String test3(){
-
-        String txt = "안녕하세요";
-        String filePath = "/home/ec2-user/upload/tetet.txt";
-
-        try{
-            File file = new File(filePath);
-
-            FileWriter fw = new FileWriter(file,true);
-            fw.write(txt);
-            fw.flush();
-            fw.close();
-        } catch (Exception e ) {
-            e.printStackTrace();
-        }
-
-        return "redirect:/";
-    }
 
 }
