@@ -1,0 +1,25 @@
+server:
+  port: 8181
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  profiles:
+     include:
+       - real-db # db 설정
+       - oauth #Security
+       - mail #메일 설정
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect # hibernate 설정
+  #인코딩설정
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      forc: true
+# log 설정
+logging:
+  level:
+    root: info # 모든 파일 info 레벨 설정.
