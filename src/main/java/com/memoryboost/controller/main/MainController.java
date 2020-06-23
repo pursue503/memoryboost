@@ -17,7 +17,7 @@ public class MainController {
     @GetMapping("/")
     public String mainPage(HttpServletRequest request, Model model){
         log.info("로그");
-
+        System.out.println("sout");
         return "main";
     }
 
