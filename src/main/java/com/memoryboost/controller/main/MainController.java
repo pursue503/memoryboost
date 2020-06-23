@@ -39,7 +39,19 @@ public class MainController {
             }
         }
 
+    }
 
+    @GetMapping("/test2")
+    public void test2(){
+        String path = "\\home\\ec-user\\upload\\name";
+        File folder = new File(path);
+        if(!folder.exists()) {
+            try{
+                folder.mkdir();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
