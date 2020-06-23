@@ -24,7 +24,7 @@ public class MainController {
     }
 
     @GetMapping("/test")
-    public void test(){
+    public String test(){
 
         String path = "/home/ec-user/upload/name";
 
@@ -32,26 +32,28 @@ public class MainController {
 
         if(!folder.exists()) {
             try{
-                folder.mkdir();
+                folder.mkdirs();
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        return "redirect:/";
 
     }
 
     @GetMapping("/test2")
-    public void test2(){
+    public String test2(){
         String path = "\\home\\ec-user\\upload\\name";
         File folder = new File(path);
         if(!folder.exists()) {
             try{
-                folder.mkdir();
+                folder.mkdirs();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        return "redirect:/";
     }
 
 }
