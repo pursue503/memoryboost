@@ -1,2 +1,6 @@
 # Project exclude paths
-/.gradle/
+.gradle
+.idea
+application-real-db.yml
+application-oauth.yml
+application-mail.yml
