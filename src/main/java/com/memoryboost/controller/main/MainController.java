@@ -56,4 +56,39 @@ public class MainController {
         return "redirect:/";
     }
 
+    @GetMapping("/test3")
+    public String test3(){
+        String path = "/upload2";
+
+        File folder = new File(path);
+
+        if(!folder.exists()) {
+            try{
+                folder.mkdirs();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "redirect:/";
+
+    }
+    @GetMapping("/test4")
+    public String test4(){
+        String path = "/upload2";
+
+        File folder = new File(path);
+
+        if(!folder.exists()) {
+            try{
+                folder.mkdirs();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "redirect:/";
+
+    }
+
 }
