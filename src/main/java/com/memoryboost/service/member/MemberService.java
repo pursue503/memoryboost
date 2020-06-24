@@ -105,7 +105,6 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         return memberRepository.save(member);
     }
 
-
     //회원서비스
 
     //회원가입

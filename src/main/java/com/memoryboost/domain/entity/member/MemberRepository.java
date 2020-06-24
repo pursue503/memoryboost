@@ -17,7 +17,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     //sns 로그인 , 회원정보가 존재하는지 찾기
     //찾을 entity , findByMemberEmail member entity 의 memberEmail -> SELECT * FROM member WHERE memberEmail
     Optional<Member> findByMemberEmailAndMemberSns(String memberEmail, String memberSns);
-
+    
     //회원가입
 
     //아이디 중복체크
