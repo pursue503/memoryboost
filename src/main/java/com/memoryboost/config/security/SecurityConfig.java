@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         //제한없이 접근 할수 있는 리소스 정의
-        web.ignoring().antMatchers("/css/**","/js/**");
+        web.ignoring().antMatchers("/css/**","/js/**","/img/**");
     }
 
     @Override
