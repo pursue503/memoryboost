@@ -24,4 +24,3 @@ spring:
 logging:
   level:
     root: info # 모든 파일 info 레벨 설정.
-

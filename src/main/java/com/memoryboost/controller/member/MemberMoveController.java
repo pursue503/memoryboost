@@ -10,10 +10,10 @@ public class MemberMoveController {
 
     //회원의 페이지 이동을 처리하는 컨트롤러
 
-    //회원가입 페이지로 이동.
+    //로그인 페이지로 이동.
     @GetMapping("/members/signin")
     public String signinPage(){
-        return "login";
+        return "member/signin";
     }
 
     //마이페이지 이동
