@@ -25,3 +25,13 @@ logging:
   level:
     root: info # 모든 파일 info 레벨 설정.
 
+cloud:
+  aws:
+    s3:
+      bucket: pursue503-amazon-webservice-repository
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instance-profile: true
