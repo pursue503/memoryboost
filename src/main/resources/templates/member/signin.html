@@ -7,22 +7,25 @@
 
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 
+    <!-- 임시 -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Nanum+Gothic+Coding&family=Noto+Sans+KR&family=Roboto&display=swap" rel="stylesheet">
     <style>
 
     /* reset 로 대체 될 css */
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-    width: 800px;
-    margin: 0 auto;
-    padding-top: 60px;
-}
-
-body {
+html, body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    /* height: 100%; */
     margin: 0 auto;
-    background-color: #182338;
+    /* background: linear-gradient(to bottom, #070E1D 40% , white); */
+    background: rgb(245,246,247);
+    
 }
 
 .main-container{
@@ -30,31 +33,59 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
+    margin-top: 150px;
+    width: 100%;
 }
 
 .sub-container{
-    margin-top: 100px;
+    margin-top: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 400px;
-    height: 600px;
-    background-color: #070E1D;
 }
 
-.title-panel{
+.form-group{
+    width: 410px;
+    height: 50px;
+
+    margin-bottom: 20px;
+}
+
+.login-text{
+    border: 1px solid silver;
+    padding: 0px 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.login-btn{
+    text-align: center;
+    line-height: 2.5;
+    /* background-image: -webkit-gradient(linear, 0% 0%  0% 100% color-stop(0.2, rgb(82,168,232)),to(rgb(46,118,207))); */
+    background: linear-gradient(to bottom, silver 10% , white);
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid #4081af;
+    border-bottom-color: #20559a;
+    width: 100%;
+    height: 100%
+}
+
+.form-menu{
+    display: inline-flex;
+}
+
+.sns-group{
+    margin-bottom: 15px;
+}
+
+
+.third-container{
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    height: 100px;
-}
-
-.title-text{
-    text-align: center;
-    font-size: 70px;
-    color: white;
+    align-items: center;
+    width: 410px;
 }
 
 </style>
@@ -62,13 +93,48 @@ body {
 </head>
 <body>
 
-<div class="main-container">
+
+    <div class="main-container">
+        <a href="/" style="width: 300px;"><img src="/img/logo.png" style="width: 100%;  height: 100%;"></a>
+    </div>
     <div class="sub-container">
-        <div class="title-panel">
-            <span class="title-text">sign in</span>
+        <form>
+            <div class="form-group">
+                <input type="text" name="memberLoginId" placeholder="아이디" class="login-text">
+            </div>
+            <div class="form-group">
+                <input type="password" name="memberPw" placeholder="비밀번호" class="login-text">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="로그인" class="login-btn">
+            </div>
+
+            <div class="form-menu">
+                <div>
+                    <label for="remeber-me" style="cursor:po">
+                        <input type="checkbox" name="remeber-me"> 로그인 상태 유지
+                    </label>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="third-container">
+        <div class="sns-group" >
+            <a>
+            <img src="/img/sns/google-btn.png">
+            </a>
+        </div>
+        <div class="sns-group">
+            <a><img src="/img/sns/naver-btn.png"></a>
+        </div>
+        <div class="sns-group">
+            <a><img src="/img/sns/kakao-btn.png"> </a>
         </div>
     </div>
-</div>
+    
+
 
 </body>
 </html>
