@@ -35,5 +35,5 @@ body {
     width: 800px;
     margin: 0 auto;
     padding-top: 60px;
-    background-color: black;
+    background-color: var(--white);
 }
