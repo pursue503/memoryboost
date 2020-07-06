@@ -35,3 +35,4 @@ cloud:
       auto: false
     credentials:
       instance-profile: true
+      use-default-aws-credentials-chain: true
