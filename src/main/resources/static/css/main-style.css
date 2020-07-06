@@ -1,0 +1,54 @@
+input[type=text] {
+    width: 100px;
+}
+
+div.container {
+    margin-top: 200px;
+}
+
+div.container > div.menu {
+    display: flex;
+}
+
+div.container > div.menu > div {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 250px; height: 250px;
+    background: var(--white);
+    margin: 0 30px;
+    transition-duration: 0.1s;
+}
+
+div.container > div.menu > div > span {
+    position: absolute;
+    display: none;
+    align-self: center;
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+div.container > div.menu > div:hover {
+    opacity: 0.6;
+}
+
+div.container > div.menu > div:hover > span {
+    display: inline-block;
+    transform: translate(0, 300%);
+}
+
+div.container > div.menu > div.estimate {
+    background: url("/img/estimate2.png") no-repeat center;
+    background-size: 80%;
+}
+
+div.container > div.menu > div.community {
+    background: url("/img/community.png") no-repeat center;
+    background-size: 90%;
+}
+
+div.container > div.menu > div.search {
+    background: url("/img/search.png") no-repeat center;
+    background-size: 90%;
+}

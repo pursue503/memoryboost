@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="kor" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>MemoryBoost</title>
+    <link rel="stylesheet" href="/css/main-style.css" />
+</head>
+<body>
+    <header th:replace="header.html"></header>
+    <div class="container">
+        <div class="menu">
+            <div class="estimate spread"><span>견적내기</span></div>
+            <div class="community"><span>게시판</span></div>
+            <div class="search spread"><span>검색</span></div>
+        </div>
+        <!--<div class="search">
+            <input type="text" placeholder="검색어를 입력해주세요" />
+        </div>-->
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".estimate").removeClass("tospread");
+            $(".search").removeClass("tospread");
+        });
+    </script>
+</body>
+</html>
