@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @Getter
 @NoArgsConstructor
-//@DynamicInsert // 데이터가 있는 값만 insert
 @Table(name = "tb_member")
 @Entity
 public class Member {

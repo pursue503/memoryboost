@@ -1,6 +1,5 @@
-package com.memoryboost.domain.member;
+package com.memoryboost.domain.entity.member;
 
-import com.memoryboost.domain.entity.member.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

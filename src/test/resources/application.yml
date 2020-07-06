@@ -78,3 +78,16 @@ spring:
 logging:
   level:
     root: info # 모든 파일 info 레벨 설정.
+#cloud
+cloud:
+  aws:
+    credentials:
+      accessKey: test
+      secretKey: test
+      instance-profile: true
+    s3:
+      bucket: test
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

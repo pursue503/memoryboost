@@ -9,6 +9,7 @@ spring:
        - real-db # db 설정
        - oauth #Security
        - mail #메일 설정
+       - aws
   jpa:
     properties:
       hibernate:
@@ -23,3 +24,4 @@ spring:
 logging:
   level:
     root: info # 모든 파일 info 레벨 설정.
+
