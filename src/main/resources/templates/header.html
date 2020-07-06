@@ -3,14 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Nanum+Gothic+Coding&family=Noto+Sans+KR&family=Roboto&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
+    -->
+    <!-- 스타일 -->
     <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/header-style.css" />
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 </head>
 <body>
-    <header class="header navbar navbar-expand-lg navbar-dark bg-primary" >
-        <h1>헤더입니다</h1>
+    <header class="header">
+        <a href="/"><img class="logo" src="/img/logo.png"></a>
+        <div class="menu">
+            <ul>
+                <li class="menu-item">
+                    <a class="estimate" href="estimate">견적내기</a>
+                </li>
+                <li class="menu-item">
+                    <a class="review" href="#">유저후기</a>
+                </li>
+            </ul>
+        </div>
+        <!-- 로그인에 따라 보여지는 버튼 다름 -->
+        <div class="btns" th:if="${not #strings.isEmpty(userId)}">
+            <button class="btn">내 정보</button>
+            <button class="btn">로그아웃</button>
+        </div>
+        <div class="btns" th:unlsess="${not #strings.isEmpty(userId)}">
+            <button class="btn">로그인</button>
+        </div>
     </header>
 </body>
 </html>

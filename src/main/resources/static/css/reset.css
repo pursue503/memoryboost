@@ -1,7 +1,39 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+:root {
+    --korean-font:
+    --english-font: 'Roboto', sans-serif;
+}
+
+:root {
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #ee5f5b;
+    --orange: #fd7e14;
+    --yellow: #f89406;
+    --green: #62c462;
+    --teal: #20c997;
+    --cyan: #5bc0de;
+    --white: #fff;
+    --gray: #7A8288;
+    --gray-dark: #3A3F44;
+    --primary: #3A3F44;
+    --secondary: #7A8288;
+    --success: #62c462;
+    --info: #5bc0de;
+    --warning: #f89406;
+    --danger: #ee5f5b;
+    --light: #e9ecef;
+    --dark: #272B30;
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 body {
     width: 800px;
     margin: 0 auto;
     padding-top: 60px;
+    background-color: black;
 }
