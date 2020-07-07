@@ -6,6 +6,7 @@
 }
 
 :root {
+    --light-blue: #3366ff;
     --blue: #007bff;
     --indigo: #6610f2;
     --purple: #6f42c1;
@@ -32,8 +33,22 @@
 }
 
 body {
-    width: 800px;
+    width: 1000px;
     margin: 0 auto;
     padding-top: 60px;
     background-color: var(--white);
+}
+
+.liftup {
+  opacity: 0;
+  visibility: hidden;
+  transition-property: transform, opacity;
+  transition-duration: 0.5s, 0.5s;
+  transition-timing-function: ease-out, ease-out;
+  transform: translate(0, 5%);
+}
+.liftup.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0);
 }

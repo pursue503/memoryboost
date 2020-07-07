@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="kor" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>MemoryBoost</title>
@@ -7,20 +7,28 @@
 </head>
 <body>
     <header th:replace="header.html"></header>
+    <div class="logo">
+        <img src="/img/logo_main.png" />
+    </div>
+    <div class="search-bar">
+        <form action="#">
+            <input type="text" name="keyword" placeholder="검색어를 입력해주세요" />
+        </form>
+    </div>
     <div class="container">
-        <div class="menu">
-            <div class="estimate spread"><span>견적내기</span></div>
-            <div class="community"><span>게시판</span></div>
-            <div class="search spread"><span>검색</span></div>
+        <div class="menu liftup">
+            <a href="estimate"><div class="estimate"><span>견적내기</span></div></a>
+            <a href="#"><div class="community"><span>게시판</span></div></a>
+            <div class="search"><span>검색</span></div>
         </div>
-        <!--<div class="search">
-            <input type="text" placeholder="검색어를 입력해주세요" />
-        </div>-->
     </div>
     <script type="text/javascript">
         $(document).ready(function() {
-            $(".estimate").removeClass("tospread");
-            $(".search").removeClass("tospread");
+            $("div.search").on("click", function() {
+                let bar = document.getElementsByClassName("search-bar")[0];
+                bar.value = null;
+                bar.classList.toggle("popup");
+            });
         });
     </script>
 </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
     <title>Title</title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Lato&family=Nanum+Gothic+Coding&family=Noto+Sans+KR&family=Roboto&display=swap" rel="stylesheet">
@@ -16,12 +16,13 @@
     <!-- 스타일 -->
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/header-style.css" />
-
+    <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/reset.js"></script>
 </head>
 <body>
-    <header class="header">
-        <a href="/"><img class="logo" src="/img/logo4.png"></a>
+    <header class="header liftup">
+        <a href="/"><img class="logo" src="/img/logo_main.png"></a>
         <div class="menu">
             <ul>
                 <li class="menu-item">
@@ -38,8 +39,13 @@
             <button class="btn">로그아웃</button>
         </div>
         <div class="btns" th:unlsess="${not #strings.isEmpty(userId)}">
-            <button class="btn">로그인</button>
+            <a href="/members/signin"><button class="btn">로그인</button></a>
         </div>
     </header>
+    <script type="text/javascript">
+        function liftUp() {
+
+        }
+    </script>
 </body>
 </html>
