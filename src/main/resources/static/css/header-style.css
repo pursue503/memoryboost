@@ -54,19 +54,20 @@
     justify-content: flex-end;
 }
 
-.header > .btns > .btn {
+.header > .btns > a > .btn {
     cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 3px;
     outline: none;
-    width: 80px;
+    width: 80px; height: 30px;
     background-color: var(--light);
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: bold;
     color: var(--dark);
+    margin-right: 10px;
 }
 
-.header > .btns > .btn:hover {
+.header > .btns > a > .btn:hover {
     background-color: var(--white);
     color: var(--gray);
     border: 2px solid rgba(0, 0, 0, 0.2);

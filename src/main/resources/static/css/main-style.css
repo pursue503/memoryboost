@@ -1,26 +1,59 @@
-input[type=text] {
-    width: 100px;
+div.logo {
+    display: flex;
+    justify-content: center;
+    padding-top: 150px;
+}
+
+div.search-bar {
+    display: none;
+}
+
+div.search-bar > form > input[type=text] {
+    outline: none;
+    border: 0;
+    background: none;
+    width: 500px; height: 40px;
+    border-radius: 3px;
+    /*border: 2px solid rgba(0, 0, 0, 0.3);*/
+    margin-top: 30px; padding: 5px;
+    padding-left: 10px;
+    box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.5);
+    font-family: 'Noto Sans KR', sans-serif, 'Lato', sans-serif;
+}
+
+div.search-bar.popup {
+    display: flex;
+    justify-content: center;
 }
 
 div.container {
-    margin-top: 200px;
+    margin-top: 20px;
 }
 
 div.container > div.menu {
     display: flex;
+    justify-content: space-between;
 }
 
-div.container > div.menu > div {
+div.container > div.menu > a {
+    color: var(--black);
+}
+
+div.container > div.menu > a:visited {
+    color: var(--black);
+}
+
+div.container > div.menu div {
     position: relative;
     display: flex;
     justify-content: center;
     width: 250px; height: 250px;
     background: var(--white);
-    margin: 0 30px;
-    transition-duration: 0.1s;
+    transition-property: opacity;
+    transition-duration: 0.2s;
 }
 
-div.container > div.menu > div > span {
+div.container > div.menu div > span {
     position: absolute;
     display: none;
     align-self: center;
@@ -29,26 +62,27 @@ div.container > div.menu > div > span {
     font-weight: bold;
 }
 
-div.container > div.menu > div:hover {
+div.container > div.menu div:hover {
     opacity: 0.6;
 }
 
-div.container > div.menu > div:hover > span {
+div.container > div.menu div:hover > span {
     display: inline-block;
-    transform: translate(0, 300%);
+    transform: translate(0, 320%);
 }
 
-div.container > div.menu > div.estimate {
-    background: url("/img/estimate2.png") no-repeat center;
+div.container > div.menu div.estimate {
+    background: url("/img/estimate.png") no-repeat center;
     background-size: 80%;
 }
 
-div.container > div.menu > div.community {
+div.container > div.menu div.community {
     background: url("/img/community.png") no-repeat center;
     background-size: 90%;
 }
 
-div.container > div.menu > div.search {
+div.container > div.menu div.search {
+    cursor: pointer;
     background: url("/img/search.png") no-repeat center;
     background-size: 90%;
 }
