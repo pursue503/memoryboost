@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     //로그인설정
                     .formLogin()
                     .loginPage("/members/signin") // 로그인 url
-                    .loginProcessingUrl("/member/signin") // 로그인 페이지 form action 에 입력할 주소 지정 post
+                    .loginProcessingUrl("/members/signin") // 로그인 페이지 form action 에 입력할 주소 지정 post
                     .usernameParameter("memberLoginId") // 파라미터 설정
                     .passwordParameter("memberPw")
                     .successHandler(memoryBoostSuccessHandler)
