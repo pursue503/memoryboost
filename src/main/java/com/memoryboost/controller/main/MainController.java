@@ -24,14 +24,6 @@ public class MainController {
     @GetMapping("/")
     public String mainPage(HttpServletRequest request, Model model){
 
-        List<Member> memberList = memberRepository.findByMemberEmail("abc1234@naer.com");
-
-        if(memberList.isEmpty()) {
-            log.info("비었습니다.");
-        } else {
-            log.info("안빔");
-        }
-
         return "main";
     }
 

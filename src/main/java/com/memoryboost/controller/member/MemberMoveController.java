@@ -22,4 +22,20 @@ public class MemberMoveController {
         return "memberInfo";
     }
 
+    //SNS 로그인
+    @GetMapping("/member/signin/google")
+    public String forGoogle(){
+        return "redirect:/oauth2/authorization/google";
+    }
+
+    @GetMapping("/member/signin/naver")
+    public String forNaver(){
+        return "redirect:/oauth2/authorization/naver";
+    }
+
+    @GetMapping("/member/signin/kakao")
+    public String forKakao(){
+        return "redirect:/oauth2/authorization/kakao";
+    }
+
 }
