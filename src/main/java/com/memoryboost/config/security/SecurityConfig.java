@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //csrf 잠시 비활성
-        http.authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 //페이지 권한 설정
                     .antMatchers("/").permitAll()
                     .antMatchers("/members/mypage").hasRole(Role.USER.name())

@@ -124,8 +124,12 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     @Transactional
     public boolean signUp(MemberSaveRequestDTO saveRequestDto)  {
 
+        if(!saveRequestDto.patternCheck()){  // 정규식에 일치하면 true , ! 반전해서 일치하면 false if문 패스
+            return false;
+        }
 
         saveRequestDto.setMemberPw(passwordEncoder.encode(saveRequestDto.getMemberPw()));
+
 
         Member member = memberRepository.save(saveRequestDto.toEntity());
 
