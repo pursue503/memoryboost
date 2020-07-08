@@ -1,5 +1,6 @@
 package com.memoryboost.config.security;
 
+import com.memoryboost.config.security.custom.MemoryBoostSNSSuccessHandler;
 import com.memoryboost.config.security.custom.MemoryBoostSuccessHandler;
 import com.memoryboost.domain.entity.member.Role;
 import com.memoryboost.service.member.MemberService;
@@ -22,6 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private MemoryBoostSuccessHandler memoryBoostSuccessHandler;
+
+    @Autowired
+    private MemoryBoostSNSSuccessHandler memoryBoostSNSSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -63,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     //외부로그인
                     .oauth2Login()
+                    .successHandler(memoryBoostSNSSuccessHandler)
 //                    .authenticationDetailsSource()
                     .userInfoEndpoint()
                     .userService(memberService);

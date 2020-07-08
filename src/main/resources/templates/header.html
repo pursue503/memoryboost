@@ -38,7 +38,7 @@
                 <span class="username" sec:authentication="principal.memberName"></span><span>님 환영합니다</span>
             </div>
             <a href="#"><button class="btn mypage">내 정보</button></a>
-            <a href="#"><button class="btn signout">로그아웃</button></a>
+            <a href="/members/logout"><button class="btn signout">로그아웃</button></a>
         </div>
         <div class="btns" sec:authorize="isAnonymous()">
             <a href="/members/signup"><button class="btn signup">회원가입</button></a>

@@ -1,5 +1,6 @@
 package com.memoryboost.domain.entity.member;
 
+import com.memoryboost.domain.dto.member.MemberSNSInfoUpdateRequestDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -89,13 +90,22 @@ public class Member {
     public Member snsUpdate(String memberEmail, String memberName) {
         this.memberEmail = memberEmail;
         this.memberName = memberName;
-        return this;
+        return this; // 리턴해서 현재정보를 사용하기 위함.
     }
 
     //이메일인증완료시 아이디 사용가능
     public Member emailAuthCompleteAndMemberStUpdate(){
         this.memberSt = true;
-        return this;
+        return this; // 리턴해서 현재정보를 사용하기 위함.
+    }
+
+    //SNS 회원 정보 업데이트 entity 는 메소드 종료시 영속성에서 변경된 데이터를 업데이트함
+    //그래서 return this 를 할필요가 없음 사용을 안할거기때문. 위에 두메소드는 사용을위해여 return this
+    public void snsMemberInfoUpdate(MemberSNSInfoUpdateRequestDTO updateRequestDTO){
+        this.memberTel = updateRequestDTO.getMemberTel();
+        this.memberZipCode = updateRequestDTO.getMemberZipCode();
+        this.memberAddress = updateRequestDTO.getMemberAddress();
+        this.memberDetailAddress = updateRequestDTO.getMemberDetailAddress();
     }
 
 }

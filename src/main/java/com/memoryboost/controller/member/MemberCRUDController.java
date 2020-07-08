@@ -1,5 +1,6 @@
 package com.memoryboost.controller.member;
 
+import com.memoryboost.domain.dto.member.MemberSNSInfoUpdateRequestDTO;
 import com.memoryboost.domain.dto.member.MemberSaveRequestDTO;
 import com.memoryboost.domain.entity.email.MemberEmail;
 import com.memoryboost.domain.entity.member.Member;
@@ -58,13 +59,20 @@ public class MemberCRUDController {
             out.println("location.href='/';");
             out.println("</script>");
         }
-
-
-
     }
 
     //아이디찾기
     
     //비밀번호찾기   
-    
+
+    //sns 계정 정보 업데이트
+    @PutMapping("members/sns/{memberId}")
+    public String snsMemberInfoUpdate(@PathVariable("memberId") Long memberId , MemberSNSInfoUpdateRequestDTO updateRequestDTO){
+
+        memberService.snsMemberInfoUpate(memberId,updateRequestDTO);
+
+        return "redirect:/";
+
+    }
+
 }

@@ -21,7 +21,7 @@ public class MemberMoveController {
     public String signupPage() { return "member/signup"; }
 
     //sns회원가입 페이지로 이동.
-    @GetMapping("/members/sns_signup")
+    @GetMapping("/members/sns-signup")
     public String snsSignupPage() { return "member/sns_signup"; }
 
     //마이페이지 이동

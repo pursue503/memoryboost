@@ -1,5 +1,6 @@
 package com.memoryboost.service.member;
 
+import com.memoryboost.domain.dto.member.MemberSNSInfoUpdateRequestDTO;
 import com.memoryboost.util.email.MemoryBoostMailTemplate;
 import com.memoryboost.domain.dto.member.MemberSaveRequestDTO;
 import com.memoryboost.domain.dto.member.OAuthAttributesDTO;
@@ -163,7 +164,14 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
             return false;
         }
 
+    }
 
+    @Transactional
+    public void snsMemberInfoUpate(Long memberId,MemberSNSInfoUpdateRequestDTO updateRequestDTO){
+        //업데이트
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다." + memberId));
+
+        member.snsMemberInfoUpdate(updateRequestDTO);
 
     }
 
