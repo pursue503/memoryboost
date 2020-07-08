@@ -95,7 +95,7 @@ form.signup-form > input[type=submit] {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-form.signup-form > input[type=submit]:disabled {
+form.signup-form > input[type=submit]:readonly {
     cursor: default;
     background: var(--white);
     color: var(--light);

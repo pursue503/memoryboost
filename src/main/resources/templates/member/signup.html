@@ -37,9 +37,9 @@
                 </div>
                 <input type="text" class="memberTel" name="memberTel" placeholder="전화번호"/>
                 <div class="addr">
-                    <input type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" disabled>
+                    <input type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" readonly>
                     <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>
-                    <input type="text" id="address" class="memberAddress add" name="memberAddress" placeholder="주소" disabled><br>
+                    <input type="text" id="address" class="memberAddress add" name="memberAddress" placeholder="주소" readonly><br>
                 </div>
                 <div class="div-detailaddr">
                     <input type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
@@ -78,93 +78,5 @@
         })();
         </script>
     </div>
-    <!--
-    //아이디 중복 검사(ajax)
-        (function() {
-            var httpReqeust;
-            document.getElementById("memberLoginId").addEventListener("keyup", function() {
-                let chkId = document.getElementById("memberLoginId");
-                if(isEmpty(chkId.value)) {
-                    document.getElementById("submit").disabled = true;
-                    chkId.classList.add("nopass");
-                } else {
-                    doRequest();
-                }
-            });
-
-            function doRequest() {
-                httpRequest = new XMLHttpRequest();
-
-                if(!httpRequest) {
-                    console.dir("XMLHttp 인스턴스 생성 불가능");
-                    return false;
-                }
-                httpRequest.onreadystatechange = alertContents;
-                let chkId = document.getElementById("memberLoginId").value;
-                let requestTo = "/members/"+chkId+"/overlap/check";
-                httpRequest.open("GET", requestTo);
-                httpRequest.send();
-            }
-
-            function alertContents() {
-                if(httpRequest.readyState === XMLHttpRequest.DONE) {
-                    let result = httpRequest.response;
-                    let chkId = document.getElementById("memberLoginId");
-                    if(httpRequest.status === 200) {
-                        if(result.indexOf("true") > 0) { //아이디 사용 불가능
-                            document.getElementById("submit").disabled = true;
-                            chkId.classList.add("nopass");
-                        } else { //아이디 사용 가능
-                            document.getElementById("submit").disabled = false;
-                            chkId.classList.remove("nopass");
-                        }
-                    } else {
-                        console.dir("request failed");
-                    }
-                }
-            }
-        })();
-
-        //회원가입 눌렀을때 부족한 부분 표시
-        (function() {
-            let submit = document.getElementById("submit");
-        })();
-
-        //한번에 검증
-        function validation() {
-            //패스워드 일치 검사
-            (function() {
-                let pw = document.getElementById("memberPw");
-                let pwc = document.getElementById("memberPwConfirm");
-
-                $(document).on("keyup", ".memberPw, .memberPwConfirm", function() {
-                    if(isEmpty(pw.value) || isEmpty(pwc.value) || (pw.value !== pwc.value)) {
-                        pw.classList.add("nopass");
-                        pwc.classList.add("nopass");
-                        document.getElementById("submit").disabled = true;
-                    } else {
-                        pw.classList.remove("nopass");
-                        pwc.classList.remove("nopass");
-                        document.getElementById("submit").disabled = false;
-                    }
-                });
-            })();
-
-            //이름 비어있는지 검사
-            (function() {
-                let username = document.getElementById("memberName");
-
-                username.addEventListener("keyup", function() {
-                    if(isEmpty(username.value)) {
-                        username.classList.add("nopass");
-                        document.getElementById("submit").disabled = true;
-                    } else {
-                        username.classList.remove("nopass");
-                        document.getElementById("submit").disabled = false;
-                    }
-                });
-            })();
-        }
-        -->
 </body>
 </html>
