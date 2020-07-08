@@ -55,7 +55,6 @@ public class ProductS3Uploader {
 
     private Optional<File> convert(MultipartFile multipartFile) throws IOException {
         File convertFile = new File(multipartFile.getOriginalFilename());
-        Runtime.getRuntime().exec("chmod 777" + multipartFile.getOriginalFilename());
         if(convertFile.createNewFile()) { // 현재 프로젝트 내부에 파일 생성
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
                 fos.write(multipartFile.getBytes()); //파일 byte 값 입력

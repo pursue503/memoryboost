@@ -45,7 +45,7 @@ public class MemoryBoostMailTemplate {
         template.append("<h1> MemoryBoost 인증 메일입니다. </h1>");
         template.append("<h3> 인증을 진행하시려면 아래에 버튼을 눌러주세요. </h3>");
         template.append("<a href='");
-        template.append("http://localhost:8181/members/email/auth/check/"+memberEmail.getMemberId() + "/" + memberEmail.getEmailNo() + "/" + memberEmail.getEmailCode());
+        template.append("http://memoryboost/members/email/auth/check/"+memberEmail.getMemberId() + "/" + memberEmail.getEmailNo() + "/" + memberEmail.getEmailCode());
         template.append("'>");
         template.append("<button>인증</button>");
         template.append("</a>");
