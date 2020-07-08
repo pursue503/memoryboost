@@ -4,8 +4,15 @@ div.logo {
     padding-top: 150px;
 }
 
+div.inner-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
 div.search-bar {
     display: none;
+    align-self: center;
 }
 
 div.search-bar > form > input[type=text] {
@@ -14,7 +21,6 @@ div.search-bar > form > input[type=text] {
     background: none;
     width: 500px; height: 40px;
     border-radius: 3px;
-    /*border: 2px solid rgba(0, 0, 0, 0.3);*/
     margin-top: 30px; padding: 5px;
     padding-left: 10px;
     box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.5);
@@ -33,6 +39,7 @@ div.container {
 div.container > div.menu {
     display: flex;
     justify-content: space-between;
+    padding: 0 100px;
 }
 
 div.container > div.menu > a {
@@ -43,7 +50,7 @@ div.container > div.menu > a:visited {
     color: var(--black);
 }
 
-div.container > div.menu div {
+div.container > div.menu > a > div {
     position: relative;
     display: flex;
     justify-content: center;
@@ -53,7 +60,16 @@ div.container > div.menu div {
     transition-duration: 0.2s;
 }
 
-div.container > div.menu div > span {
+div.container > div.menu > a > div > span {
+    position: absolute;
+    display: none;
+    align-self: center;
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+div.container > div.menu > div.search > span {
     position: absolute;
     display: none;
     align-self: center;
@@ -71,17 +87,17 @@ div.container > div.menu div:hover > span {
     transform: translate(0, 320%);
 }
 
-div.container > div.menu div.estimate {
+div.container > div.menu > a > div.estimate {
     background: url("/img/estimate.png") no-repeat center;
     background-size: 80%;
 }
 
-div.container > div.menu div.community {
+div.container > div.menu > a > div.community {
     background: url("/img/community.png") no-repeat center;
     background-size: 90%;
 }
 
-div.container > div.menu div.search {
+div.container > div.menu > a > div.search {
     cursor: pointer;
     background: url("/img/search.png") no-repeat center;
     background-size: 90%;

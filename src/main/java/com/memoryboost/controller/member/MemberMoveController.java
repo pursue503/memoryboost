@@ -16,6 +16,10 @@ public class MemberMoveController {
         return "member/signin";
     }
 
+    //회원가입 페이지로 이동.
+    @GetMapping("/members/signup")
+    public String signupPage() { return "member/signup"; }
+
     //마이페이지 이동
     @GetMapping("/members/mypage")
     public String myInfo(){

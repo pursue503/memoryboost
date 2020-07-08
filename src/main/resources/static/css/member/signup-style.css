@@ -1,0 +1,183 @@
+div.inner-container.signup {
+    display: flex;
+    flex-direction: column;
+}
+
+h1.signup-title {
+    align-self: center;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+form.signup-form {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+}
+
+form.signup-form > * {
+    margin: 5px 0;
+}
+
+form.signup-form > div {
+    display: flex;
+    align-items: center;
+}
+
+form.signup-form span.alert-small {
+    font-family: 'Nanum Gothic Coding', monospace;
+    color: var(--secondary);
+    font-size: 10px;
+    margin: 1px 0; margin-bottom: 5px; padding-left: 10px;
+    opacity: 0.8;
+}
+
+form.signup-form > div.addr {
+    display: block;
+}
+
+form.signup-form input {
+    width: 300px; height: 40px;
+    outline: none;
+    background: none;
+    border: 0;
+    border-radius: 5px;
+    padding: 0 15px;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    font-family: 'Nanum Gothic Coding', monospace, 'Lato', sans-serif;;
+    transition-property: transform;
+    transition-duration: 0.2s;
+}
+
+form.signup-form input:focus {
+    transform: scale(1.01);
+    box-shadow: 0 0 3px 1px var(--light-blue);
+}
+
+form.signup-form > div.addr > input.memberZipcode {
+    width: 100px;
+}
+
+form.signup-form > div.addr > input.searchZipCode {
+    width: 100px;
+}
+
+form.signup-form span.chksum {
+    display: inline-block;
+    width: 20px; height: 20px;
+    background-size: 20px;
+    margin: 15px;
+}
+
+form.signup-form span.chksum.true {
+    background-image: url("/img/verify_true.png");
+}
+
+form.signup-form span.chksum.false {
+    background-image: url("/img/verify_false.png");
+}
+
+form.signup-form > div.addr > input:disabled {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+form.signup-form > div.addr > input.memberAddress {
+    margin-top: 10px;
+}
+
+form.signup-form > input[type=submit] {
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    height: 50px;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.8);
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+form.signup-form > input[type=submit]:disabled {
+    cursor: default;
+    background: var(--white);
+    color: var(--light);
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.2);
+}
+
+form.signup-form > div.div-condition {
+    margin: 0px;
+    margin-bottom: 8px;
+}
+
+form.signup-form > div.div-condition > input[type=checkbox] {
+    width: 20px; height: 20px;
+    margin: 0;
+}
+
+form.signup-form > div.div-condition span.private-condition {
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--light-blue);
+    margin: 0 3px;
+}
+
+form.signup-form > div.addr > input[type=button] {
+    cursor: pointer;
+    margin-left: 5px; padding: 10px;
+    font-size: 12px;
+}
+
+form.signup-form > div.addr > input[type=button]:hover {
+    opacity: 0.5;
+}
+
+/*
+
+form.signup-form > input[type=text], form.signup-form > input[type=password] {
+    outline: none;
+    border: 0;
+    background: none;
+    width: 300px; height: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.6);
+    padding-left: 10px;
+}
+
+form.signup-form > div.addr > input[type=text] {
+    outline: none;
+    border: 0;
+    background: none;
+    height: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.6);
+    padding-left: 10px;
+    margin: 10px 0;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+form.signup-form > div.addr > input#detailAddress {
+    background: none;
+}
+
+form.signup-form > div.addr > input.searchZipCode {
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    background: var(--light);
+    width: 120px; height: 30px;
+    margin-left: 20px;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.8);
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+form.signup-form > div.addr > input.add {
+    width: 300px;
+}
+
+form.signup-form > input[type=text]:focus, form.signup-form > input[type=password]:focus {
+    border: 2px solid var(--light-blue);
+}
+
+form.signup-form > input.nopass {
+    border: 2px solid var(--red);
+}
+*/

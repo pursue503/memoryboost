@@ -1,7 +1,6 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --korean-font:
     --english-font: 'Roboto', sans-serif;
 }
 
@@ -32,11 +31,25 @@
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
-    width: 1000px;
+    /*width: 1000px;*/
     margin: 0 auto;
     padding-top: 60px;
     background-color: var(--white);
+}
+
+div.utmost-container {
+    position: relative;
+    min-height: 100%;
+}
+
+div.inner-container {
+    width: 1200px;
+    margin: 0 auto;
 }
 
 .liftup {

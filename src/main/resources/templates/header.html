@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
-    <title>Title</title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Lato&family=Nanum+Gothic+Coding&family=Noto+Sans+KR&family=Roboto&display=swap" rel="stylesheet">
     <!--
@@ -29,23 +28,27 @@
                     <a class="estimate" href="estimate">견적내기</a>
                 </li>
                 <li class="menu-item">
-                    <a class="review" href="#">유저후기</a>
+                    <a class="review" href="#">커뮤니티</a>
                 </li>
             </ul>
         </div>
         <!-- 로그인에 따라 보여지는 버튼 다름 -->
-        <div class="btns" th:if="${not #strings.isEmpty(userId)}">
+        <div class="btns" sec:authorize="isAuthenticated()">
+            <button class="btn">내 정보</button>
+            <button class="btn">로그아웃</button>
+        </div>
+        <div class="btns" sec:authorize="isAnonymous()">
+            <a href="/members/signup"><button class="btn signup">회원가입</button></a>
+            <a href="/members/signin"><button class="btn signin">로그인</button></a>
+        </div>
+        <!--<div class="btns" th:if="${not #strings.isEmpty(userId)}">
             <button class="btn">내 정보</button>
             <button class="btn">로그아웃</button>
         </div>
         <div class="btns" th:unlsess="${not #strings.isEmpty(userId)}">
-            <a href="/members/signin"><button class="btn">로그인</button></a>
-        </div>
+            <a href="#"><button class="btn signup">회원가입</button></a>
+            <a href="/members/signin"><button class="btn signin">로그인</button></a>
+        </div>-->
     </header>
-    <script type="text/javascript">
-        function liftUp() {
-
-        }
-    </script>
 </body>
 </html>

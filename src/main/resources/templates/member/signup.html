@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>회원가입</title>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/member/signup-style.css" />
+    <!-- 주소 API -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/reset.js"></script>
+</head>
+<body>
+    <div class="utmost-container">
+        <header th:replace="header.html"></header>
+        <div class="inner-container signup">
+            <h1 class="signup-title">회원가입</h1>
+            <form class="signup-form" action="/members" method="POST">
+                <div class="div-id">
+                    <input type="text" id="memberLoginId" class="memberLoginId" name="memberLoginId" placeholder="아이디"/>
+                    <span class="chksum id false"></span>
+                </div>
+                <span class="alert-small">ID는 영문 + 숫자 4~12글자 (특수문자 불가능)</span>
+                <div class="div-pw">
+                    <input type="password" id="memberPw" class="memberPw" name="memberPw" placeholder="비밀번호"/>
+                    <span class="chksum pw false"></span>
+                </div>
+                <span class="alert-small">비밀번호는 영문 + 숫자  6글자 이상 (특수문자 불가능)</span>
+                <input type="password" id="memberPwConfirm" class="memberPwConfirm" name="memberPwConfirm" placeholder="비밀번호 확인"/>
+                <div class="div-name">
+                    <input type="text" id="memberName" class="memberName" name="memberName" placeholder="이름"/>
+                    <span class="chksum name false"></span>
+                </div>
+                <div class="div-email">
+                    <input type="text" id="memberEmail" class="memberEmail" name="memberEmail" placeholder="이메일"/>
+                    <span class="chksum email false"></span>
+                </div>
+                <input type="text" class="memberTel" name="memberTel" placeholder="전화번호"/>
+                <div class="addr">
+                    <input type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" disabled>
+                    <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>
+                    <input type="text" id="address" class="memberAddress add" name="memberAddress" placeholder="주소" disabled><br>
+                </div>
+                <div class="div-detailaddr">
+                    <input type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
+                    <span class="chksum detailaddr false"></span>
+                </div>
+                <!--<div class="div-condition">
+                    <input type="checkbox" id="condition" />
+                    <span class="alert-small" ><label for="condition"><span id="private-condition" class="private-condition">개인정보처리방침</span>에 동의합니다.</label></span>
+                </div>-->
+                <input id="submit" type="submit" value="회원가입" disabled />
+                <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+            </form>
+        </div>
+        <footer th:replace="footer.html"></footer>
+        <script type="text/javascript">
+        //아이디
+        (function() {
+            document.getElementById("memberLoginId").addEventListener("keyup", validateSignup);
+        })();
+        //비밀번호
+        (function() {
+            document.getElementById("memberPw").addEventListener("keyup", validateSignup);
+            document.getElementById("memberPwConfirm").addEventListener("keyup", validateSignup);
+        })();
+        //이름
+        (function() {
+            document.getElementById("memberName").addEventListener("keyup", validateSignup);
+        })();
+        //이메일
+        (function() {
+            document.getElementById("memberEmail").addEventListener("keyup", validateSignup);
+        })();
+        //상세주소
+        (function() {
+            document.getElementById("detailAddress").addEventListener("keyup", validateSignup);
+        })();
+        </script>
+    </div>
+    <!--
+    //아이디 중복 검사(ajax)
+        (function() {
+            var httpReqeust;
+            document.getElementById("memberLoginId").addEventListener("keyup", function() {
+                let chkId = document.getElementById("memberLoginId");
+                if(isEmpty(chkId.value)) {
+                    document.getElementById("submit").disabled = true;
+                    chkId.classList.add("nopass");
+                } else {
+                    doRequest();
+                }
+            });
+
+            function doRequest() {
+                httpRequest = new XMLHttpRequest();
+
+                if(!httpRequest) {
+                    console.dir("XMLHttp 인스턴스 생성 불가능");
+                    return false;
+                }
+                httpRequest.onreadystatechange = alertContents;
+                let chkId = document.getElementById("memberLoginId").value;
+                let requestTo = "/members/"+chkId+"/overlap/check";
+                httpRequest.open("GET", requestTo);
+                httpRequest.send();
+            }
+
+            function alertContents() {
+                if(httpRequest.readyState === XMLHttpRequest.DONE) {
+                    let result = httpRequest.response;
+                    let chkId = document.getElementById("memberLoginId");
+                    if(httpRequest.status === 200) {
+                        if(result.indexOf("true") > 0) { //아이디 사용 불가능
+                            document.getElementById("submit").disabled = true;
+                            chkId.classList.add("nopass");
+                        } else { //아이디 사용 가능
+                            document.getElementById("submit").disabled = false;
+                            chkId.classList.remove("nopass");
+                        }
+                    } else {
+                        console.dir("request failed");
+                    }
+                }
+            }
+        })();
+
+        //회원가입 눌렀을때 부족한 부분 표시
+        (function() {
+            let submit = document.getElementById("submit");
+        })();
+
+        //한번에 검증
+        function validation() {
+            //패스워드 일치 검사
+            (function() {
+                let pw = document.getElementById("memberPw");
+                let pwc = document.getElementById("memberPwConfirm");
+
+                $(document).on("keyup", ".memberPw, .memberPwConfirm", function() {
+                    if(isEmpty(pw.value) || isEmpty(pwc.value) || (pw.value !== pwc.value)) {
+                        pw.classList.add("nopass");
+                        pwc.classList.add("nopass");
+                        document.getElementById("submit").disabled = true;
+                    } else {
+                        pw.classList.remove("nopass");
+                        pwc.classList.remove("nopass");
+                        document.getElementById("submit").disabled = false;
+                    }
+                });
+            })();
+
+            //이름 비어있는지 검사
+            (function() {
+                let username = document.getElementById("memberName");
+
+                username.addEventListener("keyup", function() {
+                    if(isEmpty(username.value)) {
+                        username.classList.add("nopass");
+                        document.getElementById("submit").disabled = true;
+                    } else {
+                        username.classList.remove("nopass");
+                        document.getElementById("submit").disabled = false;
+                    }
+                });
+            })();
+        }
+        -->
+</body>
+</html>
