@@ -10,6 +10,7 @@ import com.memoryboost.domain.entity.member.MemberRepository;
 import com.memoryboost.domain.vo.member.MemberOAuth2VO;
 import com.memoryboost.domain.vo.member.MemberVO;
 import com.memoryboost.util.email.MemoryBoostMailhandler;
+import jdk.nashorn.internal.runtime.options.Option;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -32,6 +33,7 @@ import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -56,6 +58,10 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     //이메일 전송 템플릿 ( 코드생성 메일양식생성 )
     @Autowired
     private MemoryBoostMailTemplate mailTemplate;
+
+    //memberEmail
+    @Autowired
+    private MemberEmailRepository emailRepository;
 
     //회원로그인
     @Override // 로그인관리.
@@ -107,7 +113,6 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
     //회원서비스
 
-    //회원가입
 
     //아이디 중복체크
     @Transactional
@@ -119,8 +124,12 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     @Transactional
     public boolean signUp(MemberSaveRequestDTO saveRequestDto)  {
 
+        if(!saveRequestDto.patternCheck()){  // 정규식에 일치하면 true , ! 반전해서 일치하면 false if문 패스
+            return false;
+        }
 
         saveRequestDto.setMemberPw(passwordEncoder.encode(saveRequestDto.getMemberPw()));
+
 
         Member member = memberRepository.save(saveRequestDto.toEntity());
 
@@ -139,6 +148,22 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         }
 
         return true;
+    }
+
+    @Transactional
+    public boolean memberEmailAuthCheck(Long memberid, Long emailNo, String emailCode) {
+
+        Optional<Object> member = memberRepository.findById(memberid).map(entity ->
+                emailRepository.countByEmailNoAndMemberIdAndEmailCode(emailNo, entity, emailCode) == 1 ?
+                entity.emailAuthCompleteAndMemberStUpdate() : entity);
+        try{
+            Member memberEntity = (Member) member.get();
+            return memberEntity.isMemberSt();
+        } catch (Exception e) {
+            return false;
+        }
+
+
 
     }
 

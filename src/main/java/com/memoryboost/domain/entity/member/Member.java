@@ -92,4 +92,10 @@ public class Member {
         return this;
     }
 
+    //이메일인증완료시 아이디 사용가능
+    public Member emailAuthCompleteAndMemberStUpdate(){
+        this.memberSt = true;
+        return this;
+    }
+
 }
