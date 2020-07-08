@@ -32,7 +32,7 @@
 }
 
 .header > .menu {
-    flex-basis: 80%;
+    flex-basis: 30%;
 }
 
 .header > .menu > ul {
@@ -49,9 +49,24 @@
 }
 
 .header > .btns {
-    flex-basis: 10%;
+    flex-basis: 60%;
     display: flex;
     justify-content: flex-end;
+    over-flow: hidden;
+}
+
+.header > .btns > div.greeting {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-family: 'Noto Sans KR', sans-serif, 'Roboto', sans-serif;
+}
+
+.header > .btns > div.greeting > span.username {
+    color: var(--primary);
+    font-size: 19px;
+    font-weight: bold;
+    margin-left: 2px;
 }
 
 .header > .btns > a > .btn {

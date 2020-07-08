@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>회원가입</title>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/member/signup-style.css" />
+    <!-- 주소 API -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/reset.js"></script>
+</head>
+<body>
+<div class="utmost-container">
+    <header th:replace="header.html"></header>
+    <div class="inner-container signup">
+        <h1 class="signup-title">추가정보 입력</h1>
+        <form class="signup-form" action="/members" method="POST">
+            <div class="div-name">
+                <input th:value="${#authentication.principal.memberName}" type="text" id="memberName" class="memberName" name="memberName" placeholder="이름" readonly />
+            </div>
+            <div class="div-email">
+                <input th:value="${#authentication.principal.memberEmail}" type="text" id="memberEmail" class="memberEmail" name="memberEmail" placeholder="이메일" readonly />
+            </div>
+            <input type="text" class="memberTel" name="memberTel" placeholder="전화번호"/>
+            <div class="addr">
+                <input type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" readonly>
+                <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>
+                <input type="text" id="address" class="memberAddress add" name="memberAddress" placeholder="주소" readonly><br>
+            </div>
+            <div class="div-detailaddr">
+                <input type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
+                <span class="chksum detailaddr false"></span>
+            </div>
+            <!--<div class="div-condition">
+                <input type="checkbox" id="condition" />
+                <span class="alert-small" ><label for="condition"><span id="private-condition" class="private-condition">개인정보처리방침</span>에 동의합니다.</label></span>
+            </div>-->
+            <input id="submit" type="submit" value="회원가입" disabled />
+            <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+        </form>
+    </div>
+    <footer th:replace="footer.html"></footer>
+    <script type="text/javascript">
+        var temp = "[[${#authentication.principal.memberName}]]";
+        console.dir(temp);
+    </script>
+    <script type="text/javascript">
+        //상세주소
+        (function() {
+            document.getElementById("detailAddress").addEventListener("keyup", function() {
+                let memberDetailAddress = document.getElementById("detailAddress");
+                let statusDetailAddr = document.querySelector(".chksum.detailaddr");
+                if(isEmpty(memberDetailAddress.value)) { //비어있음
+                    statusDetailAddr.classList.remove("true");
+                    statusDetailAddr.classList.add("false");
+                    document.getElementById("submit").disabled = true;
+                } else { //비어있지 않음
+                    statusDetailAddr.classList.remove("false");
+                    statusDetailAddr.classList.add("true");
+                    document.getElementById("submit").disabled = false;
+                }
+            });
+        })();
+        //회원가입 완료(성공)
+        (function() {
+            document.getElementById("submit").addEventListener("click", function() {
+                alert("회원가입을 완료했습니다!");
+            });
+        })();
+        </script>
+</div>
+</body>
+</html>

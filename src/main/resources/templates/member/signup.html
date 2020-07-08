@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>회원가입</title>
     <!-- css -->
     <link rel="stylesheet" href="/css/member/signup-style.css" />
@@ -75,6 +76,12 @@
         //상세주소
         (function() {
             document.getElementById("detailAddress").addEventListener("keyup", validateSignup);
+        })();
+        //회원가입 완료(성공)
+        (function() {
+            document.getElementById("submit").addEventListener("click", function() {
+                alert("회원가입을 완료했습니다!");
+            });
         })();
         </script>
     </div>

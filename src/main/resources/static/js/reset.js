@@ -121,6 +121,7 @@ var validateSignup = function() {
         statusDetailAddr.classList.remove("false");
         statusDetailAddr.classList.add("true");
     }
+    //회원가입 버튼 활성화 여부
     let chkComplete = document.querySelectorAll(".chksum.false");
     if(chkComplete.length) {
         document.getElementById("submit").disabled = true;

@@ -18,6 +18,7 @@ public class MemberOAuth2VO extends DefaultOAuth2User {
 
     private Long memberId;
     private String memberName;
+    private String memberEmail;
     private boolean memberSt;
     private String memberSns;
 
@@ -29,6 +30,7 @@ public class MemberOAuth2VO extends DefaultOAuth2User {
         super(authorities, attributes, nameAttributeKey);
         this.memberId = member.getMemberId();
         this.memberName = member.getMemberName();
+        this.memberEmail = member.getMemberEmail();
         this.memberSt = member.isMemberSt();
         this.memberSns = member.getMemberSns();
 
