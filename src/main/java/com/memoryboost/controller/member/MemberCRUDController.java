@@ -6,10 +6,7 @@ import com.memoryboost.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -62,6 +59,7 @@ public class MemberCRUDController {
 
     //sns 계정 정보 업데이트
     @PutMapping("members/sns/{memberId}")
+    @ResponseBody
     public Long snsMemberInfoUpdate(@PathVariable("memberId") Long memberId , MemberSNSInfoUpdateRequestDTO updateRequestDTO){
 
          return memberService.snsMemberInfoUpate(memberId,updateRequestDTO);
