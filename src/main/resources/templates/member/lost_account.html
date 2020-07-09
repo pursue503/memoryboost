@@ -22,7 +22,11 @@
 </head>
 <body>
 <div class="utmost-container">
-    <div class="inner-container lost-account">
+    <header th:replace="header.html"></header>
+    <div class="inner-container lost-account liftup">
+        <div class="div-nav">
+            <a href="/members/signin"><button>< 뒤로가기</button></a>
+        </div>
         <div class="account">
             <div class="id">
                 <h3>아이디 찾기</h3>
@@ -37,12 +41,14 @@
                 <button class="btn find pw">메일 발송</button>
             </div>
             <div class="code">
-                <input id="sec-code" type="text" placeholder="코드 입력" />
+                <input id="sec-code" type="text" placeholder="코드 입력" maxlength="6"/>
+                <span class="code-timer"></span>
                 <button class="btn code">확인</button>
             </div>
             <h2 class="notice-mid">임시 비밀번호가 발송되었습니다.</h2>
         </div>
     </div>
+    <footer th:replace="footer.html"></footer>
     <script type="text/javascript">
         //아이디 찾기
         document.getElementById("findid").addEventListener("click", findId);
@@ -57,27 +63,72 @@
         $(document).on("click", ".btn.find.pw", function() {
             let memberLoginId = $("#memberLoginId")[0].value;
             let memberEmail = $(".memberEmail")[0].value;
-            console.dir(memberLoginId);
-            console.dir(memberEmail);
-            this.disabled = true;
-            this.textContent = "발송됨!";
+            let btn = this;
             $("div.code").addClass("pop");
             if(!isEmpty(memberLoginId) && !isEmpty(memberEmail)) {
                 $.ajax({
                     method: "GET",
-                    url : "/members/findpw/"+memberLoginId+"/"+memberEmail
+                    url : "/members/findpw/"+memberLoginId+"/"+memberEmail,
+                    beforeSend : function() {
+                        btn.innerHTML = "<img src='/img/ajax-loader.gif' />";
+                        btn.disabled = true;
+                    }
                 })
                 .done(function(response) {
-                    console.dir(response);
+                    if(response.result) {
+                        btn.innerHTML = "메일 발송됨!";
+                        let deployTo = $(".code-timer")[0];
+                        deployTimer(180, deployTo);
+                    } else {
+                        btn.disabled = false;
+                        btn.innerHTML = "메일 발송";
+                        alert("아이디와 이메일을 찾을수 없음!");
+                    }
                 })
                 .fail(function(response) {
                     console.dir("통신 failed");
                 });
             }
         });
-        //보안코드 맞으면 메세지 출력
+        //보안코드 검증
         $(document).on("click", ".btn.code", function() {
-            $("h2.notice-mid").addClass("pop");
+            let memberLoginId = $("#memberLoginId")[0];
+            let emailCode = $("#sec-code")[0];
+            let btn = $(".btn.code")[0];
+            if(!isEmpty(memberLoginId.value) && !isEmpty(emailCode.value)) {
+                $.ajax({
+                    method : "PUT",
+                    url : "/members/pw/"+memberLoginId.value+"/"+emailCode.value,
+                    beforeSend : function() {
+                        btn.innerHTML = "<img src='/img/ajax-loader.gif' />";
+                        btn.disabled = true;
+                    }
+                })
+                .done(function(response) {
+                    console.dir(response.result);
+                    console.dir(btn);
+                    if(response.result) { //코드 맞음
+                        btn.innerHTML = "확인";
+                        $("h2.notice-mid").addClass("pop");
+                        $(".code-timer")[0].innerHTML = "";
+                        $(".code-timer").css("display", "none");
+                        emailCode.enabled = false;
+                    } else { //코드 틀림
+                        btn.disabled = false;
+                        btn.innerHTML = "확인";
+                    }
+                })
+                .fail(function(response) {
+                    console.dir("통신 failed");
+                });
+            }
+        });
+        //보안코드 6글자까지만 입력
+        $(document).on("keyup", "#sec-code", function() {
+            let area = this;
+            if(this.value.length > 7) {
+                this.value = (this.value).slice(0,6);
+            }
         });
     </script>
 </div>

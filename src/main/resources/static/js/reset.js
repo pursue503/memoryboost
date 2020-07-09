@@ -57,7 +57,6 @@ var isEmpty = function(val) {
 
 //회원가입 검증
 var validateSignup = function() {
-    console.clear();
     //요소들
     let memberLoginId = document.getElementById("memberLoginId");
     let memberPw = document.getElementById("memberPw");
@@ -75,10 +74,6 @@ var validateSignup = function() {
     let reId = /^[a-zA-Z0-9]{4,12}$/ //아이디
     let rePw = /^[a-zA-Z0-9]{6,}$/ //비밀번호
     let reEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //이메일
-    //PW 정규식 검사
-    //console.dir("PW 검증 결과는"+rePw.test(memberPw.value));
-    //Email 정규식 검사
-    //console.dir("Email 검증 결과는"+reEmail.test(memberEmail.value));
 
     //아이디
     if(isEmpty(memberLoginId.value) || !reId.test(memberLoginId.value)) {
@@ -177,7 +172,6 @@ var findId = function() {
         url: "/members/findid/"+memberEmail.value
     })
     .done(function(response) {
-        console.dir("성공!");
         var tag = "<table>"
                        +"<tr>"
                            +"<td>아이디</td>"
@@ -197,7 +191,40 @@ var findId = function() {
         $(".id-list").empty().append(tag);
     })
     .fail(function(response) {
-        console.dir("실패!");
         return false;
     });
+}
+
+//표현 자릿수 변환 (원본숫자, 채울숫자?, 몇자리로?)
+var convertDigit = function(num, pWith, pLength) {
+    let pBlock = ""; //추가할 블록
+    let result = num+""; //결과
+
+    if(result.length > pLength) {
+        return false;
+    }
+    for(var index=0;index<pLength;index++) {
+        pBlock += pWith;
+    }
+    result = (pBlock + result).slice(-pLength);
+
+    return result;
+}
+
+//타이머
+var deployTimer = function(t, deployTo) {
+    let time = t;
+    let min = "";
+    let sec = "";
+    var intervalId = setInterval(function() {
+        min = parseInt(time/60);
+        sec = time % 60;
+        deployTo.innerHTML = convertDigit(min, 0, 2)+":"+convertDigit(sec, 0, 2);
+        time--;
+
+        if(time < 0) {
+            clearInterval(intervalId);
+            deployTo.innerHTML = "만료됨";
+        }
+    }, 1000);
 }

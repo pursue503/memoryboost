@@ -80,7 +80,15 @@ html, body {
     opacity: 0.6;
 }
 
-.form-menu > a > button.btn {
+.form-menu > a {
+    text-decoration: none;
+    color: var(--black);
+}
+
+.form-menu > a > span.btn.lost-id {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
     cursor: pointer;
     outline: none;
     border: 0;
@@ -91,7 +99,7 @@ html, body {
     box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.6);
 }
 
-.form-menu > a > button.btn:hover {
+.form-menu > a > span.btn.lost-id:hover {
     opacity: 0.6;
 }
 

@@ -1,6 +1,26 @@
 div.inner-container.lost-account {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    /*justify-content: center;*/
+}
+
+div.div-nav {
+    width: 400px;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+div.div-nav > a > button {
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    background: none;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.6);
+    width: 75px; height: 30px;
+    font-family: 'Noto Sans KR', sans-serif, 'Lato', sans-serif;;
 }
 
 div.inner-container.lost-account > div.account {
@@ -88,16 +108,27 @@ div.account > div.code > button.code {
     width: 75px; height: 30px;
     margin: 10px;
     font-family: 'Noto Sans KR', sans-serif, 'Lato', sans-serif;;
-
 }
 
 div.account > div.code {
+    position: relative;
     display: none;
 }
 
 div.account > div.code.pop {
     display: flex;
     justify-content: center;
+}
+
+div.account > div.code.pop > span.code-timer {
+    position: absolute;
+    top: 0; left: 0;
+    display: block;
+    width: 45px; height: 30px;
+    transform: translate(450%, 45%);
+    color: var(--light-blue);
+    opacity: 0.8;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 div.account > h2 {
