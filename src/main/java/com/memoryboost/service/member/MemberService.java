@@ -167,12 +167,13 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     }
 
     @Transactional
-    public void snsMemberInfoUpate(Long memberId,MemberSNSInfoUpdateRequestDTO updateRequestDTO){
+    public Long snsMemberInfoUpate(Long memberId,MemberSNSInfoUpdateRequestDTO updateRequestDTO){
         //업데이트
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다." + memberId));
 
         member.snsMemberInfoUpdate(updateRequestDTO);
 
+        return memberId;
     }
 
 }

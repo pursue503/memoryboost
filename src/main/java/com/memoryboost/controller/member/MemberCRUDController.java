@@ -67,11 +67,11 @@ public class MemberCRUDController {
 
     //sns 계정 정보 업데이트
     @PutMapping("members/sns/{memberId}")
-    public String snsMemberInfoUpdate(@PathVariable("memberId") Long memberId , MemberSNSInfoUpdateRequestDTO updateRequestDTO){
+    public Long snsMemberInfoUpdate(@PathVariable("memberId") Long memberId , MemberSNSInfoUpdateRequestDTO updateRequestDTO){
 
-        memberService.snsMemberInfoUpate(memberId,updateRequestDTO);
+         return memberService.snsMemberInfoUpate(memberId,updateRequestDTO);
 
-        return "redirect:/";
+
 
     }
 
