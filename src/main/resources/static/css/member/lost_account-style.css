@@ -1,0 +1,122 @@
+div.inner-container.lost-account {
+    display: flex;
+    justify-content: center;
+}
+
+div.inner-container.lost-account > div.account {
+    width: 400px;
+}
+
+div.account input[type=text] {
+    ountline: none;
+    border: 0;
+    border-radius: 5px;
+    background: none;
+    width: 400px; height: 40px;
+    margin: 5px 0; padding-left: 15px;
+    font-size: 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.8);
+    transition-duration: 0.2s;
+    transition-property: transform;
+}
+
+div.account button.find {
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    background: none;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.6);
+    width: 150px; height: 30px;
+    margin: 10px;
+    font-family: 'Noto Sans KR', sans-serif, 'Lato', sans-serif;;
+}
+
+div.account button.find:hover {
+    opacity: 0.6;
+}
+
+div.account input[type=text]:focus {
+    transform: scale(1.01);
+}
+
+div.inner-container.lost-account > div.account > div.id {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.inner-container.lost-account > div.account > div.pw {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.inner-container.lost-account > div.account > div > h3 {
+    margin: 20px 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+div.account > div.id table * {
+    font-family: 'Noto Sans KR', sans-serif, 'Lato', sans-serif;;
+}
+
+div.account > div.id td {
+    width: 200px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+div.account > div.pw > button.find.pw:disabled {
+    cursor: default;
+}
+
+div.account > div.pw > button.find.pw:disabled:hover {
+    opacity: 1.0;
+}
+
+div.account > div.code > input[type=text] {
+    width: 200px;
+}
+div.account > div.code > button.code {
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    background: none;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.6);
+    width: 75px; height: 30px;
+    margin: 10px;
+    font-family: 'Noto Sans KR', sans-serif, 'Lato', sans-serif;;
+
+}
+
+div.account > div.code {
+    display: none;
+}
+
+div.account > div.code.pop {
+    display: flex;
+    justify-content: center;
+}
+
+div.account > h2 {
+    display: none;
+    margin: 30px;
+    color: rgba(0, 0, 0, 0.7);
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+div.account > h2.notice-mid.pop {
+    display: flex;
+}
+
+td.auto-input {
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.8);
+    text-decoration: underline;
+}
+
+td.auto-input:hover {
+    opacity: 0.6;
+}

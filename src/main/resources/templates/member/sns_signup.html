@@ -16,7 +16,7 @@
     <header th:replace="header.html"></header>
     <div class="inner-container signup">
         <h1 class="signup-title">추가정보 입력</h1>
-        <form class="signup-form" action="/members" method="POST">
+        <form class="signup-form" action="/members" method="PUT">
             <div class="div-name">
                 <input th:value="${#authentication.principal.memberName}" type="text" id="memberName" class="memberName" name="memberName" placeholder="이름" readonly />
             </div>

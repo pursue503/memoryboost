@@ -67,6 +67,32 @@ html, body {
 
 .form-menu {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+}
+
+.form-menu > label {
+    cursor: pointer;
+}
+
+.form-menu > label:hover {
+    opacity: 0.6;
+}
+
+.form-menu > a > button.btn {
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    background: none;
+    width: 200px; height: 40px;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.6);
+}
+
+.form-menu > a > button.btn:hover {
+    opacity: 0.6;
 }
 
 .sns-group {
@@ -74,7 +100,7 @@ html, body {
 }
 
 .third-container {
-    margin-top: 30px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;

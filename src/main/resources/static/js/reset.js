@@ -170,3 +170,34 @@ var chkIdDuplicate = function(val) {
     }
 }
 
+//아이디 찾기 (email로 찾기, ajax)
+var findId = function() {
+    let memberEmail = document.getElementById("memberEmail");
+    $.ajax({
+        url: "/members/findid/"+memberEmail.value
+    })
+    .done(function(response) {
+        console.dir("성공!");
+        var tag = "<table>"
+                       +"<tr>"
+                           +"<td>아이디</td>"
+                           +"<td>가입일</td>"
+                       +"</tr>";
+        for(let i in response) {
+            tag += "<tr>"
+                        +"<td class='auto-input'>"
+                            +response[i].memberLoginId
+                        +"</td>"
+                        +"<td>"
+                            +response[i].memberSignupDatel
+                        +"</td>"
+                   "</tr>"
+        }
+        tag += "</table>";
+        $(".id-list").empty().append(tag);
+    })
+    .fail(function(response) {
+        console.dir("실패!");
+        return false;
+    });
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org, http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Title</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Nanum+Gothic+Coding&family=Noto+Sans+KR&family=Roboto&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
+    -->
+    <!-- 스타일 -->
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/member/lost_account-style.css" />
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/reset.js"></script>
+</head>
+<body>
+<div class="utmost-container">
+    <div class="inner-container lost-account">
+        <div class="account">
+            <div class="id">
+                <h3>아이디 찾기</h3>
+                <input id="memberEmail" type="text" placeholder="이메일" />
+                <button id="findid" class="btn find id">ID 조회</button>
+                <div class="id-list"></div>
+            </div>
+            <div class="pw">
+                <h3>비밀번호 찾기</h3>
+                <input id="memberLoginId" type="text" placeholder="아이디" />
+                <input class="memberEmail" type="text" placeholder="이메일" />
+                <button class="btn find pw">메일 발송</button>
+            </div>
+            <div class="code">
+                <input id="sec-code" type="text" placeholder="코드 입력" />
+                <button class="btn code">확인</button>
+            </div>
+            <h2 class="notice-mid">임시 비밀번호가 발송되었습니다.</h2>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //아이디 찾기
+        document.getElementById("findid").addEventListener("click", findId);
+        //아이디 클릭시 비번찾기에 자동 입력
+        $(document).on("click", ".auto-input", function() {
+            let memberLoginId = this.textContent;
+            let memberEmail = $("#memberEmail")[0].value;
+            $("#memberLoginId")[0].value = memberLoginId;
+            $(".memberEmail")[0].value= memberEmail;
+        });
+        //비밀번호 찾기 메일 발송 시 버튼 비활성화
+        $(document).on("click", ".btn.find.pw", function() {
+            let memberLoginId = $("#memberLoginId")[0].value;
+            let memberEmail = $(".memberEmail")[0].value;
+            console.dir(memberLoginId);
+            console.dir(memberEmail);
+            this.disabled = true;
+            this.textContent = "발송됨!";
+            $("div.code").addClass("pop");
+            if(!isEmpty(memberLoginId) && !isEmpty(memberEmail)) {
+                $.ajax({
+                    method: "GET",
+                    url : "/members/findpw/"+memberLoginId+"/"+memberEmail
+                })
+                .done(function(response) {
+                    console.dir(response);
+                })
+                .fail(function(response) {
+                    console.dir("통신 failed");
+                });
+            }
+        });
+        //보안코드 맞으면 메세지 출력
+        $(document).on("click", ".btn.code", function() {
+            $("h2.notice-mid").addClass("pop");
+        });
+    </script>
+</div>
+</body>
+</html>
