@@ -105,4 +105,9 @@ public class Member {
         this.memberDetailAddress = updateRequestDTO.getMemberDetailAddress();
     }
 
+    //회원비밀번호찾기 비밀번호 업데이트
+    public void memberPwChange(String changePw){
+        this.memberPw = changePw;
+    }
+
 }

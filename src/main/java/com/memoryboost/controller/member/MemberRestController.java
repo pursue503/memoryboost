@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -38,6 +39,28 @@ public class MemberRestController {
     public List<MemberFindByLoginIdResponseDTO> findByMemberLoginId(@PathVariable("memberEmail") String memberEmail) {
 
         return memberService.memberFindByLoginId(memberEmail);
+    }
+
+    //회원인증번호 정송
+    @GetMapping("/members/findpw/{memberLoginId}/{memberEmail}")
+    public Map<String,Boolean> pwAuthCodeSend(@PathVariable("memberLoginId") String memberLoginId, @PathVariable("memberEmail") String memberEmail){
+        Map<String,Boolean> resultMap = new HashMap<>();
+        if(memberService.memberExistenceCheck(memberLoginId,memberEmail)) {
+            if(memberService.memberFindByPwAuthCodeSend(memberLoginId,memberEmail)) {
+                resultMap.put("result", true);
+                return resultMap;
+            }
+        }
+        resultMap.put("result", false);
+        return resultMap;
+    }
+
+    //회원정보수정
+    @PutMapping("/members/pw/{memberLoginId}/{emailCode}")
+    public Map<String,Boolean> findByPw(@PathVariable("memberLoginId") String memberLoginId, @PathVariable("emailCode") String emailCode ){
+        Map<String,Boolean> resultMap = new HashMap<>();
+        resultMap.put("result", memberService.findByMemberPw(memberLoginId,emailCode));
+        return resultMap;
     }
 
 }

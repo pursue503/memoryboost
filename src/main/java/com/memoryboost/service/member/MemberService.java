@@ -12,6 +12,7 @@ import com.memoryboost.domain.entity.member.MemberRepository;
 import com.memoryboost.domain.vo.member.MemberOAuth2VO;
 import com.memoryboost.domain.vo.member.MemberVO;
 import com.memoryboost.util.email.MemoryBoostMailhandler;
+import com.memoryboost.util.email.MemoryBoostPwAuthCodeDelete;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -138,7 +139,7 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
         MemberEmail memberEmail = memberEmailRepository.save(new MemberEmail().builder()
         .memberId(member)
-        .emailCode(mailTemplate.createRandomCode()).build());
+        .emailCode(mailTemplate.createRandomCode(12)).build());
 
         try {
             MemoryBoostMailhandler mailhandler = new MemoryBoostMailhandler(javaMailSender);
@@ -153,6 +154,7 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         return true;
     }
 
+    //이메일인증확인
     @Transactional
     public boolean memberEmailAuthCheck(Long memberid, Long emailNo, String emailCode) {
 
@@ -161,13 +163,20 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
                 entity.emailAuthCompleteAndMemberStUpdate() : entity);
         try{
             Member memberEntity = (Member) member.get();
-            return memberEntity.isMemberSt();
+            if(memberEntity.isMemberSt()) { // 위에서 email 코드가 일치하면 true가됨
+                MemberEmail memberEmail = memberEmailRepository.findById(emailNo).get();
+                memberEmailRepository.delete(memberEmail);
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception e) {
             return false;
         }
 
     }
-
+    
+    //SNS 접속자 정보 업데이트
     @Transactional
     public Long snsMemberInfoUpate(Long memberId,MemberSNSInfoUpdateRequestDTO updateRequestDTO){
         //업데이트
@@ -177,7 +186,8 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
         return memberId;
     }
-
+    
+    //회원아이디찾기
     @Transactional
     public List<MemberFindByLoginIdResponseDTO> memberFindByLoginId(String memberEmail) {
         //email 과 sns 구분으로 아이디를찾음
@@ -188,6 +198,62 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
             findByLoginIdResponseDTOList.add(new MemberFindByLoginIdResponseDTO(member));
         }
         return findByLoginIdResponseDTOList;
+    }
+
+    //비밀번호 찾기 아이디 존재유무
+    @Transactional
+    public boolean memberExistenceCheck(String memberLoginId,String memberEmail) {
+        return memberRepository.countByMemberLoginIdAndMemberEmail(memberLoginId,memberEmail) == 1 ? true : false;
+    }
+
+    //인증코드 생성 + 전송
+    @Transactional
+    public boolean memberFindByPwAuthCodeSend(String memberLoginId, String memberEmail) {
+
+        MemberEmail emailEntity =  memberEmailRepository.save(new MemberEmail().builder()
+        .memberId(memberRepository.findByMemberLoginIdAndMemberSns(memberLoginId,memoryboost)).emailCode(mailTemplate.createRandomCode(6)).build());
+
+        try{
+            MemoryBoostMailhandler mailhandler = new MemoryBoostMailhandler(javaMailSender);
+            mailhandler.setTo(memberEmail); // 받는사람 회원이메일
+            mailhandler.setSubject("Memoryboost 비밀번호 찾기 인증번호");
+            mailhandler.setText(mailTemplate.findByPwAuthCodeTemplate(emailEntity));
+            mailhandler.send();
+
+            //메일전송후 3분뒤 메일삭제
+            Thread thread = new Thread(new MemoryBoostPwAuthCodeDelete(memberEmailRepository,emailEntity));
+            thread.start();
+        } catch (MessagingException e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Transactional
+    public boolean findByMemberPw(String memberLoginId, String emailCode){
+
+        Member member = memberRepository.findByMemberLoginIdAndMemberSns(memberLoginId,memoryboost);
+
+        boolean flag = memberEmailRepository.countByMemberIdAndEmailCode(member,emailCode) == 1 ? true : false;
+
+        if(flag) {
+            String changePw = mailTemplate.createRandomCode(12);
+            member.memberPwChange(passwordEncoder.encode(changePw));
+
+            try{
+                MemoryBoostMailhandler mailhandler = new MemoryBoostMailhandler(javaMailSender);
+                mailhandler.setTo(member.getMemberEmail()); // 받는사람 회원이메일
+                mailhandler.setSubject("Memoryboost 비밀번호 찾기");
+                mailhandler.setText(mailTemplate.changePwTemplate(changePw));
+                mailhandler.send();
+                return true;
+            } catch (MessagingException e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        
     }
 
 }

@@ -13,11 +13,12 @@ public class MemoryBoostMailTemplate {
 
     //메일전송을 도와줄 클래스
     //회원의 인증코드를 생성시켜줄 랜덤메소드
-    public String createRandomCode(){
+
+    public String createRandomCode(int count){
         StringBuffer randomCode = new StringBuffer();
         Random rn = new Random();
 
-        for(int i=0; i<12; i++) {
+        for(int i=0; i<count; i++) {
             int randomNumber = rn.nextInt(3);
             switch(randomNumber) {
                 case 0:
@@ -50,7 +51,25 @@ public class MemoryBoostMailTemplate {
         template.append("<button>인증</button>");
         template.append("</a>");
         return template.toString();
+    }
 
+    public String findByPwAuthCodeTemplate(MemberEmail memberEmail) {
+        StringBuffer template = new StringBuffer();
+
+        template.append("<h1> MemoryBoost 비밀번호 찾기 인증번호 입니다 </h1>");
+        template.append("아래 인증코드를 입력해주세요 <br>");
+        template.append(memberEmail.getEmailCode());
+        return template.toString();
+    }
+
+    public String changePwTemplate(String memberPw) {
+        StringBuffer template = new StringBuffer();
+
+        template.append("<h1> MemoryBoost 비밀번호 찾기 </h1>");
+        template.append("변경된 비밀번호는 " + memberPw + "입니다.");
+        template.append("<br>");
+        template.append("비밀번호를 꼭 변경해주세요!");
+        return template.toString();
     }
 
 }

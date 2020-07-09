@@ -7,4 +7,6 @@ public interface MemberEmailRepository extends JpaRepository<MemberEmail,Long> {
 
     int countByEmailNoAndMemberIdAndEmailCode(Long memberNo, Member member, String emailCode);
 
+    int countByMemberIdAndEmailCode(Member member, String emailCode);
+
 }

@@ -35,6 +35,7 @@ public class MemberCRUDController {
                                      @PathVariable("EmailCode") String emailCode, HttpServletResponse response) throws IOException {
 
         if(memberService.memberEmailAuthCheck(memberId,emailNo,emailCode)) {
+
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
 
@@ -59,13 +60,8 @@ public class MemberCRUDController {
 
     //sns 계정 정보 업데이트
     @PutMapping("members/sns/{memberId}")
-    @ResponseBody
     public Long snsMemberInfoUpdate(@PathVariable("memberId") Long memberId , MemberSNSInfoUpdateRequestDTO updateRequestDTO){
-
          return memberService.snsMemberInfoUpate(memberId,updateRequestDTO);
-
-
-
     }
 
 
