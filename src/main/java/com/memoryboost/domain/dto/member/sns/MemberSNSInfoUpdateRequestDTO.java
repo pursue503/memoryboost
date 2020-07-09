@@ -1,4 +1,4 @@
-package com.memoryboost.domain.dto.member;
+package com.memoryboost.domain.dto.member.sns;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,5 +1,6 @@
 package com.memoryboost.controller.member;
 
+import com.memoryboost.domain.dto.member.memoryboost.response.MemberFindByLoginIdResponseDTO;
 import com.memoryboost.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -29,6 +32,12 @@ public class MemberRestController {
         result.put("result",memberService.loginIdOverlapCheck(memberloginId));
         return result;
 
+    }
+
+    @GetMapping("/members/findid/{memberEmail}")
+    public List<MemberFindByLoginIdResponseDTO> findByMemberLoginId(@PathVariable("memberEmail") String memberEmail) {
+
+        return memberService.memberFindByLoginId(memberEmail);
     }
 
 }

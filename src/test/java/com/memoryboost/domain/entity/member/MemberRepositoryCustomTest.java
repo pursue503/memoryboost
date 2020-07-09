@@ -12,20 +12,18 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
-public class MemberRepositoryImplTest {
+public class MemberRepositoryCustomTest {
 
     @Autowired
     private MemberRepository memberRepository;
 
     @Test
-    public void querydslCustomTest(){
-        List<Member> memberList = memberRepository.findByMemberEmail("abc1234@naber.com");
+    public void findMemberLoginId(){
 
-        if(memberList.isEmpty()) {
-            log.info("비었습니다.");
-        } else {
-            memberList.forEach(member -> log.info(member.getMemberEmail()));
-        }
+        List<Member> memberList = memberRepository.findMemberLoginId("pursue503@naver.com","memoryboost");
+
+        memberList.forEach(member -> log.info(member.getMemberLoginId()));
+
     }
 
 }

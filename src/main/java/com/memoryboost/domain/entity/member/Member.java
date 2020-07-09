@@ -1,16 +1,13 @@
 package com.memoryboost.domain.entity.member;
 
-import com.memoryboost.domain.dto.member.MemberSNSInfoUpdateRequestDTO;
+import com.memoryboost.domain.dto.member.sns.MemberSNSInfoUpdateRequestDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Map;
-import java.util.Optional;
 
 @Getter
 @NoArgsConstructor

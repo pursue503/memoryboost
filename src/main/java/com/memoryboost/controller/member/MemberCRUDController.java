@@ -1,14 +1,9 @@
 package com.memoryboost.controller.member;
 
-import com.memoryboost.domain.dto.member.MemberSNSInfoUpdateRequestDTO;
-import com.memoryboost.domain.dto.member.MemberSaveRequestDTO;
-import com.memoryboost.domain.entity.email.MemberEmail;
-import com.memoryboost.domain.entity.member.Member;
-import com.memoryboost.domain.entity.member.Role;
+import com.memoryboost.domain.dto.member.sns.MemberSNSInfoUpdateRequestDTO;
+import com.memoryboost.domain.dto.member.memoryboost.request.MemberSaveRequestDTO;
 import com.memoryboost.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,5 +69,6 @@ public class MemberCRUDController {
 
 
     }
+
 
 }

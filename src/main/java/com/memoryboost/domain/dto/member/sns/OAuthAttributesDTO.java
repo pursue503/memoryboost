@@ -1,4 +1,4 @@
-package com.memoryboost.domain.dto.member;
+package com.memoryboost.domain.dto.member.sns;
 
 import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.member.Role;

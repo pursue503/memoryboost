@@ -1,4 +1,4 @@
-package com.memoryboost.domain.dto.member;
+package com.memoryboost.domain.dto.member.memoryboost.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

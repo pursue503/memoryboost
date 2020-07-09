@@ -1,9 +1,10 @@
 package com.memoryboost.service.member;
 
-import com.memoryboost.domain.dto.member.MemberSNSInfoUpdateRequestDTO;
+import com.memoryboost.domain.dto.member.memoryboost.response.MemberFindByLoginIdResponseDTO;
+import com.memoryboost.domain.dto.member.sns.MemberSNSInfoUpdateRequestDTO;
 import com.memoryboost.util.email.MemoryBoostMailTemplate;
-import com.memoryboost.domain.dto.member.MemberSaveRequestDTO;
-import com.memoryboost.domain.dto.member.OAuthAttributesDTO;
+import com.memoryboost.domain.dto.member.memoryboost.request.MemberSaveRequestDTO;
+import com.memoryboost.domain.dto.member.sns.OAuthAttributesDTO;
 import com.memoryboost.domain.entity.email.MemberEmail;
 import com.memoryboost.domain.entity.email.MemberEmailRepository;
 import com.memoryboost.domain.entity.member.Member;
@@ -11,10 +12,8 @@ import com.memoryboost.domain.entity.member.MemberRepository;
 import com.memoryboost.domain.vo.member.MemberOAuth2VO;
 import com.memoryboost.domain.vo.member.MemberVO;
 import com.memoryboost.util.email.MemoryBoostMailhandler;
-import jdk.nashorn.internal.runtime.options.Option;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -64,11 +63,14 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     @Autowired
     private MemberEmailRepository emailRepository;
 
+    //자사서비스 이름 sns 구분명
+    private final String memoryboost = "memoryboost";
+
     //회원로그인
     @Override // 로그인관리.
     public UserDetails loadUserByUsername(String memberLoginId) throws UsernameNotFoundException {
 
-        Member member = memberRepository.findByMemberLoginIdAndMemberSns(memberLoginId,"memoryboost");
+        Member member = memberRepository.findByMemberLoginIdAndMemberSns(memberLoginId,memoryboost);
 
         if(member == null) throw new UsernameNotFoundException(memberLoginId);
 
@@ -174,6 +176,18 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         member.snsMemberInfoUpdate(updateRequestDTO);
 
         return memberId;
+    }
+
+    @Transactional
+    public List<MemberFindByLoginIdResponseDTO> memberFindByLoginId(String memberEmail) {
+        //email 과 sns 구분으로 아이디를찾음
+        List<MemberFindByLoginIdResponseDTO> findByLoginIdResponseDTOList = new ArrayList<>();
+        List<Member> memberList = memberRepository.findMemberLoginId(memberEmail,memoryboost);
+
+        for (Member member : memberList) {
+            findByLoginIdResponseDTOList.add(new MemberFindByLoginIdResponseDTO(member));
+        }
+        return findByLoginIdResponseDTOList;
     }
 
 }
