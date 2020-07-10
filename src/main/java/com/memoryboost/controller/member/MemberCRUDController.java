@@ -61,6 +61,7 @@ public class MemberCRUDController {
 
     //sns 계정 정보 업데이트
     @PutMapping("/members/sns/{memberId}")
+    @ResponseBody
     public Long snsMemberInfoUpdate(@PathVariable("memberId") Long memberId , MemberSNSInfoUpdateRequestDTO updateRequestDTO){
          return memberService.snsMemberInfoUpate(memberId,updateRequestDTO);
     }

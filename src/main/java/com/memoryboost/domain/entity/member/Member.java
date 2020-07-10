@@ -105,6 +105,7 @@ public class Member {
         this.memberZipCode = updateRequestDTO.getMemberZipCode();
         this.memberAddress = updateRequestDTO.getMemberAddress();
         this.memberDetailAddress = updateRequestDTO.getMemberDetailAddress();
+        this.memberAuth = Role.USER;
     }
 
     //회원비밀번호찾기 비밀번호 업데이트

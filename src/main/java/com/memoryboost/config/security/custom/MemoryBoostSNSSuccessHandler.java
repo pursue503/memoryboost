@@ -24,7 +24,7 @@ public class MemoryBoostSNSSuccessHandler extends SavedRequestAwareAuthenticatio
             PrintWriter out = response.getWriter();
             out.println("<script>");
             out.println("if(confirm('SNS로그인은 1회 개인정보를 입력해주셔야 합니다\\n지금 이동하시겠습니까?')) {");
-            out.println("location.href='/members/sns-signup' }");
+            out.println("location.href='/members/sns-signup'}");
             out.println("else {");
             out.println("location.href='/members/logout'");
             out.println("}");
