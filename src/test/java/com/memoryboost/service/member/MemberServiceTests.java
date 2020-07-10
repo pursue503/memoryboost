@@ -5,6 +5,7 @@ import com.memoryboost.domain.dto.member.memoryboost.request.MemberUpdateRequest
 import com.memoryboost.domain.dto.member.sns.MemberSNSInfoUpdateRequestDTO;
 import com.memoryboost.domain.entity.member.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +40,11 @@ public class MemberServiceTests {
         saveRequestDTO.setMemberAddress("서울특별시");
         saveRequestDTO.setMemberDetailAddress("종로구");
         memberRepository.save(saveRequestDTO.toEntity());
+    }
 
+    @After
+    public void deleteMember(){
+        memberRepository.deleteAll();
     }
 
 
@@ -49,23 +54,8 @@ public class MemberServiceTests {
         log.info("결과: " + result);
     }
 
-    //sns 계정 업데이트
-
-    @Test
-    public void snsMemberInfoUpdate(){
-
-        MemberSNSInfoUpdateRequestDTO updateRequestDTO = MemberSNSInfoUpdateRequestDTO.builder().
-                memberTel("010-98923984").
-                memberZipCode("30203").
-                memberAddress("서울특별시 서울서울").
-                memberDetailAddress("단성사").
-                build();
-    }
-
     @Test
     public void memberUpdate(){
-
-
 
         MemberUpdateRequestDTO updateRequestDTO = new MemberUpdateRequestDTO();
         updateRequestDTO.setMemberPw("aaa1111");
