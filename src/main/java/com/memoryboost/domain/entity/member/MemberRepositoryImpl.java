@@ -25,6 +25,5 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         return queryFactory.selectFrom(member)
                 .where(member.memberEmail.eq(memberEmail).and(member.memberSns.eq(memberSns)))
                 .fetch();
-
     }
 }

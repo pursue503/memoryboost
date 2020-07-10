@@ -1,5 +1,6 @@
 package com.memoryboost.controller.member;
 
+import com.memoryboost.domain.dto.member.memoryboost.request.MemberUpdateRequestDTO;
 import com.memoryboost.domain.dto.member.sns.MemberSNSInfoUpdateRequestDTO;
 import com.memoryboost.domain.dto.member.memoryboost.request.MemberSaveRequestDTO;
 import com.memoryboost.service.member.MemberService;
@@ -59,9 +60,23 @@ public class MemberCRUDController {
     //비밀번호찾기   
 
     //sns 계정 정보 업데이트
-    @PutMapping("members/sns/{memberId}")
+    @PutMapping("/members/sns/{memberId}")
     public Long snsMemberInfoUpdate(@PathVariable("memberId") Long memberId , MemberSNSInfoUpdateRequestDTO updateRequestDTO){
          return memberService.snsMemberInfoUpate(memberId,updateRequestDTO);
+    }
+
+    //회원 정보 업데이트
+    @PutMapping("/members/{memberId}")
+    public String memberUpdate(@PathVariable("memberId") Long memberId,MemberUpdateRequestDTO updateRequestDTO){
+        try{
+            if(memberService.memberUpdate(memberId,updateRequestDTO)) {
+                return "redirect:/";
+            } else {
+                return "error"; // 비밀번호 정규식 매칭안댐
+            }
+        } catch (NullPointerException e) {
+            return "error"; // 회원아이디가 존재하지 않음.
+        }
     }
 
 

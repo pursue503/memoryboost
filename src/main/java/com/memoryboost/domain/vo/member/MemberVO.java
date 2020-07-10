@@ -28,7 +28,7 @@ public class MemberVO extends User {
     }
 
     public MemberVO(Member member , List<GrantedAuthority> authorities) {
-        super(member.getMemberEmail(),member.getMemberPw(),authorities);
+        super(member.getMemberLoginId(),member.getMemberPw(),authorities);
         this.memberId = member.getMemberId();
         this.memberName = member.getMemberName();
         this.memberSt = member.isMemberSt();

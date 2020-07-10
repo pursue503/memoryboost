@@ -1,5 +1,6 @@
 package com.memoryboost.service.member;
 
+import com.memoryboost.domain.dto.member.memoryboost.request.MemberUpdateRequestDTO;
 import com.memoryboost.domain.dto.member.memoryboost.response.MemberFindByLoginIdResponseDTO;
 import com.memoryboost.domain.dto.member.sns.MemberSNSInfoUpdateRequestDTO;
 import com.memoryboost.util.email.MemoryBoostMailTemplate;
@@ -16,6 +17,7 @@ import com.memoryboost.util.email.MemoryBoostPwAuthCodeDelete;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Service
@@ -119,7 +123,7 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
 
     //아이디 중복체크
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean loginIdOverlapCheck(String memberLoginId) {
         return memberRepository.countByMemberLoginId(memberLoginId) >= 1 ? true : false;
     }
@@ -154,8 +158,8 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         return true;
     }
 
-    //이메일인증확인
-    @Transactional
+    //이메일인증확인 , + 상태 업데이트 
+    @Transactional // 사용
     public boolean memberEmailAuthCheck(Long memberid, Long emailNo, String emailCode) {
 
         Optional<Object> member = memberRepository.findById(memberid).map(entity ->
@@ -188,7 +192,7 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     }
     
     //회원아이디찾기
-    @Transactional
+    @Transactional(readOnly = true) //읽기전용이라 사용을안하겠음.
     public List<MemberFindByLoginIdResponseDTO> memberFindByLoginId(String memberEmail) {
         //email 과 sns 구분으로 아이디를찾음
         List<MemberFindByLoginIdResponseDTO> findByLoginIdResponseDTOList = new ArrayList<>();
@@ -201,7 +205,7 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     }
 
     //비밀번호 찾기 아이디 존재유무
-    @Transactional
+    @Transactional(readOnly = true) // 읽기전용 SELECT
     public boolean memberExistenceCheck(String memberLoginId,String memberEmail) {
         return memberRepository.countByMemberLoginIdAndMemberEmail(memberLoginId,memberEmail) == 1 ? true : false;
     }
@@ -253,7 +257,29 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         } else {
             return false;
         }
-        
+    }
+
+    //마이페이지 회원정보수정 비밀번호확인
+    public boolean mypagePasswordConfirm(Long memberId, String memberPw ) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NullPointerException("아이디가 존재 하지 않습니다."));
+        return passwordEncoder.matches(memberPw,member.getMemberPw());
+    }
+    //회원정보 업데이트
+    @Transactional
+    public boolean memberUpdate(Long memberId, MemberUpdateRequestDTO updateRequestDTO) {
+
+        Pattern pw = Pattern.compile("^(?=.*?[^\\s])[\\w\\d]{6,12}$");
+        Matcher pwMatcher = pw.matcher(updateRequestDTO.getMemberPw());
+        if (!pwMatcher.find()) {
+            return false;
+        }
+
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NullPointerException("아이디가 존재 하지 않습니다."));
+
+        member.memberUpdate(updateRequestDTO,passwordEncoder);
+
+        return true;
+
     }
 
 }

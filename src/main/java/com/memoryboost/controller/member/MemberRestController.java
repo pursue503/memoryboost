@@ -1,17 +1,18 @@
 package com.memoryboost.controller.member;
 
 import com.memoryboost.domain.dto.member.memoryboost.response.MemberFindByLoginIdResponseDTO;
+import com.memoryboost.domain.vo.member.MemberOAuth2VO;
 import com.memoryboost.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +62,18 @@ public class MemberRestController {
         Map<String,Boolean> resultMap = new HashMap<>();
         resultMap.put("result", memberService.findByMemberPw(memberLoginId,emailCode));
         return resultMap;
+    }
+
+    @PostMapping("/members/mypage/pw-check/{memberId}")
+    public Map<String, Boolean> mypagePasswordConfirm(@PathVariable("memberId") Long memberId, @RequestParam("memberPw") String memberPw) {
+        Map<String, Boolean> resultMap = new HashMap<>();
+        try {
+            resultMap.put("result", memberService.mypagePasswordConfirm(memberId,memberPw));
+            return resultMap;
+        }catch (NullPointerException e) {
+            resultMap.put("result", false);
+            return resultMap;
+        }
     }
 
 }

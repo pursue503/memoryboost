@@ -1,10 +1,12 @@
 package com.memoryboost.domain.entity.member;
 
+import com.memoryboost.domain.dto.member.memoryboost.request.MemberUpdateRequestDTO;
 import com.memoryboost.domain.dto.member.sns.MemberSNSInfoUpdateRequestDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -108,6 +110,30 @@ public class Member {
     //회원비밀번호찾기 비밀번호 업데이트
     public void memberPwChange(String changePw){
         this.memberPw = changePw;
+    }
+
+    //회원 정보 업데이트
+    public void memberUpdate(MemberUpdateRequestDTO updateRequestDTO, PasswordEncoder passwordEncoder) {
+
+        if(updateRequestDTO.getMemberPw() != null && !updateRequestDTO.getMemberPw().equals("")) {
+            this.memberPw = passwordEncoder.encode(updateRequestDTO.getMemberPw());
+        }
+        if(updateRequestDTO.getMemberName() != null && !updateRequestDTO.getMemberName().equals("")) {
+            this.memberName = updateRequestDTO.getMemberName();
+        }
+        if(updateRequestDTO.getMemberTel() != null && !updateRequestDTO.getMemberTel().equals("")) {
+            this.memberTel = updateRequestDTO.getMemberTel();
+        }
+        if(updateRequestDTO.getMemberZipCode() != null && !updateRequestDTO.getMemberZipCode().equals("")) {
+            this.memberZipCode = updateRequestDTO.getMemberZipCode();
+        }
+        if(updateRequestDTO.getMemberAddress() != null && !updateRequestDTO.getMemberAddress().equals("")) {
+            this.memberAddress = updateRequestDTO.getMemberAddress();
+        }
+        if(updateRequestDTO.getMemberDetailAddress() != null && !updateRequestDTO.getMemberDetailAddress().equals("")) {
+            this.memberDetailAddress = updateRequestDTO.getMemberDetailAddress();
+        }
+
     }
 
 }

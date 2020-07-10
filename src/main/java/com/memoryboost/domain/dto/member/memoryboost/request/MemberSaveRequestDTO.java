@@ -21,20 +21,6 @@ public class MemberSaveRequestDTO {
     private String memberDetailAddress;
     private String memberEmail;
 
-    @Builder
-    public MemberSaveRequestDTO(String memberLoginId, String memberPw, String memberName,
-                                String memberTel, String memberZipCode, String memberAddress,
-                                String memberDetailAddress, String memberEmail) {
-        this.memberLoginId = memberLoginId;
-        this.memberPw = memberPw;
-        this.memberName = memberName;
-        this.memberTel = memberTel;
-        this.memberZipCode = memberZipCode;
-        this.memberAddress = memberAddress;
-        this.memberDetailAddress = memberDetailAddress;
-        this.memberEmail = memberEmail;
-    }
-
     //유효성 검사
     public boolean patternCheck() {
 
