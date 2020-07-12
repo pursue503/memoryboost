@@ -152,4 +152,4 @@ application-mail.yml
 application-aws.yml
 
 generated
-querydsl
+src/main/querydsl
