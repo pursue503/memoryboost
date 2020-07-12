@@ -16,26 +16,30 @@ public class Vga {
     // 고유번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long motherboardNo;
+    private Integer vgaNo;
 
     // 상품번호
     @ManyToOne
     @JoinColumn(name = "product_no",nullable = false)
     private Product productNo;
 
-    // 제조회사
+    // 제조회사 // 이엠택 갤럭시
     @Column(nullable = false)
-    private String metherboardCompany;
+    private String vgaCompany;
 
-    // 소켓
+    // 칩셋 ex) AMD,등
     @Column
-    private String metherboardSocket;
+    private String vgaChipset;
+
+    // 제품 시리즈 //ex) rtx 2070
+    @Column
+    private String vgaSeries;
 
     @Builder
-
-    public Vga(Product productNo, String metherboardCompany, String metherboardSocket) {
+    public Vga(Product productNo, String vgaCompany, String vgaChipset, String vgaSeries) {
         this.productNo = productNo;
-        this.metherboardCompany = metherboardCompany;
-        this.metherboardSocket = metherboardSocket;
+        this.vgaCompany = vgaCompany;
+        this.vgaChipset = vgaChipset;
+        this.vgaSeries = vgaSeries;
     }
 }

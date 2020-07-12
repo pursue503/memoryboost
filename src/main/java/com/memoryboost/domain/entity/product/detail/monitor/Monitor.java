@@ -31,10 +31,15 @@ public class Monitor {
     @Column
     private String monitorPanel;
 
+    //인치 사이즈
+    @Column
+    private String monitorSize;
+
     @Builder
-    public Monitor(Product productNo, String monitorCompany, String monitorPanel) {
+    public Monitor(Product productNo, String monitorCompany, String monitorPanel, String monitorSize) {
         this.productNo = productNo;
         this.monitorCompany = monitorCompany;
         this.monitorPanel = monitorPanel;
+        this.monitorSize = monitorSize;
     }
 }

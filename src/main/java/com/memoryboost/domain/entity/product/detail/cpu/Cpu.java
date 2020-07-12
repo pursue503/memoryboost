@@ -26,19 +26,19 @@ public class Cpu {
     @Column(nullable = false)
     private String cpuCompany;
 
-    //코어형태
+    //세대 ex) 9세대 10세대 8세대
     @Column
-    private String cpuCore;
+    private String cpuGeneration;
 
-    //쓰레드 형태
+    //모델명 ex) i3 i5 i9
     @Column
-    private String cpuThread;
+    private String cpuModel;
 
     @Builder
-    public Cpu(Product productNo, String cpuCompany, String cpuCore, String cpuThread) {
+    public Cpu(Product productNo, String cpuCompany, String cpuGeneration, String cpuModel) {
         this.productNo = productNo;
         this.cpuCompany = cpuCompany;
-        this.cpuCore = cpuCore;
-        this.cpuThread = cpuThread;
+        this.cpuGeneration = cpuGeneration;
+        this.cpuModel = cpuModel;
     }
 }

@@ -4,6 +4,7 @@ import com.memoryboost.domain.entity.product.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.apachecommons.CommonsLog;
 
 import javax.persistence.*;
 
@@ -27,14 +28,19 @@ public class Keyboard {
     @Column(nullable = false)
     private String keyboardCompany;
 
-    // 접점방식
+    //연결방식 유무선
+    @Column
+    private String keyboardConnection;
+
+    // 접점방식 ex ) 기계식 멤브레인 등
     @Column
     private String keyboardContact;
 
     @Builder
-    public Keyboard(Product productNo, String keyboardCompany, String keyboardContact) {
+    public Keyboard(Product productNo, String keyboardCompany, String keyboardConnection, String keyboardContact) {
         this.productNo = productNo;
         this.keyboardCompany = keyboardCompany;
+        this.keyboardConnection = keyboardConnection;
         this.keyboardContact = keyboardContact;
     }
 }

@@ -25,16 +25,21 @@ public class Motherboard {
 
     // 제조회사
     @Column(nullable = false)
-    private String metherboardCompany;
+    private String motherboardCompany;
 
-    // 소켓
+    // 소켓 인텔 1151-v2
     @Column
-    private String metherboardSocket;
+    private String motherboardSocket;
+
+    //칩셋 종류 z370  h310 등
+    @Column
+    private String motherboardChipset;
 
     @Builder
-    public Motherboard(Product productNo, String metherboardCompany, String metherboardSocket) {
+    public Motherboard(Product productNo, String motherboardCompany, String motherboardSocket, String motherboardChipset) {
         this.productNo = productNo;
-        this.metherboardCompany = metherboardCompany;
-        this.metherboardSocket = metherboardSocket;
+        this.motherboardCompany = motherboardCompany;
+        this.motherboardSocket = motherboardSocket;
+        this.motherboardChipset = motherboardChipset;
     }
 }
