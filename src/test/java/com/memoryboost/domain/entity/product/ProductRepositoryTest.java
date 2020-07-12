@@ -21,5 +21,9 @@ public class ProductRepositoryTest {
     @Autowired
     private ProductRepository productRepository;
 
+    @Test
+    public void test(){
+
+    }
 
 }
