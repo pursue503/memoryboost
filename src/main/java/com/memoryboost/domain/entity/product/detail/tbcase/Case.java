@@ -16,7 +16,7 @@ public class Case {
     // 고유번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ssdNo;
+    private Long caseNo;
 
     // 상품번호
     @ManyToOne
@@ -25,16 +25,16 @@ public class Case {
 
     // 제조회사
     @Column(nullable = false)
-    private String ssdCompany;
+    private String caseCompany;
 
     // 스스디용량
     @Column
-    private String ssdSize;
+    private String caseSize;
 
     @Builder
-    public Case(Product productNo, String ssdCompany, String ssdSize) {
+    public Case(Product productNo, String caseCompany, String caseSize) {
         this.productNo = productNo;
-        this.ssdCompany = ssdCompany;
-        this.ssdSize = ssdSize;
+        this.caseCompany = caseCompany;
+        this.caseSize = caseSize;
     }
 }

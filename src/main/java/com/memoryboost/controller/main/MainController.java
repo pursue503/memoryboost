@@ -1,5 +1,6 @@
 package com.memoryboost.controller.main;
 
+import com.memoryboost.domain.dto.product.request.ProductSaveRequestDTO;
 import com.memoryboost.domain.entity.member.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class MainController {
 
         return "main";
     }
+
+
 
 
 }

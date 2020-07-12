@@ -1,23 +1,30 @@
 package com.memoryboost.controller.admin;
 
+import com.memoryboost.domain.dto.product.request.ProductDetailSaveRequestDTO;
+import com.memoryboost.domain.dto.product.request.ProductSaveRequestDTO;
+import com.memoryboost.service.admin.AdminService;
 import com.memoryboost.util.product.ProductS3Uploader;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
-@Controller
+@RequestMapping("/admin/**")
+@RestController
 public class AdminController {
 
     private final ProductS3Uploader productS3Uploader;
+
+    private final AdminService adminService;
 
     @GetMapping("/product/upload-page")
     public String uploadPage(){
@@ -33,9 +40,23 @@ public class AdminController {
     @ResponseBody
     public String upload(@RequestParam("data")MultipartFile multipartFile) throws IOException {
         log.info(multipartFile.getOriginalFilename());
-        String url = productS3Uploader.upload(multipartFile,"product");
+        log.info(multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."), multipartFile.getOriginalFilename().length()));
+
+        String reName = productS3Uploader.fileReName(multipartFile);
+
+        String url = productS3Uploader.upload(multipartFile,"product",reName);
 
         return url;
+    }
+
+    @PostMapping("/product/upload")
+    @ResponseBody
+    public Map<String, Boolean> productUpload(ProductSaveRequestDTO productSaveRequestDTO, @RequestParam("thumbnail") MultipartFile thumbnailFile,
+                                              @RequestParam("detailImages") List<MultipartFile> detailImageList,
+                                              ProductDetailSaveRequestDTO productDetailSaveRequestDTO){
+        Map<String,Boolean> resultMap = new HashMap<>();
+        resultMap.put("result",adminService.productUpload(productSaveRequestDTO,thumbnailFile,detailImageList,productDetailSaveRequestDTO));
+        return resultMap;
     }
 
 }

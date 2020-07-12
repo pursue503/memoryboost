@@ -35,14 +35,16 @@ public class MemberRestController {
         return result;
 
     }
-
+    
+    
+    //아이디찾기
     @GetMapping("/members/findid/{memberEmail}")
     public List<MemberFindByLoginIdResponseDTO> findByMemberLoginId(@PathVariable("memberEmail") String memberEmail) {
 
         return memberService.memberFindByLoginId(memberEmail);
     }
 
-    //회원인증번호 정송
+    //비밀번호 찾기 회원인증번호 정송
     @GetMapping("/members/findpw/{memberLoginId}/{memberEmail}")
     public Map<String,Boolean> pwAuthCodeSend(@PathVariable("memberLoginId") String memberLoginId, @PathVariable("memberEmail") String memberEmail){
         Map<String,Boolean> resultMap = new HashMap<>();
@@ -56,7 +58,7 @@ public class MemberRestController {
         return resultMap;
     }
 
-    //회원정보수정
+    //비밀번호 찾기 회원정보 수정하고 이메일전송
     @PutMapping("/members/pw/{memberLoginId}/{emailCode}")
     public Map<String,Boolean> findByPw(@PathVariable("memberLoginId") String memberLoginId, @PathVariable("emailCode") String emailCode ){
         Map<String,Boolean> resultMap = new HashMap<>();
@@ -64,6 +66,7 @@ public class MemberRestController {
         return resultMap;
     }
 
+    //비밀번호라 POST로했음..
     @PostMapping("/members/mypage/pw-check/{memberId}")
     public Map<String, Boolean> mypagePasswordConfirm(@PathVariable("memberId") Long memberId, @RequestParam("memberPw") String memberPw) {
         Map<String, Boolean> resultMap = new HashMap<>();

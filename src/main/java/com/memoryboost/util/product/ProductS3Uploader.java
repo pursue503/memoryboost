@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Optional;
 
 @Slf4j
@@ -26,8 +27,8 @@ public class ProductS3Uploader {
     @Value("${cloud.aws.s3.bucket}") // application-aws.yml 에서 값을 가져옴
     private String bucket;
 
-    public String upload(MultipartFile multipartFile, String dirName) throws IOException {
-        File uploadFile = convert(multipartFile) // private 메소드 호출
+    public String upload(MultipartFile multipartFile, String dirName , String reName) throws IOException {
+        File uploadFile = convert(multipartFile,reName) // private 메소드 호출
                 .orElseThrow(() -> new IllegalArgumentException("multipartFile -> File 전환이 실패했습니다."));
 
         return upload(uploadFile,dirName); // private upload 호출
@@ -53,15 +54,37 @@ public class ProductS3Uploader {
         }
     }
 
-    private Optional<File> convert(MultipartFile multipartFile) throws IOException {
-        File convertFile = new File(multipartFile.getOriginalFilename());
+    private Optional<File> convert(MultipartFile multipartFile,String reName) throws IOException {
+
+        File convertFile = new File(reName);
+
         if(convertFile.createNewFile()) { // 현재 프로젝트 내부에 파일 생성
-            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
+            try (FileOutputStream fos = new FileOutputStream(reName)) {
                 fos.write(multipartFile.getBytes()); //파일 byte 값 입력
             }
             return Optional.of(convertFile); // 파일리턴
         }
         return Optional.empty();
+    }
+    
+    //파일이름 시간단위로 재생성
+    public String fileReName(MultipartFile multipartFile) {
+
+        //문자열 저장
+        StringBuffer reName = new StringBuffer();
+        //날짜
+        Calendar calendar = Calendar.getInstance();
+        reName.append(calendar.get(Calendar.YEAR));  // 년도
+        reName.append(calendar.get(Calendar.MONTH)); // 월
+        reName.append(calendar.get(Calendar.DATE)); //날짜
+        reName.append(calendar.get(Calendar.HOUR));
+        reName.append(calendar.get(Calendar.MINUTE));
+        reName.append(calendar.get(Calendar.SECOND));
+        reName.append(calendar.get(Calendar.MILLISECOND)); //밀리초단위
+        reName.append(multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."),multipartFile.getOriginalFilename().length())); // 확장자
+        return reName.toString();
+
+
     }
 
 }
