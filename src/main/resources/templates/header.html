@@ -37,21 +37,13 @@
             <div class="greeting">
                 <span class="username" sec:authentication="principal.memberName"></span><span>님 환영합니다</span>
             </div>
-            <a href="#"><button class="btn mypage">내 정보</button></a>
+            <a href="/members/mypage"><button class="btn mypage">내 정보</button></a>
             <a href="/members/logout"><button class="btn signout">로그아웃</button></a>
         </div>
         <div class="btns" sec:authorize="isAnonymous()">
             <a href="/members/signup"><button class="btn signup">회원가입</button></a>
             <a href="/members/signin"><button class="btn signin">로그인</button></a>
         </div>
-        <!--<div class="btns" th:if="${not #strings.isEmpty(userId)}">
-            <button class="btn">내 정보</button>
-            <button class="btn">로그아웃</button>
-        </div>
-        <div class="btns" th:unlsess="${not #strings.isEmpty(userId)}">
-            <a href="#"><button class="btn signup">회원가입</button></a>
-            <a href="/members/signin"><button class="btn signin">로그인</button></a>
-        </div>-->
     </header>
 </body>
 </html>

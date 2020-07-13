@@ -18,9 +18,15 @@ public class MemberVO extends User {
     //Custom MemberVO
     //Seesion에 들어갈 정보드를 설정
     private Long memberId;
+    private String memberLoginId;
+    private String memberEmail;
     private String memberName;
+    private String memberTel;
     private boolean memberSt;
     private String memberSns;
+    private String memberZipCode;
+    private String memberAddress;
+    private String memberDetailAddress;
 
     private static final long serialVersionUID = 1L;
     public MemberVO(String username, String password, Collection<? extends GrantedAuthority> authorities) {
@@ -30,9 +36,15 @@ public class MemberVO extends User {
     public MemberVO(Member member , List<GrantedAuthority> authorities) {
         super(member.getMemberLoginId(),member.getMemberPw(),authorities);
         this.memberId = member.getMemberId();
+        this.memberLoginId = member.getMemberLoginId();
+        this.memberEmail = member.getMemberEmail();
         this.memberName = member.getMemberName();
+        this.memberTel = member.getMemberTel();
         this.memberSt = member.isMemberSt();
         this.memberSns = member.getMemberSns();
+        this.memberZipCode = member.getMemberZipCode();
+        this.memberAddress = member.getMemberAddress();
+        this.memberDetailAddress = member.getMemberDetailAddress();
     }
 
 }

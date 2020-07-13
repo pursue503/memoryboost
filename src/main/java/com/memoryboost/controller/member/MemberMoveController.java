@@ -31,7 +31,7 @@ public class MemberMoveController {
     //마이페이지 이동
     @GetMapping("/members/mypage")
     public String myInfo(){
-        return "memberInfo";
+        return "member/mypage";
     }
 
     //SNS 로그인

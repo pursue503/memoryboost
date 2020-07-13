@@ -42,6 +42,14 @@ body {
     background-color: var(--white);
 }
 
+input[type=text] {
+    font-family: 'Noto Sans KR', sans-serif, 'Lato', sans-serif;
+}
+
+button {
+    font-family: 'Nanum Gothic Coding', monospace, 'Roboto', sans-serif;
+}
+
 div.utmost-container {
     position: relative;
     min-height: 100%;
@@ -65,4 +73,15 @@ div.inner-container {
   opacity: 1;
   visibility: visible;
   transform: translate(0);
+}
+
+.menu-hover {
+    cursor: pointer;
+    transition-property: transform opacity;
+    transition-duration: 0.2s 0.2s;
+}
+
+.menu-hover:hover {
+    transform: scale(1.02);
+    opacity: 0.6;
 }

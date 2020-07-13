@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org, http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <title>관리페이지</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Nanum+Gothic+Coding&family=Noto+Sans+KR&family=Roboto&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
+    -->
+    <!-- 스타일 -->
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/admin/product-manager-style.css" />
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/reset.js"></script>
+    <script src="/js/admin/product-manager.js"></script>
+</head>
+<body>
+<div class="utmost-container">
+    <div class="inner-container product-manager">
+        <h1>상품관리</h1>
+        <div class="category">
+            <button class="btn category" value="1">CPU(1)</button>
+            <button class="btn category" value="2">MOTHERBOARD(2)</button>
+            <button class="btn category" value="3">GPU(3)</button>
+            <button class="btn category" value="4">MEMORY(4)</button>
+            <button class="btn category" value="5">HDD(5)</button>
+            <button class="btn category" value="6">SSD(6)</button>
+            <button class="btn category" value="7">CASE(7)</button>
+            <button class="btn category" value="8">POWER(8)</button>
+            <button class="btn category" value="9">KEYBOARD(9)</button>
+            <button class="btn category" value="10">MOUSE(0)</button>
+            <button class="btn category" value="11">MONITOR(-)</button>
+        </div>
+        <div class="product-info">
+            <form id="product-form" action="" enctype="multipart/form-data">
+                <table id="basic-info">
+                    <tr>
+                        <th colspan="2">기본정보</th>
+                    </tr>
+                    <tr>
+                        <td class="title">카테고리</td>
+                        <td class="disabled"><input class="productCategory" type="text" disabled/></td>
+                    </tr>
+                    <tr>
+                        <td class="title">상품이름</td>
+                        <td><input id="productName" type="text" name="productName"/></td>
+                    </tr>
+                    <tr>
+                        <td class="title">설명</td>
+                        <td><input id="productDescription" type="text" name="productDescription"/></td>
+                    </tr>
+                    <tr>
+                        <td class="title">가격</td>
+                        <td><input id="productPrice" type="text" name="productPrice"/></td>
+                    </tr>
+                    <tr>
+                        <td class="title">썸네일</td>
+                        <td class="disabled"><input class="path productThumbnail" type="text" disabled /><button class="btn file productThumbnail">파일 선택</button></td>
+                    </tr>
+                    <tr>
+                        <td class="title">상세이미지<button class="btn addImage" tabindex="-1">+</button></td>
+                        <td class="disabled"><input class="path productDetailImage1" type="text" disabled /><button class="btn file productDetailImage1">파일 선택</button></td>
+                    </tr>
+                </table>
+                <table id="detail-info"></table>
+                <div class="div-hide">
+                    <input id="productThumbnail" class="productThumbnail" type="file" name="thumbnail"/>
+                    <input class="productDetailImage1 productDetailImage" type="file" name="detailImages"/>
+                </div>
+                <div class="btns">
+                    <button id="btn-submit">등록</button>
+                </div>
+                <input id="productCategory" type="hidden" name="productCategory" />
+            </form>
+        </div>
+        <span class="msg success">등록완료!</span>
+        <span class="msg fail">등록실패!</span>
+    </div>
+</div>
+</body>
+</html>
