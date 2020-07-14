@@ -9,7 +9,6 @@ branches:
 # gradlew 파일 권한 설정
 before_install:
   - chmod +x gradlew
-  - chmod +x deploy.sh
 # Travis CI 서버의 Home
 cache:
   directories:
