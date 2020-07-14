@@ -58,6 +58,8 @@ public class ProductS3Uploader {
 
         File convertFile = new File(reName);
 
+        Runtime.getRuntime().exec("chmod 777" + reName);
+
         if(convertFile.createNewFile()) { // 현재 프로젝트 내부에 파일 생성
             try (FileOutputStream fos = new FileOutputStream(reName)) {
                 fos.write(multipartFile.getBytes()); //파일 byte 값 입력
