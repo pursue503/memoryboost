@@ -19,12 +19,12 @@ script: "./gradlew clean build"
 
 before_deploy: # deploy 명령어가 실행되기전 수행됨 , code deploy 는 jar 파일을 인식못하기 때문에 zip 로 압축
   - mkdir -p before-deploy # zip에 포함시킬 파일들을 담을 디렉토리 생성
-  - cp scripts/*.sh before-deploy/
+  - cp scripts/*.sh before-deploy/ # 배포에필요한 스크립트들만 담음
   - cp appspec.yml before-deploy/
   - cp build/libs/*.jar before-deploy/
   - cd before-deploy && zip -r before-deploy * # before-deploy로 이동후 전체 압축
   - cd ../ && mkdir -p deploy # 상위디렉토리 이동후 deploy 디렉토리생성
-  - mv before-deploy/before-deploy.zip deploy/memoryboost-webservice.zip # deploy로 zip 파일 이동
+  - mv before-deploy/before-deploy.zip deploy/memoryboost.zip # deploy로 zip 파일 이동
 
 deploy:
   - provider: s3
@@ -43,8 +43,8 @@ deploy:
     bucket: pursue503-amazon-webservice-repository # S3 버킷
     key : memoryboost-webservice.zip # 빌드파일
     bundle_type: zip #압축확장자
-    application: pursue503-amazon-webservice # 아마존 codedeploy 이름
-    deployment_group: pursue503-amazon-webservice-group # 그룹이름
+    application: memoryboost-deploy # 아마존 codedeploy 이름
+    deployment_group: memoryboost-deploy-group # 그룹이름
     region: ap-northeast-2
     wait-unitl-deployed: true
 
