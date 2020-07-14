@@ -89,7 +89,7 @@ public class AdminService {
                 //S3에 이미지 업로드 한후 URL 가져오기
                 String detailImageUrl =  productS3Uploader.upload(detailImage,detailImagePath,detailImageRename);
                 //상품 상세이미지 저장
-                productImageRepository.save(ProductImage.builder().productNo(product).productImagePath(detailImagePath.replace(s3Url,"")).build());
+                productImageRepository.save(ProductImage.builder().productNo(product).productImagePath(detailImageUrl.replace(s3Url,"")).build());
             }
 
             //상품 세부내용 저장
