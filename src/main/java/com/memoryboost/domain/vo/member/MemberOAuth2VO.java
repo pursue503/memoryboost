@@ -22,6 +22,7 @@ public class MemberOAuth2VO extends DefaultOAuth2User {
     private boolean memberSt;
     private String memberSns;
 
+
     public MemberOAuth2VO(Collection<? extends GrantedAuthority> authorities, Map<String, Object> attributes, String nameAttributeKey) {
         super(authorities, attributes, nameAttributeKey);
     }
