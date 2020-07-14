@@ -20,32 +20,7 @@ import java.util.Map;
 @RestController
 public class AdminController {
 
-    private final ProductS3Uploader productS3Uploader;
-
     private final AdminService adminService;
-
-    @GetMapping("/product/upload-page")
-    public String uploadPage(){
-        log.info(productS3Uploader.toString());
-        log.info(productS3Uploader.getBucket());
-        log.info(productS3Uploader.getAmazonS3Client().getRegion().toString());
-        log.info(productS3Uploader.getAmazonS3Client().toString());
-
-        return "productInsert";
-    }
-
-    @PostMapping("/upload")
-    @ResponseBody
-    public String upload(@RequestParam("data")MultipartFile multipartFile) throws IOException {
-        log.info(multipartFile.getOriginalFilename());
-        log.info(multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."), multipartFile.getOriginalFilename().length()));
-
-        String reName = productS3Uploader.fileReName(multipartFile);
-
-        String url = productS3Uploader.upload(multipartFile,"product",reName);
-
-        return url;
-    }
 
     @PostMapping("/product/upload")
     @ResponseBody
