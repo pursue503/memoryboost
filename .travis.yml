@@ -30,7 +30,7 @@ deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY # # Travis repo settings에 설정된 값
     secret_access_key: $AWS_SECRET_KEY # 위와동일
-    bucket: pursue503-amazon-webservice-repository # S3 버킷
+    bucket: memoryboost-service-build # S3 버킷
     region: ap-northeast-2
     skip_cleanup: true
     acl: private # zip 파일 접근을 private
@@ -40,7 +40,7 @@ deploy:
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    bucket: pursue503-amazon-webservice-repository # S3 버킷
+    bucket: memoryboost-service-build # S3 버킷
     key : memoryboost.zip # 빌드파일
     bundle_type: zip #압축확장자
     application: memoryboost-deploy # 아마존 codedeploy 이름
