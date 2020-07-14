@@ -41,7 +41,7 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: pursue503-amazon-webservice-repository # S3 버킷
-    key : memoryboost-webservice.zip # 빌드파일
+    key : memoryboost.zip # 빌드파일
     bundle_type: zip #압축확장자
     application: memoryboost-deploy # 아마존 codedeploy 이름
     deployment_group: memoryboost-deploy-group # 그룹이름
