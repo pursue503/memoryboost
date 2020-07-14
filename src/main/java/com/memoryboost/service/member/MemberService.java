@@ -101,6 +101,9 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
         Member member = saveOrUpdate(attributes,registrationId);
 
+        log.info("kakao login : " + userNameAttributeName);
+        log.info("oauthDTO: " + attributes.getNameAttributeKey());
+
         return new MemberOAuth2VO(member,
                 Collections.singleton(new SimpleGrantedAuthority(member.getRoleKey())),
                 attributes.getAttributes(),
