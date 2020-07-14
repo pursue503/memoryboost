@@ -158,6 +158,7 @@ public class AdminService {
 
         } catch (Exception e) {
             log.info("에러에러");
+            log.info(e.getMessage());
             e.printStackTrace();
             return false;
         }
