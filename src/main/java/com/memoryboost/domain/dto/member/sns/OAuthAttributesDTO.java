@@ -73,8 +73,8 @@ public class OAuthAttributesDTO {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account"); //전체값에서 kakao_account 이메일, profile
         Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile"); // 위에서 profile 닉네임이 들어있음
         profile.put("email",kakaoAccount.get("email")); //email값 넣어놓기
-        profile.put("id", attributes.get("id")); // id값 설정 카카오는 값들이 분산 되어있음. 필요한 값들을 한곳에 몰아줌.
-
+        profile.put("id", attributes.get("id")); // id값 설정 카카오는 값들이 분산 되어있음. 필요한 값들을 한곳에 몰아줌. , id값 매칭
+        
         return OAuthAttributesDTO.builder()
                 .memberEmail((String) profile.get("email"))
                 .memberName((String) profile.get("nickname"))
