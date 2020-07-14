@@ -11,9 +11,6 @@ permissions:
     group: ec2-user
 hooks:
   ApplicationStart:
-    - location: test.sh
-      timeout: 60
-      runas: ec-user
-    - location: deploy.sh
+    - location: firstScript.sh
       timeout: 60
       runas: ec2-user
