@@ -157,11 +157,10 @@ public class AdminService {
             }// case end
 
         } catch (Exception e) {
+            log.info("에러에러");
             e.printStackTrace();
             return false;
         }
-
-
         return true;
     }
 
