@@ -157,7 +157,7 @@ public class AdminService {
             }// case end
 
         } catch (Exception e) {
-            log.info("상품 저장 에러");
+            e.printStackTrace();
             return false;
         }
 
