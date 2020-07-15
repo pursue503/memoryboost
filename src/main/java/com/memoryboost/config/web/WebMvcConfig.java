@@ -17,6 +17,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // ex) /product/detail/abc.jpg -> s3서버주소의 /product/detail/abc1234.jpg
         // s3 경로를 product까지 써줘야함.
         registry.addResourceHandler("/product/**")
-                .addResourceLocations("https://pursue503-amazon-webservice-repository.s3.ap-northeast-2.amazonaws.com/product/");
+                .addResourceLocations("https://memoryboost-product-images.s3.ap-northeast-2.amazonaws.com/product/");
     }
 }

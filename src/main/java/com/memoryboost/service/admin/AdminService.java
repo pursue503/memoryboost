@@ -62,7 +62,7 @@ public class AdminService {
     private final String detailImagePath = "product/detail";
 
     //S3주소 잘라내기위함
-    private final String s3Url = "https://memoryboost-service-build.s3.ap-northeast-2.amazonaws.com";
+    private final String s3Url = "https://memoryboost-product-images.s3.ap-northeast-2.amazonaws.com";
 
     @Transactional
     public boolean productUpload(ProductSaveRequestDTO productSaveRequestDTO, MultipartFile thumbnailFile,
