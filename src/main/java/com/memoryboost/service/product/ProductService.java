@@ -17,7 +17,7 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ArrayList<String> productSearchPreview(String keyword) {
-        return productRepository.productSearch(keyword);
+        return productRepository.searchPreview(keyword);
     }
 
 }

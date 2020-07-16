@@ -57,7 +57,7 @@ public class ProductRepositoryTest {
 
         String keyword = "갤럭시";
 
-        ArrayList<String> keywordArr = productRepository.productSearch(keyword);
+        ArrayList<String> keywordArr = productRepository.searchPreview(keyword);
 
         for (String s : keywordArr) {
             log.info(s);

@@ -12,6 +12,6 @@ public interface ProductRepositoryCustom {
 
     List<ProductSearchResponseDTO> findByProductSearch(String[] searchArr);
 
-    ArrayList<String> productSearch(String keyword);
+    ArrayList<String> searchPreview(String keyword);
 
 }

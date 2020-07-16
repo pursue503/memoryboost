@@ -34,7 +34,6 @@ public class MemberOAuth2VO extends DefaultOAuth2User {
         this.memberEmail = member.getMemberEmail();
         this.memberSt = member.isMemberSt();
         this.memberSns = member.getMemberSns();
-
     }
 
 }

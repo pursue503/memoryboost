@@ -61,7 +61,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     }
 
     @Override
-    public ArrayList<String> productSearch(String keyword) {
+    public ArrayList<String> searchPreview(String keyword) {
         QProduct product = QProduct.product;
         return (ArrayList<String>) queryFactory.select(product.productName)
                 .from(product)
