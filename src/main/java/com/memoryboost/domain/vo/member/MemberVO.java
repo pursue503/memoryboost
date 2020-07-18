@@ -28,6 +28,7 @@ public class MemberVO extends User {
     private String memberAddress;
     private String memberDetailAddress;
 
+
     private static final long serialVersionUID = 1L;
     public MemberVO(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);

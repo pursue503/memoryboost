@@ -1,0 +1,41 @@
+package com.memoryboost.controller.product;
+
+import com.memoryboost.service.paging.PagingService;
+import com.memoryboost.service.product.ProductService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Slf4j
+@RequiredArgsConstructor
+@RestController
+public class ProductRestController {
+
+    private final ProductService productService;
+    //페이징
+    private final PagingService pagingService;
+
+    //검색 비동기
+    @GetMapping("/search-asyn")
+    public Map<String, Object> searchAsyn(@RequestParam("keyword") String keyword,
+                                          @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
+                                          @RequestParam(value = "page",required = false,defaultValue = "1") int page ){
+        Map<String,Object> resultMap = new HashMap<>();
+
+        if(keyword.trim().equals("")) {
+            resultMap.put("product", null);
+            return resultMap;
+        }
+
+        resultMap.put("product",productService.productSearch(keyword,order,page));
+        resultMap.put("paging", pagingService.searchPaging(keyword,page));
+        return resultMap;
+    }
+
+
+}

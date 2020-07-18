@@ -44,11 +44,25 @@ public class ProductRepositoryTest {
     public void searchTest(){
 
         String[] arr = {"2070"};
-        List<ProductSearchResponseDTO> productSearchResponseDTOList = productRepository.findByProductSearch(arr);
+        List<ProductSearchResponseDTO> productSearchResponseDTOList = productRepository.productSearch(arr,"priceDesc", 1);
+
+        for (ProductSearchResponseDTO s : productSearchResponseDTOList) {
+            log.info(s.toString());
+        }
 
         ProductSearchResponseDTO productSearchResponseDTO = productSearchResponseDTOList.get(0);
 
         assertThat(productSearchResponseDTO.getProductName()).contains(arr[0]);
+    }
+
+    @Test
+    public void searchPagingTotalCountTest(){
+
+        String[] searchArr = {"갤럭시"};
+
+        int result = productRepository.countByProductNameContaining(searchArr);
+
+        assertThat(result).isEqualTo(1);
 
     }
 

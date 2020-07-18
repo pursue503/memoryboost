@@ -3,6 +3,7 @@ package com.memoryboost.service.member;
 import com.memoryboost.domain.dto.member.memoryboost.request.MemberUpdateRequestDTO;
 import com.memoryboost.domain.dto.member.memoryboost.response.MemberFindByLoginIdResponseDTO;
 import com.memoryboost.domain.dto.member.sns.MemberSNSInfoUpdateRequestDTO;
+import com.memoryboost.domain.vo.member.MemberCustomVO;
 import com.memoryboost.util.email.MemoryBoostMailTemplate;
 import com.memoryboost.domain.dto.member.memoryboost.request.MemberSaveRequestDTO;
 import com.memoryboost.domain.dto.member.sns.OAuthAttributesDTO;
@@ -83,7 +84,8 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(member.getRoleKey()));
 
-        return new MemberVO(member,authorities);
+//        return new MemberVO(member,authorities);
+        return new MemberCustomVO(member,authorities);
     }
 
     //SNS 외부 로그인 처리
@@ -102,7 +104,11 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
         Member member = saveOrUpdate(attributes,registrationId);
 
-        return new MemberOAuth2VO(member,
+//        return new MemberOAuth2VO(member,
+//                Collections.singleton(new SimpleGrantedAuthority(member.getRoleKey())),
+//                attributes.getAttributes(),
+//                attributes.getNameAttributeKey());
+        return new MemberCustomVO(member,
                 Collections.singleton(new SimpleGrantedAuthority(member.getRoleKey())),
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());

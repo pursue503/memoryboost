@@ -1,5 +1,6 @@
 package com.memoryboost.config.security.custom;
 
+import com.memoryboost.domain.vo.member.MemberCustomVO;
 import com.memoryboost.domain.vo.member.MemberOAuth2VO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -17,9 +18,9 @@ public class MemoryBoostSNSSuccessHandler extends SavedRequestAwareAuthenticatio
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
 
-        MemberOAuth2VO memberOAuth2VO = (MemberOAuth2VO) authentication.getPrincipal();
-
-        if(!memberOAuth2VO.isMemberSt()) {
+//        MemberOAuth2VO memberOAuth2VO = (MemberOAuth2VO) authentication.getPrincipal();
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+        if(!memberCustomVO.isMemberSt()) {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>");

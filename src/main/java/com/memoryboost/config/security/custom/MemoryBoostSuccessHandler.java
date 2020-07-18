@@ -2,6 +2,7 @@ package com.memoryboost.config.security.custom;
 
 import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.member.MemberRepository;
+import com.memoryboost.domain.vo.member.MemberCustomVO;
 import com.memoryboost.domain.vo.member.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,9 +26,10 @@ public class MemoryBoostSuccessHandler extends SavedRequestAwareAuthenticationSu
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
 
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
         //자체 서비스 로그인 핸들러
-        MemberVO memberVO = (MemberVO) authentication.getPrincipal();
-        if(!memberVO.isMemberSt()) { // true 면 사용가능 false 사용불가능 false ! 반전으로 true if 문을 실행
+//        MemberVO memberVO = (MemberVO) authentication.getPrincipal();
+        if(!memberCustomVO.isMemberSt()) { // true 면 사용가능 false 사용불가능 false ! 반전으로 true if 문을 실행
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>");

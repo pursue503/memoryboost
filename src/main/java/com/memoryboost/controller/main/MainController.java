@@ -8,16 +8,16 @@ import com.memoryboost.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -39,12 +39,10 @@ public class MainController {
         return productService.productSearchPreview(keyword);
     }
 
-    @GetMapping("/search")
-    public String productSearch(@RequestParam("keyword") String keyword) {
-        return null;
+    @GetMapping("/test")
+    public String test(){
+
+        return "security-test";
     }
-
-
-
 
 }
