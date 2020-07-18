@@ -1,73 +1,84 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>마이페이지</title>
-    <!-- 주소 API -->
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Title</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Noto Sans', sans-serif;
+
+    보통은(한/영 둘다) Noto Sans로 하고
+    정보표시는 Nanum Gothic Coding.
+    -->
+    <!-- fontawesome CDN -->
+    <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
     <!-- css -->
+    <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/member/mypage-style.css" />
     <!-- 스크립트 -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
     <script src="/js/member/member.js"></script>
 </head>
 <body>
-<div class="utmost-container">
-    <header th:replace="header.html"></header>
-    <div class="inner-container mypage">
-        <div class="nav">
-            <ul>
-                <li class="myinfo menu-hover">내정보</li>
-                <li class="cart menu-hover">장바구니</li>
-                <li class="order menu-hover">주문내역</li>
-                <li class="request menu-hover">1:1문의</li>
-            </ul>
+<header th:replace="header.html"></header>
+<div class="content-container mypage">
+    <div class="nav">
+        <ul>
+            <li class="myinfo menu-hover">내정보</li>
+            <li class="cart menu-hover">장바구니</li>
+            <li class="order menu-hover">주문내역</li>
+            <li class="request menu-hover">1:1문의</li>
+        </ul>
+    </div>
+    <div class="content myinfo pop">
+        <div class="auth">
+            <input type="password" placeholder="비밀번호를 한번 더 입력해주세요"/>
+            <button class="btn auth">확인</button>
         </div>
-        <div class="content myinfo pop">
-            <div class="auth">
-                <input type="password" placeholder="비밀번호를 한번 더 입력해주세요"/>
-                <button class="btn auth">확인</button>
-            </div>
-            <div class="info">
-                <form id="edit-info" class="edit-info" action="#" method="PUT">
-                    <input class="memberLoginId" type="text" placeholder="아이디" disabled />
-                    <input class="memberEmail" type="text" placeholder="이메일" disabled/>
-                    <input class="memberPw" name="memberPw" type="password" placeholder="비밀번호" />
-                    <input class="memberPwConfirm" type="password" placeholder="비밀번호 확인" />
-                    <span class="alert-small">비밀번호는 영문 + 숫자  6글자 이상 (특수문자 불가능)</span>
-                    <div class="div-name">
-                        <input class="memberName" type="text" name="memberName" placeholder="이름" />
-                        <span class="chksum name true"></span>
-                    </div>
-                    <input class="memberTel" type="text" name="memberTel" placeholder="전화번호" />
-                    <div class="addr">
-                        <input type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" readonly>
-                        <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>
-                        <input type="text" id="address" class="memberAddress add" name="memberAddress" placeholder="주소" readonly><br>
-                    </div>
-                    <div class="div-detailaddr">
-                        <input type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
-                        <span class="chksum detailaddr true"></span>
-                    </div>
-                    <div class="btns">
-                        <button class="btn edit">수정</button>
-                        <button class="btn delete">회원탈퇴</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="content cart">
-            장바구니
-        </div>
-        <div class="content order">
-            주문내역
-        </div>
-        <div class="content request">
-            1:1문의
+        <div class="info">
+            <form id="edit-info" class="edit-info" action="#" method="PUT">
+                <input class="memberLoginId" type="text" placeholder="아이디" disabled />
+                <input class="memberEmail" type="text" placeholder="이메일" disabled/>
+                <input class="memberPw" name="memberPw" type="password" placeholder="비밀번호" />
+                <input class="memberPwConfirm" type="password" placeholder="비밀번호 확인" />
+                <span class="alert-small">비밀번호는 영문 + 숫자  6글자 이상 (특수문자 불가능)</span>
+                <div class="div-name">
+                    <input class="memberName" type="text" name="memberName" placeholder="이름" />
+                    <span class="chksum name true"></span>
+                </div>
+                <input class="memberTel" type="text" name="memberTel" placeholder="전화번호" />
+                <div class="addr">
+                    <input type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" readonly>
+                    <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>
+                    <input type="text" id="address" class="memberAddress add" name="memberAddress" placeholder="주소" readonly><br>
+                </div>
+                <div class="div-detailaddr">
+                    <input type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
+                    <span class="chksum detailaddr true"></span>
+                </div>
+                <div class="btns">
+                    <button class="btn edit">수정</button>
+                    <button class="btn delete">회원탈퇴</button>
+                </div>
+            </form>
         </div>
     </div>
-    <footer th:replace="footer.html"></footer>
+    <div class="content cart">
+        장바구니
+    </div>
+    <div class="content order">
+        주문내역
+    </div>
+    <div class="content request">
+        1:1문의
+    </div>
 </div>
 <script type="text/javascript">
     //선택한 메뉴 보여줌.
@@ -188,5 +199,6 @@
         });
     });
 </script>
+<footer th:replace="footer.html"></footer>
 </body>
 </html>

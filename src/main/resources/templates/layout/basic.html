@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>틀</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&family=Roboto&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Noto Sans', sans-serif;
+
+    보통은(한/영 둘다) Noto Sans로 하고
+    정보표시는 Nanum Gothic Coding으로 하는게 좋을듯.
+    -->
+    <link rel="stylesheet" href="/css/basic.css" />
+</head>
+<body>
+    <input type="text" class="input-info" value="다람쥐 챗바퀴 굴러가듯 한다"/>
+    <input type="text" class="input-info" value="Lorem ipsum"/><br />
+    <div>
+        <span class="text title bold">디스 이즈 제모크. 타이틀이라 이마리얏!</span><br /><br />
+        <span class="text normal">이 텍스트는 일반적인 내용을 표시합니다.</span>
+        <span class="text sub">(사실 일반적이지 않을 수 있습니다.)</span><br />
+        <span class="text dim">이 텍스트는 그다지 중요하지 않거나 어물쩡 넘어가고 싶습니다.</span><br />
+        <span class="text title bold warning">경고!</span>
+        <span class="text title bold danger">위험!</span>
+        <span class="text title bold enlighten">강조!</span>
+        <span class="text title bold success">성공!</span><br />
+        <button class="btn">버튼</button>
+        <button class="btn" disabled>비활성화</button>
+        <button class="btn agree">동의</button>
+        <button class="btn warning">주의</button>
+        <button class="btn danger">위험</button>
+        <button class="btn ok">확인</button>
+    </div>
+    <ul>
+        <li class="nav first">
+            홈으로
+            <ul>
+                <li class="nav second">첫번째홈</li>
+                <li class="nav second">일과이분의일홈</li>
+                <li class="nav second">셋째홈
+                    <ul>
+                        <li class="nav third">이메뉴의</li>
+                        <li class="nav third">마지막을</li>
+                        <li class="nav third">다시써보려해</li>
+                    </ul>
+                </li>
+                <li class="nav second">스킵다섯으로</li>
+            </ul>
+        </li>
+        <li class="nav first">게시판</li>
+        <li class="nav first">자료실</li>
+        <li class="nav first">1:1문의</li>
+        <li class="nav first">About</li>
+    </ul>
+</body>
+</html>

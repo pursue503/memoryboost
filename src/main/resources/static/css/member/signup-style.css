@@ -1,6 +1,7 @@
-div.inner-container.signup {
+div.content-container.signup {
     display: flex;
     flex-direction: column;
+    margin: 20px auto;
 }
 
 h1.signup-title {
@@ -38,7 +39,7 @@ form.signup-form > div.addr {
 form.signup-form input {
     width: 300px; height: 40px;
     outline: none;
-    background: none;
+    background: var(--white);
     border: 0;
     border-radius: 5px;
     padding: 0 15px;

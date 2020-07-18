@@ -1,0 +1,6 @@
+.vertical-slide.two {
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+    /*overflow: hidden;*/
+}

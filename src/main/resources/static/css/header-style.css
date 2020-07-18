@@ -1,90 +1,186 @@
-.header {
-    display: flex;
-    position: fixed;
-    width: 100%; height: 50px;
-    padding: 10px;
-    top: 0; left: 0;
-    background-color: var(--white);
-    box-shadow : 0px 0px 3px -1px rgba(0, 0, 0, 0.8);
+header {
     z-index: 100;
-}
-
-.header a {
-    text-decoration: none;
-    color: var(--dark);
-}
-
-.header a:visited {
-    text-decoration: none;
-    color: var(--dark);
-}
-
-.header a:hover {
-    color: var(--light);
-}
-
-.header > a {
-    flex-basis: 10%;
-}
-
-.header > a > .logo {
-    width: 200px;
-    margin-right: 35px;
-}
-
-.header > .menu {
-    flex-basis: 30%;
-}
-
-.header > .menu > ul {
-    list-style: none;
+    position: fixed;
+    top: 0; left: 0;
     display: flex;
-    justify-content: flex-start;
+    width: 100%; height: 110px;
+    background-color: var(--white);
+    box-shadow: 0 0 2px -1px rgba(0, 0, 0, 0.8);
 }
 
-.header > .menu > ul > li {
-    line-height: 30px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 20px;
-    margin-right: 35px;
+header > div.container {
+    position: absolute;
 }
 
-.header > .btns {
-    flex-basis: 60%;
-    display: flex;
-    justify-content: flex-end;
-    over-flow: hidden;
-}
-
-.header > .btns > div.greeting {
+/* 로고, 검색 */
+header > div.funcs {
+    top: 20px; left: 20px;
     display: flex;
     align-items: center;
-    padding: 10px;
-    font-family: 'Noto Sans KR', sans-serif, 'Roboto', sans-serif;
+    width: 1000px; height: 50px;
 }
 
-.header > .btns > div.greeting > span.username {
-    color: var(--primary);
-    font-size: 19px;
-    font-weight: bold;
-    margin-left: 2px;
-}
-
-.header > .btns > a > .btn {
+header > div.funcs > .logo {
     cursor: pointer;
+    margin-right: 20px;
+}
+
+/* 검색 */
+header > div.funcs > div.search {
+    position: relative;
+}
+
+header > div.funcs > div.search > form {
+    display: flex;
+    align-items: center;
+    width: 600px; height: 45px;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+header > div.funcs > div.search > form > input#keyword {
     outline: none;
-    width: 80px; height: 30px;
-    background-color: var(--light);
-    font-family: 'Noto Sans KR', sans-serif;
-    font-weight: bold;
-    color: var(--dark);
+    border: 0;
+    width: 88.5%; height: 30px;
+}
+
+header > div.funcs .btn {
+    background: none;
+    border: 0;
+    font-size: 25px;
+    color: var(--gray);
     margin-right: 10px;
 }
 
-.header > .btns > a > .btn:hover {
+header > div.funcs .btn.reset {
+    visibility: hidden;
+}
+
+header > div.funcs.ontype .btn.reset {
+    visibility: visible;
+}
+
+/* 연관 검색어 */
+header > div.funcs > div.search.recommend > form {
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+
+header > div.funcs > div.search > div.keyword-list {
+    display: none;
+    z-index: 101;
+    position: absolute;
+    width: 100%;
+    background: var(--white);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+header > div.funcs > div.search.recommend > div.keyword-list {
+    display: inline-block;
+}
+
+header > div.funcs > div.search.recommend > div.keyword-list > ul > li {
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+header > div.funcs > div.search.recommend > div.keyword-list > ul > li:hover {
+    background-color: var(--light-gray);
+}
+
+header > div.funcs > div.search.recommend > div.keyword-list > ul > li.keywordSelected {
+    background-color: var(--light-gray);
+}
+
+/* 오른쪽 버튼들 */
+header > div.buttons {
+    top: 20px; right: 20px;
+    display: flex;
+}
+
+header > div.buttons > div.greeting {
+    display: flex;
+    align-items: center;
+}
+
+header > div.buttons > div.greeting > span.username {
+    cursor: pointer;
+}
+
+header > div.buttons > div.greeting > span.username:hover {
+    opacity: 0.7;
+}
+
+header > div.buttons > button.btn {
+    width: 100px; height: 45px;
+    margin: 0 5px;
+    font-size: 16px;
+}
+
+/* 메뉴 */
+header > nav.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 75%; height: 40px;
+}
+
+header > nav.header > ul {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 30%;
+}
+
+header > nav.header > ul > li > a > i {
+    margin-right: 5px;
+}
+
+/***************** 간소화 헤더 ****************/
+header.mini {
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: var(--white);
-    color: var(--gray);
-    border: 2px solid rgba(0, 0, 0, 0.2);
+    width: 100%; height: 50px;
+    transition-duration: 0.2s;
+}
+
+header.mini > div.funcs {
+    position: static;
+    margin-left: 20px;
+}
+
+header.mini > div.funcs > div.search > form {
+    height: 35px;
+}
+
+header.mini > div.container.buttons {
+    position: static;
+    margin-right: 10px;
+}
+
+header.mini > div.container.buttons > button.btn {
+    width: 70px; height: 25px;
+    font-size: 13px;
+}
+
+header.mini > nav.header {
+    display: absolute;
+    bottom: 5px; left: 78%;
+    width: 300px;
+}
+
+header.mini > nav.header > ul {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5%;
+    margin-right: 10%;
 }
