@@ -54,22 +54,22 @@ public class MemberServiceTests {
         log.info("결과: " + result);
     }
 
-    @Test
-    public void memberUpdate(){
-
-        MemberUpdateRequestDTO updateRequestDTO = new MemberUpdateRequestDTO();
-        updateRequestDTO.setMemberPw("aaa1111");
-        updateRequestDTO.setMemberTel("010-1111-1111");
-
-        boolean flag = memberService.memberUpdate(1L,updateRequestDTO);
-        
-        if(flag) {
-            log.info("업데이트완료");
-        } else {
-            log.info("업데이트 실패");
-        }
-
-    }
+//    @Test
+//    public void memberUpdate(){
+//
+//        MemberUpdateRequestDTO updateRequestDTO = new MemberUpdateRequestDTO();
+//        updateRequestDTO.setMemberPw("aaa1111");
+//        updateRequestDTO.setMemberTel("010-1111-1111");
+//
+//        boolean flag = memberService.memberUpdate(1L,updateRequestDTO);
+//
+//        if(flag) {
+//            log.info("업데이트완료");
+//        } else {
+//            log.info("업데이트 실패");
+//        }
+//
+//    }
 
 
 }

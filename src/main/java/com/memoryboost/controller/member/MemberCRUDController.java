@@ -6,6 +6,7 @@ import com.memoryboost.domain.dto.member.memoryboost.request.MemberSaveRequestDT
 import com.memoryboost.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,23 +61,29 @@ public class MemberCRUDController {
     //비밀번호찾기   
 
     //sns 계정 정보 업데이트
-    @PutMapping("/members/sns/{memberId}")
+    @PutMapping("/members/sns")
     @ResponseBody
-    public Long snsMemberInfoUpdate(@PathVariable("memberId") Long memberId , MemberSNSInfoUpdateRequestDTO updateRequestDTO){
-         return memberService.snsMemberInfoUpate(memberId,updateRequestDTO);
+    public Boolean snsMemberInfoUpdate(Authentication authentication, MemberSNSInfoUpdateRequestDTO updateRequestDTO){
+        try{
+            return memberService.snsMemberInfoUpate(authentication,updateRequestDTO);
+        }catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     //회원 정보 업데이트
-    @PutMapping("/members/{memberId}")
-    public String memberUpdate(@PathVariable("memberId") Long memberId,MemberUpdateRequestDTO updateRequestDTO){
+    @PutMapping("/members")
+    @ResponseBody
+    public Boolean memberUpdate(Authentication authentication, MemberUpdateRequestDTO updateRequestDTO){
+        log.info("업데이트");
         try{
-            if(memberService.memberUpdate(memberId,updateRequestDTO)) {
-                return "redirect:/";
+            if(memberService.memberUpdate(authentication,updateRequestDTO)) {
+                return true;
             } else {
-                return "error"; // 비밀번호 정규식 매칭안댐
+                return false; // 비밀번호 정규식 매칭안댐
             }
         } catch (NullPointerException e) {
-            return "error"; // 회원아이디가 존재하지 않음.
+            return false; // 회원아이디가 존재하지 않음.
         }
     }
 

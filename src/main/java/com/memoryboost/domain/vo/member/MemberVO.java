@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 @Getter
 public class MemberVO extends User {
 
+    //사용안함.
+
     //Custom MemberVO
     //Seesion에 들어갈 정보를 설정
     private Long memberId;

@@ -38,11 +38,5 @@ public class MainController {
     public ArrayList<String> searchPreview(@PathVariable("keyword") String keyword) {
         return productService.productSearchPreview(keyword);
     }
-
-    @GetMapping("/test")
-    public String test(){
-
-        return "security-test";
-    }
-
+    
 }

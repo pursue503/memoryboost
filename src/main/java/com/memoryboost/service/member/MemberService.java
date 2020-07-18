@@ -189,13 +189,16 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     
     //SNS 접속자 정보 업데이트
     @Transactional
-    public Long snsMemberInfoUpate(Long memberId,MemberSNSInfoUpdateRequestDTO updateRequestDTO){
+    public Boolean snsMemberInfoUpate(Authentication authentication,MemberSNSInfoUpdateRequestDTO updateRequestDTO){
         //업데이트
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다." + memberId));
+
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다." + memberCustomVO.getMemberId()));
 
         member.snsMemberInfoUpdate(updateRequestDTO);
 
-        return memberId;
+        return true;
     }
     
     //회원아이디찾기
@@ -273,7 +276,7 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     }
     //회원정보 업데이트
     @Transactional
-    public boolean memberUpdate(Long memberId, MemberUpdateRequestDTO updateRequestDTO) {
+    public boolean memberUpdate(Authentication authentication, MemberUpdateRequestDTO updateRequestDTO) {
 
         Pattern pw = Pattern.compile("^(?=.*?[^\\s])[\\w\\d]{6,12}$");
         Matcher pwMatcher = pw.matcher(updateRequestDTO.getMemberPw());
@@ -281,7 +284,9 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
             return false;
         }
 
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NullPointerException("아이디가 존재 하지 않습니다."));
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(() -> new NullPointerException("아이디가 존재 하지 않습니다."));
 
         member.memberUpdate(updateRequestDTO,passwordEncoder);
 

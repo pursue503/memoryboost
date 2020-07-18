@@ -14,6 +14,9 @@ import java.util.Map;
 
 @Getter
 public class MemberOAuth2VO extends DefaultOAuth2User {
+
+    //사용안함
+
     private static final long serialVersionUID = 1L;
 
     private Long memberId;
