@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 @Controller
 public class SearchController {
-    @GetMapping("/search")
+    @GetMapping("/searchtest")
     public String searchPage() { return "search/search"; }
 }
