@@ -1,8 +1,8 @@
-div.inner-container.lost-account {
+div.content-container.lost-account {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*justify-content: center;*/
+    margin-bottom: 30px;
 }
 
 div.div-nav {
@@ -23,7 +23,7 @@ div.div-nav > a > button {
     font-family: 'Noto Sans KR', sans-serif, 'Lato', sans-serif;;
 }
 
-div.inner-container.lost-account > div.account {
+div.content-container.lost-account > div.account {
     width: 400px;
 }
 
@@ -61,19 +61,19 @@ div.account input[type=text]:focus {
     transform: scale(1.01);
 }
 
-div.inner-container.lost-account > div.account > div.id {
+div.content-container.lost-account > div.account > div.id {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-div.inner-container.lost-account > div.account > div.pw {
+div.content-container.lost-account > div.account > div.pw {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-div.inner-container.lost-account > div.account > div > h3 {
+div.content-container.lost-account > div.account > div > h3 {
     margin: 20px 0;
     font-family: 'Noto Sans KR', sans-serif;
 }

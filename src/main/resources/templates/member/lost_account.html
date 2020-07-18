@@ -1,136 +1,138 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org, http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
     <title>Title</title>
     <!-- 폰트 -->
-    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Nanum+Gothic+Coding&family=Noto+Sans+KR&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--
     한글 폰트
     font-family: 'Nanum Gothic Coding', monospace;
     font-family: 'Noto Sans KR', sans-serif;
     영문 폰트
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
+
+    보통은(한/영 둘다) Noto Sans로 하고
+    정보표시는 Nanum Gothic Coding.
     -->
-    <!-- 스타일 -->
+    <!-- fontawesome CDN -->
+    <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
+    <!-- css -->
     <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/member/lost_account-style.css" />
+    <link rel="stylesheet" href="/css/member/lost-account-style.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
 </head>
 <body>
-<div class="utmost-container">
-    <header th:replace="header.html"></header>
-    <div class="inner-container lost-account liftup">
-        <div class="div-nav">
-            <a href="/members/signin"><button>< 뒤로가기</button></a>
-        </div>
-        <div class="account">
-            <div class="id">
-                <h3>아이디 찾기</h3>
-                <input id="memberEmail" type="text" placeholder="이메일" />
-                <button id="findid" class="btn find id">ID 조회</button>
-                <div class="id-list"></div>
-            </div>
-            <div class="pw">
-                <h3>비밀번호 찾기</h3>
-                <input id="memberLoginId" type="text" placeholder="아이디" />
-                <input class="memberEmail" type="text" placeholder="이메일" />
-                <button class="btn find pw">메일 발송</button>
-            </div>
-            <div class="code">
-                <input id="sec-code" type="text" placeholder="코드 입력" maxlength="6"/>
-                <span class="code-timer"></span>
-                <button class="btn code">확인</button>
-            </div>
-            <h2 class="notice-mid">임시 비밀번호가 발송되었습니다.</h2>
-        </div>
+<header th:replace="header.html"></header>
+<div class="content-container lost-account liftup">
+    <div class="div-nav">
+        <a href="/members/signin"><button>< 뒤로가기</button></a>
     </div>
-    <footer th:replace="footer.html"></footer>
-    <script type="text/javascript">
-        //아이디 찾기
-        document.getElementById("findid").addEventListener("click", findId);
-        //아이디 클릭시 비번찾기에 자동 입력
-        $(document).on("click", ".auto-input", function() {
-            let memberLoginId = this.textContent;
-            let memberEmail = $("#memberEmail")[0].value;
-            $("#memberLoginId")[0].value = memberLoginId;
-            $(".memberEmail")[0].value= memberEmail;
-        });
-        //비밀번호 찾기 메일 발송 시 버튼 비활성화
-        $(document).on("click", ".btn.find.pw", function() {
-            let memberLoginId = $("#memberLoginId")[0].value;
-            let memberEmail = $(".memberEmail")[0].value;
-            let btn = this;
-            $("div.code").addClass("pop");
-            if(!isEmpty(memberLoginId) && !isEmpty(memberEmail)) {
-                $.ajax({
-                    method: "GET",
-                    url : "/members/findpw/"+memberLoginId+"/"+memberEmail,
-                    beforeSend : function() {
-                        btn.innerHTML = "<img src='/img/ajax-loader.gif' />";
-                        btn.disabled = true;
-                    }
-                })
-                .done(function(response) {
-                    if(response.result) {
-                        btn.innerHTML = "메일 발송됨!";
-                        let deployTo = $(".code-timer")[0];
-                        deployTimer(180, deployTo);
-                    } else {
-                        btn.disabled = false;
-                        btn.innerHTML = "메일 발송";
-                        alert("아이디와 이메일을 찾을수 없음!");
-                    }
-                })
-                .fail(function(response) {
-                    console.dir("통신 failed");
-                });
-            }
-        });
-        //보안코드 검증
-        $(document).on("click", ".btn.code", function() {
-            let memberLoginId = $("#memberLoginId")[0];
-            let emailCode = $("#sec-code")[0];
-            let btn = $(".btn.code")[0];
-            if(!isEmpty(memberLoginId.value) && !isEmpty(emailCode.value)) {
-                $.ajax({
-                    method : "PUT",
-                    url : "/members/pw/"+memberLoginId.value+"/"+emailCode.value,
-                    beforeSend : function() {
-                        btn.innerHTML = "<img src='/img/ajax-loader.gif' />";
-                        btn.disabled = true;
-                    }
-                })
-                .done(function(response) {
-                    console.dir(response.result);
-                    console.dir(btn);
-                    if(response.result) { //코드 맞음
-                        btn.innerHTML = "확인";
-                        $("h2.notice-mid").addClass("pop");
-                        $(".code-timer")[0].innerHTML = "";
-                        $(".code-timer").css("display", "none");
-                        emailCode.enabled = false;
-                    } else { //코드 틀림
-                        btn.disabled = false;
-                        btn.innerHTML = "확인";
-                    }
-                })
-                .fail(function(response) {
-                    console.dir("통신 failed");
-                });
-            }
-        });
-        //보안코드 6글자까지만 입력
-        $(document).on("keyup", "#sec-code", function() {
-            let area = this;
-            if(this.value.length > 7) {
-                this.value = (this.value).slice(0,6);
-            }
-        });
-    </script>
+    <div class="account">
+        <div class="id">
+            <h3>아이디 찾기</h3>
+            <input id="memberEmail" type="text" placeholder="이메일" />
+            <button id="findid" class="btn find id">ID 조회</button>
+            <div class="id-list"></div>
+        </div>
+        <div class="pw">
+            <h3>비밀번호 찾기</h3>
+            <input id="memberLoginId" type="text" placeholder="아이디" />
+            <input class="memberEmail" type="text" placeholder="이메일" />
+            <button class="btn find pw">메일 발송</button>
+        </div>
+        <div class="code">
+            <input id="sec-code" type="text" placeholder="코드 입력" maxlength="6"/>
+            <span class="code-timer"></span>
+            <button class="btn code">확인</button>
+        </div>
+        <h2 class="notice-mid">임시 비밀번호가 발송되었습니다.</h2>
+    </div>
 </div>
+<script type="text/javascript">
+    //아이디 찾기
+    document.getElementById("findid").addEventListener("click", findId);
+    //아이디 클릭시 비번찾기에 자동 입력
+    $(document).on("click", ".auto-input", function() {
+        let memberLoginId = this.textContent;
+        let memberEmail = $("#memberEmail")[0].value;
+        $("#memberLoginId")[0].value = memberLoginId;
+        $(".memberEmail")[0].value= memberEmail;
+    });
+    //비밀번호 찾기 메일 발송 시 버튼 비활성화
+    $(document).on("click", ".btn.find.pw", function() {
+        let memberLoginId = $("#memberLoginId")[0].value;
+        let memberEmail = $(".memberEmail")[0].value;
+        let btn = this;
+        $("div.code").addClass("pop");
+        if(!isEmpty(memberLoginId) && !isEmpty(memberEmail)) {
+            $.ajax({
+                method: "GET",
+                url : "/members/findpw/"+memberLoginId+"/"+memberEmail,
+                beforeSend : function() {
+                    btn.innerHTML = "<img src='/img/ajax-loader.gif' />";
+                    btn.disabled = true;
+                }
+            })
+            .done(function(response) {
+                if(response.result) {
+                    btn.innerHTML = "메일 발송됨!";
+                    let deployTo = $(".code-timer")[0];
+                    deployTimer(180, deployTo);
+                } else {
+                    btn.disabled = false;
+                    btn.innerHTML = "메일 발송";
+                    alert("아이디와 이메일을 찾을수 없음!");
+                }
+            })
+            .fail(function(response) {
+                console.dir("통신 failed");
+            });
+        }
+    });
+    //보안코드 검증
+    $(document).on("click", ".btn.code", function() {
+        let memberLoginId = $("#memberLoginId")[0];
+        let emailCode = $("#sec-code")[0];
+        let btn = $(".btn.code")[0];
+        if(!isEmpty(memberLoginId.value) && !isEmpty(emailCode.value)) {
+            $.ajax({
+                method : "PUT",
+                url : "/members/pw/"+memberLoginId.value+"/"+emailCode.value,
+                beforeSend : function() {
+                    btn.innerHTML = "<img src='/img/ajax-loader.gif' />";
+                    btn.disabled = true;
+                }
+            })
+            .done(function(response) {
+                console.dir(response.result);
+                console.dir(btn);
+                if(response.result) { //코드 맞음
+                    btn.innerHTML = "확인";
+                    $("h2.notice-mid").addClass("pop");
+                    $(".code-timer")[0].innerHTML = "";
+                    $(".code-timer").css("display", "none");
+                    emailCode.enabled = false;
+                } else { //코드 틀림
+                    btn.disabled = false;
+                    btn.innerHTML = "확인";
+                }
+            })
+            .fail(function(response) {
+                console.dir("통신 failed");
+            });
+        }
+    });
+    //보안코드 6글자까지만 입력
+    $(document).on("keyup", "#sec-code", function() {
+        let area = this;
+        if(this.value.length > 7) {
+            this.value = (this.value).slice(0,6);
+        }
+    });
+</script>
+<footer th:replace="footer.html"></footer>
 </body>
 </html>

@@ -1,0 +1,34 @@
+div.search-header {
+    position: fixed;
+    top: 50px; left: 0;
+    width: 100%; height: 100px;
+    background: var(--light);
+}
+
+div.search {
+    padding-top: 100px;
+}
+
+/* 다른 페이지도 공통으로 사용하는 부분 */
+div.search-preview {
+    position: absolute;
+    top: 0; left: 0;
+    display: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: var(--white);
+    font-family: 'Noto Sans KR', sans-serif, 'Lato', sans-serif;
+}
+
+div.search-preview.pop {
+    display: block;
+}
+
+div.search-preview li {
+    cursor: pointer;
+    list-style: none;
+}
+
+div.search-preview li:hover {
+    background-color: var(--light);
+    opacity: 0.6;
+}

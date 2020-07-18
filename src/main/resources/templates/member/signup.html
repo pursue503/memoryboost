@@ -1,61 +1,75 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>회원가입</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Title</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Noto Sans', sans-serif;
+
+    보통은(한/영 둘다) Noto Sans로 하고
+    정보표시는 Nanum Gothic Coding.
+    -->
+    <!-- fontawesome CDN -->
+    <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
     <!-- css -->
+    <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/member/signup-style.css" />
+    <!-- 스크립트 -->
     <!-- 주소 API -->
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
+    <script src="/js/member/member.js"></script>
 </head>
 <body>
-    <div class="utmost-container">
-        <header th:replace="header.html"></header>
-        <div class="inner-container signup">
-            <h1 class="signup-title">회원가입</h1>
-            <form class="signup-form liftup" action="/members" method="POST">
-                <div class="div-id">
-                    <input type="text" id="memberLoginId" class="memberLoginId" name="memberLoginId" placeholder="아이디"/>
-                    <span class="chksum id false"></span>
-                </div>
-                <span class="alert-small">ID는 영문 + 숫자 4~12글자 (특수문자 불가능)</span>
-                <div class="div-pw">
-                    <input type="password" id="memberPw" class="memberPw" name="memberPw" placeholder="비밀번호"/>
-                    <span class="chksum pw false"></span>
-                </div>
-                <span class="alert-small">비밀번호는 영문 + 숫자  6글자 이상 (특수문자 불가능)</span>
-                <input type="password" id="memberPwConfirm" class="memberPwConfirm" name="memberPwConfirm" placeholder="비밀번호 확인"/>
-                <div class="div-name">
-                    <input type="text" id="memberName" class="memberName" name="memberName" placeholder="이름"/>
-                    <span class="chksum name false"></span>
-                </div>
-                <div class="div-email">
-                    <input type="text" id="memberEmail" class="memberEmail" name="memberEmail" placeholder="이메일"/>
-                    <span class="chksum email false"></span>
-                </div>
-                <input type="text" class="memberTel" name="memberTel" placeholder="전화번호"/>
-                <div class="addr">
-                    <input type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" readonly>
-                    <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>
-                    <input type="text" id="address" class="memberAddress add" name="memberAddress" placeholder="주소" readonly><br>
-                </div>
-                <div class="div-detailaddr">
-                    <input type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
-                    <span class="chksum detailaddr false"></span>
-                </div>
-                <!--<div class="div-condition">
-                    <input type="checkbox" id="condition" />
-                    <span class="alert-small" ><label for="condition"><span id="private-condition" class="private-condition">개인정보처리방침</span>에 동의합니다.</label></span>
-                </div>-->
-                <input id="submit" type="submit" value="회원가입" disabled />
-                <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-            </form>
+<header th:replace="header.html"></header>
+<div class="content-container signup">
+    <h1 class="signup-title">회원가입</h1>
+    <form class="signup-form liftup" action="/members" method="POST">
+        <div class="div-id">
+            <input type="text" id="memberLoginId" class="memberLoginId" name="memberLoginId" placeholder="아이디"/>
+            <span class="chksum id false"></span>
         </div>
-        <footer th:replace="footer.html"></footer>
-        <script type="text/javascript">
+        <span class="alert-small">ID는 영문 + 숫자 4~12글자 (특수문자 불가능)</span>
+        <div class="div-pw">
+            <input type="password" id="memberPw" class="memberPw" name="memberPw" placeholder="비밀번호"/>
+            <span class="chksum pw false"></span>
+        </div>
+        <span class="alert-small">비밀번호는 영문 + 숫자  6글자 이상 (특수문자 불가능)</span>
+        <input type="password" id="memberPwConfirm" class="memberPwConfirm" name="memberPwConfirm" placeholder="비밀번호 확인"/>
+        <div class="div-name">
+            <input type="text" id="memberName" class="memberName" name="memberName" placeholder="이름"/>
+            <span class="chksum name false"></span>
+        </div>
+        <div class="div-email">
+            <input type="text" id="memberEmail" class="memberEmail" name="memberEmail" placeholder="이메일"/>
+            <span class="chksum email false"></span>
+        </div>
+        <input type="text" class="memberTel" name="memberTel" placeholder="전화번호"/>
+        <div class="addr">
+            <input type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" readonly>
+            <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>
+            <input type="text" id="address" class="memberAddress add" name="memberAddress" placeholder="주소" readonly><br>
+        </div>
+        <div class="div-detailaddr">
+            <input type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
+            <span class="chksum detailaddr false"></span>
+        </div>
+        <!--<div class="div-condition">
+            <input type="checkbox" id="condition" />
+            <span class="alert-small" ><label for="condition"><span id="private-condition" class="private-condition">개인정보처리방침</span>에 동의합니다.</label></span>
+        </div>-->
+        <input id="submit" type="submit" value="회원가입" disabled />
+        <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+    </form>
+
+    <script type="text/javascript">
         //아이디
         (function() {
             document.getElementById("memberLoginId").addEventListener("keyup", validateSignup);
@@ -83,7 +97,8 @@
                 alert("회원가입을 완료했습니다!");
             });
         })();
-        </script>
-    </div>
+    </script>
+</div>
+<footer th:replace="footer.html"></footer>
 </body>
 </html>
