@@ -84,8 +84,8 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(member.getRoleKey()));
 
-//        return new MemberVO(member,authorities);
-        return new MemberCustomVO(member,authorities);
+        return new MemberVO(member,authorities);
+//        return new MemberCustomVO(member,authorities);
     }
 
     //SNS 외부 로그인 처리

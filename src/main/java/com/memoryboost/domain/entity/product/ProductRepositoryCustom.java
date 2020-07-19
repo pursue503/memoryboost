@@ -20,6 +20,7 @@ public interface ProductRepositoryCustom {
     //검색미리보기
     ArrayList<String> searchPreview(String keyword);
 
+    //필터검색
 
 
 }

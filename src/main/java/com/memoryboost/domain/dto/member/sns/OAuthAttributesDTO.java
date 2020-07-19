@@ -91,7 +91,7 @@ public class OAuthAttributesDTO {
         return Member.builder()
                 .memberEmail(memberEmail)
                 .memberName(memberName)
-                .memberAuth(Role.GUEST)
+                .memberAuth(Role.USER)
                 .memberSns(registrationId) // 외부로그인
                 .build();
     }

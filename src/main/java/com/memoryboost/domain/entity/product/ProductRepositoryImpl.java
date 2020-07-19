@@ -51,7 +51,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 product.productNo,product.productName,
                 product.productCategory,product.productDescription,
                 product.productThumbnail,product.productPrice,
-                productReview.reviewGrade.avg(),productReview.reviewNo.count()))
+                productReview.reviewGrade.avg().as("reviewGradeAvg"),productReview.reviewNo.count().as("reviewCount")))
                 .from(product)
                 .leftJoin(productReview).on(product.eq(productReview.productNo))
                 .where(builder)

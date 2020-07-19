@@ -129,4 +129,47 @@ public class MemberCustomVO implements UserDetails, CredentialsContainer, OAuth2
         return sortedAuthorities;
     }
 
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public String getMemberLoginId() {
+        return memberLoginId;
+    }
+
+    public String getMemberEmail() {
+        return memberEmail;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public String getMemberTel() {
+        return memberTel;
+    }
+
+    public boolean isMemberSt() {
+        return memberSt;
+    }
+
+    public String getMemberSns() {
+        return memberSns;
+    }
+
+    public String getMemberZipCode() {
+        return memberZipCode;
+    }
+
+    public String getMemberAddress() {
+        return memberAddress;
+    }
+
+    public String getMemberDetailAddress() {
+        return memberDetailAddress;
+    }
+
+    public String getNameAttributeKey() {
+        return nameAttributeKey;
+    }
 }
