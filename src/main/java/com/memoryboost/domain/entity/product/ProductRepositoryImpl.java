@@ -1,6 +1,7 @@
 package com.memoryboost.domain.entity.product;
 
 import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
+import com.memoryboost.domain.dto.product.response.ProductDetailResponseDTO;
 import com.memoryboost.domain.dto.product.response.ProductSearchResponseDTO;
 import com.memoryboost.domain.entity.product.detail.cpu.QCpu;
 import com.memoryboost.domain.entity.product.detail.hdd.QHdd;
@@ -29,7 +30,6 @@ import java.util.List;
 public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
 
-
     private final JPAQueryFactory queryFactory;
 
     @Override
@@ -49,41 +49,41 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     }
 
     @Override
-    public List<ProductSearchResponseDTO> productSearch(String[] searchArr, String order , int page) {
+    public List<ProductSearchResponseDTO> productSearch(String[] searchArr, String order, int page) {
 
         QProduct product = QProduct.product;
         QProductReview productReview = QProductReview.productReview;
 
         BooleanBuilder builder = new BooleanBuilder();
-        for(String name : searchArr) {
+        for (String name : searchArr) {
             builder.and(product.productName.contains(name));
         }
         //동적 order by
         JPAQuery<ProductSearchResponseDTO> jpaQuery = queryFactory.select(Projections.constructor(ProductSearchResponseDTO.class,
-                product.productNo,product.productName,
-                product.productCategory,product.productDescription,
-                product.productThumbnail,product.productPrice,
-                productReview.reviewGrade.avg().as("reviewGradeAvg"),productReview.reviewNo.count().as("reviewCount")))
+                product.productNo, product.productName,
+                product.productCategory, product.productDescription,
+                product.productThumbnail, product.productPrice,
+                productReview.reviewGrade.avg().as("reviewGradeAvg"), productReview.reviewNo.count().as("reviewCount")))
                 .from(product)
                 .leftJoin(productReview).on(product.eq(productReview.productNo))
                 .where(builder)
-                .groupBy(product.productNo,product.productName,
-                        product.productCategory,product.productDescription,
-                        product.productThumbnail,product.productPrice);
+                .groupBy(product.productNo, product.productName,
+                        product.productCategory, product.productDescription,
+                        product.productThumbnail, product.productPrice);
         //order 에 따라서 order by 를 다르게
         switch (order.toLowerCase()) {
-            case "popular" :
+            case "popular":
                 jpaQuery.orderBy(productReview.reviewGrade.avg().desc());
                 break;
             case "pricedesc":
                 jpaQuery.orderBy(product.productPrice.desc());
                 break;
-            case "priceasc" :
+            case "priceasc":
                 jpaQuery.orderBy(product.productPrice.asc());
                 break;
         }
 
-        jpaQuery.offset((page -1 ) * 10).limit(10);
+        jpaQuery.offset((page - 1) * 10).limit(10);
 
         List<ProductSearchResponseDTO> responseDTOList = jpaQuery.fetch();
 
@@ -113,7 +113,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         BooleanBuilder builder = new BooleanBuilder();
 
-        for(String name : searchArr) {
+        for (String name : searchArr) {
             builder.and(product.productName.contains(name));
         }
 
@@ -131,7 +131,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     }
 
     @Override
-    public List<ProductSearchResponseDTO> productFilterSearch(ProductFilterSearchRequestDTO filterDTO, String order , int page) {
+    public List<ProductSearchResponseDTO> productFilterSearch(ProductFilterSearchRequestDTO filterDTO, String order, int page) {
         QProduct product = QProduct.product;
         QProductReview productReview = QProductReview.productReview;
 
@@ -150,10 +150,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         BooleanBuilder builder = new BooleanBuilder();
 
         JPAQuery<ProductSearchResponseDTO> jpaQuery = queryFactory.select(Projections.constructor(ProductSearchResponseDTO.class,
-                product.productNo,product.productName,
-                product.productCategory,product.productDescription,
-                product.productThumbnail,product.productPrice,
-                productReview.reviewGrade.avg().as("reviewGradeAvg"),productReview.reviewNo.count().as("reviewCount")))
+                product.productNo, product.productName,
+                product.productCategory, product.productDescription,
+                product.productThumbnail, product.productPrice,
+                productReview.reviewGrade.avg().as("reviewGradeAvg"), productReview.reviewNo.count().as("reviewCount")))
                 .from(product)
                 .leftJoin(productReview).on(product.eq(productReview.productNo));
 
@@ -163,13 +163,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "cpu":
 
                 jpaQuery.leftJoin(cpu).on(product.eq(cpu.productNo));
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(cpu.cpuCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect3())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
                     builder.and(cpu.cpuModel.upper().eq(filterDTO.getSelect3().toUpperCase()));
                 }
                 break;
@@ -177,13 +177,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "motherboard":
 
                 jpaQuery.leftJoin(motherboard).on(product.eq(motherboard.productNo));
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect3())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
                     builder.and(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3().toUpperCase()));
                 }
                 break;
@@ -191,13 +191,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "vga":
 
                 jpaQuery.leftJoin(vga).on(product.eq(vga.productNo));
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(vga.vgaCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(vga.vgaChipset.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect3())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
                     builder.and(vga.vgaSeries.upper().eq(filterDTO.getSelect3().toUpperCase()));
                 }
                 break;
@@ -205,10 +205,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "memory":
 
                 jpaQuery.leftJoin(memory).on(product.eq(memory.productNo));
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(memory.memoryCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(memory.memorySize.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
                 break;
@@ -216,22 +216,22 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "hdd":
 
                 jpaQuery.leftJoin(hdd).on(product.eq(hdd.productNo));
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(hdd.hddCompany.eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(hdd.hddSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
 
                 break;
 
-            case"ssd":
+            case "ssd":
 
                 jpaQuery.leftJoin(ssd).on(product.eq(ssd.productNo));
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(ssd.ssdCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(ssd.ssdSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
                 break;
@@ -239,10 +239,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "case":
 
                 jpaQuery.leftJoin(qCase).on(product.eq(qCase.productNo));
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(qCase.caseCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(qCase.caseSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
                 break;
@@ -250,10 +250,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "power":
 
                 jpaQuery.leftJoin(power).on(product.eq(power.productNo));
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(power.powerCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(power.powerWatt.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
                 break;
@@ -261,13 +261,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "keyboard":
 
                 jpaQuery.leftJoin(keyboard).on(product.eq(keyboard.productNo));
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect3())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
                     builder.and(keyboard.keyboardContact.eq(filterDTO.getSelect3().toUpperCase()));
                 }
                 break;
@@ -275,45 +275,45 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "mouse":
 
                 jpaQuery.leftJoin(mouse).on(product.eq(mouse.productNo));
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(mouse.mouseCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(mouse.mouseConnection.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
                 break;
             case "monitor":
                 jpaQuery.leftJoin(monitor).on(product.eq(monitor.productNo));
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(monitor.monitorCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(monitor.monitorPanel.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect3())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
                     builder.and(monitor.monitorSize.upper().eq(filterDTO.getSelect3().toUpperCase()));
                 }
                 break;
         }
         //builder where 넣기 + groupBy
         jpaQuery.where(builder)
-                .groupBy(product.productNo,product.productName,
-                        product.productCategory,product.productDescription,
-                        product.productThumbnail,product.productPrice);
+                .groupBy(product.productNo, product.productName,
+                        product.productCategory, product.productDescription,
+                        product.productThumbnail, product.productPrice);
 
         switch (order.toLowerCase()) {
-            case "popular" :
+            case "popular":
                 jpaQuery.orderBy(productReview.reviewGrade.avg().desc());
                 break;
             case "pricedesc":
                 jpaQuery.orderBy(product.productPrice.desc());
                 break;
-            case "priceasc" :
+            case "priceasc":
                 jpaQuery.orderBy(product.productPrice.asc());
                 break;
         }
 
-        jpaQuery.offset((page -1 ) * 10).limit(10);
+        jpaQuery.offset((page - 1) * 10).limit(10);
 
         List<ProductSearchResponseDTO> responseDTOList = jpaQuery.fetch();
 
@@ -343,13 +343,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "cpu":
 
 
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(cpu.cpuCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect3())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
                     builder.and(cpu.cpuModel.upper().eq(filterDTO.getSelect3().toUpperCase()));
                 }
 
@@ -358,13 +358,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "motherboard":
 
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect3())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
                     builder.and(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3().toUpperCase()));
                 }
                 return (int) queryFactory.select(motherboard.count()).from(motherboard)
@@ -372,13 +372,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "vga":
 
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(vga.vgaCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(vga.vgaChipset.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect3())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
                     builder.and(vga.vgaSeries.upper().eq(filterDTO.getSelect3().toUpperCase()));
                 }
 
@@ -387,10 +387,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "memory":
 
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(memory.memoryCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(memory.memorySize.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
                 return (int) queryFactory.select(memory.count()).from(memory)
@@ -398,31 +398,31 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "hdd":
 
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(hdd.hddCompany.eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(hdd.hddSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
                 return (int) queryFactory.select(hdd.count()).from(hdd)
                         .where(builder).fetchCount();
 
-            case"ssd":
+            case "ssd":
 
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(ssd.ssdCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(ssd.ssdSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
                 return (int) queryFactory.select(ssd.count())
                         .where(builder).fetchCount();
 
             case "case":
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(qCase.caseCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(qCase.caseSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
                 return (int) queryFactory.select(qCase.count()).from(qCase)
@@ -430,10 +430,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "power":
 
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(power.powerCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(power.powerWatt.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
                 return (int) queryFactory.select(power.count()).from(power)
@@ -441,13 +441,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "keyboard":
 
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect3())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
                     builder.and(keyboard.keyboardContact.eq(filterDTO.getSelect3().toUpperCase()));
                 }
                 return (int) queryFactory.select(keyboard.count()).from(keyboard)
@@ -455,10 +455,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "mouse":
 
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(mouse.mouseCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(mouse.mouseConnection.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
 
@@ -466,13 +466,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                         .where(builder).fetchCount();
 
             case "monitor":
-                if(!StringUtils.isEmpty(filterDTO.getSelect1())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
                     builder.and(monitor.monitorCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect2())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
                     builder.and(monitor.monitorPanel.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
-                if(!StringUtils.isEmpty(filterDTO.getSelect3())) {
+                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
                     builder.and(monitor.monitorSize.upper().eq(filterDTO.getSelect3().toUpperCase()));
                 }
                 return (int) queryFactory.select(monitor.count()).from(monitor)
@@ -480,5 +480,25 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         }
 
         return 0;
+    }
+
+    @Override
+    public ProductDetailResponseDTO productDetail(Product productEntity) {
+
+
+
+        QProduct product = QProduct.product;
+        QProductImage productImage = QProductImage.productImage;
+
+        ProductDetailResponseDTO productDetailResponseDTO = queryFactory.select(Projections.fields(ProductDetailResponseDTO.class,product.productNo, product.productName,
+                product.productCategory, product.productDescription, product.productThumbnail,
+                product.productPrice)).from(product).where(product.eq(productEntity))
+                .fetchOne();
+
+        productDetailResponseDTO.setProductImagePath(queryFactory.select(productImage.productImagePath)
+                .from(productImage).where(productImage.productNo.eq(productEntity)).fetch());
+
+        return productDetailResponseDTO;
+
     }
 }

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
@@ -17,18 +18,17 @@ public class ProductMoveController {
     private final ProductService productService;
     private final PagingService pagingService;
 
-    @GetMapping("/search")
-    public String search(@RequestParam("keyword") String keyword,
-                         @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
-                         @RequestParam(value = "page",required = false,defaultValue = "1") int page , Model model) {
 
-        if(keyword.trim().equals("")) {
-            model.addAttribute("product",null);
-        } else {
-            model.addAttribute("product", productService.productSearch(keyword,order,page));
-            model.addAttribute("paging",pagingService.searchPaging(keyword,page));
+    @GetMapping("/product/detail/{productNo}")
+    public String productDetail(@PathVariable("productNo") Long productNo, Model model) {
+        try{
+            model.addAttribute("product",productService.productDetail(productNo));
+            return "페이지";
+        } catch (NullPointerException e) {
+            return "error";
         }
-        return "search/search";
+
+
     }
 
 }
