@@ -1,5 +1,6 @@
 package com.memoryboost.controller.product;
 
+import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
 import com.memoryboost.service.paging.PagingService;
 import com.memoryboost.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +32,19 @@ public class ProductRestController {
             resultMap.put("product", null);
             return resultMap;
         }
-
         resultMap.put("product",productService.productSearch(keyword,order,page));
         resultMap.put("paging", pagingService.searchPaging(keyword,page));
+        return resultMap;
+    }
+
+    @GetMapping("/search-filter")
+    public Map<String,Object> searchFilter(ProductFilterSearchRequestDTO filterDTO,
+                                           @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
+                                           @RequestParam(value = "page",required = false,defaultValue = "1") int page ) {
+
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("product",productService.filterSearch(filterDTO,order,page));
+        resultMap.put("paging",pagingService.filterSearchPaging(filterDTO, page));
         return resultMap;
     }
 

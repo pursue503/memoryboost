@@ -87,7 +87,7 @@ public class ProductDetailSaveRequestDTO {
     // 제조회사
     private String mouseCompany;
     // 연결방식
-    private Integer mouseConnection;
+    private String mouseConnection;
 
     //monitor
     // 제조회사

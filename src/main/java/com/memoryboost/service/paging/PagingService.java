@@ -1,5 +1,6 @@
 package com.memoryboost.service.paging;
 
+import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
 import com.memoryboost.domain.entity.product.ProductRepository;
 import com.memoryboost.util.paging.PagingUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +21,24 @@ public class PagingService {
 
         String[] searchArr = keyword.split(" ");
 
-        PagingUtil productSearchPaging = new PagingUtil();
+        PagingUtil paging = new PagingUtil();
         //총 게시물 수
-        productSearchPaging.setTotalResult(productRepository.countByProductNameContaining(searchArr));
+        paging.setTotalResult(productRepository.countByProductNameContaining(searchArr));
         //현재 페이지
-        productSearchPaging.setPage(page);
-        productSearchPaging.pageSetting();
-        return productSearchPaging;
+        paging.setPage(page);
+        paging.pageSetting();
+        return paging;
+    }
+
+    @Transactional(readOnly = true)
+    public PagingUtil filterSearchPaging(ProductFilterSearchRequestDTO filterDTO, int page) {
+
+        PagingUtil paging= new PagingUtil();
+        paging.setTotalResult(productRepository.countByFilterSearch(filterDTO));
+
+        paging.setPage(page);
+        paging.pageSetting();
+        return paging;
     }
 
 }

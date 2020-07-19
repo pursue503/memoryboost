@@ -1,8 +1,11 @@
 package com.memoryboost.domain.dto.product.request;
 
+import com.memoryboost.domain.entity.product.detail.cpu.QCpu;
+import com.querydsl.core.BooleanBuilder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.StringUtils;
 
 @Getter
 @Setter
@@ -16,5 +19,7 @@ public class ProductFilterSearchRequestDTO {
     private String select1;
     private String select2;
     private String select3;
+
+
 
 }

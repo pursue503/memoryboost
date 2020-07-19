@@ -1,5 +1,6 @@
 package com.memoryboost.service.product;
 
+import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
 import com.memoryboost.domain.dto.product.response.ProductSearchResponseDTO;
 import com.memoryboost.domain.entity.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,11 @@ public class ProductService {
     public List<ProductSearchResponseDTO> productSearch(String keyword, String order, int page) {
         String[] searchArr = keyword.split(" "); // 배열로 변환
         return productRepository.productSearch(searchArr,order,page);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductSearchResponseDTO> filterSearch(ProductFilterSearchRequestDTO filterDTO, String order, int page) {
+        return productRepository.productFilterSearch(filterDTO,order,page);
     }
 
 }

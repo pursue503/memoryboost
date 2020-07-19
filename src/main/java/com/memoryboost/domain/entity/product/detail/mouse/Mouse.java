@@ -29,10 +29,10 @@ public class Mouse {
 
     // 연결방식
     @Column
-    private Integer mouseConnection;
+    private String mouseConnection;
 
     @Builder
-    public Mouse(Product productNo, String mouseCompany, Integer mouseConnection) {
+    public Mouse(Product productNo, String mouseCompany, String mouseConnection) {
         this.productNo = productNo;
         this.mouseCompany = mouseCompany;
         this.mouseConnection = mouseConnection;
