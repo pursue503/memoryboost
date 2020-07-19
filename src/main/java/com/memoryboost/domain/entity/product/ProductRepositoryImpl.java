@@ -485,8 +485,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     @Override
     public ProductDetailResponseDTO productDetail(Product productEntity) {
 
-
-
         QProduct product = QProduct.product;
         QProductImage productImage = QProductImage.productImage;
 
@@ -497,7 +495,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         productDetailResponseDTO.setProductImagePath(queryFactory.select(productImage.productImagePath)
                 .from(productImage).where(productImage.productNo.eq(productEntity)).fetch());
-
         return productDetailResponseDTO;
 
     }
