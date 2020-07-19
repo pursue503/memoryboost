@@ -1,34 +1,190 @@
-div.search-header {
-    position: fixed;
-    top: 50px; left: 0;
-    width: 100%; height: 100px;
-    background: var(--light);
+div.content-container.search {
+    display: flex;
+    flex-direction: column;
 }
 
-div.search {
-    padding-top: 100px;
+/* 필터 */
+div.content-container.search > div.filter {
+    display: flex;
+    border: 1px solid #000;
 }
 
-/* 다른 페이지도 공통으로 사용하는 부분 */
-div.search-preview {
-    position: absolute;
-    top: 0; left: 0;
+div.content-container.search > div.filter > div#category {
+    flex-basis: 20%;
+    border: 1px solid #000;
+    overflow-Y: scroll;
+}
+
+div.content-container.search > div.filter > div#criteria {
+    flex-basis: 80%;
+    border: 1px solid #000;
+}
+
+/* 결과 내 재검색 */
+div.content-container.search > div.detail-search {
+    height: 100px;
+    border: 1px solid #000;
+}
+
+/* 검색 결과 */
+div.content-container.search > div.result {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000;
+}
+
+div.content-container.search > div.result > div.controller {
+    height: 50px;
+    border: 1px solid #000;
+}
+
+/* 제품 목록(리스트 레이아웃) */
+div.content-container.search > div.result > div.product-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000;
+}
+
+div.content-container.search > div.result > div.product-list > div.product {
+    display: flex;
+    height: 200px;
+    border: 1px solid #000;
+}
+
+div.content-container.search > div.result > div.product-list > div.product > div.image-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+    width: 200px;
+}
+
+div.content-container.search > div.result > div.product-list > div.product > div.product-info {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000;
+    width: 900px;
+}
+
+div.content-container.search > div.result > div.product-list > div.product > div.product-info > div.product-name {
+    flex-basis: 30%;
+    display: flex;
+    align-items: center;
+    border: 1px solid #000;
+}
+
+div.content-container.search > div.result > div.product-list > div.product > div.product-info > div.product-detail {
+    flex-basis: 70%;
+    border: 1px solid #000;
+}
+
+div.content-container.search > div.result > div.product-list > div.product > div.product-purchase {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000;
+    width: 196px;
+}
+
+div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.product-price {
+    flex-basis: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+}
+
+div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.review {
+    flex-basis: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+}
+
+div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.interaction {
+    flex-basis: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+}
+
+div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.interaction > button.btn {
+
+}
+
+/* 제품 목록(그리드 레이아웃) */
+div.content-container.search > div.result > div.product-list.grid {
+    flex-direction: row;
+    flex-wrap : wrap;
+    border: 1px solid #F00;
+}
+
+div.content-container.search > div.result > div.product-list.grid > div.product {
+    flex-basis: 20%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #F00;
+    height: 100%;
+}
+
+div.content-container.search > div.result > div.product-list.grid > div.product > div.image-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+    width: inherit;
+}
+
+div.content-container.search > div.result > div.product-list.grid > div.product > div.product-info {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000;
+    width: inherit;
+}
+
+div.content-container.search > div.result > div.product-list.grid > div.product > div.product-info > div.product-name {
+    flex-basis: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+}
+
+div.content-container.search > div.result > div.product-list.grid > div.product > div.product-info > div.product-detail {
     display: none;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: var(--white);
-    font-family: 'Noto Sans KR', sans-serif, 'Lato', sans-serif;
 }
 
-div.search-preview.pop {
-    display: block;
+div.content-container.search > div.result > div.product-list.grid > div.product > div.product-purchase {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000;
+    width: inherit;
 }
 
-div.search-preview li {
-    cursor: pointer;
-    list-style: none;
+div.content-container.search > div.result > div.product-list.grid > div.product > div.product-purchase > div.product-price {
+    flex-basis: 35%;
+    border: 1px solid #000;
 }
 
-div.search-preview li:hover {
-    background-color: var(--light);
-    opacity: 0.6;
+div.content-container.search > div.result > div.product-list.grid > div.product > div.product-purchase > div.review {
+    flex-basis: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+}
+
+div.content-container.search > div.result > div.product-list.grid > div.product > div.product-purchase > div.interaction {
+    flex-basis: 55%;
+    border: 1px solid #000;
+}
+
+/* 페이징 */
+div.content-container.search > div.paging > form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    border: 1px solid #000;
 }

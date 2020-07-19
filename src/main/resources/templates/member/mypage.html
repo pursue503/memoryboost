@@ -38,29 +38,29 @@
         </ul>
     </div>
     <div class="content myinfo pop">
-        <div class="auth">
+        <div th:if="${#authentication.principal.memberSns.toString().equals('memoryboost')}" class="auth">
             <input type="password" placeholder="비밀번호를 한번 더 입력해주세요"/>
             <button class="btn auth">확인</button>
         </div>
-        <div class="info">
+        <div th:classappend="${#authentication.principal.memberSns.toString()} != 'memoryboost' ? pop" class="info">
             <form id="edit-info" class="edit-info" action="#" method="PUT">
-                <input class="memberLoginId" type="text" placeholder="아이디" disabled />
-                <input class="memberEmail" type="text" placeholder="이메일" disabled/>
-                <input class="memberPw" name="memberPw" type="password" placeholder="비밀번호" />
-                <input class="memberPwConfirm" type="password" placeholder="비밀번호 확인" />
-                <span class="alert-small">비밀번호는 영문 + 숫자  6글자 이상 (특수문자 불가능)</span>
+                <input th:if="${#authentication.principal.memberSns.toString().equals('memoryboost')}" th:value="${#authentication.principal.memberLoginId}" class="memberLoginId" type="text" placeholder="아이디" disabled />
+                <input th:if="${#authentication.principal.memberSns.toString().equals('memoryboost')}" th:value="${#authentication.principal.memberEmail}" class="memberEmail" type="text" placeholder="이메일" disabled/>
+                <input th:if="${#authentication.principal.memberSns.toString().equals('memoryboost')}" class="memberPw" name="memberPw" type="password" placeholder="비밀번호" />
+                <input th:if="${#authentication.principal.memberSns.toString().equals('memoryboost')}" class="memberPwConfirm" type="password" placeholder="비밀번호 확인" />
+                <span th:if="${#authentication.principal.memberSns.toString().equals('memoryboost')}" class="alert-small">비밀번호는 영문 + 숫자  6글자 이상 (특수문자 불가능)</span>
                 <div class="div-name">
-                    <input class="memberName" type="text" name="memberName" placeholder="이름" />
+                    <input th:value="${#authentication.principal.memberName}" class="memberName" type="text" name="memberName" placeholder="이름" />
                     <span class="chksum name true"></span>
                 </div>
-                <input class="memberTel" type="text" name="memberTel" placeholder="전화번호" />
+                <input th:value="${#authentication.principal.memberTel}" class="memberTel" type="text" name="memberTel" placeholder="전화번호" />
                 <div class="addr">
-                    <input type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" readonly>
+                    <input th:value="${#authentication.principal.memberZipCode}" type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" readonly>
                     <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>
-                    <input type="text" id="address" class="memberAddress add" name="memberAddress" placeholder="주소" readonly><br>
+                    <input th:value="${#authentication.principal.memberAddress}" type="text" id="address" class="memberAddress add" name="memberAddress" placeholder="주소" readonly><br>
                 </div>
                 <div class="div-detailaddr">
-                    <input type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
+                    <input th:value="${#authentication.principal.memberDetailAddress}" type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
                     <span class="chksum detailaddr true"></span>
                 </div>
                 <div class="btns">
@@ -106,28 +106,6 @@
                 if(response.result) {
                     $("div.auth").remove();
                     $("div.info").addClass("pop");
-                    let memberLoginId = $(".memberLoginId")[0];
-                    let memberEmail = $(".memberEmail")[0];
-                    let memberName = $(".memberName")[0];
-                    let memberTel = $(".memberTel")[0];
-                    let memberZipCode = $(".memberZipcode")[0];
-                    let memberAddress = $(".memberAddress")[0];
-                    let memberDetailAddress = $(".memberDetailAddress")[0];
-                    memberName.value= "[[${#authentication.principal.memberName}]]";
-                    memberTel.value= "[[${#authentication.principal.memberTel}]]";
-                    memberZipCode.value= "[[${#authentication.principal.memberZipCode}]]";
-                    memberAddress.value= "[[${#authentication.principal.memberAddress}]]";
-                    memberDetailAddress.value= "[[${#authentication.principal.memberDetailAddress}]]";
-
-                    if("[[${#authentication.principal.memberSns}]]" === "memoryboost") { //일반유저
-                        memberLoginId.value= "[[${#authentication.principal.memberLoginId}]]";
-                        memberEmail.value= "[[${#authentication.principal.memberEmail}]]";
-                    } else {
-                        memberLoginId.remove();
-                        memberEmail.remove();
-                        $(".memberPw")[0].remove();
-                        $(".memberPwConfirm")[0].remove();
-                    }
                 } else {
                     alert("비밀번호를 확인해주세요");
                 }
@@ -155,9 +133,51 @@
             $(".btn.edit")[0].disabled = false;
         }
     });
-    //내정보. 수정 눌렀을때 검증3
+    //내정보. 수정 눌렀을때 검증(작업중)
     $(document).on("click", ".btn.edit", function(e) {
         e.preventDefault();
+        let memberSns = "[[${#authentication.principal.memberSns}]]";
+        let requestURL = null;
+        if(memberSns === "memoryboost") { //자체유저
+            requestURL = "/members";
+            let password = $(".memberPw")[0];
+            let passwordConfirm = $(".memberPwConfirm")[0];
+
+            if(isEmpty(password.value) && isEmpty(passwordConfirm.value)) {
+                console.dir("비번 안바꿈");
+            } else {
+                console.dir("비번 바꿈");
+                if(!validatePassword(password, passwordConfirm)) {
+                    alert("비밀번호를 확인해주세요");
+                    return;
+                }
+            }
+        } else { //sns유저
+            requestURL = "/members/sns";
+        }
+
+        let form = $("form#edit-info")[0];
+        let params = new FormData(form);
+
+        $.ajax({
+            type : "PUT",
+            url : requestURL,
+            data : params,
+            processData: false,
+            contentType: false
+        })
+        .done(function(response) {
+            if(response) {
+                alert("정보수정을 완료했습니다!");
+                location.replace("/members/mypage");
+            }
+        })
+        .fail(function(response) {
+            console.dir("통신 실패");
+        })
+    });
+    //내정보. 수정 눌렀을때 검증(이전)
+    $(document).on("click", ".btn.edit1", function(e) {
         if("[[${#authentication.principal.memberSns}]]" == "memoryboost") { //일반유저
             let password = $(".memberPw")[0];
             let passwordConfirm = $(".memberPwConfirm")[0];
@@ -173,12 +193,11 @@
         let memberName = $(".memberName")[0];
         let memberDetailAddress = $(".memberDetailAddress")[0];
         let requestTo;
-        let memberId = [[${#authentication.principal.memberId}]];
         if(validateName(memberName) && validateDetailAddress(memberDetailAddress)) { //이름, 주소 검증
             if("[[${#authentication.principal.memberSns}]]" == "memoryboost") { //일반유저
-                requestTo = "/members/"+memberId;
+                requestTo = "/members/";
             } else { //sns유저
-                requestTo = "/members/sns/"+memberId;
+                requestTo = "/members/sns/";
             }
         }
 

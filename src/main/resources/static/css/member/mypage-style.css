@@ -59,6 +59,10 @@ div.content-container.mypage > div.content.myinfo > div.info {
 }
 
 div.content-container.mypage > div.content.myinfo > div.info.pop {
+    display: inline-block;
+}
+
+div.content-container.mypage > div.content.myinfo > div.info.pop {
     display: flex;
     flex-direction: column;
 }

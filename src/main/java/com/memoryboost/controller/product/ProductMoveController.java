@@ -28,7 +28,7 @@ public class ProductMoveController {
             model.addAttribute("product", productService.productSearch(keyword,order,page));
             model.addAttribute("paging",pagingService.searchPaging(keyword,page));
         }
-        return "검색페이지";
+        return "search/search";
     }
 
 }

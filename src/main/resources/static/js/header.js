@@ -4,6 +4,7 @@ var prevScroll = 0;
 var prevHeaderOffset = 0;
 var headerHeight = 110;
 var keywordSelected = null;
+
 elem.addEventListener("scroll", function(e) {
     //현재 스크롤 위치
     let currentScroll = document.documentElement.scrollTop;
