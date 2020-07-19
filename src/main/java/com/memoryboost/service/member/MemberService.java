@@ -84,8 +84,8 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(member.getRoleKey()));
 
-        return new MemberVO(member,authorities);
-//        return new MemberCustomVO(member,authorities);
+//        return new MemberVO(member,authorities);
+        return new MemberCustomVO(member,authorities);
     }
 
     //SNS 외부 로그인 처리
@@ -280,9 +280,12 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
         Pattern pw = Pattern.compile("^(?=.*?[^\\s])[\\w\\d]{6,12}$");
         Matcher pwMatcher = pw.matcher(updateRequestDTO.getMemberPw());
-        if (!pwMatcher.find()) {
-            return false;
+        if(updateRequestDTO.getMemberPw() != null && !updateRequestDTO.getMemberPw().equals("")) {
+            if (!pwMatcher.find()) {
+                return false;
+            }
         }
+
 
         MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
 
