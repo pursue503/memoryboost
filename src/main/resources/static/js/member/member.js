@@ -15,6 +15,11 @@ var validatePassword = function(password, passwordConfirm) { //(패스워드, �
     }
 };
 
+var validatePassword2 = function(password, passwordConfirm) { //(패스워드, 패스워드확인)
+    console.dir("비번검증");
+    let regPw = /^[a-zA-Z0-9]{6,}$/ //정규식
+}
+
 //이름 검증
 var validateName = function(name) {
     return !isEmpty(name.value);

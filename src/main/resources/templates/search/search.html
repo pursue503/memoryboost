@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
-    <title>Title</title>
+    <title>검색</title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--
@@ -19,15 +19,89 @@
     <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/basic.css" />
+    <link rel="stylesheet" href="/css/search/search-style.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
+    <script src="/js/search/search.js"></script>
 </head>
 <body>
 <header th:replace="header.html"></header>
-<div class="content-container">
-    <!-- 이곳에 내용을 입력 -->
+<div class="content-container search">
+    <div class="filter">
+        <div id="category">
+            <ul>
+                <li>CPU</li>
+                <li>메인보드</li>
+                <li>그래픽카드</li>
+                <li>RAM</li>
+                <li>HDD</li>
+                <li>SSD</li>
+                <li>케이스</li>
+                <li>파워</li>
+                <li>키보드</li>
+                <li>마우스</li>
+                <li>모니터</li>
+            </ul>
+        </div>
+        <div id="criteria">
+            <ul>
+                <li>제조회사</li>
+                <li>조건2</li>
+                <li>조건3</li>
+                <li>조건4</li>
+            </ul>
+        </div>
+    </div>
+    <div class="detail-search">
+        결과 내 재검색
+    </div>
+    <div class="result">
+        <div class="controller">
+            결과 컨트롤러(정렬 등)
+            <button class="test">변경</button>
+        </div>
+        <div class="product-list">
+            <div th:each="product : ${product}" th:classappend="|${product.productCategory} ${product.productNo}|" class="product">
+                <div class="image-div">
+                    <img th:src="${product.productThumbnail}" class="product-image" />
+                </div>
+                <div class="product-info">
+                    <div th:text="${product.productName}" class="product-name"></div>
+                    <div th:text="${product.productDescription}" class="product-detail"></div>
+                </div>
+                <div class="product-purchase">
+                    <div th:text="|${#numbers.formatInteger(product.productPrice, 3, 'COMMA')}원|" class="product-price"></div>
+                    <div class="review">
+                        <div th:text="${product.reviewGradeAvg}" class="grade"></div>
+                        <div th:text="${product.reviewCount}" class="count"></div>
+                    </div>
+                    <div class="interaction">
+                        <button class="btn addcart">장바구니</button>
+                        <button class="btn purchase">바로구매</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="paging">
+        <div th:text="${paging}"></div>
+        <form>
+            <input id="pagingKeyword" type="hidden" name="keyword" />
+            <button class="btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="btn">1</button>
+            <button class="btn">2</button>
+            <button class="btn">3</button>
+            <button class="btn">4</button>
+            <button class="btn">5</button>
+            <button class="btn">6</button>
+            <button class="btn">7</button>
+            <button class="btn">8</button>
+            <button class="btn">9</button>
+            <button class="btn">10</button>
+            <button class="btn"><i class="fas fa-chevron-right"></i></button>
+        </form>
+    </div>
 </div>
 <footer th:replace="footer.html"></footer>
 </body>

@@ -37,7 +37,7 @@
 <header th:replace="header.html"></header>
 <div class="content-container signup">
     <h1 class="signup-title">추가정보 입력</h1>
-    <form class="signup-form" action="/members" method="PUT">
+    <form id="signup-form" class="signup-form" action="/members/sns" method="POST">
         <div class="div-name">
             <input th:value="${#authentication.principal.memberName}" type="text" id="memberName" class="memberName" name="memberName" placeholder="이름" readonly />
         </div>
@@ -54,12 +54,8 @@
             <input type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
             <span class="chksum detailaddr false"></span>
         </div>
-        <!--<div class="div-condition">
-            <input type="checkbox" id="condition" />
-            <span class="alert-small" ><label for="condition"><span id="private-condition" class="private-condition">개인정보처리방침</span>에 동의합니다.</label></span>
-        </div>-->
         <input id="submit" type="submit" value="회원가입" disabled />
-        <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+        <input type="hidden" name="_method" value="put"/>
     </form>
 </div>
 <script type="text/javascript">
@@ -79,10 +75,28 @@
             }
         });
     })();
-    //회원가입 완료(성공)
     (function() {
-        document.getElementById("submit").addEventListener("click", function() {
-            alert("회원가입을 완료했습니다!");
+        $(document).on("click", "#submit", function(e) {
+            e.preventDefault();
+            let form = $("form#signup-form")[0];
+            let params = new FormData(form);
+
+            $.ajax({
+                type : "PUT",
+                url : "/members/sns",
+                data : params,
+                processData: false,
+                contentType: false
+            })
+            .done(function(response) {
+                if(response) {
+                    alert("회원가입을 완료했습니다!");
+                    location.replace("/");
+                }
+            })
+            .fail(function(response) {
+                console.dir("통신 실패");
+            })
         });
     })();
 </script>
