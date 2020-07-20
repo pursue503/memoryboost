@@ -91,13 +91,11 @@ public class ProductRepositoryTest {
 
         ProductFilterSearchRequestDTO filterDTO = new ProductFilterSearchRequestDTO();
         filterDTO.setCategory("vga");
-        filterDTO.setSelect1("갤럭시");
-        filterDTO.setSelect2("2070SUPER");
-        filterDTO.setSelect3("RTX");
+        filterDTO.setSelect1(new String[] {"갤럭시"});
+
 
         List<ProductSearchResponseDTO> searchResponseDTO = productRepository.productFilterSearch(filterDTO,"priceDesc",1);
 
-        searchResponseDTO.forEach(ttt -> log.info(ttt.toString()));
 
         assertThat(searchResponseDTO.get(0).getProductName()).contains(filterDTO.getSelect1());
 

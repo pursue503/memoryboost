@@ -56,10 +56,4 @@ public class MainController {
         return "search/search";
     }
 
-    @PutMapping("/test")
-    public @ResponseBody Long test () {
-        System.out.println("Asdsda");
-        return 1L;
-    }
-
 }

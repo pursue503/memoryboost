@@ -164,137 +164,232 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             //where 에서 and or 명시 안하면 and 로 통일.
             //switch 문 을 안쓰고 해결할 수 있는 방법을 나중에 생각해보기..
             case "cpu":
-                builder.and(product.productCategory.eq(1));
+                if(filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(1));
+                }
+
                 jpaQuery.leftJoin(cpu).on(product.eq(cpu.productNo));
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.or(cpu.cpuCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(cpu.cpuCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(cpu.cpuGeneration.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
-                    builder.or(cpu.cpuModel.upper().eq(filterDTO.getSelect3().toUpperCase()));
+                if(filterDTO.getSelect3() != null) {
+                    for(String select : filterDTO.getSelect3()) {
+                        builder.or(cpu.cpuModel.upper().eq(select.toUpperCase()));
+                    }
                 }
+
                 break;
 
             case "motherboard":
+                if(filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(2));
+                }
 
                 jpaQuery.leftJoin(motherboard).on(product.eq(motherboard.productNo));
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(motherboard.motherboardCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(motherboard.motherboardSocket.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
-                    builder.and(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3().toUpperCase()));
+                if(filterDTO.getSelect3() != null) {
+                    for(String select : filterDTO.getSelect3()) {
+                        builder.or(motherboard.motherboardChipset.upper().eq(select.toUpperCase()));
+                    }
                 }
                 break;
 
             case "vga":
+                if(filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(3));
+                }
 
                 jpaQuery.leftJoin(vga).on(product.eq(vga.productNo));
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(vga.vgaCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(vga.vgaCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(vga.vgaChipset.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(vga.vgaChipset.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
-                    builder.and(vga.vgaSeries.upper().eq(filterDTO.getSelect3().toUpperCase()));
+                if(filterDTO.getSelect3() != null) {
+                    for(String select : filterDTO.getSelect3()) {
+                        builder.or(vga.vgaSeries.upper().eq(select.toUpperCase()));
+                    }
                 }
+
                 break;
 
             case "memory":
+                if(filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(4));
+                }
 
                 jpaQuery.leftJoin(memory).on(product.eq(memory.productNo));
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(memory.memoryCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(memory.memoryCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(memory.memorySize.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(memory.memorySize.upper().eq(select.toUpperCase()));
+                    }
                 }
+
                 break;
 
             case "hdd":
+                if(filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(5));
+                }
 
                 jpaQuery.leftJoin(hdd).on(product.eq(hdd.productNo));
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(hdd.hddCompany.eq(filterDTO.getSelect1().toUpperCase()));
-                }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(hdd.hddSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
-                }
 
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(hdd.hddCompany.upper().eq(select.toUpperCase()));
+                    }
+                }
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(hdd.hddSize.upper().eq(select.toUpperCase()));
+                    }
+                }
                 break;
 
             case "ssd":
+                if(filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(6));
+                }
 
                 jpaQuery.leftJoin(ssd).on(product.eq(ssd.productNo));
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(ssd.ssdCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(ssd.ssdCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(ssd.ssdSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
+
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(ssd.ssdSize.upper().eq(select.toUpperCase()));
+                    }
                 }
                 break;
 
             case "case":
+                if(filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(7));
+                }
 
                 jpaQuery.leftJoin(qCase).on(product.eq(qCase.productNo));
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(qCase.caseCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(qCase.caseCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(qCase.caseSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(qCase.caseSize.upper().eq(select.toUpperCase()));
+                    }
                 }
                 break;
 
             case "power":
+                if(filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(8));
+                }
 
                 jpaQuery.leftJoin(power).on(product.eq(power.productNo));
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(power.powerCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(power.powerCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(power.powerWatt.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(power.powerWatt.upper().eq(select.toUpperCase()));
+                    }
                 }
                 break;
 
             case "keyboard":
+                if(filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(9));
+                }
 
                 jpaQuery.leftJoin(keyboard).on(product.eq(keyboard.productNo));
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(keyboard.keyboardCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(keyboard.keyboardConnection.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
-                    builder.and(keyboard.keyboardContact.eq(filterDTO.getSelect3().toUpperCase()));
+                if(filterDTO.getSelect3() != null) {
+                    for(String select : filterDTO.getSelect3()) {
+                        builder.or(keyboard.keyboardContact.upper().eq(select.toUpperCase()));
+                    }
                 }
                 break;
 
             case "mouse":
+                if(filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(10));
+                }
 
                 jpaQuery.leftJoin(mouse).on(product.eq(mouse.productNo));
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(mouse.mouseCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(mouse.mouseCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(mouse.mouseConnection.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(mouse.mouseConnection.upper().eq(select.toUpperCase()));
+                    }
                 }
+
                 break;
             case "monitor":
+                if(filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(11));
+                }
+
                 jpaQuery.leftJoin(monitor).on(product.eq(monitor.productNo));
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(monitor.monitorCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(monitor.monitorCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(monitor.monitorPanel.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(monitor.monitorPanel.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
-                    builder.and(monitor.monitorSize.upper().eq(filterDTO.getSelect3().toUpperCase()));
+                if(filterDTO.getSelect3() != null) {
+                    for(String select : filterDTO.getSelect3()) {
+                        builder.or(monitor.monitorSize.upper().eq(select.toUpperCase()));
+                    }
                 }
                 break;
         }
@@ -345,15 +440,20 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             //switch 문 을 안쓰고 해결할 수 있는 방법을 나중에 생각해보기..
             case "cpu":
 
-
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(cpu.cpuCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(cpu.cpuCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(cpu.cpuGeneration.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
-                    builder.and(cpu.cpuModel.upper().eq(filterDTO.getSelect3().toUpperCase()));
+                if(filterDTO.getSelect3() != null) {
+                    for(String select : filterDTO.getSelect3()) {
+                        builder.or(cpu.cpuModel.upper().eq(select.toUpperCase()));
+                    }
                 }
 
                 return (int) queryFactory.select(cpu.count()).from(cpu)
@@ -361,28 +461,40 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "motherboard":
 
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(motherboard.motherboardCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(motherboard.motherboardSocket.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
-                    builder.and(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3().toUpperCase()));
+                if(filterDTO.getSelect3() != null) {
+                    for(String select : filterDTO.getSelect3()) {
+                        builder.or(motherboard.motherboardChipset.upper().eq(select.toUpperCase()));
+                    }
                 }
                 return (int) queryFactory.select(motherboard.count()).from(motherboard)
                         .where(builder).fetchCount();
 
             case "vga":
 
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(vga.vgaCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(vga.vgaCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(vga.vgaChipset.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(vga.vgaChipset.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
-                    builder.and(vga.vgaSeries.upper().eq(filterDTO.getSelect3().toUpperCase()));
+                if(filterDTO.getSelect3() != null) {
+                    for(String select : filterDTO.getSelect3()) {
+                        builder.or(vga.vgaSeries.upper().eq(select.toUpperCase()));
+                    }
                 }
 
                 return (int) queryFactory.select(vga.count()).from(vga)
@@ -390,93 +502,127 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "memory":
 
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(memory.memoryCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                for(String select : filterDTO.getSelect1()) {
+                    builder.or(memory.memoryCompany.upper().eq(select.toUpperCase()));
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(memory.memorySize.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                for(String select : filterDTO.getSelect2()) {
+                    builder.or(memory.memorySize.upper().eq(select.toUpperCase()));
                 }
                 return (int) queryFactory.select(memory.count()).from(memory)
                         .where(builder).fetchCount();
 
             case "hdd":
 
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(hdd.hddCompany.eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(hdd.hddCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(hdd.hddSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(hdd.hddSize.upper().eq(select.toUpperCase()));
+                    }
                 }
                 return (int) queryFactory.select(hdd.count()).from(hdd)
                         .where(builder).fetchCount();
 
             case "ssd":
 
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(ssd.ssdCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(ssd.ssdCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(ssd.ssdSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
+
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(ssd.ssdSize.upper().eq(select.toUpperCase()));
+                    }
                 }
                 return (int) queryFactory.select(ssd.count())
                         .where(builder).fetchCount();
 
             case "case":
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(qCase.caseCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(qCase.caseCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(qCase.caseSize.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(qCase.caseSize.upper().eq(select.toUpperCase()));
+                    }
                 }
                 return (int) queryFactory.select(qCase.count()).from(qCase)
                         .where(builder).fetchCount();
 
             case "power":
 
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(power.powerCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(power.powerCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(power.powerWatt.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(power.powerWatt.upper().eq(select.toUpperCase()));
+                    }
                 }
+
                 return (int) queryFactory.select(power.count()).from(power)
                         .where(builder).fetchCount();
 
             case "keyboard":
 
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(keyboard.keyboardCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(keyboard.keyboardConnection.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
-                    builder.and(keyboard.keyboardContact.eq(filterDTO.getSelect3().toUpperCase()));
+                if(filterDTO.getSelect3() != null) {
+                    for(String select : filterDTO.getSelect3()) {
+                        builder.or(keyboard.keyboardContact.upper().eq(select.toUpperCase()));
+                    }
                 }
                 return (int) queryFactory.select(keyboard.count()).from(keyboard)
                         .where(builder).fetchCount();
 
             case "mouse":
 
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(mouse.mouseCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(mouse.mouseCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(mouse.mouseConnection.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(mouse.mouseConnection.upper().eq(select.toUpperCase()));
+                    }
                 }
 
                 return (int) queryFactory.select(mouse.count()).from(mouse)
                         .where(builder).fetchCount();
 
             case "monitor":
-                if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(monitor.monitorCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(String select : filterDTO.getSelect1()) {
+                        builder.or(monitor.monitorCompany.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(monitor.monitorPanel.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(String select : filterDTO.getSelect2()) {
+                        builder.or(monitor.monitorPanel.upper().eq(select.toUpperCase()));
+                    }
                 }
-                if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
-                    builder.and(monitor.monitorSize.upper().eq(filterDTO.getSelect3().toUpperCase()));
+                if(filterDTO.getSelect3() != null) {
+                    for(String select : filterDTO.getSelect3()) {
+                        builder.or(monitor.monitorSize.upper().eq(select.toUpperCase()));
+                    }
                 }
                 return (int) queryFactory.select(monitor.count()).from(monitor)
                         .where(builder).fetchCount();
@@ -499,13 +645,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         productDetailResponseVO.setProductImagePath(queryFactory.select(productImage.productImagePath)
                 .from(productImage).where(productImage.productNo.eq(productEntity)).fetch());
-
-        NumberExpression<Integer> star1 = null;
-
-        productDetailResponseVO = queryFactory.select(Projections.fields(ProductDetailResponseVO.class,
-                productReview.reviewGrade.avg().as("gradeAvg"),
-                productReview.reviewGrade.when(1).then(productReview.reviewGrade).otherwise(1).count().as("star1")))
-                .from(productReview).where(productReview.productNo.eq(productEntity)).fetchOne();
 
         return productDetailResponseVO;
 
