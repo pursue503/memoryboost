@@ -17,7 +17,7 @@ public class ProductSearchResponseDTO {
     private String productDescription;
     private String productThumbnail;
     private int productPrice;
-    private Double reviewGradeAvg; // null 을 처리하기위해 Double
+    private double reviewGradeAvg; // null 을 처리하기위해 Double
     private Long reviewCount;
 
 
