@@ -1,5 +1,6 @@
 package com.memoryboost.controller.main;
 
+import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
 import com.memoryboost.domain.dto.product.request.ProductSaveRequestDTO;
 import com.memoryboost.domain.entity.member.MemberRepository;
 import com.memoryboost.domain.entity.product.ProductRepository;
@@ -46,15 +47,23 @@ public class MainController {
                          @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
                          @RequestParam(value = "page",required = false,defaultValue = "1") int page , Model model ){
 
-        if(keyword.trim().equals("")) {
-            model.addAttribute("product",null);
-        } else {
-            model.addAttribute("keyword", keyword);
-            model.addAttribute("layout","list");
-            model.addAttribute("product", productService.productSearch(keyword,order,page));
-            model.addAttribute("paging",pagingService.searchPaging(keyword,page));
-        }
-        return "search/search";
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("layout","list");
+        model.addAttribute("product", productService.productSearch(keyword,order,page));
+        model.addAttribute("paging",pagingService.searchPaging(keyword,page));
+        return "search/search :: fragment-result";
+    }
+
+
+    @GetMapping("/search-filter")
+    public String searchFilter(ProductFilterSearchRequestDTO filterDTO,
+                                           @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
+                                           @RequestParam(value = "page",required = false,defaultValue = "1") int page,
+                                           @RequestParam(value = "layout", required = false, defaultValue = "list") String layout, Model model) {
+        model.addAttribute("product",productService.filterSearch(filterDTO,order,page));
+        model.addAttribute("paging",pagingService.filterSearchPaging(filterDTO, page));
+        model.addAttribute("layout",layout);
+        return "search/search :: fragment-result";
     }
 
 }

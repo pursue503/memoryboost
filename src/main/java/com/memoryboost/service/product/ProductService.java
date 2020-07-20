@@ -29,6 +29,11 @@ public class ProductService {
     //검색 한 결과 전달
     @Transactional(readOnly = true)
     public List<ProductSearchResponseDTO> productSearch(String keyword, String order, int page) {
+
+        if(keyword.trim().equals("")) {
+            List<ProductSearchResponseDTO> productSearchResponseDTOList = new ArrayList<>();
+            return productSearchResponseDTOList;
+        }
         String[] searchArr = keyword.split(" "); // 배열로 변환
         return productRepository.productSearch(searchArr,order,page);
     }

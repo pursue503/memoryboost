@@ -39,18 +39,19 @@ public class ProductRestController {
         return resultMap;
     }
 
-    @GetMapping("/search-filter")
-    public Map<String,Object> searchFilter(ProductFilterSearchRequestDTO filterDTO,
-                                           @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
-                                           @RequestParam(value = "page",required = false,defaultValue = "1") int page,
-                                           @RequestParam(value = "layout", required = false, defaultValue = "list") String layout) {
-
-        Map<String,Object> resultMap = new HashMap<>();
-        resultMap.put("product",productService.filterSearch(filterDTO,order,page));
-        resultMap.put("paging",pagingService.filterSearchPaging(filterDTO, page));
-        resultMap.put("layout",layout);
-        return resultMap;
-    }
+    //타임리프 fragment 기능으로 대체됨.
+//    @GetMapping("/search-filter")
+//    public Map<String,Object> searchFilter(ProductFilterSearchRequestDTO filterDTO,
+//                                           @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
+//                                           @RequestParam(value = "page",required = false,defaultValue = "1") int page,
+//                                           @RequestParam(value = "layout", required = false, defaultValue = "list") String layout) {
+//
+//        Map<String,Object> resultMap = new HashMap<>();
+//        resultMap.put("product",productService.filterSearch(filterDTO,order,page));
+//        resultMap.put("paging",pagingService.filterSearchPaging(filterDTO, page));
+//        resultMap.put("layout",layout);
+//        return resultMap;
+//    }
 
 
 }
