@@ -49,6 +49,7 @@ public class MainController {
         if(keyword.trim().equals("")) {
             model.addAttribute("product",null);
         } else {
+            model.addAttribute("keyword", keyword);
             model.addAttribute("layout","list");
             model.addAttribute("product", productService.productSearch(keyword,order,page));
             model.addAttribute("paging",pagingService.searchPaging(keyword,page));
