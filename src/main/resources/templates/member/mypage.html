@@ -2,6 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Title</title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -81,6 +83,10 @@
     </div>
 </div>
 <script type="text/javascript">
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+
     //선택한 메뉴 보여줌.
     $(document).on("click", "div.nav > ul > li", function() {
         let selectedClass = this.classList;
@@ -100,7 +106,10 @@
                 method : "POST",
                 url : "/members/mypage/pw-check/"+memberId,
                 data : { memberPw : editAuth.value },
-                dataType : "json"
+                dataType : "json",
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header,token);
+                }
             })
             .done(function(response) {
                 if(response.result) {
@@ -164,7 +173,10 @@
             url : requestURL,
             data : params,
             processData: false,
-            contentType: false
+            contentType: false,
+            beforeSend : function(xhr) {
+                xhr.setRequestHeader(header,token);
+            }
         })
         .done(function(response) {
             if(response) {
