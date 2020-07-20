@@ -1,7 +1,6 @@
 package com.memoryboost.domain.entity.product;
 
 import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
-import com.memoryboost.domain.dto.product.response.ProductDetailResponseDTO;
 import com.memoryboost.domain.dto.product.response.ProductSearchResponseDTO;
 import com.memoryboost.domain.entity.product.detail.cpu.QCpu;
 import com.memoryboost.domain.entity.product.detail.hdd.QHdd;
@@ -15,14 +14,18 @@ import com.memoryboost.domain.entity.product.detail.ssd.QSsd;
 import com.memoryboost.domain.entity.product.detail.tbcase.QCase;
 import com.memoryboost.domain.entity.product.detail.vga.QVga;
 import com.memoryboost.domain.entity.product.review.QProductReview;
+import com.memoryboost.domain.vo.product.response.ProductDetailResponseVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -161,16 +164,16 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             //where 에서 and or 명시 안하면 and 로 통일.
             //switch 문 을 안쓰고 해결할 수 있는 방법을 나중에 생각해보기..
             case "cpu":
-
+                builder.and(product.productCategory.eq(1));
                 jpaQuery.leftJoin(cpu).on(product.eq(cpu.productNo));
                 if (!StringUtils.isEmpty(filterDTO.getSelect1())) {
-                    builder.and(cpu.cpuCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
+                    builder.or(cpu.cpuCompany.upper().eq(filterDTO.getSelect1().toUpperCase()));
                 }
                 if (!StringUtils.isEmpty(filterDTO.getSelect2())) {
-                    builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2().toUpperCase()));
+                    builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2().toUpperCase()));
                 }
                 if (!StringUtils.isEmpty(filterDTO.getSelect3())) {
-                    builder.and(cpu.cpuModel.upper().eq(filterDTO.getSelect3().toUpperCase()));
+                    builder.or(cpu.cpuModel.upper().eq(filterDTO.getSelect3().toUpperCase()));
                 }
                 break;
 
@@ -483,19 +486,28 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     }
 
     @Override
-    public ProductDetailResponseDTO productDetail(Product productEntity) {
+    public ProductDetailResponseVO productDetail(Product productEntity) {
 
         QProduct product = QProduct.product;
         QProductImage productImage = QProductImage.productImage;
+        QProductReview productReview = QProductReview.productReview;
 
-        ProductDetailResponseDTO productDetailResponseDTO = queryFactory.select(Projections.fields(ProductDetailResponseDTO.class,product.productNo, product.productName,
+        ProductDetailResponseVO productDetailResponseVO = queryFactory.select(Projections.fields(ProductDetailResponseVO.class,product.productNo, product.productName,
                 product.productCategory, product.productDescription, product.productThumbnail,
                 product.productPrice)).from(product).where(product.eq(productEntity))
                 .fetchOne();
 
-        productDetailResponseDTO.setProductImagePath(queryFactory.select(productImage.productImagePath)
+        productDetailResponseVO.setProductImagePath(queryFactory.select(productImage.productImagePath)
                 .from(productImage).where(productImage.productNo.eq(productEntity)).fetch());
-        return productDetailResponseDTO;
+
+        NumberExpression<Integer> star1 = null;
+
+        productDetailResponseVO = queryFactory.select(Projections.fields(ProductDetailResponseVO.class,
+                productReview.reviewGrade.avg().as("gradeAvg"),
+                productReview.reviewGrade.when(1).then(productReview.reviewGrade).otherwise(1).count().as("star1")))
+                .from(productReview).where(productReview.productNo.eq(productEntity)).fetchOne();
+
+        return productDetailResponseVO;
 
     }
 }

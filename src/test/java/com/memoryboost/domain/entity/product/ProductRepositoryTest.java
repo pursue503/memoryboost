@@ -97,6 +97,8 @@ public class ProductRepositoryTest {
 
         List<ProductSearchResponseDTO> searchResponseDTO = productRepository.productFilterSearch(filterDTO,"priceDesc",1);
 
+        searchResponseDTO.forEach(ttt -> log.info(ttt.toString()));
+
         assertThat(searchResponseDTO.get(0).getProductName()).contains(filterDTO.getSelect1());
 
     }

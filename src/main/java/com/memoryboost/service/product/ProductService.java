@@ -1,10 +1,10 @@
 package com.memoryboost.service.product;
 
 import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
-import com.memoryboost.domain.dto.product.response.ProductDetailResponseDTO;
 import com.memoryboost.domain.dto.product.response.ProductSearchResponseDTO;
 import com.memoryboost.domain.entity.product.Product;
 import com.memoryboost.domain.entity.product.ProductRepository;
+import com.memoryboost.domain.vo.product.response.ProductDetailResponseVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class ProductService {
 
     //상품 결과 값 + 이미지 리스트 전송.
     @Transactional(readOnly = true)
-    public ProductDetailResponseDTO productDetail(Long productNo) {
+    public ProductDetailResponseVO productDetail(Long productNo) {
         Product product = productRepository.findById(productNo).orElseThrow(NullPointerException::new);
         return productRepository.productDetail(product);
     }

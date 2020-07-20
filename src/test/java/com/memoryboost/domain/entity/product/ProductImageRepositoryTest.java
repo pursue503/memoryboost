@@ -1,7 +1,6 @@
 package com.memoryboost.domain.entity.product;
 
-import com.memoryboost.domain.dto.product.response.ProductDetailResponseDTO;
-import com.memoryboost.domain.entity.product.detail.vga.Vga;
+import com.memoryboost.domain.vo.product.response.ProductDetailResponseVO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Before;
@@ -46,16 +45,14 @@ public class ProductImageRepositoryTest {
     }
 
     @Test
-    public void productDetailTest(){
+    public void productDetailTest() {
 
         Optional<Product> product = productRepository.findById(1L);
         Product productEntity = product.get();
 
-        ProductDetailResponseDTO productDetailResponseDTO = productRepository.productDetail(productEntity);
+        ProductDetailResponseVO productDetailResponseVO = productRepository.productDetail(productEntity);
 
-        log.info(productDetailResponseDTO.toString());
-
-
+        log.info(productDetailResponseVO.toString());
     }
 
 }

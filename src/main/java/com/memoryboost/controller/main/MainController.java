@@ -44,11 +44,12 @@ public class MainController {
     @GetMapping("/search")
     public String search(@RequestParam("keyword") String keyword,
                          @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
-                         @RequestParam(value = "page",required = false,defaultValue = "1") int page , Model model) {
+                         @RequestParam(value = "page",required = false,defaultValue = "1") int page , Model model ){
 
         if(keyword.trim().equals("")) {
             model.addAttribute("product",null);
         } else {
+            model.addAttribute("layout","list");
             model.addAttribute("product", productService.productSearch(keyword,order,page));
             model.addAttribute("paging",pagingService.searchPaging(keyword,page));
         }
