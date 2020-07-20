@@ -31,17 +31,6 @@ body {
     margin: 0 auto;
     padding-top: 150px;
     background-color: var(--white);
-}
-
-div.utmost-container {
-    position: relative;
-    min-height: 100%;
-    padding-bottom: 180px;
-}
-
-div.inner-container {
-    width: 1200px;
-    margin: 0 auto;
 }*/
 
 body {
@@ -91,6 +80,44 @@ div.content-container {
 }
 
 .text.dim {
+    font-size: 12px;
+    color: var(--dim-gray);
+}
+
+/* 표현 요쇼 */
+.char.title {
+    font-size: 26px;
+}
+
+.char.normal {
+    font-size: 16px;
+}
+
+.char.sub {
+    font-size: 12px;
+}
+
+.char.bold {
+    font-weight: bold;
+}
+
+.char.warning {
+    color: var(--warning);
+}
+
+.char.danger {
+    color: var(--danger);
+}
+
+.char.enlighten {
+    color: var(--blue);
+}
+
+.char.success {
+    color: var(--success);
+}
+
+.char.dim {
     font-size: 12px;
     color: var(--dim-gray);
 }

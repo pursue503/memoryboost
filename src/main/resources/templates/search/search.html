@@ -58,23 +58,36 @@
     </div>
     <div class="result">
         <div class="controller">
-            결과 컨트롤러(정렬 등)
+            결과 컨트롤러(정렬, 장바구니)
             <button class="test">변경</button>
         </div>
         <div class="product-list">
-            <div th:each="product : ${product}" th:classappend="|${product.productCategory} ${product.productNo}|" class="product">
+            <div th:each="product : ${product}" th:classappend="|${product.productCategory} ${product.productNo} liftup|" class="product">
                 <div class="image-div">
                     <img th:src="${product.productThumbnail}" class="product-image" />
+                    <input th:classappend="|${product.productCategory} ${product.productNo}|" type="checkbox" />
                 </div>
                 <div class="product-info">
-                    <div th:text="${product.productName}" class="product-name"></div>
-                    <div th:text="${product.productDescription}" class="product-detail"></div>
+                    <div th:text="${product.productName}" class="product-name text bold"></div>
+                    <div th:text="${product.productDescription}" class="product-detail text normal"></div>
                 </div>
                 <div class="product-purchase">
-                    <div th:text="|${#numbers.formatInteger(product.productPrice, 3, 'COMMA')}원|" class="product-price"></div>
-                    <div class="review">
-                        <div th:text="${product.reviewGradeAvg}" class="grade"></div>
-                        <div th:text="${product.reviewCount}" class="count"></div>
+                    <div th:classappend="|char normal bold|" th:text="|${#numbers.formatInteger(product.productPrice, 3, 'COMMA')}|" class="product-price"></div>
+                    <div th:if="${product.reviewGradeAvg != null}"
+                         class="review">
+                        <div class="grade">
+                            <div th:if="${product.reviewGradeAvg != null}"
+                                 th:style="|width: ${product.reviewGradeAvg*20}px;|"
+                                 class="stars"></div>
+                        </div>
+                        <div class="score"
+                             th:if="${product.reviewGradeAvg != null}"
+                             th:text="${#numbers.formatDecimal(product.reviewGradeAvg,1,1)}"></div>
+                        <div th:text="|(${product.reviewCount})|" class="count"></div>
+                    </div>
+                    <div th:unless="${product.reviewGradeAvg != null}"
+                         class="review none">
+                        <span>평가 없음</span>
                     </div>
                     <div class="interaction">
                         <button class="btn addcart">장바구니</button>
@@ -85,21 +98,23 @@
         </div>
     </div>
     <div class="paging">
-        <div th:text="${paging}"></div>
-        <form>
+        <form action="/search" method="GET">
             <input id="pagingKeyword" type="hidden" name="keyword" />
-            <button class="btn"><i class="fas fa-chevron-left"></i></button>
-            <button class="btn">1</button>
-            <button class="btn">2</button>
-            <button class="btn">3</button>
-            <button class="btn">4</button>
-            <button class="btn">5</button>
-            <button class="btn">6</button>
-            <button class="btn">7</button>
-            <button class="btn">8</button>
-            <button class="btn">9</button>
-            <button class="btn">10</button>
-            <button class="btn"><i class="fas fa-chevron-right"></i></button>
+            <button th:disabled="${paging.prev == false}"
+                    th:value="${paging.startPage-10}" class="btn"><i class="fas fa-chevron-left"></i></button>
+            <!--<button th:each="num : ${#numbers.sequence(paging.startPage, paging.startPage+9)}"
+                    th:disabled="${num > paging.endPage}"
+                    th:text="${num}"
+                    th:value="${num}"
+                    class="btn" name="page" ></button>-->
+            <button th:each="num : ${#numbers.sequence(paging.startPage, paging.startPage+9)}"
+                    th:disabled="${num > paging.endPage}"
+                    th:text="${num}"
+                    th:value="${num}"
+                    th:style="${num == paging.page} ? |color: var(--danger);|"
+                    class="btn" name="page" ></button>
+            <button th:disabled="${paging.next == false}"
+                    th:value="${paging.startPage+10}" class="btn"><i class="fas fa-chevron-right"></i></button>
         </form>
     </div>
 </div>

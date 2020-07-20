@@ -176,47 +176,6 @@
             console.dir("통신 실패");
         })
     });
-    //내정보. 수정 눌렀을때 검증(이전)
-    $(document).on("click", ".btn.edit1", function(e) {
-        if("[[${#authentication.principal.memberSns}]]" == "memoryboost") { //일반유저
-            let password = $(".memberPw")[0];
-            let passwordConfirm = $(".memberPwConfirm")[0];
-
-            if(!isEmpty(password.value) || isEmpty(!passwordConfirm.value)) { //비번을 바꾸려 할때
-                if(!validatePassword(password, passwordConfirm)) {
-                    alert("변경하려는 비밀번호를 확인해주세요");
-                    return false;
-                }
-            }
-        }
-
-        let memberName = $(".memberName")[0];
-        let memberDetailAddress = $(".memberDetailAddress")[0];
-        let requestTo;
-        if(validateName(memberName) && validateDetailAddress(memberDetailAddress)) { //이름, 주소 검증
-            if("[[${#authentication.principal.memberSns}]]" == "memoryboost") { //일반유저
-                requestTo = "/members/";
-            } else { //sns유저
-                requestTo = "/members/sns/";
-            }
-        }
-
-        let params = $("form#edit-info").serializeObject();
-        console.dir("전송");
-        $.ajax({
-            method : "put",
-            url : requestTo,
-            data : params
-        })
-        .done(function(response) {
-            console.dir("전송완료");
-            console.dir(response);
-        })
-        .fail(function(response) {
-            console.dir("전송실패");
-            console.dir(response);
-        });
-    });
 </script>
 <footer th:replace="footer.html"></footer>
 </body>
