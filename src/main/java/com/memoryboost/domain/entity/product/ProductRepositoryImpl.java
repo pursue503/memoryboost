@@ -884,8 +884,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         productDetailResponseVO.setProductImagePath(queryFactory.select(productImage.productImagePath)
                 .from(productImage).where(productImage.productNo.eq(productEntity)).fetch());
 
-        productDetailResponseVO.setGradeAvg(queryFactory.select(productReview.reviewGrade.avg().as("gradeAvg"))
-        .from(productReview).where(productReview.productNo.eq(productEntity)).fetchOne());
+        try{ // 리뷰가 1개도 없으면 nullpoint 에러가 발생. 0점을 넣어줌
+            productDetailResponseVO.setGradeAvg(queryFactory.select(productReview.reviewGrade.avg().as("gradeAvg"))
+                    .from(productReview).where(productReview.productNo.eq(productEntity)).fetchOne());
+        } catch (NullPointerException e) {
+            productDetailResponseVO.setGradeAvg(0.0);
+        }
+
 
         productDetailResponseVO.setGradeStarList(queryFactory.select(Projections.fields(ProductDetailReviewStarResponseVO.class,productReview.reviewGrade,
                 productReview.reviewGrade.count().as("gradeCount"))).from(productReview)

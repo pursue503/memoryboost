@@ -1,5 +1,6 @@
 package com.memoryboost.controller.product;
 
+import com.memoryboost.domain.vo.product.response.ProductDetailResponseVO;
 import com.memoryboost.service.paging.PagingService;
 import com.memoryboost.service.product.ProductService;
 import lombok.RequiredArgsConstructor;

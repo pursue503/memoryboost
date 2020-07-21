@@ -3,6 +3,7 @@ package com.memoryboost.domain.entity.product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "tb_product")
 @Entity
+@ToString
 public class Product {
 
     @Id
