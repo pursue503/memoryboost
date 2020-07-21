@@ -22,7 +22,8 @@ public class SearchFragmentController {
     @GetMapping("/search-fragment")
     public String search(@RequestParam("keyword") String keyword,
                          @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
-                         @RequestParam(value = "page",required = false,defaultValue = "1") int page , Model model ){
+                         @RequestParam(value = "page",required = false,defaultValue = "1") int page,
+                         @RequestParam(value = "layout", required = false, defaultValue = "list") String layout, Model model ){
 
         model.addAttribute("keyword", keyword);
         model.addAttribute("layout","list");
@@ -34,9 +35,11 @@ public class SearchFragmentController {
 
     @GetMapping("/search-filter")
     public String searchFilter(ProductFilterSearchRequestDTO filterDTO,
+                               @RequestParam(value = "category") String category,
                                @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
                                @RequestParam(value = "page",required = false,defaultValue = "1") int page,
                                @RequestParam(value = "layout", required = false, defaultValue = "list") String layout, Model model) {
+        model.addAttribute("category", category);
         model.addAttribute("product",productService.filterSearch(filterDTO,order,page));
         model.addAttribute("paging",pagingService.filterSearchPaging(filterDTO, page));
         model.addAttribute("layout",layout);

@@ -28,96 +28,370 @@
 <body>
 <header th:replace="header.html"></header>
 <div class="content-container search">
-    <div class="filter">
-        <div id="category">
-            <ul>
-                <li>CPU</li>
-                <li>메인보드</li>
-                <li>그래픽카드</li>
-                <li>RAM</li>
-                <li>HDD</li>
-                <li>SSD</li>
-                <li>케이스</li>
-                <li>파워</li>
-                <li>키보드</li>
-                <li>마우스</li>
-                <li>모니터</li>
-            </ul>
-        </div>
-        <div id="criteria">
-            <ul>
-                <li>제조회사</li>
-                <li>조건2</li>
-                <li>조건3</li>
-                <li>조건4</li>
-            </ul>
-        </div>
-    </div>
-    <div class="detail-search">
-        결과 내 재검색
-    </div>
-    <div class="result">
-        <div class="controller">
-            결과 컨트롤러(정렬, 장바구니)
-            <button class="test">변경</button>
-        </div>
-        <div class="product-list">
-            <div th:each="product : ${product}" th:classappend="|${product.productCategory} ${product.productNo} liftup|" class="product">
-                <div class="image-div">
-                    <img th:src="${product.productThumbnail}" class="product-image" />
-                    <input th:classappend="|${product.productCategory} ${product.productNo}|" type="checkbox" />
+    <form id="form1" action="/search-filter" method="GET">
+        <input type="submit" value="전송" />
+        <div class="filter">
+            <div id="category">
+                <label for="cpu">CPU</label><input id="cpu" class="category-radio" type="radio" name="category" value="cpu" />
+                <label for="motherboard">메인보드</label><input id="motherboard" class="category-radio" type="radio" name="category" value="motherboard" />
+                <label for="vga">그래픽카드</label><input id="vga" class="category-radio" type="radio" name="category" value="vga" />
+                <label for="memory">RAM</label><input id="memory" class="category-radio" type="radio" name="category" value="memory" />
+                <label for="hdd">HDD</label><input id="hdd" class="category-radio" type="radio" name="category" value="hdd" />
+                <label for="ssd">SSD</label><input id="ssd" class="category-radio" type="radio" name="category" value="ssd" />
+                <label for="case">케이스</label><input id="case" class="category-radio" type="radio" name="category" value="case" />
+                <label for="power">파워</label><input id="power" class="category-radio" type="radio" name="category" value="power" />
+                <label for="keyboard">키보드</label><input id="keyboard" class="category-radio" type="radio" name="category" value="keyboard" />
+                <label for="mouse">마우스</label><input id="mouse" class="category-radio" type="radio" name="category" value="mouse" />
+                <label for="monitor">모니터</label><input id="monitor" class="category-radio" type="radio" name="category" value="monitor" />
+            </div>
+            <!--<div th:if="${category == null}" th:id="|criteria|" th:text="|카테고리를 선택해주세요.|"></div>-->
+            <div th:if="${category == null || category == 'cpu'}" th:id="|criteria|">
+                <div class="criteria-title">
+                    제조회사
                 </div>
-                <div class="product-info">
-                    <div th:text="${product.productName}" class="product-name text bold"></div>
-                    <div th:text="${product.productDescription}" class="product-detail text normal"></div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a1" type="checkbox" name="select1" value="AMD" /><label for="a1">AMD</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a2" type="checkbox" name="select1" value="INTEL" /><label for="a2">인텔</label></div>
                 </div>
-                <div class="product-purchase">
-                    <div th:classappend="|char normal bold|" th:text="|${#numbers.formatInteger(product.productPrice, 3, 'COMMA')}|" class="product-price"></div>
-                    <div th:if="${product.reviewGradeAvg != null}"
-                         class="review">
-                        <div class="grade">
-                            <div th:if="${product.reviewGradeAvg != null}"
-                                 th:style="|width: ${product.reviewGradeAvg*20}px;|"
-                                 class="stars"></div>
-                        </div>
-                        <div class="score"
-                             th:if="${product.reviewGradeAvg != null}"
-                             th:text="${#numbers.formatDecimal(product.reviewGradeAvg,1,1)}"></div>
-                        <div th:text="|(${product.reviewCount})|" class="count"></div>
-                    </div>
-                    <div th:unless="${product.reviewGradeAvg != null}"
-                         class="review none">
-                        <span>평가 없음</span>
-                    </div>
-                    <div class="interaction">
-                        <button class="btn addcart">장바구니</button>
-                        <button class="btn purchase">바로구매</button>
-                    </div>
+                <div class="criteria-title">
+                    세대
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b1" type="checkbox" name="select2" value="마티스" /><label for="b1">마티스</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b2" type="checkbox" name="select2" value="피카소" /><label for="b2">피카소</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b3" type="checkbox" name="select2" value="피나클 릿지" /><label for="b3">피나클릿지</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b4" type="checkbox" name="select2" value="서밋 릿지" /><label for="b4">서밋릿지</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b5" type="checkbox" name="select2" value="코멧레이크" /><label for="b5">코멧레이크</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b6" type="checkbox" name="select2" value="코멧레이크S" /><label for="b6">코멧레이크S</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b7" type="checkbox" name="select2" value="커피레이크-R" /><label for="b7">커피레이크-R</label></div>
+                </div>
+                <div class="criteria-title">
+                    모델명
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c1" type="checkbox" name="select3" value="라이젠3" /><label for="c1">라이젠3</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c2" type="checkbox" name="select3" value="라이젠5" /><label for="c2">라이젠5</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c3" type="checkbox" name="select3" value="라이젠7" /><label for="c3">라이젠7</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c4" type="checkbox" name="select3" value="라이젠9" /><label for="c4">라이젠9</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c5" type="checkbox" name="select3" value="I3" /><label for="c5">i3</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c6" type="checkbox" name="select3" value="I5" /><label for="c6">i5</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c7" type="checkbox" name="select3" value="I7" /><label for="c7">i7</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c8" type="checkbox" name="select3" value="I9" /><label for="c8">i9</label></div>
+                </div>
+            </div>
+            <div th:if="${category == 'motherboard'}" th:id="|criteria|">
+                <div class="criteria-title">
+                    제조회사
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a1" type="checkbox" name="select1" value="ASUS" /><label for="a1">ASUS</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a2" type="checkbox" name="select1" value="MSI" /><label for="a2">MSI</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a3" type="checkbox" name="select1" value="GIGABYTE" /><label for="a3">GIGABYTE</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a4" type="checkbox" name="select1" value="ASROCK" /><label for="a4">ASRock</label></div>
+                </div>
+                <div class="criteria-title">
+                    소켓
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b1" type="checkbox" name="select2" value="AM4" /><label for="b1">AM4</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b2" type="checkbox" name="select2" value="1200" /><label for="b2">1200</label></div>
+                </div>
+                <div class="criteria-title">
+                    칩셋
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c1" type="checkbox" name="select3" value="B450" /><label for="c1">B450</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c2" type="checkbox" name="select3" value="B460" /><label for="c2">B460</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c3" type="checkbox" name="select3" value="A320" /><label for="c3">A320</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c4" type="checkbox" name="select3" value="B550" /><label for="c4">B550</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c5" type="checkbox" name="select3" value="X570" /><label for="c5">X570</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c6" type="checkbox" name="select3" value="Z490" /><label for="c6">Z490</label></div>
+                </div>
+            </div>
+            <div th:if="${category == 'vga'}" th:id="|criteria|">
+                <div class="criteria-title">
+                    제조회사
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a1" type="checkbox" name="select1" value="이엠텍" /><label for="a1">이엠텍</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a2" type="checkbox" name="select1" value="GIGABYTE" /><label for="a2">GIGABYTE</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a3" type="checkbox" name="select1" value="갤럭시" /><label for="a3">GALAX</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a4" type="checkbox" name="select1" value="MSI" /><label for="a4">MSI</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a5" type="checkbox" name="select1" value="ZOTAC" /><label for="a5">ZOTAC</label></div>
+                </div>
+                <div class="criteria-title">
+                    칩셋
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b1" type="checkbox" name="select2" value="2080Ti" /><label for="b1">2080Ti</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b2" type="checkbox" name="select2" value="2080SUPER" /><label for="b2">2080 SUPER</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b3" type="checkbox" name="select2" value="2080" /><label for="b3">2080</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b4" type="checkbox" name="select2" value="2070SUPER" /><label for="b4">2070 SUPER</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b5" type="checkbox" name="select2" value="2060SUPER" /><label for="b5">2060 SUPER</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b6" type="checkbox" name="select2" value="1660Ti" /><label for="b6">1660Ti</label></div>
+                </div>
+                <div class="criteria-title">
+                    시리즈
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c1" type="checkbox" name="select3" value="RTX" /><label for="c1">RTX</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c2" type="checkbox" name="select3" value="GTX" /><label for="c2">GTX</label></div>
+                </div>
+            </div>
+            <div th:if="${category == 'memory'}" th:id="|criteria|">
+                <div class="criteria-title">
+                    제조회사
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a1" type="checkbox" name="select1" value="삼성전자" /><label for="a1">삼성전자</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a2" type="checkbox" name="select1" value="G.SKILL" /><label for="a2">G.SKILL</label></div>
+                </div>
+                <div class="criteria-title">
+                    용량
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b1" type="checkbox" name="select2" value="8G" /><label for="b1">8G</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b2" type="checkbox" name="select2" value="16G" /><label for="b2">16G</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b3" type="checkbox" name="select2" value="32G" /><label for="b3">32G</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b4" type="checkbox" name="select2" value="64G" /><label for="b4">64G</label></div>
+                </div>
+            </div>
+            <div th:if="${category == 'hdd'}" th:id="|criteria|">
+                <div class="criteria-title">
+                    제조회사
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a1" type="checkbox" name="select1" value="WD" /><label for="a1">WD</label></div>
+                </div>
+                <div class="criteria-title">
+                    용량
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b1" type="checkbox" name="select2" value="2TB" /><label for="b1">2TB</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b2" type="checkbox" name="select2" value="4TB" /><label for="b2">4TB</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b3" type="checkbox" name="select2" value="6TB" /><label for="b3">6TB</label></div>
+                </div>
+            </div>
+            <div th:if="${category == 'ssd'}" th:id="|criteria|">
+                <div class="criteria-title">
+                    제조회사
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a1" type="checkbox" name="select1" value="삼성전자" /><label for="a1">삼성전자</label></div>
+                </div>
+                <div class="criteria-title">
+                    용량
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b1" type="checkbox" name="select2" value="250GB" /><label for="b1">250GB</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b2" type="checkbox" name="select2" value="500GB" /><label for="b2">500GB</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b3" type="checkbox" name="select2" value="1TB" /><label for="b3">1TB</label></div>
+                </div>
+            </div>
+            <div th:if="${category == 'case'}" th:id="|criteria|">
+                <div class="criteria-title">
+                    제조회사
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a1" type="checkbox" name="select1" value="ABKO" /><label for="a1">ABKO</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a2" type="checkbox" name="select1" value="마이크로닉스" /><label for="a2">마이크로닉스</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a3" type="checkbox" name="select1" value="아이구주" /><label for="a3">아이구주</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a4" type="checkbox" name="select1" value="3RSYS" /><label for="a4">3RSYS</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a5" type="checkbox" name="select1" value="JONSBO" /><label for="a5">JONSBO</label></div>
+                </div>
+                <div class="criteria-title">
+                    규격
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b1" type="checkbox" name="select2" value="미들타워" /><label for="b1">미들타워</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b2" type="checkbox" name="select2" value="28540" /><label for="b2">28540</label></div>
+                </div>
+            </div>
+            <div th:if="${category == 'power'}" th:id="|criteria|">
+                <div class="criteria-title">
+                    제조회사
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a1" type="checkbox" name="select1" value="FSP" /><label for="a1">FSP</label></div>
+                </div>
+                <div class="criteria-title">
+                    정격출력
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b1" type="checkbox" name="select2" value="500" /><label for="b1">500W</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b2" type="checkbox" name="select2" value="600" /><label for="b2">600W</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b3" type="checkbox" name="select2" value="700" /><label for="b3">700W</label></div>
+                </div>
+            </div>
+            <div th:if="${category == 'keyboard'}" th:id="|criteria|">
+                <div class="criteria-title">
+                    제조회사
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a1" type="checkbox" name="select1" value="레오폴드" /><label for="a1">레오폴드</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a2" type="checkbox" name="select1" value="커세어" /><label for="a2">커세어</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a3" type="checkbox" name="select1" value="덱" /><label for="a3">덱</label></div>
+                </div>
+                <div class="criteria-title">
+                    연결방식
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b1" type="checkbox" name="select2" value="유선" /><label for="b1">유선</label></div>
+                </div>
+                <div class="criteria-title">
+                    접촉방식
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c1" type="checkbox" name="select3" value="기계식" /><label for="c1">기계식</label></div>
+                </div>
+            </div>
+            <div th:if="${category == 'mouse'}" th:id="|criteria|">
+                <div class="criteria-title">
+                    제조회사
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a1" type="checkbox" name="select1" value="로지텍" /><label for="a1">로지텍</label></div>
+                </div>
+                <div class="criteria-title">
+                    연결방식
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b1" type="checkbox" name="select2" value="유선" /><label for="b1">유선</label></div>
+                </div>
+            </div>
+            <div th:if="${category == 'monitor'}" th:id="|criteria|">
+                <div class="criteria-title">
+                    제조회사
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a1" type="checkbox" name="select1" value="알파스캔" /><label for="a1">알파스캔</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="a2" type="checkbox" name="select1" value="래안텍" /><label for="a2">리안텍</label></div>
+                </div>
+                <div class="criteria-title">
+                    패널종류
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b1" type="checkbox" name="select2" value="IPS" /><label for="b1">IPS</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="b2" type="checkbox" name="select2" value="TN" /><label for="b2">TN</label></div>
+                </div>
+                <div class="criteria-title">
+                    크기
+                </div>
+                <div class="criteria-elem">
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c1" type="checkbox" name="select3" value="24" /><label for="c1">24"</label></div>
+                    <div class="checkbox-elem"><input class="btn chkbox" th:id="c2" type="checkbox" name="select3" value="27" /><label for="c2">27"</label></div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="paging">
-        <form action="/search" method="GET">
-            <input id="pagingKeyword" type="hidden" name="keyword" />
-            <button th:disabled="${paging.prev == false}"
-                    th:value="${paging.startPage-10}" class="btn"><i class="fas fa-chevron-left"></i></button>
-            <!--<button th:each="num : ${#numbers.sequence(paging.startPage, paging.startPage+9)}"
-                    th:disabled="${num > paging.endPage}"
-                    th:text="${num}"
-                    th:value="${num}"
-                    class="btn" name="page" ></button>-->
-            <button th:each="num : ${#numbers.sequence(paging.startPage, paging.startPage+9)}"
-                    th:disabled="${num > paging.endPage}"
-                    th:text="${num}"
-                    th:value="${num}"
-                    th:style="${num == paging.page} ? |color: var(--danger);|"
-                    class="btn" name="page" ></button>
-            <button th:disabled="${paging.next == false}"
-                    th:value="${paging.startPage+10}" class="btn"><i class="fas fa-chevron-right"></i></button>
-        </form>
-    </div>
+        <div th:if="${#lists.size(product) > 0}"
+             class="controller">
+            <button class="btn cartall">장바구니</button>
+            <div class="layout">
+                <label for="layout-list" class="btn list fas fa-bars"></label><input th:checked="${layout == 'list'}" id="layout-list" class="btn layout" type="radio" name="layout" value="list"/>
+                <label for="layout-grid" class="btn grid fas fa-th-large"></label><input th:checked="${layout == 'grid'}" id="layout-grid" class="btn layout" type="radio" name="layout" value="grid"/>
+            </div>
+            <div class="order">
+                <select class="btn order1" name="order">
+                    <option class="btn order" th:selected="${order == 'popular'}" value="popular">인기순</option>
+                    <option class="btn order" th:selected="${order == 'pricedesc'}" value="pricedesc">높은가격순</option>
+                    <option class="btn order" th:selected="${order == 'priceasc'}" value="priceasc">낮은가격순</option>
+                </select>
+            </div>
+        </div>
+        <div class="fragment-result" th:fragment="fragment-result">
+            <div th:if="${#lists.size(product) == 0}" class="result noresult">
+                <span class="keyword text normal bold" >'[[${keyword}]]'</span>에 대한 검색결과가 없습니다.
+            </div>
+            <div th:if="${#lists.size(product) > 0}"
+                 class="result">
+                <div th:classappend="${layout == 'grid'} ? grid"
+                     class="product-list">
+                    <div th:each="product : ${product}" th:classappend="|${product.productCategory} ${product.productNo} liftup|" class="product">
+                        <div class="image-div">
+                            <img th:src="${product.productThumbnail}" class="product-image" />
+                            <input th:classappend="|${product.productCategory} ${product.productNo}|" type="checkbox" />
+                        </div>
+                        <div class="product-info">
+                            <div th:text="${product.productName}" class="product-name text bold"></div>
+                            <div th:text="${product.productDescription}" class="product-detail text normal"></div>
+                        </div>
+                        <div class="product-purchase">
+                            <div th:classappend="|char normal bold|" th:text="|${#numbers.formatInteger(product.productPrice, 3, 'COMMA')}|" class="product-price"></div>
+                            <div th:if="${product.reviewGradeAvg != null}"
+                                 class="review">
+                                <div class="grade">
+                                    <div th:if="${product.reviewGradeAvg != null}"
+                                         th:style="|width: ${product.reviewGradeAvg*20}px;|"
+                                         class="stars"></div>
+                                </div>
+                                <div class="score"
+                                     th:if="${product.reviewGradeAvg != null}"
+                                     th:text="${#numbers.formatDecimal(product.reviewGradeAvg,1,1)}"></div>
+                                <div th:text="|(${product.reviewCount})|" class="count"></div>
+                            </div>
+                            <div th:unless="${product.reviewGradeAvg != null}"
+                                 class="review none">
+                                <span>평가 없음</span>
+                            </div>
+                            <div class="interaction">
+                                <button class="btn addcart">장바구니</button>
+                                <button class="btn purchase">바로구매</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${paging.totalResult > 0}" class="paging">
+                    <input type="hidden" name="keyword" th:value="${keyword}" />
+
+                    <button th:disabled="${paging.prev == false}"
+                            th:value="${paging.startPage-10}" class="btn page"><i class="fas fa-chevron-left"></i></button>
+                    <button th:each="num : ${#numbers.sequence(paging.startPage, paging.startPage+9)}"
+                            th:disabled="${num > paging.endPage}"
+                            th:text="${num}"
+                            th:value="${num}"
+                            th:style="${num == paging.page} ? |color: var(--danger);|"
+                            class="btn page" name="page" ></button>
+                    <button th:disabled="${paging.next == false}"
+                            th:value="${paging.startPage+10}" class="btn page"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </form>
 </div>
+<script th:inline="javascript">
+    $(document).on("click", ".btnasd", function() {
+        $.ajax({
+            type : "GET",
+            url : "/search2?keyword=amd"
+        })
+        .done(function(fragment) {
+            $("#willVanish").replaceWith(fragment);
+        })
+        .fail(function(response) {
+            console.dir("통신실패");
+        });
+    });
+    //카테고리
+    $(document).on("change", ".category-radio", function(e) {
+        console.dir("카테고리 선택함");
+        var params = $("#form1").serialize();
+        console.dir(params);
+
+        $.ajax({
+            type : "GET",
+            url : "/search-filter",
+            data : params,
+            processData: false,
+            contentType: false,
+        })
+        .done(function(fragment) {
+            $("#criteria").replaceWith(fragment);
+        })
+        .fail(function(response) {
+            console.dir("통신 실패");
+        })
+    });
+</script>
 <footer th:replace="footer.html"></footer>
 </body>
 </html>
