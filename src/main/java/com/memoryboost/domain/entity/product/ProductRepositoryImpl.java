@@ -190,9 +190,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                     for(int i=0; i<filterDTO.getSelect3().length; i++) {
                         if(i == 0) {
-                            builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect3()[i]));
+                            builder.and(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
-                            builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect3()[i]));
+                            builder.or(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
                         }
                     }
                 }
@@ -581,9 +581,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                     for(int i=0; i<filterDTO.getSelect3().length; i++) {
                         if(i == 0) {
-                            builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect3()[i]));
+                            builder.and(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
-                            builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect3()[i]));
+                            builder.or(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
                         }
                     }
                 }

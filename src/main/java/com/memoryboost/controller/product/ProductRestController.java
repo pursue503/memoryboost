@@ -39,6 +39,10 @@ public class ProductRestController {
         return resultMap;
     }
 
+
+
+
+
     //타임리프 fragment 기능으로 대체됨.
 //    @GetMapping("/search-filter")
 //    public Map<String,Object> searchFilter(ProductFilterSearchRequestDTO filterDTO,

@@ -27,8 +27,6 @@ public class ProductMoveController {
         } catch (NullPointerException e) {
             return "error";
         }
-
-
     }
 
 }
