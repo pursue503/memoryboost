@@ -22,10 +22,7 @@ public class ProductDetailResponseVO {
     private List<String> productImagePath;
 
     private double gradeAvg;
-    private Long star1;
-    private int star2;
-    private int star3;
-    private int star4;
-    private int star5;
+
+    private List<ProductDetailStarVO> gradeStarList;
 
 }

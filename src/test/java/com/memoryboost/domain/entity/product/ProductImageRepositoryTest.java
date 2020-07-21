@@ -23,26 +23,26 @@ public class ProductImageRepositoryTest {
     @Autowired
     private ProductImageRepository productImageRepository;
 
-    @Before
-    public void saveProduct() {
-        Product product = productRepository.save(Product.builder().productName("갤럭시 GALAX 지포스 RTX 2070 SUPER EX OC D6 8GB PINK Edition").
-                productCategory(1)
-                .productThumbnail("주소~")
-                .productDescription("설명")
-                .productPrice(600000)
-                .build());
-
-        for(int i=0; i<5; i++) {
-            productImageRepository.save(ProductImage.builder().productNo(product).productImagePath(i + " 번째").build());
-        }
-
-    }
-
-    @After
-    public void deleteProduct() {
-        productImageRepository.deleteAll();
-        productRepository.deleteAll();
-    }
+//    @Before
+//    public void saveProduct() {
+//        Product product = productRepository.save(Product.builder().productName("갤럭시 GALAX 지포스 RTX 2070 SUPER EX OC D6 8GB PINK Edition").
+//                productCategory(1)
+//                .productThumbnail("주소~")
+//                .productDescription("설명")
+//                .productPrice(600000)
+//                .build());
+//
+//        for(int i=0; i<5; i++) {
+//            productImageRepository.save(ProductImage.builder().productNo(product).productImagePath(i + " 번째").build());
+//        }
+//
+//    }
+//
+//    @After
+//    public void deleteProduct() {
+//        productImageRepository.deleteAll();
+//        productRepository.deleteAll();
+//    }
 
     @Test
     public void productDetailTest() {
