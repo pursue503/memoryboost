@@ -385,7 +385,7 @@
             contentType: false,
         })
         .done(function(fragment) {
-            $("#criteria").replaceWith(fragment);
+            $("div.fragment-result").replaceWith(fragment);
         })
         .fail(function(response) {
             console.dir("통신 실패");
