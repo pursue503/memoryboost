@@ -2,48 +2,129 @@ div.content-container.search {
     display: flex;
     flex-direction: column;
 }
-
 /* 필터 */
-div.content-container.search > div.filter {
+div.content-container.search > form > div.filter {
     display: flex;
-    border: 1px solid #000;
+    width: 100%; height: 300px;
+    background-color: #FAFAFA;
 }
 
-div.content-container.search > div.filter > div#category {
+/* 카테고리 */
+div.content-container.search > form > div.filter > div#category {
     flex-basis: 20%;
-    border: 1px solid #000;
-    overflow-Y: scroll;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
 }
 
-div.content-container.search > div.filter > div#criteria {
+div.content-container.search > form > div.filter > div#category > label {
+    cursor: pointer;
+}
+
+div.content-container.search > form > div.filter > div#category > label:hover {
+    opacity: 0.5;
+}
+
+div.content-container.search > form > div.filter > div#category > input.category-radio {
+    /*display: none;*/
+}
+
+/* 스펙 */
+div.content-container.search > form > div.filter > div#criteria {
     flex-basis: 80%;
-    border: 1px solid #000;
+    overflow-y: scroll;
 }
 
-/* 결과 내 재검색 */
-div.content-container.search > div.detail-search {
-    height: 100px;
-    border: 1px solid #000;
+div.content-container.search > form > div.filter > div#criteria > div.criteria-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 17px;
+    color: var(--light-blue);
 }
 
+div.content-container.search > form > div.filter > div#criteria > div.criteria-elem {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+div.content-container.search > form > div.filter > div#criteria > div.criteria-elem > div.checkbox-elem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px; padding: 5px;
+}
+
+div.content-container.search > form > div.filter > div#criteria > div.criteria-elem > div.checkbox-elem > input[type=checkbox] {
+    margin: 3px;
+}
+
+div.content-container.search > form > div.filter > div#criteria > div.criteria-elem > div.checkbox-elem > label {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* 컨트롤러(정렬, 장바구니 담기) */
+div.content-container.search > form > div.controller {
+    height: 30px;
+    margin: 5px 0;
+}
+
+div.content-container.search > form > div.controller > button.btn.cartall {
+    float: left;
+    width: 80px; height: 30px;
+}
+
+div.content-container.search > form > div.controller > div.order {
+    float: right;
+    height: 30px;
+    margin: 0 5px;
+}
+
+div.content-container.search > form > div.controller > div.order > select{
+    height: 30px;
+    outline: none;
+}
+
+div.content-container.search > form > div.controller > div.layout {
+    float: right;
+}
+
+div.content-container.search > form > div.controller > div.layout > input[type=radio] {
+    /*display: none;*/
+}
+
+div.content-container.search > form > div.controller > div.layout > label.btn {
+    cursor: pointer;
+    font-size: 30px;
+    margin: 0 2px;
+}
+
+div.content-container.search > form > div.controller > div.layout > label.btn:hover {
+    opacity: 0.5;
+}
 /* 검색 결과 */
-div.content-container.search > div.result {
+div.content-container.search > form > div.fragment-result > div.result {
     display: flex;
     flex-direction: column;
 }
-/* 컨트롤러(정렬, 장바구니 담기) */
-div.content-container.search > div.result > div.controller {
-    height: 50px;
-    border: 1px solid #000;
+
+div.content-container.search > form > div.fragment-result > div.result.noresult {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
 }
 
 /*-------------------- 제품 목록(리스트 레이아웃) --------------------*/
-div.content-container.search > div.result > div.product-list {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list {
     display: flex;
     flex-direction: column;
 }
 
-div.content-container.search > div.result > div.product-list > div.product {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product {
     display: flex;
     height: 200px;
     margin: 5px 0;
@@ -51,7 +132,7 @@ div.content-container.search > div.result > div.product-list > div.product {
 }
 
 /****************************** 이미지 ******************************/
-div.content-container.search > div.result > div.product-list > div.product > div.image-div {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.image-div {
     position: relative;
     display: flex;
     justify-content: center;
@@ -59,16 +140,16 @@ div.content-container.search > div.result > div.product-list > div.product > div
     width: 200px;
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.image-div > img.product-image {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.image-div > img.product-image {
     cursor: pointer;
     width: 150px; height: 150px;
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.image-div > img.product-image:hover {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.image-div > img.product-image:hover {
     opacity: 0.5;
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.image-div > input[type=checkbox] {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.image-div > input[type=checkbox] {
     cursor: pointer;
     position: absolute;
     top: 5%; left: 5%;
@@ -77,19 +158,19 @@ div.content-container.search > div.result > div.product-list > div.product > div
     border: 2px solid rgba(255, 0, 0, 1.0);
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.image-div > input[type=checkbox]:hover {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.image-div > input[type=checkbox]:hover {
     opacity: 0.5;
 }
 
 /****************************** 제품정보 ******************************/
-div.content-container.search > div.result > div.product-list > div.product > div.product-info {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-info {
     display: flex;
     flex-direction: column;
     width: 900px;
 }
 
 /* 제품명 */
-div.content-container.search > div.result > div.product-list > div.product > div.product-info > div.product-name {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-info > div.product-name {
     cursor: pointer;
     flex-basis: 30%;
     display: flex;
@@ -97,31 +178,31 @@ div.content-container.search > div.result > div.product-list > div.product > div
     padding-left: 20px;
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.product-info > div.product-name:hover {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-info > div.product-name:hover {
     opacity: 0.5;
 }
 
 /* 제품상세 */
-div.content-container.search > div.result > div.product-list > div.product > div.product-info > div.product-detail {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-info > div.product-detail {
     cursor: pointer;
     flex-basis: 70%;
     padding: 0 20px;
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.product-info > div.product-detail:hover {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-info > div.product-detail:hover {
     opacity: 0.5;
     text-decoration: underline;
 }
 
 /****************************** 구매정보 ******************************/
-div.content-container.search > div.result > div.product-list > div.product > div.product-purchase {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-purchase {
     display: flex;
     flex-direction: column;
     width: 196px;
 }
 
 /* 가격 */
-div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.product-price {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-purchase > div.product-price {
     flex-basis: 35%;
     display: flex;
     justify-content: center;
@@ -129,26 +210,26 @@ div.content-container.search > div.result > div.product-list > div.product > div
     padding-top: 20px;
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.product-price::after {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-purchase > div.product-price::after {
     content: "원";
     font-size: 12px;
     margin-left: 2px;
 }
 
 /* 리뷰 */
-div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.review {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-purchase > div.review {
     flex-basis: 10%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.review.none {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-purchase > div.review.none {
     justify-content: center;
     color: var(--dim-gray);
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.review > div.grade {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-purchase > div.review > div.grade {
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -160,7 +241,7 @@ div.content-container.search > div.result > div.product-list > div.product > div
     overflow: hidden
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.review > div.grade > div.stars {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-purchase > div.review > div.grade > div.stars {
     background-image: url("/img/grade_star.png");
     background-size: 100px; 20px;
     background-repeat: no-repeat;
@@ -168,12 +249,12 @@ div.content-container.search > div.result > div.product-list > div.product > div
     overflow: hidden;
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.review > div.score {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-purchase > div.review > div.score {
     margin-left: 10px;
     font-weight: bold;
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.review > div.count {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-purchase > div.review > div.count {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -183,32 +264,32 @@ div.content-container.search > div.result > div.product-list > div.product > div
 }
 
 /* 구매버튼 */
-div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.interaction {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-purchase > div.interaction {
     flex-basis: 55%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-div.content-container.search > div.result > div.product-list > div.product > div.product-purchase > div.interaction > button.btn {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list > div.product > div.product-purchase > div.interaction > button.btn {
     width: 80px; height: 40px;
     margin: 0 1px;
 }
 
 /* 제품 목록(그리드 레이아웃) */
-div.content-container.search > div.result > div.product-list.grid {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid {
     flex-direction: row;
     flex-wrap : wrap;
 }
 
-div.content-container.search > div.result > div.product-list.grid > div.product {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid > div.product {
     flex-basis: 20%;
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-div.content-container.search > div.result > div.product-list.grid > div.product > div.image-div {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid > div.product > div.image-div {
     position: relative;
     display: flex;
     justify-content: center;
@@ -216,68 +297,65 @@ div.content-container.search > div.result > div.product-list.grid > div.product 
     width: inherit;
 }
 
-div.content-container.search > div.result > div.product-list.grid > div.product > div.image-div > img.product-image {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid > div.product > div.image-div > img.product-image {
     width: 200px; height: 200px;
 }
 
-div.content-container.search > div.result > div.product-list.grid > div.product > div.image-div > input[type=checkbox] {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid > div.product > div.image-div > input[type=checkbox] {
     top: 5%; left: 5%;
     width: 15px; height: 15px;
 }
 
-div.content-container.search > div.result > div.product-list.grid > div.product > div.product-info {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid > div.product > div.product-info {
     display: flex;
     flex-direction: column;
-    border: 1px solid #000;
     width: inherit;
 }
 
-div.content-container.search > div.result > div.product-list.grid > div.product > div.product-info > div.product-name {
-    flex-basis: 30%;
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid > div.product > div.product-info > div.product-name {
+    flex-basis: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #000;
+    height: 70px;
 }
 
-div.content-container.search > div.result > div.product-list.grid > div.product > div.product-info > div.product-detail {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid > div.product > div.product-info > div.product-detail {
     display: none;
 }
 
-div.content-container.search > div.result > div.product-list.grid > div.product > div.product-purchase {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid > div.product > div.product-purchase {
     display: flex;
     flex-direction: column;
-    border: 1px solid #000;
     width: inherit;
 }
 
-div.content-container.search > div.result > div.product-list.grid > div.product > div.product-purchase > div.product-price {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid > div.product > div.product-purchase > div.product-price {
     flex-basis: 35%;
-    border: 1px solid #000;
+    padding: 0;
 }
 
-div.content-container.search > div.result > div.product-list.grid > div.product > div.product-purchase > div.review {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid > div.product > div.product-purchase > div.review {
     flex-basis: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #000;
 }
 
-div.content-container.search > div.result > div.product-list.grid > div.product > div.product-purchase > div.interaction {
+div.content-container.search > form > div.fragment-result > div.result > div.product-list.grid > div.product > div.product-purchase > div.interaction {
     flex-basis: 55%;
-    border: 1px solid #000;
+    padding: 10px 0;
 }
 
 /* 페이징 */
-div.content-container.search > div.paging > form {
+div.content-container.search > form > div.fragment-result > div.paging {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 50px;
 }
 
-div.content-container.search > div.paging > form > button.btn {
+div.content-container.search > form > div.fragment-result > div.paging > button.btn {
     outline: none;
     background: none;
     border: 0;
