@@ -18,14 +18,10 @@ import com.memoryboost.domain.vo.product.response.ProductDetailResponseVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.CaseBuilder;
-import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -170,18 +166,33 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 jpaQuery.leftJoin(cpu).on(product.eq(cpu.productNo));
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(cpu.cpuCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(cpu.cpuGeneration.upper().eq(select.toUpperCase()));
+
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
+
                 if(filterDTO.getSelect3() != null) {
-                    for(String select : filterDTO.getSelect3()) {
-                        builder.or(cpu.cpuModel.upper().eq(select.toUpperCase()));
+
+                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
+                        if(i == 0) {
+                            builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect3()[i]));
+                        }
                     }
                 }
 
@@ -194,41 +205,74 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 jpaQuery.leftJoin(motherboard).on(product.eq(motherboard.productNo));
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(motherboard.motherboardCompany.upper().eq(select.toUpperCase()));
+
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
+
                 }
+
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(motherboard.motherboardSocket.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
+
                 if(filterDTO.getSelect3() != null) {
-                    for(String select : filterDTO.getSelect3()) {
-                        builder.or(motherboard.motherboardChipset.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
+                        if(i == 0) {
+                            builder.and(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
+                        }
                     }
                 }
+
+
                 break;
 
             case "vga":
                 if(filterDTO.nullCheck()) {
+                    System.out.println("카테고리실행");
                     builder.and(product.productCategory.eq(3));
                 }
 
                 jpaQuery.leftJoin(vga).on(product.eq(vga.productNo));
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(vga.vgaCompany.upper().eq(select.toUpperCase()));
+
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(vga.vgaChipset.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect3() != null) {
-                    for(String select : filterDTO.getSelect3()) {
-                        builder.or(vga.vgaSeries.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
+                        if(i == 0) {
+                            builder.and(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
+                        }
                     }
                 }
 
@@ -242,13 +286,21 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 jpaQuery.leftJoin(memory).on(product.eq(memory.productNo));
 
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(memory.memoryCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(memory.memorySize.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
 
@@ -262,13 +314,21 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 jpaQuery.leftJoin(hdd).on(product.eq(hdd.productNo));
 
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(hdd.hddCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(hdd.hddSize.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 break;
@@ -280,14 +340,22 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 jpaQuery.leftJoin(ssd).on(product.eq(ssd.productNo));
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(ssd.ssdCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
 
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(ssd.ssdSize.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 break;
@@ -299,13 +367,21 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 jpaQuery.leftJoin(qCase).on(product.eq(qCase.productNo));
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(qCase.caseCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(qCase.caseSize.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 break;
@@ -317,13 +393,21 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 jpaQuery.leftJoin(power).on(product.eq(power.productNo));
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(power.powerCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(power.powerWatt.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 break;
@@ -335,18 +419,30 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 jpaQuery.leftJoin(keyboard).on(product.eq(keyboard.productNo));
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(keyboard.keyboardCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(keyboard.keyboardConnection.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect3() != null) {
-                    for(String select : filterDTO.getSelect3()) {
-                        builder.or(keyboard.keyboardContact.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
+                        if(i == 0) {
+                            builder.and(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
+                        }
                     }
                 }
                 break;
@@ -358,13 +454,21 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 jpaQuery.leftJoin(mouse).on(product.eq(mouse.productNo));
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(mouse.mouseCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(mouse.mouseConnection.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
 
@@ -377,18 +481,30 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 jpaQuery.leftJoin(monitor).on(product.eq(monitor.productNo));
 
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(monitor.monitorCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(monitor.monitorPanel.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect3() != null) {
-                    for(String select : filterDTO.getSelect3()) {
-                        builder.or(monitor.monitorSize.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
+                        if(i == 0) {
+                            builder.and(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
+                        }
                     }
                 }
                 break;
@@ -441,18 +557,33 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "cpu":
 
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(cpu.cpuCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(cpu.cpuGeneration.upper().eq(select.toUpperCase()));
+
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
+
                 if(filterDTO.getSelect3() != null) {
-                    for(String select : filterDTO.getSelect3()) {
-                        builder.or(cpu.cpuModel.upper().eq(select.toUpperCase()));
+
+                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
+                        if(i == 0) {
+                            builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect3()[i]));
+                        }
                     }
                 }
 
@@ -462,18 +593,34 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "motherboard":
 
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(motherboard.motherboardCompany.upper().eq(select.toUpperCase()));
+
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
+
                 }
+
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(motherboard.motherboardSocket.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
+
                 if(filterDTO.getSelect3() != null) {
-                    for(String select : filterDTO.getSelect3()) {
-                        builder.or(motherboard.motherboardChipset.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
+                        if(i == 0) {
+                            builder.and(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
+                        }
                     }
                 }
                 return (int) queryFactory.select(motherboard.count()).from(motherboard)
@@ -482,18 +629,32 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "vga":
 
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(vga.vgaCompany.upper().eq(select.toUpperCase()));
+
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(vga.vgaChipset.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect3() != null) {
-                    for(String select : filterDTO.getSelect3()) {
-                        builder.or(vga.vgaSeries.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
+                        if(i == 0) {
+                            builder.and(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
+                        }
                     }
                 }
 
@@ -502,11 +663,23 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "memory":
 
-                for(String select : filterDTO.getSelect1()) {
-                    builder.or(memory.memoryCompany.upper().eq(select.toUpperCase()));
+                if(filterDTO.getSelect1() != null) {
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
                 }
-                for(String select : filterDTO.getSelect2()) {
-                    builder.or(memory.memorySize.upper().eq(select.toUpperCase()));
+                if(filterDTO.getSelect2() != null) {
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
                 }
                 return (int) queryFactory.select(memory.count()).from(memory)
                         .where(builder).fetchCount();
@@ -514,13 +687,21 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "hdd":
 
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(hdd.hddCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(hdd.hddSize.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 return (int) queryFactory.select(hdd.count()).from(hdd)
@@ -529,14 +710,22 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "ssd":
 
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(ssd.ssdCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
 
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(ssd.ssdSize.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 return (int) queryFactory.select(ssd.count())
@@ -544,13 +733,21 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "case":
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(qCase.caseCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(qCase.caseSize.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 return (int) queryFactory.select(qCase.count()).from(qCase)
@@ -559,13 +756,21 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "power":
 
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(power.powerCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(power.powerWatt.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
 
@@ -575,18 +780,30 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "keyboard":
 
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(keyboard.keyboardCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(keyboard.keyboardConnection.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect3() != null) {
-                    for(String select : filterDTO.getSelect3()) {
-                        builder.or(keyboard.keyboardContact.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
+                        if(i == 0) {
+                            builder.and(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
+                        }
                     }
                 }
                 return (int) queryFactory.select(keyboard.count()).from(keyboard)
@@ -595,13 +812,21 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "mouse":
 
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(mouse.mouseCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(mouse.mouseConnection.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
 
@@ -610,18 +835,30 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "monitor":
                 if(filterDTO.getSelect1() != null) {
-                    for(String select : filterDTO.getSelect1()) {
-                        builder.or(monitor.monitorCompany.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
+                        if(i == 0) {
+                            builder.and(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect2() != null) {
-                    for(String select : filterDTO.getSelect2()) {
-                        builder.or(monitor.monitorPanel.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
+                        if(i == 0) {
+                            builder.and(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
+                        }
                     }
                 }
                 if(filterDTO.getSelect3() != null) {
-                    for(String select : filterDTO.getSelect3()) {
-                        builder.or(monitor.monitorSize.upper().eq(select.toUpperCase()));
+                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
+                        if(i == 0) {
+                            builder.and(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
+                        }
                     }
                 }
                 return (int) queryFactory.select(monitor.count()).from(monitor)

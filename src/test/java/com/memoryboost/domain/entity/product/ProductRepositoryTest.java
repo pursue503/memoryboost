@@ -91,13 +91,15 @@ public class ProductRepositoryTest {
 
         ProductFilterSearchRequestDTO filterDTO = new ProductFilterSearchRequestDTO();
         filterDTO.setCategory("vga");
-        filterDTO.setSelect1(new String[] {"갤럭시"});
+        filterDTO.setSelect1(new String[] {"갤럭시","ZOTAC"});
+        filterDTO.setSelect2(new String[] {"2080Ti","2070SUPER"});
+        filterDTO.setSelect3(new String[] {"RTX","GTX"});
 
 
         List<ProductSearchResponseDTO> searchResponseDTO = productRepository.productFilterSearch(filterDTO,"priceDesc",1);
 
 
-        assertThat(searchResponseDTO.get(0).getProductName()).contains(filterDTO.getSelect1());
+        assertThat(searchResponseDTO.get(0).getProductName()).contains(filterDTO.getSelect1()[0]);
 
     }
 

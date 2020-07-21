@@ -22,10 +22,10 @@ public class ProductFilterSearchRequestDTO {
 
     public boolean nullCheck(){
 
-        if(select1 == null || select2 == null || select3 == null) {
-            return false;
-        } else {
+        if(select1 == null && select2 == null && select3 == null) {
             return true;
+        } else {
+            return false;
         }
 
     }

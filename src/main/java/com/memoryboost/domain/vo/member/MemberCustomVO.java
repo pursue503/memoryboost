@@ -129,6 +129,7 @@ public class MemberCustomVO implements UserDetails, CredentialsContainer, OAuth2
         return sortedAuthorities;
     }
 
+    //getter
     public Long getMemberId() {
         return memberId;
     }

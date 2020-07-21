@@ -25,14 +25,10 @@ import java.util.Map;
 @Controller
 public class MainController {
 
-
-
-
     @GetMapping("/")
     public String mainPage(HttpServletRequest request, Model model){
 
         return "main";
     }
-
 
 }
