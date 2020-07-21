@@ -3,13 +3,15 @@ package com.memoryboost.domain.vo.product.response;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProductDetailStarVO {
+@ToString
+public class ProductDetailReviewStarResponseVO {
 
-    private Long reviewGrade;
+    private Integer reviewGrade;
     private Long gradeCount;
 
 }

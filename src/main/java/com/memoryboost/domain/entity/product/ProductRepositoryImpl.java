@@ -13,10 +13,9 @@ import com.memoryboost.domain.entity.product.detail.power.QPower;
 import com.memoryboost.domain.entity.product.detail.ssd.QSsd;
 import com.memoryboost.domain.entity.product.detail.tbcase.QCase;
 import com.memoryboost.domain.entity.product.detail.vga.QVga;
-import com.memoryboost.domain.entity.product.review.ProductReview;
 import com.memoryboost.domain.entity.product.review.QProductReview;
 import com.memoryboost.domain.vo.product.response.ProductDetailResponseVO;
-import com.memoryboost.domain.vo.product.response.ProductDetailStarVO;
+import com.memoryboost.domain.vo.product.response.ProductDetailReviewStarResponseVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
@@ -730,7 +729,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                         }
                     }
                 }
-                return (int) queryFactory.select(ssd.count())
+                return (int) queryFactory.select(ssd.count()).from(ssd)
                         .where(builder).fetchCount();
 
             case "case":
@@ -885,10 +884,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         productDetailResponseVO.setProductImagePath(queryFactory.select(productImage.productImagePath)
                 .from(productImage).where(productImage.productNo.eq(productEntity)).fetch());
 
-//        productDetailResponseVO.setGradeAvg(queryFactory.select(productReview.reviewGrade.avg().as("gradeAvg"))
-//        .from(productReview).where(productReview.productNo.eq(productEntity)).fetchOne());
+        productDetailResponseVO.setGradeAvg(queryFactory.select(productReview.reviewGrade.avg().as("gradeAvg"))
+        .from(productReview).where(productReview.productNo.eq(productEntity)).fetchOne());
 
-        productDetailResponseVO.setGradeStarList(queryFactory.select(Projections.fields(ProductDetailStarVO.class,productReview.reviewGrade,
+        productDetailResponseVO.setGradeStarList(queryFactory.select(Projections.fields(ProductDetailReviewStarResponseVO.class,productReview.reviewGrade,
                 productReview.reviewGrade.count().as("gradeCount"))).from(productReview)
                 .where(productReview.productNo.eq(productEntity))
                 .groupBy(productReview.reviewGrade).fetch());

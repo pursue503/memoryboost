@@ -23,6 +23,6 @@ public class ProductDetailResponseVO {
 
     private double gradeAvg;
 
-    private List<ProductDetailStarVO> gradeStarList;
+    private List<ProductDetailReviewStarResponseVO> gradeStarList;
 
 }

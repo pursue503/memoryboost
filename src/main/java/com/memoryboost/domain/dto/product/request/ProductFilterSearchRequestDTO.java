@@ -5,11 +5,13 @@ import com.querydsl.core.BooleanBuilder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.util.StringUtils;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class ProductFilterSearchRequestDTO {
 
     //table 구분
