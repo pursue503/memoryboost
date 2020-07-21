@@ -2,11 +2,31 @@ div.content-container.search {
     display: flex;
     flex-direction: column;
 }
+
+div.content-container.search > div#spreader {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; height: 20px;
+    border-radius: 5px;
+    margin-top: 5px;
+    background-color: var(--gray);
+}
+
+div.content-container.search > div#spreader:hover {
+    opacity: 0.5;
+}
+
 /* 필터 */
 div.content-container.search > form > div.filter {
     display: flex;
-    width: 100%; height: 300px;
+    width: 100%; height: 0px;
     background-color: #FAFAFA;
+    transition-duration: 0.5s;
+}
+div.content-container.search > form > div.filter.spread {
+    height: 200px;
 }
 
 /* 카테고리 */
@@ -26,16 +46,21 @@ div.content-container.search > form > div.filter > div#category > label:hover {
 }
 
 div.content-container.search > form > div.filter > div#category > input.category-radio {
-    /*display: none;*/
+    display: none;
 }
 
 /* 스펙 */
-div.content-container.search > form > div.filter > div#criteria {
+div.content-container.search > form > div.filter > div.criteria {
+    display: none;
     flex-basis: 80%;
     overflow-y: scroll;
 }
 
-div.content-container.search > form > div.filter > div#criteria > div.criteria-title {
+div.content-container.search > form > div.filter > div.criteria.none {
+    display: block;
+}
+
+div.content-container.search > form > div.filter > div.criteria > div.criteria-title {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -44,23 +69,23 @@ div.content-container.search > form > div.filter > div#criteria > div.criteria-t
     color: var(--light-blue);
 }
 
-div.content-container.search > form > div.filter > div#criteria > div.criteria-elem {
+div.content-container.search > form > div.filter > div.criteria > div.criteria-elem {
     display: flex;
     flex-wrap: wrap;
 }
 
-div.content-container.search > form > div.filter > div#criteria > div.criteria-elem > div.checkbox-elem {
+div.content-container.search > form > div.filter > div.criteria > div.criteria-elem > div.checkbox-elem {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 5px; padding: 5px;
 }
 
-div.content-container.search > form > div.filter > div#criteria > div.criteria-elem > div.checkbox-elem > input[type=checkbox] {
+div.content-container.search > form > div.filter > div.criteria > div.criteria-elem > div.checkbox-elem > input[type=checkbox] {
     margin: 3px;
 }
 
-div.content-container.search > form > div.filter > div#criteria > div.criteria-elem > div.checkbox-elem > label {
+div.content-container.search > form > div.filter > div.criteria > div.criteria-elem > div.checkbox-elem > label {
     cursor: pointer;
     font-size: 14px;
 }
@@ -92,7 +117,7 @@ div.content-container.search > form > div.controller > div.layout {
 }
 
 div.content-container.search > form > div.controller > div.layout > input[type=radio] {
-    /*display: none;*/
+    display: none;
 }
 
 div.content-container.search > form > div.controller > div.layout > label.btn {
@@ -108,6 +133,7 @@ div.content-container.search > form > div.controller > div.layout > label.btn:ho
 div.content-container.search > form > div.fragment-result > div.result {
     display: flex;
     flex-direction: column;
+    z-index: 999;
 }
 
 div.content-container.search > form > div.fragment-result > div.result.noresult {

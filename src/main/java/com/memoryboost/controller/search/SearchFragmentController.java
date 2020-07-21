@@ -26,7 +26,7 @@ public class SearchFragmentController {
                          @RequestParam(value = "layout", required = false, defaultValue = "list") String layout, Model model ){
 
         model.addAttribute("keyword", keyword);
-        model.addAttribute("layout","list");
+        model.addAttribute("layout", layout);
         model.addAttribute("product", productService.productSearch(keyword,order,page));
         model.addAttribute("paging",pagingService.searchPaging(keyword,page));
         return "search/search :: fragment-result";
