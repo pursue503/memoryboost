@@ -23,7 +23,7 @@ public class ProductMoveController {
     public String productDetail(@PathVariable("productNo") Long productNo, Model model) {
         try{
             model.addAttribute("product",productService.productDetail(productNo));
-            return "페이지";
+            return "product/product-detail";
         } catch (NullPointerException e) {
             return "error";
         }

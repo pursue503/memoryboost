@@ -314,7 +314,8 @@
                      class="product-list">
                     <div th:each="product : ${product}" th:classappend="|${product.productCategory} ${product.productNo}|" class="product">
                         <div class="image-div">
-                            <img th:src="${product.productThumbnail}" class="product-image" />
+                            <img th:src="${product.productThumbnail}" class="product-image"
+                                 th:onclick="|location.href='product/detail/${product.productNo}'|"/>
                             <input th:classappend="|${product.productCategory} ${product.productNo}|" type="checkbox" />
                         </div>
                         <div class="product-info">
