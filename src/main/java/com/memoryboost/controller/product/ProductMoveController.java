@@ -22,7 +22,7 @@ public class ProductMoveController {
     private final PagingService pagingService;
 
 
-    @GetMapping("/product/detail/{productNo}")
+    @GetMapping("/product-detail/{productNo}")
     public String productDetail(@PathVariable("productNo") Long productNo,Model model,
                                 @RequestParam(value = "order", required = false, defaultValue = "0") int order,
                                 @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
