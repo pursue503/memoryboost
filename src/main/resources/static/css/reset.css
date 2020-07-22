@@ -8,6 +8,7 @@
     --warning: #ff9900;
     --danger: #ee5f5b;
     --success: #62c462;
+    --less: #909090;
     --blue: #007bff;
     --light-blue: #3366ff;
 }
@@ -83,6 +84,10 @@ div.content-container {
     color: var(--success);
 }
 
+.text.less {
+    color: var(--less);
+}
+
 .text.dim {
     font-size: 12px;
     color: var(--dim-gray);
@@ -119,6 +124,10 @@ div.content-container {
 
 .char.success {
     color: var(--success);
+}
+
+.char.less {
+    color: var(--less);
 }
 
 .char.dim {

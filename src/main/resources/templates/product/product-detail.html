@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
-    <title></title>
+    <title th:text="${product.productName}"></title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--
@@ -19,16 +19,212 @@
     <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/header-style.css" />
     <link rel="stylesheet" href="/css/product/product-detail-style.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
+    <script src="/js/header-refined.js"></script>
     <script src="/js/product/product-detail.js"></script>
 </head>
 <body>
-<header th:replace="header.html"></header>
-<div class="content-container">
-    <!-- 이곳에 내용을 입력 -->
+<header th:replace="header.html :: header"></header>
+<div class="content-container product-detail">
+    <!--<th:block th:text="${product}"></th:block><br /><br />-->
+    <!--
+    <th:block>
+        상품정보, 구매
+        <th:block th:text="${product.productNo}"></th:block><br />
+        <th:block th:text="${product.productThumbnail}"></th:block><br />
+        <th:block th:text="${product.productName}"></th:block><br />
+        <th:block th:text="${product.productCategory}"></th:block><br />
+        <th:block th:text="${product.productDescription}"></th:block><br />
+        <th:block th:text="${product.productPrice}"></th:block><br />
+        <th:block th:text="${product.productImagePath}"></th:block><br />
+        <th:block th:text="${product.gradeAvg}"></th:block><br />
+        <th:block th:text="${#lists.size(product.gradeStarList)}"></th:block><br />
+        <th:block th:each="grade : ${product.gradeStarList}">
+            <th:block th:text="${grade}"></th:block><br />
+        </th:block>
+    </th:block>-->
+    <!--<th:block th:text="${#numbers.formatDecimal(0*1.0/(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5)*100, 0, 2)}"></th:block>-->
+    <!-- 타이틀 -->
+    <div th:classappend="title">
+        <div th:classappend="|product-name char title|" th:text="${product.productName}"></div>
+        <div th:classappend="|product-description char sub less|" th:text="${product.productDescription}"></div>
+    </div>
+    <!-- 이미지, 구매 -->
+    <div th:classappend="product">
+        <!-- 이미지 -->
+        <div th:classappend="product-image">
+            <img th:src="${product.productThumbnail}" />
+            <div th:classappend="thumbnail-list">
+                <img th:src="|http://placehold.it/30x30|" />
+                <img th:src="|http://placehold.it/30x30|" />
+                <img th:src="|http://placehold.it/30x30|" />
+            </div>
+        </div>
+        <!-- 우측 -->
+        <div th:classappend="right">
+            <!-- 가격, 평가, 배송비 -->
+            <div th:classappend="summary">
+                <div>
+                    <h3 th:text="가격"></h3>
+                    <div th:classappend="|product-price char title|" th:text="|${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}|"></div><div th:classappend="won" th:text="원"></div>
+                </div>
+                <div>
+                    <h3 th:text="평가"></h3>
+                    <div th:classappend="product-grade">
+                        <div th:classappend="star"
+                             th:style="|width: ${product.gradeAvg*20}px;|"></div>
+                    </div>
+                    <div th:text="${#numbers.formatDecimal(product.gradeAvg, 1, 1)}"></div>
+                    <div th:classappend="|count char less|"
+                         th:text="|(${#numbers.formatInteger(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5, 0, 'COMMA')})|"></div>
+                </div>
+                <div>
+                    <h3 th:text="배송비"></h3>
+                    <div th:classappend="shipment-fee" th:text="|${#numbers.formatInteger(2500, 0, 'COMMA')}원|"></div>
+                </div>
+            </div>
+            <!-- 수량변경 -->
+            <div th:classappend="interaction">
+                <span th:classappend="|text normal less|" th:text="${product.productName}"></span>
+                <span th:classappend="|price char sub|" th:data-value="${product.productPrice}" th:text="${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}"></span>
+                <span th:classappend="product-amount">
+                    <button th:classappend="|btn amount down fas fa-minus|"></button>
+                    <input th:classappend="amount" th:type="text" th:name="amount" th:value="1"/>
+                    <button th:classappend="|btn amount up fas fa-plus|"></button>
+                </span>
+            </div>
+            <!-- 총 가격 -->
+            <div th:classappend="total-price">
+                <div th:classappend="|char normal|" th:text="|총 금액|"></div>
+                <div th:classappend="|price text title danger|" th:text="|${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}원|"></div>
+            </div>
+            <!-- 장바구니, 구매 버튼 -->
+            <div th:classappend="buttons">
+                <button th:classappend="|cart fas fa-shopping-cart|" th:text="장바구니"></button>
+                <button th:classappend="|purchase|">구매하기</button>
+            </div>
+        </div>
+    </div>
+    <!-- 컨트롤 -->
+    <div th:classappend="control">
+        <div th:classappend="|btn control detail|">상세정보</div>
+        <div th:classappend="|btn control review|">후기</div>
+        <div th:classappend="|btn control shipment|">배송/교환/환불안내</div>
+    </div>
+    <div th:classappend="flow">
+        <div th:classappend="matter"></div>
+    </div>
+    <!-- 상세설명 이미지 -->
+    <div th:classappend="description-image">
+        <th:block th:each="image : ${product.productImagePath}">
+            <img th:src="${image}" />
+        </th:block>
+    </div>
+    <!-- 후기 -->
+    <div th:classappend="product-review">
+        <!-- 후기 타이틀(몇명인지) -->
+        <div th:classappend="title">
+            <th:block th:with="count = ${product.grade1+product.grade2+product.grade3+product.grade4+product.grade5}">
+                <h3 th:text="구매후기"></h3>
+                <span th:classappend="|char normal enlighten|" th:text="${#numbers.formatInteger(count, 0, 'COMMA')}"></span>
+            </th:block><br />
+        </div>
+        <!-- 평점 상세 -->
+        <div th:classappend="grade">
+            <!-- 별 -->
+            <div th:classappend="star">
+                <h3 th:text="평점"></h3>
+                <div th:classappend="back">
+                    <div th:classappend="inside" th:style="|width: ${product.gradeAvg*30}px;|"></div>
+                </div>
+                <div th:classappend="|score char title bold|" th:text="${#numbers.formatDecimal(product.GradeAvg, 1, 1)}"></div>
+            </div>
+            <!-- 그래프 -->
+            <div th:classappend="graph">
+                <h3>평점비율</h3>
+                <div>
+                    <div th:classappend="ratio">
+                        <div th:classappend="count">
+                            <div th:if="${product.grade5 > 0}" th:classappend="|tag text sub|" th:text="${#numbers.formatInteger(product.grade5, 0, 'COMMA')}"
+                                 th:stlye="|position: absolute; left: 0; bottom: ${#numbers.formatDecimal(product.grade5*1.0/(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5)*100, 0, 2)}%;|"></div>
+                            <div th:classappend="bar"
+                                 th:if="${(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5) != 0}"
+                                 th:style="|height: ${#numbers.formatDecimal(product.grade5*1.0/(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5)*100, 0, 2)}%;|"></div>
+                        </div>
+                        <div th:classappend="|char sub|" th:text="5점"></div>
+                    </div>
+                    <div th:classappend="ratio">
+                        <div th:classappend="count">
+                            <div th:if="${product.grade4 > 0}" th:classappend="|tag text sub|" th:text="${#numbers.formatInteger(product.grade4, 0, 'COMMA')}"
+                                 th:stlye="|bottom: ${#numbers.formatDecimal(product.grade4*1.0/(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5)*100, 0, 2)}%;|"></div>
+                            <div th:classappend="bar"
+                                 th:if="${(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5) != 0}"
+                                 th:style="|height: ${#numbers.formatDecimal(product.grade4*1.0/(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5)*100, 0, 2)}%;|"></div>
+                        </div>
+                        <div th:classappend="|char sub|" th:text="4점"></div>
+                    </div>
+                    <div th:classappend="ratio">
+                        <div th:classappend="count">
+                            <div th:if="${product.grade3 > 0}" th:classappend="|tag text sub|" th:text="${#numbers.formatInteger(product.grade3, 0, 'COMMA')}"></div>
+                            <div th:classappend="bar"
+                                 th:if="${(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5) != 0}"
+                                 th:style="|height: ${#numbers.formatDecimal(product.grade3*1.0/(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5)*100, 0, 2)}%;|"></div>
+                        </div>
+                        <div th:classappend="|char sub|" th:text="3점"></div>
+                    </div>
+                    <div th:classappend="ratio">
+                        <div th:classappend="count">
+                            <div th:if="${product.grade2 > 0}" th:classappend="|tag text sub|" th:text="${#numbers.formatInteger(product.grade2, 0, 'COMMA')}"></div>
+                            <div th:classappend="bar"
+                                 th:if="${(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5) != 0}"
+                                 th:style="|height: ${#numbers.formatDecimal(product.grade2*1.0/(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5)*100, 0, 2)}%;|"></div>
+                        </div>
+                        <div th:classappend="|char sub|" th:text="2점"></div>
+                    </div>
+                    <div th:classappend="ratio">
+                        <div th:classappend="count">
+                            <div th:if="${product.grade1 > 0}" th:classappend="|tag text sub|" th:text="${#numbers.formatInteger(product.grade1, 0, 'COMMA')}"></div>
+                            <div th:classappend="bar"
+                                 th:if="${(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5) != 0}"
+                                 th:style="|height: ${#numbers.formatDecimal(product.grade1*1.0/(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5)*100, 0, 2)}%;|"></div>
+                        </div>
+                        <div th:classappend="|char sub|" th:text="1점"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 리뷰 게시판 -->
+        <div th:classappend="board">
+            <table>
+                <tr>
+                    <th>번호</th>
+                    <th>별점</th>
+                    <th>내용</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>5.0</td>
+                    <td>가성비 좋았지만 바이럴로 다 망친 제품</td>
+                    <td>abd****(마지막 네글자 *처리)</td>
+                    <td>2020-07-22</td>
+                </tr>
+                    <td></td>
+                    <td></td>
+                    <td>리사수 리사수 하지만 총판이 바이럴해서 이미지 하락한 회사 ㅋㅋㅋ</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- 배송/교환/환불 안내 -->
+    <div th:text="|배송/교환/환불 안내|"></div>
 </div>
 <footer th:replace="footer.html"></footer>
 </body>
