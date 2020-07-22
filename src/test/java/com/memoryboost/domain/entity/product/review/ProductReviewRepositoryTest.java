@@ -1,18 +1,14 @@
 package com.memoryboost.domain.entity.product.review;
 
-import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.member.MemberRepository;
-import com.memoryboost.domain.entity.product.Product;
 import com.memoryboost.domain.entity.product.ProductRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Optional;
-import java.util.Random;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,10 +24,16 @@ public class ProductReviewRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private JPAQueryFactory queryFactory;
 
     @Test
-    public void dsfasf(){
-        log.info("test");
-    }
+    public void findByProductDetailReviewTest(){
 
+//        Product product = productRepository.findById(1L).orElseThrow(NullPointerException::new);
+//
+//        List<ProductDetailReviewResponseDTO> reviewResponseDTOList = productReviewRepository.findByProductDetailReview(product);
+//        reviewResponseDTOList.forEach(rere -> log.info(rere.toString()));
+        log.info("sd");
+    }
 }

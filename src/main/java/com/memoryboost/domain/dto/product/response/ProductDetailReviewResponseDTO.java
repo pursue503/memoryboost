@@ -13,7 +13,7 @@ import java.util.Date;
 @ToString
 public class ProductDetailReviewResponseDTO {
 
-    private Integer number;
+    private Long number;
     private String memberName;
     private String reviewTitle;
     private String reviewContent;

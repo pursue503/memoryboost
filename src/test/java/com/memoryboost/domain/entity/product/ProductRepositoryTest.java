@@ -1,9 +1,11 @@
 package com.memoryboost.domain.entity.product;
 
 import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
+import com.memoryboost.domain.dto.product.response.ProductDetailReviewResponseDTO;
 import com.memoryboost.domain.dto.product.response.ProductSearchResponseDTO;
 import com.memoryboost.domain.entity.product.detail.vga.Vga;
 import com.memoryboost.domain.entity.product.detail.vga.VgaRepository;
+import com.memoryboost.domain.vo.product.response.ProductDetailResponseVO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Before;
@@ -86,21 +88,21 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void filterSearchTest(){
+    public void filterSearchTest() {
 
 
         ProductFilterSearchRequestDTO filterDTO = new ProductFilterSearchRequestDTO();
         filterDTO.setCategory("vga");
-        filterDTO.setSelect1(new String[] {"갤럭시","ZOTAC"});
-        filterDTO.setSelect2(new String[] {"2080Ti","2070SUPER"});
-        filterDTO.setSelect3(new String[] {"RTX","GTX"});
+        filterDTO.setSelect1(new String[]{"갤럭시", "ZOTAC"});
+        filterDTO.setSelect2(new String[]{"2080Ti", "2070SUPER"});
+        filterDTO.setSelect3(new String[]{"RTX", "GTX"});
 
 
-        List<ProductSearchResponseDTO> searchResponseDTO = productRepository.productFilterSearch(filterDTO,"priceDesc",1);
+        List<ProductSearchResponseDTO> searchResponseDTO = productRepository.productFilterSearch(filterDTO, "priceDesc", 1);
 
 
         assertThat(searchResponseDTO.get(0).getProductName()).contains(filterDTO.getSelect1()[0]);
-
     }
+
 
 }
