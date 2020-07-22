@@ -13,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -23,14 +25,16 @@ public class CartService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Boolean cartSave(CartSaveRequestDTO cartSaveRequestDTO, Authentication authentication) {
+    public Boolean cartSave(List<CartSaveRequestDTO> cartSaveRequestDTOList, Authentication authentication) {
 
         MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
         Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
-        Product product = productRepository.findById(cartSaveRequestDTO.getProductNo()).orElseThrow(NullPointerException::new);
+        for(CartSaveRequestDTO cart : cartSaveRequestDTOList) {
+            Product product = productRepository.findById(cart.getProductNo()).orElseThrow(NullPointerException::new);
+            cartRepository.save(cart.toEntity(product,member));
+        }
 
-
-        return  cartRepository.save(cartSaveRequestDTO.toEntity(product,member)).getCartNo() >=1 ? true : false;
+        return  true;
     }
 
 }

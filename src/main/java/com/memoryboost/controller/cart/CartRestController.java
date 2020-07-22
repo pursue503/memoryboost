@@ -5,11 +5,11 @@ import com.memoryboost.service.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -21,11 +21,16 @@ public class CartRestController {
 
     //상품넣기
     @PostMapping("/cart")
-    public Map<String,Boolean> cartSave(CartSaveRequestDTO cartSaveRequestDTO , Authentication authentication) {
+    public Map<String,Boolean> cartSave(List<CartSaveRequestDTO> cartSaveRequestDTO , Authentication authentication) {
+        Map<String, Boolean> resultMap = new HashMap<>();
+        try {
 
-        Map<String , Boolean> resultMap = new HashMap<>();
-        resultMap.put("result",cartService.cartSave(cartSaveRequestDTO,authentication));
-        return resultMap;
+            resultMap.put("result", cartService.cartSave(cartSaveRequestDTO, authentication));
+            return resultMap;
+        } catch (NullPointerException e) {
+            resultMap.put("result", false);
+            return resultMap;
+        }
     }
 
 }
