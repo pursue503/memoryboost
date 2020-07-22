@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -26,21 +27,41 @@ public class ProductDetailResponseVO {
 
     private double gradeAvg;
 
-    private List<ProductDetailReviewStarResponseVO> starList;
+    private Long grade1,grade2,grade3,grade4,grade5;
 
-    public void starListSetting(){
+    public void starListSetting(List<ProductDetailReviewStarResponseVO> starList){
 
-        int size = starList.size();
         List<Integer> reviewGradeList = new ArrayList<>();
-        if(size < 5) {
+        if(starList.size() < 5) {
             for(ProductDetailReviewStarResponseVO star : starList) {
                 reviewGradeList.add(star.getReviewGrade());
             }
+            for(int i=5; i>=1; i--) {
+                if(!reviewGradeList.contains(i)) {
+                    starList.add(new ProductDetailReviewStarResponseVO(i,0L));
+                }
+            }
+
         }
 
-        for(int i=5; i>=1; i--) {
-            if(!reviewGradeList.contains(i)) {
-                starList.add(new ProductDetailReviewStarResponseVO(i,0L));
+        for(ProductDetailReviewStarResponseVO star : starList) {
+            switch (star.getReviewGrade()) {
+                case 1:
+                    this.grade1 = star.getGradeCount();
+                    break;
+                case 2:
+                    this.grade2 = star.getGradeCount();
+                    break;
+                case 3 :
+                    this.grade3 = star.getGradeCount();
+                    break;
+                case 4:
+                    this.grade4 = star.getGradeCount();
+                    break;
+                case 5:
+                    this.grade5 = star.getGradeCount();
+                    break;
+
             }
         }
 

@@ -1,6 +1,7 @@
 package com.memoryboost.service.product;
 
 import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
+import com.memoryboost.domain.dto.product.response.ProductDetailReviewResponseDTO;
 import com.memoryboost.domain.dto.product.response.ProductSearchResponseDTO;
 import com.memoryboost.domain.entity.product.Product;
 import com.memoryboost.domain.entity.product.ProductRepository;

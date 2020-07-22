@@ -1,7 +1,9 @@
 package com.memoryboost.service.paging;
 
 import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
+import com.memoryboost.domain.entity.product.Product;
 import com.memoryboost.domain.entity.product.ProductRepository;
+import com.memoryboost.domain.entity.product.review.ProductReviewRepository;
 import com.memoryboost.util.paging.PagingUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,8 @@ public class PagingService {
 
     //상품 repository
     private final ProductRepository productRepository;
+    private final ProductReviewRepository reviewRepository;
+
 
     @Transactional(readOnly = true)
     public PagingUtil searchPaging(String keyword, int page) {
@@ -36,6 +40,18 @@ public class PagingService {
         PagingUtil paging= new PagingUtil();
         paging.setTotalResult(productRepository.countByFilterSearch(filterDTO));
 
+        paging.setPage(page);
+        paging.pageSetting();
+        return paging;
+    }
+
+    @Transactional(readOnly = true)
+    public PagingUtil productDetailReviewPaging(Long productNo,int page) {
+
+        Product product = productRepository.findById(productNo).orElseThrow(NullPointerException::new);
+
+        PagingUtil paging = new PagingUtil();
+        paging.setTotalResult(reviewRepository.countByProductDetailReview(product));
         paging.setPage(page);
         paging.pageSetting();
         return paging;

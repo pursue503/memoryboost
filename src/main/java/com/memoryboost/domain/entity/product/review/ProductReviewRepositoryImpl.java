@@ -16,7 +16,7 @@ public class ProductReviewRepositoryImpl implements ProductReviewRepositoryCusto
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<ProductDetailReviewResponseDTO> findByProductDetailReview(Product product , Long order, Long page) {
+    public List<ProductDetailReviewResponseDTO> findByProductDetailReview(Product product , int order, int page) {
         QMember member = QMember.member;
         QProductReview productReview = QProductReview.productReview;
         //order 0 =  최신 ,  1 = 평점순

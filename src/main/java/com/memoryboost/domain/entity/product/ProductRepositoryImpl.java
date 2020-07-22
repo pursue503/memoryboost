@@ -892,12 +892,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         }
 
 
-        productDetailResponseVO.setStarList(queryFactory.select(Projections.fields(ProductDetailReviewStarResponseVO.class,productReview.reviewGrade,
+        productDetailResponseVO.starListSetting(queryFactory.select(Projections.fields(ProductDetailReviewStarResponseVO.class,productReview.reviewGrade,
                 productReview.reviewGrade.count().as("gradeCount"))).from(productReview)
                 .where(productReview.productNo.eq(productEntity))
-                .groupBy(productReview.reviewGrade).fetch());
-
-        productDetailResponseVO.starListSetting();
+                .groupBy(productReview.reviewGrade).orderBy(productReview.reviewGrade.desc()).fetch());
 
         return productDetailResponseVO;
     }

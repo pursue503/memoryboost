@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProductReviewRepositoryCustom {
 
-    List<ProductDetailReviewResponseDTO> findByProductDetailReview(Product product , Long order , Long page);
+    List<ProductDetailReviewResponseDTO> findByProductDetailReview(Product product , int order , int page);
 
     int countByProductDetailReview(Product product);
 
