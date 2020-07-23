@@ -2,6 +2,7 @@ package com.memoryboost.domain.entity.cart;
 
 import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.product.Product;
+import com.memoryboost.domain.vo.cart.request.CartProductCountUpdateRequestVO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,4 +36,9 @@ public class Cart {
         this.product = product;
         this.productCnt = productCnt;
     }
+
+    public void cartProductCountUpdate(CartProductCountUpdateRequestVO updateRequestVO) {
+        this.productCnt = updateRequestVO.getProductCnt();
+    }
+
 }
