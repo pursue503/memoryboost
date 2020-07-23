@@ -42,16 +42,27 @@ div.product > div.product-image {
 }
 
 div.product > div.product-image > img {
+    cursor: pointer;
     width: 100px; height: 100px;
 }
 
+div.product > div.product-image > img:hover {
+    opacity: 0.5;
+}
+
 div.product > div.product-name {
+    cursor: pointer;
     flex-basis: 45%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding-left: 10px;
     /*background-color: #97FF97;*/
+}
+
+div.product > div.product-name:hover {
+    opacity: 0.5;
+    text-decoration: underline;
 }
 
 div.product > div.product-price {

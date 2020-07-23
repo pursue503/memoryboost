@@ -51,10 +51,10 @@
                 <input th:classappend="chkbox" th:type="checkbox" th:data-productnum="${cart.productNo}" th:value="${cart.cartNo}" th:checked="false" />
             </div>
             <div th:classappend="product-image">
-                <img th:src="${cart.productThumbnail}" />
+                <img th:src="${cart.productThumbnail}" th:onclick="|location.href='product-detail/${cart.productNo}'|" />
             </div>
-            <div th:classappend="product-name" th:text="${cart.productName}"></div>
-            <div th:classappend="product-price" th:text="${#numbers.formatInteger(cart.productPrice, 0, 'COMMA')}"></div>
+            <div th:classappend="product-name" th:text="${cart.productName}" th:onclick="|location.href='product-detail/${cart.productNo}'|"></div>
+            <div th:classappend="product-price" th:text="${#numbers.formatInteger((cart.productPrice*cart.productCnt), 0, 'COMMA')}"></div>
             <div th:classappend="control">
                 <form action="/cart" method="POST" th:classappend="|form-amount ${cart.productNo}|">
                     <select th:data-prev="${cart.productCnt}" th:data-price="${#numbers.formatInteger(cart.productPrice, 0)}" th:classappend="amount" th:name="productCnt">
