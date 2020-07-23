@@ -120,13 +120,105 @@ $(document).on("click", ".btn.page", function(e) {
 //장바구니 모두 추가
 $(document).on("click", ".btn.cartall", function(e) {
     e.preventDefault();
-    console.dir("장바구니 모두 추가");
+
+    let chkbox = $(".cartchk");
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    var params = new Array();
+
+    for(let a of chkbox) {
+        if(a.checked) {
+            let obj = {
+                productNo : Number(a.dataset.num),
+                productCnt : 1
+            };
+
+            params.push(obj);
+        }
+    }
+
+    $.ajax({
+        type : "POST",
+        url : "/cart",
+        data : JSON.stringify(params),
+        processData : false,
+        contentType: "application/json",
+        async : true,
+        cache : false,
+        beforeSend : function(xhr) {
+            xhr.setRequestHeader(header, token);
+        }
+    })
+    .done(function(response) {
+        if(response.result == undefined) {
+            let toSignin= confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?");
+            if(toSignin){
+                location.href = "/members/signin";
+            }
+        } else if(response.result == true) {
+            let toCartPage = confirm("장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
+            if(toCartPage) {
+                location.href = "/members/mypage";
+            }
+        }
+    })
+    .fail(function(response) {
+        console.dir("통신 실패");
+    })
 });
 
-//장바구니, 바로구매
-$(document).on("click", ".btn.addcart, .btn.purchase", function(e) {
+//장바구니
+$(document).on("click", ".btn.addcart", function(e) {
     e.preventDefault();
-    console.dir("장바구니 / 바로구매")
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    let productNum = Number(e.target.dataset.num);
+    let productAmount = 1;
+
+    var params = new Array();
+
+    let obj = {
+        productNo : productNum,
+        productCnt : productAmount
+    };
+
+    params.push(obj);
+
+    $.ajax({
+        type : "POST",
+        url : "/cart",
+        data : JSON.stringify(params),
+        processData : false,
+        contentType: "application/json",
+        async : true,
+        cache : false,
+        beforeSend : function(xhr) {
+            xhr.setRequestHeader(header, token);
+        }
+    })
+    .done(function(response) {
+        if(response.result == undefined) {
+            let toSignin= confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?");
+            if(toSignin){
+                location.href = "/members/signin";
+            }
+        } else if(response.result == true) {
+            let toCartPage = confirm("장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
+            if(toCartPage) {
+                location.href = "/members/mypage";
+            }
+        }
+    })
+    .fail(function(response) {
+        console.dir("통신 실패");
+    })
+});
+
+//구매
+$(document).on("click", ".btn.purchase", function(e) {
+    e.preventDefault();
+    console.dir("구매")
 });
 
 //테스트

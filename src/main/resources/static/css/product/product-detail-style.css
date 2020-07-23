@@ -169,14 +169,20 @@ div.product-detail > div.product > div.right > div.buttons > button.purchase {
 }
 
 /* 컨트롤 탭 */
-div.product-detail > div.control {
+div.product-detail > div.control-tab {
+    width: 100%;
+    background-color: var(--white);
+    z-index: 100;
+}
+
+div.product-detail > div.control-tab > div.control {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 30px;
 }
 
-div.product-detail > div.control > div {
+div.product-detail > div.control-tab > div.control > div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -187,30 +193,37 @@ div.product-detail > div.control > div {
 }
 
 /* 컨트롤 탭 인디케이터 */
-div.product-detail > div.flow {
+div.product-detail > div.control-tab > div.indicator {
     position: relative;
     width: 100%; height: 5px;
     background-color: var(--light-gray);
 }
 
-div.product-detail > div.flow > div.matter {
+div.product-detail > div.control-tab > div.indicator > div.matter {
     position: absolute;
     top: 0; left: 0;
     width: 33.3%; height: 5px;
     background-color: var(--light-blue);
-    transition-duration: 0.2s;
+    transition-duration: 0.3s;
 }
 
-div.product-detail > div.flow.detail > div.matter {
+div.product-detail > div.control-tab > div.indicator.detail > div.matter {
     left: 0;
 }
 
-div.product-detail > div.flow.review > div.matter {
+div.product-detail > div.control-tab > div.indicator.review > div.matter {
     left: 33.3%;
 }
 
-div.product-detail > div.flow.shipment > div.matter {
+div.product-detail > div.control-tab > div.indicator.shipment > div.matter {
     left: 66.6%;
+}
+
+/* 컨트롤 탭 고정됨 */
+div.product-detail > div.control-tab.onfix {
+    position: fixed;
+    top: 0px;
+    width: 1300px;
 }
 
 /* 상세정보 이미지 */
@@ -328,9 +341,136 @@ div.product-detail > div.product-review > div.grade > div.graph > div > div.rati
     background-color: rgba(255, 0, 0, 0.7);
 }
 
-div.product-detail > div.product-review > div.grade > div.graph > div > div.ratio > div.count > span.tag {
-
-}
+/* 후기 게시판 */
 div.product-detail > div.product-review > div.board {
-    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+div.product-detail > div.product-review > div.board > form > div.order > input[type=radio] {
+    cursor: pointer;
+    margin-right: 2px;
+}
+
+div.product-detail > div.product-review > div.board > form > div.order > label {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table {
+    border: 0;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table tr:first-child {
+    background-color: var(--light-gray);
+    border: 0;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table td {
+    text-align: center;
+    padding: 5px;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table td.review-title {
+    text-align: left;
+    padding: 10px 5px;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table td.review-title:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table td.review-content {
+    text-align: left;
+    padding: 25px 10px;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table th {
+    height: 50px;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table th:first-child {
+    width: 10%;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table th:nth-child(2) {
+    width: 10%;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table th:nth-child(3) {
+    width: 60%;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table th:nth-child(4) {
+    width: 10%;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table th:nth-child(5) {
+    width: 20%;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table tr.content-row {
+    display: none;
+    background-color: rgba(220, 220, 220, 0.1);
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > table tr.content-row.pop {
+    display: table-row;
+}
+
+/* 후기 게시판 페이징 */
+div.product-detail > div.product-review > div.board > form > div#fragment > div.paging {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+}
+
+div.product-detail > div.product-review > div.board > form > div#fragment > div.paging > button.btn {
+    outline: none;
+    background: none;
+    border: 0;
+    font-size: 16px;
+    width: 30px; height: 30px;
+}
+
+/* 배송/교환/환불 규정 */
+div.product-detail > div.shipment-guide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div.product-detail > div.shipment-guide > h1 {
+    margin: 20px 0;
+}
+
+div.product-detail > div.shipment-guide > h2 {
+    width: 70%;
+    text-align: left;
+}
+
+div.product-detail > div.shipment-guide table {
+    border-collapse: collapse;
+    width: 70%; height: 350px;
+    margin-bottom: 20px;
+}
+
+div.product-detail > div.shipment-guide td, div.product-detail > div.shipment-guide th {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+div.product-detail > div.shipment-guide th {
+    background-color: rgba(200, 200, 200, 0.3);
+}
+
+div.product-detail > div.shipment-guide td {
+    padding: 20px;
 }
