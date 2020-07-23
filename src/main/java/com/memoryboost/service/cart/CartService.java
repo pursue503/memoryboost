@@ -48,7 +48,11 @@ public class CartService {
         return cartRepository.findByMemberCart(member);
     }
 
-
+    @Transactional
+    public void cartCountUpdate(CartProductCountUpdateRequestVO updateRequestVO) {
+        Cart cart = cartRepository.findById(updateRequestVO.getCartNo()).orElseThrow(NullPointerException::new);
+        cart.cartProductCountUpdate(updateRequestVO);
+    }
 
 
 }
