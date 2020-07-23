@@ -2,6 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>검색</title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -315,18 +317,18 @@
                     <div th:each="product : ${product}" th:classappend="|${product.productCategory} ${product.productNo}|" class="product">
                         <div class="image-div">
                             <img th:src="${product.productThumbnail}" class="product-image"
-                                 th:onclick="|location.href='product-detail/${product.productNo}'|"/>
-                            <input th:classappend="|${product.productCategory} ${product.productNo}|" type="checkbox" />
+                                 th:onclick="|location.href='product-detail/${product.productNo}'|" />
+                            <input th:data-num="${product.productNo}" th:classappend="cartchk" type="checkbox" />
                         </div>
                         <div class="product-info">
-                            <div th:text="${product.productName}" class="product-name text bold"></div>
-                            <div th:text="${product.productDescription}" class="product-detail text normal"></div>
+                            <div th:text="${product.productName}" class="product-name text bold" th:onclick="|location.href='product-detail/${product.productNo}'|"></div>
+                            <div th:text="${product.productDescription}" class="product-detail text normal" th:onclick="|location.href='product-detail/${product.productNo}'|"></div>
                         </div>
                         <div class="product-purchase">
                             <div th:classappend="|char normal bold|" th:text="|${#numbers.formatInteger(product.productPrice, 3, 'COMMA')}|" class="product-price"></div>
                             <div th:if="${product.reviewGradeAvg != null}"
                                  class="review">
-                                <div class="grade">
+                                <div class="grade" th:onclick="|location.href='product-detail/${product.productNo}'|">
                                     <div th:if="${product.reviewGradeAvg != null}"
                                          th:style="|width: ${product.reviewGradeAvg*20}px;|"
                                          class="stars"></div>
@@ -341,7 +343,7 @@
                                 <span>평가 없음</span>
                             </div>
                             <div class="interaction">
-                                <button class="btn addcart">장바구니</button>
+                                <button th:data-num="${product.productNo}" class="btn addcart">장바구니</button>
                                 <button class="btn purchase">바로구매</button>
                             </div>
                         </div>

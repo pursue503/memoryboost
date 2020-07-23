@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class CartRestController {
 
     //상품넣기
     @PostMapping("/cart")
-    public Map<String,Boolean> cartSave(List<CartSaveRequestDTO> cartSaveRequestDTO , Authentication authentication) {
+    public Map<String,Boolean> cartSave(@RequestBody List<CartSaveRequestDTO> cartSaveRequestDTO , Authentication authentication) {
         Map<String, Boolean> resultMap = new HashMap<>();
         try {
             resultMap.put("result", cartService.cartSave(cartSaveRequestDTO, authentication));

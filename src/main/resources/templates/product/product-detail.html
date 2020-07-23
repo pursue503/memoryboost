@@ -2,6 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title th:text="${product.productName}"></title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -30,26 +32,9 @@
 <body>
 <header th:replace="header.html :: header"></header>
 <div class="content-container product-detail">
-    <!--<th:block th:text="${product}"></th:block><br /><br />-->
-    <!--
-    <th:block>
-        상품정보, 구매
-        <th:block th:text="${product.productNo}"></th:block><br />
-        <th:block th:text="${product.productThumbnail}"></th:block><br />
-        <th:block th:text="${product.productName}"></th:block><br />
-        <th:block th:text="${product.productCategory}"></th:block><br />
-        <th:block th:text="${product.productDescription}"></th:block><br />
-        <th:block th:text="${product.productPrice}"></th:block><br />
-        <th:block th:text="${product.productImagePath}"></th:block><br />
-        <th:block th:text="${product.gradeAvg}"></th:block><br />
-        <th:block th:text="${#lists.size(product.gradeStarList)}"></th:block><br />
-        <th:block th:each="grade : ${product.gradeStarList}">
-            <th:block th:text="${grade}"></th:block><br />
-        </th:block>
-    </th:block>-->
-    <!--<th:block th:text="${#numbers.formatDecimal(0*1.0/(product.grade1+product.grade2+product.grade3+product.grade4+product.grade5)*100, 0, 2)}"></th:block>-->
     <!-- 타이틀 -->
     <div th:classappend="title">
+        <input th:id="product-number" th:type="hidden" th:value="${product.productNo}" />
         <div th:classappend="|product-name char title|" th:text="${product.productName}"></div>
         <div th:classappend="|product-description char sub less|" th:text="${product.productDescription}"></div>
     </div>
@@ -93,7 +78,7 @@
                 <span th:classappend="|price char sub|" th:data-value="${product.productPrice}" th:text="${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}"></span>
                 <span th:classappend="product-amount">
                     <button th:classappend="|btn amount down fas fa-minus|"></button>
-                    <input th:classappend="amount" th:type="text" th:name="amount" th:value="1"/>
+                    <input th:id="amount" th:classappend="amount" th:type="text" th:name="amount" th:value="1"/>
                     <button th:classappend="|btn amount up fas fa-plus|"></button>
                 </span>
             </div>
@@ -110,13 +95,15 @@
         </div>
     </div>
     <!-- 컨트롤 -->
-    <div th:classappend="control">
-        <div th:classappend="|btn control detail|">상세정보</div>
-        <div th:classappend="|btn control review|">후기</div>
-        <div th:classappend="|btn control shipment|">배송/교환/환불안내</div>
-    </div>
-    <div th:classappend="flow">
-        <div th:classappend="matter"></div>
+    <div th:classappend="control-tab">
+        <div th:classappend="control">
+            <div th:classappend="|btn control detail|">상세정보</div>
+            <div th:classappend="|btn control review|">후기</div>
+            <div th:classappend="|btn control shipment|">배송/교환/환불안내</div>
+        </div>
+        <div th:classappend="indicator">
+            <div th:classappend="matter"></div>
+        </div>
     </div>
     <!-- 상세설명 이미지 -->
     <div th:classappend="description-image">
@@ -199,33 +186,143 @@
         </div>
         <!-- 리뷰 게시판 -->
         <div th:classappend="board">
-            <table>
-                <tr>
-                    <th>번호</th>
-                    <th>별점</th>
-                    <th>내용</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>5.0</td>
-                    <td>가성비 좋았지만 바이럴로 다 망친 제품</td>
-                    <td>abd****(마지막 네글자 *처리)</td>
-                    <td>2020-07-22</td>
-                </tr>
-                    <td></td>
-                    <td></td>
-                    <td>리사수 리사수 하지만 총판이 바이럴해서 이미지 하락한 회사 ㅋㅋㅋ</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
+            <form id="review-form">
+                <div class="order">
+                    <input id="grade" type="radio" name="order" value="1" checked /><label for="grade">평점순</label>
+                    <input id="recent" type="radio" name="order" value="0" /><label for="recent">최신순</label>
+                </div>
+                <div th:id="fragment" th:fragment="fragment-result">
+                    <table>
+                        <tr>
+                            <th>번호</th>
+                            <th>별점</th>
+                            <th>내용</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                        </tr>
+                        <th:block th:each="review : ${review}">
+                            <tr>
+                                <td th:text="${review.number}"></td>
+                                <td th:text="${review.reviewGrade}"></td>
+                                <td th:classappend="|review-title ${review.number}|" th:text="${review.reviewTitle}"></td>
+                                <td th:text="${review.memberName}"></td>
+                                <td th:text="${review.reviewDate}"></td>
+                            </tr>
+                            <tr th:classappend="|content-row ${review.number}|">
+                                <td></td>
+                                <td></td>
+                                <td th:classappend="review-content" th:text="${review.reviewContent}"></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </th:block>
+                    </table>
+                    <div th:if="${#lists.size(product) > 0}" class="paging">
+
+                        <button th:disabled="${paging.prev == false}"
+                                th:value="${paging.startPage-10}" class="btn page"><i class="fas fa-chevron-left"></i></button>
+                        <button th:each="num : ${#numbers.sequence(paging.startPage, paging.startPage+9)}"
+                                th:disabled="${num > paging.endPage}"
+                                th:text="${num}"
+                                th:value="${num}"
+                                th:style="${num == paging.page} ? |color: var(--danger);|"
+                                class="btn page" name="page" ></button>
+                        <button th:disabled="${paging.next == false}"
+                                th:value="${paging.startPage+10}" class="btn page"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <!-- 배송/교환/환불 안내 -->
-    <div th:text="|배송/교환/환불 안내|"></div>
+    <div th:classappend="shipment-guide">
+        <h1 th:text="|배송/교환/환불 안내|"></h1>
+        <h2>배송</h2>
+        <table>
+            <tr>
+                <th>배송가능지역</th>
+                <td>국내 전 지역(단, 옹진군/울릉도 제외)</td>
+            </tr>
+            <tr>
+                <th>배송가능시간</th>
+                <td>
+                    오후 4시 이전 주문 시 당일 출고 또는 원하는 배송일자 선택이 가능합니다.
+                    *주문 물량 일시 증가 시 오전 4시 주문 이전에도 당일 출고가 불가할 수 있습니다.
+                </td>
+            </tr>
+            <tr>
+                <th>배송비</th>
+                <td>3만원 이상 무료배송 (미만 시 2,500원) *예약배송/업체배송 상품 별도</td>
+            </tr>
+        </table>
+        <h2>교환</h2>
+        <table>
+            <tr>
+                <th>교환/반품 절차</th>
+            </tr>
+            <tr>
+                <td>
+                    ① 교환 및 반품 신청서를 작성해주세요. (교환 시, 교환을 원하시는 상품을 적어주세요.)<br />
+                    ② 교환 및 반품하실 상품을 워런티카드, 파우치, 지퍼백을 받은 상태 그대로 포장해주세요.<br />
+                    ③ 반품처로 현대 택배를 이용하여 보내주세요. (반품처 : 서울시 용산구)<br />
+                    ④ 고객 변심에 의한 교환 및 반품일 경우 택배비는 고객님 부담으로 미리 선지불하여 보내주세요. 택배사는 자유롭게 이용해주세요.<br />
+                    ⑤ 단, 상품에 하자가 있어 교환 및 반품할 경우, 온라인 고객센터(02-0000-0000)로 통화하신 후, 현대택배를 이용하여 보내주세요.<br /> (현대택배 대표번호 : 0000-0000)<br />
+                    ⑥ 반품 상품은 상품 확인 후, 무통장 입금 또는 카드결제 취소 처리 해드립니다.<br />
+                </td>
+            </tr>
+            <tr>
+                <th>불가사유</th>
+            </tr>
+            <tr>
+                <td>
+                    - 교환/반품 가능기간을 초과하였을 경우
+                    - 상품을 사용하거나 훼손한 경우
+                    - 택 제거나 상품에 부착된 보호필름지 등을 제거한 경우
+                </td>
+            </tr>
+        </table>
+        <h2>환불</h2>
+        <table>
+            <tr>
+                <th>결제수단</th>
+                <th>환불수단</th>
+                <th>취소 반영 기간</th>
+            </tr>
+            <tr>
+                <th>신용카드</th>
+                <td>신용카드</td>
+                <td>3~7일 소요</td>
+            </tr>
+            <tr>
+                <th>실시간 계좌이체</th>
+                <td>본인 계좌</td>
+                <td>1~2일 (영업일 기준)</td>
+            </tr>
+            <tr>
+                <th>무통장입금</th>
+                <td>본인 계좌</td>
+                <td>1~2일 (영업일 기준)</td>
+            </tr>
+            <tr>
+                <th rowspan="2">휴대폰 소액 결제</th>
+                <td>당월 취소</td>
+                <td>
+                    전체취소 : 청구서 미반영
+                    부분취소 : 예치금 또는 고객계좌 (청구서 반영)
+                </td>
+            </tr>
+            <tr>
+                <td>익월 취소</td>
+                <td>
+                    전체/부분 취소 : 예치금 또는 고객계좌 (청구서 반영)
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
+<script th:inline="javascript">
+
+</script>
 <footer th:replace="footer.html"></footer>
 </body>
 </html>
