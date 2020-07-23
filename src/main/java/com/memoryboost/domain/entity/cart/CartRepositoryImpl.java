@@ -20,7 +20,7 @@ public class CartRepositoryImpl implements CartRepositoryCustom {
         QProduct product = QProduct.product;
 
         return queryFactory.select(Projections.fields(MemberCartResponseVO.class,
-                cart.cartNo,cart.productCnt,product.productNo,product.productThumbnail,product.productDescription))
+                cart.cartNo,cart.productCnt,product.productNo,product.productThumbnail,product.productName,product.productPrice))
                 .from(cart).leftJoin(product).on(cart.product.eq(product))
                 .where(cart.member.eq(memberEntity)).fetch();
     }

@@ -16,6 +16,7 @@ public class MemberCartResponseVO {
     private String productName;
     private String productThumbnail;
     private int productCnt;
+    private int productPrice;
 
 
 }
