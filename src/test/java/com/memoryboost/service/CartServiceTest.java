@@ -37,8 +37,16 @@ public class CartServiceTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    @Before
-    public void before(){
+    @After
+    public void after(){
+        cartRepository.deleteAll();
+        memberRepository.deleteAll();
+        productRepository.deleteAll();
+    }
+
+    @Test
+    public void memberCartProductCountUpdateTests(){
+
         Product product = productRepository.save(Product.builder().productName("갤럭시 GALAX 지포스 RTX 2070 SUPER EX OC D6 8GB PINK Edition").
                 productCategory(1)
                 .productThumbnail("썸네일경로")
@@ -55,30 +63,19 @@ public class CartServiceTest {
                 memberDetailAddress("종로구댕댕댕").
                 memberTel("010-0000-0000").
                 memberAuth(Role.USER).build());
-        cartRepository.save(Cart.builder().product(product).member(member).productCnt(5).build());
-    }
-
-    @After
-    public void after(){
-        cartRepository.deleteAll();
-        memberRepository.deleteAll();
-        productRepository.deleteAll();
-    }
-
-    @Test
-    public void memberCartProductCountUpdateTests(){
+        Cart cart = cartRepository.save(Cart.builder().product(product).member(member).productCnt(5).build());
 
         int count = 10;
 
         CartProductCountUpdateRequestVO cartProductCountUpdateRequestVO = new CartProductCountUpdateRequestVO();
-        cartProductCountUpdateRequestVO.setCartNo(1L);
+        cartProductCountUpdateRequestVO.setCartNo(cart.getCartNo());
         cartProductCountUpdateRequestVO.setProductCnt(count);
 
         cartService.cartCountUpdate(cartProductCountUpdateRequestVO);
 
-        Cart cart = cartRepository.findById(1L).orElseThrow(NullPointerException::new);
+        Cart resultCart = cartRepository.findById(cart.getCartNo()).orElseThrow(NullPointerException::new);
 
-        assertThat(count).isEqualTo(cart.getProductCnt());
+        assertThat(count).isEqualTo(resultCart.getProductCnt());
     }
 
 }

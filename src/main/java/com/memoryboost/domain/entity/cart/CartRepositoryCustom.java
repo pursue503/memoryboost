@@ -9,4 +9,6 @@ public interface CartRepositoryCustom {
 
     List<MemberCartResponseVO> findByMemberCart(Member memberEntity);
 
+    Cart findByCartNoAndMemberId(Long cartNo, Member member);
+
 }

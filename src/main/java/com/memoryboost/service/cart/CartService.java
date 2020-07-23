@@ -54,5 +54,18 @@ public class CartService {
         cart.cartProductCountUpdate(updateRequestVO);
     }
 
+    @Transactional
+    public void memberCartDelete(Long cartNo, Authentication authentication) {
+
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
+
+        Cart cart = cartRepository.findByCartNoAndMemberId(cartNo,member);
+
+        cartRepository.delete(cart);
+
+
+    }
+
 
 }

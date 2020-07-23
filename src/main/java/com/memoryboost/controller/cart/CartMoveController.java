@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,6 +36,16 @@ public class CartMoveController {
         }
     }
 
+    @DeleteMapping("/cart")
+    public String memberCartDelete(@RequestParam("cartNo") Long cartNo, Authentication authentication) {
 
+        try{
+            cartService.memberCartDelete(cartNo,authentication);
+            return "redirect:/cart";
+        } catch (NullPointerException e) {
+            return "error";
+        }
+
+    }
 
 }

@@ -37,8 +37,16 @@ public class ProductReviewRepositoryTest {
     @Autowired
     private JPAQueryFactory queryFactory;
 
-    @Before
-    public void before() {
+    @After
+    public void after(){
+        productReviewRepository.deleteAll();
+        memberRepository.deleteAll();
+        productRepository.deleteAll();
+    }
+
+    @Test
+    public void findByProductDetailReviewTest(){
+
         Product product = productRepository.save(Product.builder().productName("갤럭시 GALAX 지포스 RTX 2070 SUPER EX OC D6 8GB PINK Edition").
                 productCategory(1)
                 .productThumbnail("주소~")
@@ -57,20 +65,6 @@ public class ProductReviewRepositoryTest {
                 memberAuth(Role.USER).build());
         productReviewRepository.save(ProductReview.builder().memberId(member).productNo(product).reviewTitle("타이틀").
                 reviewContent("내용").reviewGrade(5).build());
-    }
-
-    @After
-    public void after(){
-        productReviewRepository.deleteAll();
-        memberRepository.deleteAll();
-        productRepository.deleteAll();
-    }
-
-    @Test
-    public void findByProductDetailReviewTest(){
-
-
-        Product product = productRepository.findById(1L).orElseThrow(NullPointerException::new);
 
         int page = 1;
 
