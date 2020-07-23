@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Title</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Noto Sans', sans-serif;
+
+    보통은(한/영 둘다) Noto Sans로 하고
+    정보표시는 Nanum Gothic Coding.
+    -->
+    <!-- fontawesome CDN -->
+    <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/payment-style.css" />
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/reset.js"></script>
+    <script src="/js/payment.js"></script>
+</head>
+<body>
+<header th:replace="header.html"></header>
+<div class="content-container payment">
+    <h1>주문 상품</h1>
+    <div th:classappend="order-list">
+        <div th:classappend="product">
+            <img th:src="|http://placehold.it/50x50|" />
+            <div th:classappend="status">
+                <div th:classappend="product-name" th:text="|상품이름 1|"></div>
+            </div>
+        </div>
+    </div>
+    <h1>배송지정보</h1>
+    <h1>결제</h1>
+</div>
+<footer th:replace="footer.html"></footer>
+</body>
+</html>

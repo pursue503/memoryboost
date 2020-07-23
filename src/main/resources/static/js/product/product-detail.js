@@ -1,6 +1,14 @@
 var controlTabOffset = 0;
+var descriptionOffset = 0;
+var reviewOffset = 0;
+var shipmentOffset = 0;
+
 $(document).ready(function() {
+    window.scrollTo(0, 0);
     controlTabOffset = document.querySelector("div.control-tab").offsetTop; //인디케이터 바닥
+    descriptionOffset = Number(document.querySelector("div.description-image").offsetTop);
+    reviewOffset = Number(document.querySelector("div.product-review").offsetTop);
+    shipmentOffset = Number(document.querySelector("div.shipment-guide").offsetTop);
 });
 
 //수량 플러스 마이너스 버튼
@@ -35,12 +43,8 @@ $(document).on("change", "input.amount", function(e) {
 
 //컨트롤 패널
 $(document).on("click", "div.btn.control", function(e) {
-    let descriptionOffset = document.querySelector("div.description-image").offsetTop;
-    let reviewOffset = document.querySelector("div.product-review").offsetTop;
-    let shipmentOffset = document.querySelector("div.shipment-guide").offsetTop;
-
     if(e.target.classList[2] == 'detail') {
-        window.scrollTo({top:descriptionOffset-35, behavior:'smooth'});
+        window.scrollTo({top:descriptionOffset, behavior:'smooth'});
     } else if(e.target.classList[2] == 'review') {
         window.scrollTo({top:reviewOffset, behavior:'smooth'});
     } else if(e.target.classList[2] == 'shipment') {
@@ -51,9 +55,6 @@ $(document).on("click", "div.btn.control", function(e) {
 //스크롤 이벤트
 $(document).on("scroll", function(e) {
     let currentScroll = window.scrollY;
-    let descriptionOffset = Number(document.querySelector("div.description-image").offsetTop);
-    let reviewOffset = Number(document.querySelector("div.product-review").offsetTop);
-    let shipmentOffset = Number(document.querySelector("div.shipment-guide").offsetTop);
 
     if(currentScroll > descriptionOffset) {
         $(".control-tab").addClass("onfix");
@@ -68,7 +69,6 @@ $(document).on("scroll", function(e) {
     } else if(currentScroll >= shipmentOffset) {
         $("div.indicator")[0].className = "indicator shipment";
     }
-
 });
 
 //리뷰 게시판 내용 토글
@@ -149,7 +149,6 @@ $(document).on("click", "button.cart", function(e) {
         productNo : productNum,
         productCnt : productAmount
     };
-
 
     params.push(obj);
 

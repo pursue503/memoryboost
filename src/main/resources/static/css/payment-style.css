@@ -1,0 +1,13 @@
+div.content-container.payment {
+    display: flex;
+    flex-direction: column;
+}
+
+div.payment > div.order-list {
+    display: flex;
+    flex-direction: column;
+}
+
+div.payment > div.order-list > div.product {
+
+}

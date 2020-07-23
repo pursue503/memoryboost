@@ -149,9 +149,9 @@ button.btn:hover {
     opacity: 0.5;
 }
 
-button.btn:active {
+/*button.btn:active {
     transform: scale(0.98);
-}
+}*/
 
 button.btn:focus {
     border: 1px solid rgba(0, 0, 0, 1.0);

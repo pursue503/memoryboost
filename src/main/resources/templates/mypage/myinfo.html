@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Title</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Noto Sans', sans-serif;
+
+    보통은(한/영 둘다) Noto Sans로 하고
+    정보표시는 Nanum Gothic Coding.
+    -->
+    <!-- fontawesome CDN -->
+    <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/mypage/base-style.css" />
+    <link rel="stylesheet" href="/css/mypage/myinfo-style.css" />
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/reset.js"></script>
+    <script src="/js/mypage/myinfo.js"></script>
+</head>
+<body>
+<header th:replace="header.html"></header>
+<div class="content-container myinfo">
+    <nav th:classappend="mypage">
+        <div>
+            <h3 th:text="|주문/배송|"></h3>
+            <a th:href="@{/cart}" th:classappend="cartlist" th:text="|장바구니|"></a>
+            <a th:href="@{/mypage/orderlist}" th:classappend="orderlist" th:text="|주문목록|"></a>
+        </div>
+        <div>
+            <h3 th:text="|계정|"></h3>
+            <a th:href="@{/mypage/myinfo}" th:classappend="myinfo" th:text="|내정보|"></a>
+        </div>
+        <div>
+            <h3 th:text="|기타|"></h3>
+            <a th:href="@{/mypage/inquiry}" th:classappend="inquiry" th:text="|1:1문의|"></a>
+        </div>
+    </nav>
+    <div th:classappend="frame">
+    </div>
+</div>
+<footer th:replace="footer.html"></footer>
+</body>
+</html>

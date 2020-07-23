@@ -23,7 +23,7 @@ public class CartMoveController {
     public String memberCartList(Authentication authentication , Model model){
 
         model.addAttribute("cartList", cartService.memberCart(authentication));
-        return "cart 페이지";
+        return "mypage/cartlist";
     }
 
     @PutMapping("/cart")

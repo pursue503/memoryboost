@@ -1,0 +1,33 @@
+div.content-container {
+    display: flex;
+    padding: 15px 0;
+}
+
+nav.mypage {
+    flex-basis: 13%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+nav.mypage > div {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 5px 0;
+}
+
+nav.mypage > div > a {
+    float: left;
+    clear: both;
+    cursor: pointer;
+    font-size: 10pt;
+    height: 20px;
+}
+
+nav.mypage > div > a:hover {
+    opacity: 0.5;
+}
+
+div.frame {
+    flex-basis: 74%;
+}
+

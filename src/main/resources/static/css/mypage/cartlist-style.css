@@ -1,0 +1,138 @@
+/* 메인 프레임 */
+div.frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px;
+}
+
+div.frame > h1 {
+    width: 80%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* 장바구니 항목 */
+div.frame > div.product {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    /*background-color: #FF9797;*/
+    height: 110px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+div.product > div.product-number {
+    flex-basis: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.product > div.product-number > input {
+    cursor: pointer;
+    width: 17px; height: 17px;
+}
+
+div.product > div.product-image {
+    flex-basis: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*background-color: #9797FF;*/
+}
+
+div.product > div.product-image > img {
+    width: 100px; height: 100px;
+}
+
+div.product > div.product-name {
+    flex-basis: 45%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    /*background-color: #97FF97;*/
+}
+
+div.product > div.product-price {
+    flex-basis: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*background-color: #97FF97;*/
+}
+
+div.product > div.control {
+    flex-basis: 15%;
+    display: flex;
+    flex-direction: column;
+}
+
+div.product > div.control > form {
+    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.product > div.control > form > * {
+    margin: 0 1px;
+}
+
+/* 컨트롤 */
+div.frame > div.control {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px 0;
+    width: 80%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    /*background-color: #9797FF;*/
+}
+
+div.frame > div.control > button {
+    cursor: pointer;
+    outline: none;
+    background: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 0 2.5px;
+    padding: 2.5px;
+}
+
+/* 주문 정보 */
+div.frame > div.info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%; height: 100px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    /*background-color: #97FF97;*/
+    background-color: rgba(255, 86, 3, 0.5);
+}
+
+div.frame > div.info > table {
+    width: 80%;
+}
+
+td, th {
+    text-align: center;
+}
+
+/* 주문하기 */
+div.frame > div.order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 100px;
+    /*background-color: #FF9797;*/
+}
+
+div.frame > div.order > button {
+    width: 200px; height: 50px;
+    font-size: 23pt;
+}
+
+div.frame > div.order > button:hover {
+    opacity: 1.0;
+}
