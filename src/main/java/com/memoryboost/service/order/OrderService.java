@@ -5,6 +5,7 @@ import com.memoryboost.domain.entity.member.MemberRepository;
 import com.memoryboost.domain.entity.order.OrderRepository;
 import com.memoryboost.domain.vo.kakao.KaKaoPayApprovalVO;
 import com.memoryboost.domain.vo.member.MemberCustomVO;
+import com.memoryboost.domain.vo.order.response.MemberOrderResponseVO;
 import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
 import com.memoryboost.util.kakao.KaKaoPay;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,14 @@ public class OrderService {
     public List<OrderPaymentResponseVO> orderPaymentReady(List<Long> cartList){
         return orderRepository.setOrderPayment(cartList);
     }
+
+    @Transactional(readOnly = true)
+    public List<MemberOrderResponseVO> memberOrderResponseVOList(Authentication authentication) {
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
+        return orderRepository.findByMemberOrder(member);
+    }
+
 
     public String kaKaoPayReady(Authentication authentication) {
         MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();

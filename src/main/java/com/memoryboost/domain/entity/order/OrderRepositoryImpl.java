@@ -1,7 +1,9 @@
 package com.memoryboost.domain.entity.order;
 
 import com.memoryboost.domain.entity.cart.QCart;
+import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.product.QProduct;
+import com.memoryboost.domain.vo.order.response.MemberOrderResponseVO;
 import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
@@ -35,5 +37,13 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         jpaQuery.where(builder).orderBy(cart.cartNo.asc());
 
         return jpaQuery.fetch();
+    }
+
+    @Override
+    public List<MemberOrderResponseVO> findByMemberOrder(Member member) {
+        QOrder order = QOrder.order;
+        return queryFactory.select(Projections.fields(MemberOrderResponseVO.class,
+                order.orderNo,order.orderDate,order.orderSt,order.orderTrackingNumber,order.orderAmountTotal))
+                .from(order).where(order.member.eq(member)).fetch();
     }
 }

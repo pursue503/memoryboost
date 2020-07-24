@@ -27,8 +27,9 @@ public class OrderMoveController {
     }
 
     @GetMapping("/mypage-orderList")
-    public String myPageOrderList(Authentication authentication) {
-        return null;
+    public String myPageOrderList(Authentication authentication , Model model) {
+        model.addAttribute("order", orderService.memberOrderResponseVOList(authentication));
+        return "주소";
     }
 
 

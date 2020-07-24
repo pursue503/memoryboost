@@ -41,13 +41,17 @@ public class Order {
 
     //운송장번호
     @Column
-    private int orderTrackingNumber;
+    private Long orderTrackingNumber;
+
+    @Column
+    private Long orderAmountTotal;
 
     @Builder
-    public Order(Member member, String orderSt, int orderPaymentGb, int orderTrackingNumber) {
+    public Order(Member member, String orderSt, int orderPaymentGb, Long orderTrackingNumber, Long orderAmountTotal) {
         this.member = member;
         this.orderSt = orderSt;
         this.orderPaymentGb = orderPaymentGb;
         this.orderTrackingNumber = orderTrackingNumber;
+        this.orderAmountTotal = orderAmountTotal;
     }
 }
