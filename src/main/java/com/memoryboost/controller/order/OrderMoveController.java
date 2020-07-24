@@ -1,5 +1,6 @@
 package com.memoryboost.controller.order;
 
+import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
 import com.memoryboost.service.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,7 +24,9 @@ public class OrderMoveController {
     @GetMapping("/order")
     public String order(@RequestParam("cartList") ArrayList<Long> cartList, Model model){
 
-        model.addAttribute("order", orderService.orderPaymentReady(cartList));
+        List<OrderPaymentResponseVO> orderPaymentResponseVOList = orderService.orderPaymentReady(cartList);
+        model.addAttribute("order", orderPaymentResponseVOList);
+        model.addAttribute("totalAmount", orderService.orderTotalAmount(orderPaymentResponseVOList));
         return "주소";
     }
 

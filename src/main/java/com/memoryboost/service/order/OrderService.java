@@ -31,6 +31,15 @@ public class OrderService {
         return orderRepository.setOrderPayment(cartList);
     }
 
+    public int orderTotalAmount(List<OrderPaymentResponseVO> paymentResponseVOList) {
+
+        int totalAmount = 0;
+        for(OrderPaymentResponseVO order : paymentResponseVOList) {
+            totalAmount += order.getProductCnt() * order.getProductPrice();
+        }
+        return totalAmount;
+    }
+
     @Transactional(readOnly = true)
     public List<MemberOrderResponseVO> memberOrderResponseVOList(Authentication authentication) {
         MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
