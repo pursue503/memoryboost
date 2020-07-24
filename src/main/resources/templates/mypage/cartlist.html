@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Title</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Noto Sans', sans-serif;
+
+    보통은(한/영 둘다) Noto Sans로 하고
+    정보표시는 Nanum Gothic Coding.
+    -->
+    <!-- fontawesome CDN -->
+    <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/mypage/base-style.css" />
+    <link rel="stylesheet" href="/css/mypage/cartlist-style.css" />
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/reset.js"></script>
+    <script src="/js/mypage/cartlist.js"></script>
+</head>
+<body>
+<header th:replace="header.html"></header>
+<div class="content-container cartlist">
+    <nav th:classappend="mypage">
+        <div>
+            <h3 th:text="|주문/배송|"></h3>
+            <a th:href="@{/cart}" th:classappend="cartlist" th:text="|장바구니|"></a>
+            <a th:href="@{/mypage/orderlist}" th:classappend="orderlist" th:text="|주문목록|"></a>
+        </div>
+        <div>
+            <h3 th:text="|계정|"></h3>
+            <a th:href="@{/mypage/myinfo}" th:classappend="myinfo" th:text="|내정보|"></a>
+        </div>
+        <div>
+            <h3 th:text="|기타|"></h3>
+            <a th:href="@{/mypage/inquiry}" th:classappend="inquiry" th:text="|1:1문의|"></a>
+        </div>
+    </nav>
+    <div th:classappend="frame">
+        <h1 th:text="장바구니"></h1>
+        <div th:each="cart : ${cartList}" th:classappend="product">
+            <div th:classappend="product-number">
+                <input th:classappend="chkbox" th:type="checkbox" th:data-productnum="${cart.productNo}" th:value="${cart.cartNo}" th:checked="false" />
+            </div>
+            <div th:classappend="product-image">
+                <img th:src="${cart.productThumbnail}" th:onclick="|location.href='product-detail/${cart.productNo}'|" />
+            </div>
+            <div th:classappend="product-name" th:text="${cart.productName}" th:onclick="|location.href='product-detail/${cart.productNo}'|"></div>
+            <div th:classappend="product-price" th:text="${#numbers.formatInteger((cart.productPrice*cart.productCnt), 0, 'COMMA')}"></div>
+            <div th:classappend="control">
+                <form action="/cart" method="POST" th:classappend="|form-amount ${cart.productNo}|">
+                    <select th:data-prev="${cart.productCnt}" th:data-price="${#numbers.formatInteger(cart.productPrice, 0)}" th:classappend="amount" th:name="productCnt">
+                        <option th:selected="${quantity == cart.productCnt}" th:each="quantity : ${#numbers.sequence(1, 999, 1)}" th:value="${quantity}" th:text="${quantity}"/>
+                    </select>
+                    <input th:type="hidden" th:name="cartNo" th:value="${cart.cartNo}" />
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <input type="hidden" name="_method" value="put"/>
+                    <button th:text="변경"></button>
+                </form>
+                <form action="/cart" method="POST" th:classappend="form-delete">
+                    <input th:type="hidden" th:name="cartNo" th:value="${cart.cartNo}" />
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button th:text="삭제"></button>
+                </form>
+            </div>
+        </div>
+        <div th:classappend="control">
+            <button th:classappend="|btn all|" th:text="전체선택"></button>
+            <button th:classappend="|btn none|" th:text="전체해제"></button>
+        </div>
+        <div th:classappend="info">
+            <table>
+                <tr>
+                    <th>상품가격</th>
+                    <td></td>
+                    <th>배송비</th>
+                    <td></td>
+                    <th>총 가격</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div th:classappend="|total-price char normal|" th:text="|0원|"></div>
+                    </td>
+                    <td>
+                        <div th:classappend="|char normal|" th:text="|+|"></div>
+                    </td>
+                    <td>
+                        <div th:classappend="|shipment-fee char normal|" th:text="|0원|"></div>
+                    </td>
+                    <td>
+                        <div th:text="|=|"></div>
+                    </td>
+                    <td>
+                        <div th:classappend="|final-price char title enlighten|" th:text="|0원|"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div th:classappend="order">
+            <button th:classappend="|btn order enlighten|" th:text="주문하기"></button>
+        </div>
+    </div>
+</div>
+<footer th:replace="footer.html"></footer>
+</body>
+</html>

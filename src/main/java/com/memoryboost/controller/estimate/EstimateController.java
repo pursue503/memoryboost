@@ -14,4 +14,19 @@ public class EstimateController {
 
     @GetMapping("/templates")
     public String templatePage() { return "basic"; }
+
+    @GetMapping("/paytest")
+    public String payPage() { return "payment"; }
+
+    @GetMapping("/mypage/myinfo")
+    public String myinfoPage() { return "mypage/myinfo"; }
+
+    @GetMapping("/mypage/cartlist")
+    public String cartlistPage() { return "mypage/cartlist"; }
+
+    @GetMapping("/mypage/inquiry")
+    public String inquiryPage() { return "mypage/inquiry"; }
+
+    @GetMapping("/mypage/orderlist")
+    public String orderlistPage() { return "mypage/orderlist"; }
 }
