@@ -15,6 +15,7 @@ spring:
        - oauth #Security
        - mail #메일 설정
        - aws
+       - kakao-key
   jpa:
     properties:
       hibernate:
