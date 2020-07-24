@@ -1,13 +1,216 @@
 div.content-container.payment {
     display: flex;
     flex-direction: column;
+    width: 600px;
 }
 
+/* 제목 */
+div.payment h1 {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+    padding-bottom: 5px;
+}
+
+/* 상품 목록 */
 div.payment > div.order-list {
     display: flex;
     flex-direction: column;
 }
 
 div.payment > div.order-list > div.product {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
 
+div.payment > div.order-list > div.product > div.product-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+}
+
+div.payment > div.order-list > div.product > div.product-image > img {
+    width: 60px; height: 60px;
+}
+
+div.payment > div.order-list > div.product > div.status {
+    flex-basis: 70%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+div.payment > div.order-list > div.product > div.product-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* 주소 선택(배송정보지만 form 밖에 있음) */
+div.payment > div.select-addr {
+    display: flex;
+    padding-top: 10px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+div.payment > div.select-addr > input[type=radio] {
+    margin: 0 3px;
+}
+
+div.payment > div.select-addr > label.btn.addr{
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+/* 배송 정보 */
+div.payment > form > div.shipment-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    /*background-color: #97FF97;*/
+}
+
+div.payment > form > div.shipment-info > * {
+    width: 100%;
+    margin-top: 10px;
+}
+
+div.payment > form > div.shipment-info input {
+    height: 40px;
+}
+
+div.payment > form > div.shipment-info input[type=text] {
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.6);
+    padding: 0 10px;
+}
+
+div.payment > form > div.shipment-info input[type=text]:focus {
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 1.0);
+}
+
+/* 주소입력 */
+#zipcode:focus , #address:focus {
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.6);
+}
+
+input.searchZipCode {
+    cursor: pointer;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 0 5px;
+    margin-left: 10px;
+}
+
+#address {
+    margin-top: 10px;
+    width: 100%;
+}
+
+#detailAddress {
+    width: 100%;
+}
+
+/* 주소 저장 여부 */
+input#changeaddr {
+    margin: 0 5px;
+}
+
+label.changeaddr {
+    cursor: pointer;
+}
+
+/* 결제방법 */
+div.payment > form > div.payment-method {
+    /*background-color: #9797FF;*/
+}
+
+/* 결제 금액 */
+div.payment > form > div.payment-method > div.final-info {
+    padding: 5px 10px;
+    background-color: rgba(255, 125, 56, 0.15);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+div.payment > form > div.payment-method > div.final-info > div {
+    margin: 5px 0;
+}
+
+div.payment > form > div.payment-method > div.method {
+    padding: 10px 0;
+}
+
+div.payment > form > div.payment-method > div.method > label {
+    width: 200px; height: 50px;
+    font-size: 16pt;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+div.payment > form > div.payment-method > div.method > label.selected {
+    color: var(--white);
+    background-color: var(--light-blue);
+    border: 1px solid var(--light-blue);
+}
+
+div.payment > form > div.payment-method > div.method > label:first-child {
+    /*background-color: rgba(255, 240, 50, 1.0);*/
+    border-right: 0;
+    border-radius: 5px 0 0 5px;
+}
+
+div.payment > form > div.payment-method > div.method > label:nth-child(2) {
+    border-left: 0;
+    border-radius: 0 5px 5px 0;
+}
+
+div.payment > form > div.payment-method > div > input[name=cash-name] {
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    width: 150px;
+    padding: 0 3px;
+    margin-left: 10px;
+    margin-right: 20px;
+    height: 30px;
+}
+
+div.payment > form > div.payment-method > div.cash {
+    display: none;
+    margin: 10px 0;
+}
+
+div.payment > form > div.payment-method > div.cash.pop {
+    display: flex;
+}
+
+div.payment > form > div.payment-method > div.cash > select.bank {
+    outline: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    height: 30px;
+}
+
+button.order {
+    cursor: pointer;
+    outline: none;
+    width: 300px; height: 60px;
+    margin: 30px 0;
+    font-size: 25pt;
+    /*color: var(--white);*/
+    /*background-color: var(--light-blue);*/
+    background-color: var(--white);
+    border: 1px solid var(--light-blue);
+    border-radius: 5px;
+}
+
+/* 사라짐 */
+.hide {
+    display: none;
 }

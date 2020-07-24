@@ -239,6 +239,47 @@ li {
     width: 200px; height: 26px;
 }
 
+/* 정렬(가로)*/
+.align-left.horizontal {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.align-mid.horizontal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.align-right.horizontal {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* 정렬(세로)*/
+.align-left.vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.align-mid.vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.align-right.vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 /* 화면 전환 효과 */
 .liftup {
   opacity: 0;
