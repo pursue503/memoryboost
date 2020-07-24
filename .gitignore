@@ -150,6 +150,7 @@ application-real-db.yml
 application-oauth.yml
 application-mail.yml
 application-aws.yml
+application-kakao-key.yml
 
 generated
 src/main/querydsl
