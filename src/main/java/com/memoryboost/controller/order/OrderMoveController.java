@@ -32,22 +32,16 @@ public class OrderMoveController {
         return "주소";
     }
 
-
-
-
-
-
-    @GetMapping("/kakaopayTest")
-    public String kaKaoPayReady(Authentication authentication){
-       log.info("ready");
-       return "redirect:" + orderService.kaKaoPayReady(authentication);
-    }
-
-    @GetMapping("/kakaoSuccess")
+    @GetMapping("/kakaopay-success")
     public String kakaoSuccess(@RequestParam("pg_token") String pgToken , Authentication authentication) {
         log.info("들어옴!");
         log.info(orderService.kaKaoPayApprovalVO(pgToken,authentication).toString());
-        return "redirect:/";
+        return "여기에 이벤트 발생시킬 url 써주세요";
+    }
+
+    @GetMapping("/order-complete")
+    public String orderComplete(){
+        return null;
     }
 
 }

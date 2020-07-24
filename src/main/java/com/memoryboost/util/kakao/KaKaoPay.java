@@ -36,7 +36,7 @@ public class KaKaoPay {
     private KaKaoPayResponseVO kaKaoPayResponseVO;
     private KaKaoPayApprovalVO kaKaoPayApprovalVO;
 
-    public String kaKaoPayReady(Member member , String category) {
+    public String kaKaoPayReady(Member member , String category , String totalAmount) {
         RestTemplate restTemplate = new RestTemplate();
 
         //서버로 요청, 헤더부분
@@ -52,9 +52,9 @@ public class KaKaoPay {
         params.add("partner_user_id" , member.getMemberId() + ""); //회원아이디 String
         params.add("item_name" , member.getMemberName() + " " +  category + " 주문");
         params.add("quantity" , "1");
-        params.add("total_amount" , "1000000");
+        params.add("total_amount" , totalAmount);
         params.add("tax_free_amount", "0");
-        params.add("approval_url", "http://localhost:8181/kakaoSuccess"); //결제 성공페이지
+        params.add("approval_url", "http://localhost:8181/kakaopay-success"); //결제 성공페이지
         params.add("cancel_url" , "http://localhost:8181/kakaoCancel");
         params.add("fail_url", "http://localhost:8181/kakaoFail");
 
@@ -85,7 +85,6 @@ public class KaKaoPay {
         params.add("partner_order_id", "1"); //이상품 주문시 주문 번호, 장바 구니는 1.조립은 2할예정
         params.add("partner_user_id" , member.getMemberId() + "");
         params.add("pg_token", pgToken);
-        params.add("total_amount", "1000000");
 
         HttpEntity<MultiValueMap<String , String >> body = new HttpEntity<>(params, headers);
 
@@ -98,6 +97,6 @@ public class KaKaoPay {
         return null;
     }
 
-    
+
 
 }

@@ -39,12 +39,12 @@ public class OrderService {
     }
 
 
-    public String kaKaoPayReady(Authentication authentication) {
+    public String kaKaoPayReady(Authentication authentication, String totalAmout) {
         MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
         Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
 
 
-        return kaKaoPay.kaKaoPayReady(member, "장바구니");
+        return kaKaoPay.kaKaoPayReady(member, "장바구니", totalAmout);
     }
 
     public KaKaoPayApprovalVO kaKaoPayApprovalVO(String paToken , Authentication authentication) {
