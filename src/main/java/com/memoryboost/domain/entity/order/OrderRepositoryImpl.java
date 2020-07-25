@@ -5,6 +5,7 @@ import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.product.QProduct;
 import com.memoryboost.domain.vo.order.response.MemberOrderResponseVO;
 import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
+import com.memoryboost.domain.vo.orderdetail.OrderDetailProductResponseVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -45,5 +46,15 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         return queryFactory.select(Projections.fields(MemberOrderResponseVO.class,
                 order.orderNo,order.orderDate,order.orderSt,order.orderTrackingNumber,order.orderTotalAmount))
                 .from(order).where(order.member.eq(member)).fetch();
+    }
+
+    @Override
+    public List<OrderDetailProductResponseVO> findByOrderDetailProduct(Long orderNo, Member member) {
+        QProduct product = QProduct.product;
+        QOrder order = QOrder.order;
+        QOrderList orderList = QOrderList.orderList;
+        return null;
+//        return queryFactory.select(Projections.fields(OrderDetailProductResponseVO.class,
+//                ))
     }
 }
