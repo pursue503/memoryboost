@@ -44,13 +44,13 @@
             <div th:classappend="|product-price char sub|" th:text="|${#numbers.formatInteger(order.productPrice, 0, 'COMMA')}원|"></div>
         </div>
     </div>
-        <h1 th:text="배송정보"></h1>
-        <div th:classappend="select-addr">
-            <input th:id="|base-addr|" th:type="radio" th:name="|addr-status|" checked />
-            <label th:for="|base-addr|" th:classappend="|btn addr base selected|" th:text="기본주소"></label>
-            <input th:id="|new-addr|" th:type="radio" th:name="|addr-status|" />
-            <label th:for="|new-addr|" th:classappend="|btn addr new|" th:text="|새주소 입력|"></label>
-        </div>
+    <h1 th:text="배송정보"></h1>
+    <div th:classappend="select-addr">
+        <input th:id="|base-addr|" th:type="radio" th:name="|addr-status|" checked />
+        <label th:for="|base-addr|" th:classappend="|btn addr base selected|" th:text="기본주소"></label>
+        <input th:id="|new-addr|" th:type="radio" th:name="|addr-status|" />
+        <label th:for="|new-addr|" th:classappend="|btn addr new|" th:text="|새주소 입력|"></label>
+    </div>
     <form id="order-form" method="POST" action="/order-complete">
         <input th:type="hidden" th:each="order : ${order}" th:if="${order.cartNo != null}" th:name="cartList" th:value="${order.cartNo}" />
         <div th:classappend="shipment-info">

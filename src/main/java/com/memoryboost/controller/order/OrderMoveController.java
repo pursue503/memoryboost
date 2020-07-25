@@ -52,15 +52,13 @@ public class OrderMoveController {
     public String kakaoSuccess(@RequestParam("pg_token") String pgToken , Authentication authentication,Model model) {
         log.info("들어옴!");
         model.addAttribute("tid", orderService.kaKaoPayApprovalVO(pgToken,authentication).getTid());
-        return "여기에 이벤트 발생시킬 url 써주세요";
+        return "payment/kakao-success";
     }
 
     @PostMapping("/order-complete")
-    public String orderComplete(@RequestParam(value = "cartNo" , required = false) ArrayList<Long> cartList , OrderSaveRequestDTO orderSaveRequestDTO , Authentication authentication,
+    public String orderComplete(@RequestParam(value = "cartList" , required = false) ArrayList<Long> cartList , OrderSaveRequestDTO orderSaveRequestDTO , Authentication authentication,
                                 OrderSingleProductSaveRequestDTO singleProductSaveRequestDTO, @RequestParam(value = "tid",required = false) String tid){
         try{
-            log.info(cartList.toString());
-            log.info(singleProductSaveRequestDTO.toString());
             if(orderService.orderSave(authentication,cartList,orderSaveRequestDTO,singleProductSaveRequestDTO,tid)) {
                 return "redirect:/";
             } else {
