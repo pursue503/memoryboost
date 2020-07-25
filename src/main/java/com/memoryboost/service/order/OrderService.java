@@ -53,7 +53,7 @@ public class OrderService {
 
     public int orderTotalAmount(List<OrderPaymentResponseVO> paymentResponseVOList) {
 
-        int totalAmount = 0;
+        int totalAmount = 2500;
         for(OrderPaymentResponseVO order : paymentResponseVOList) {
             totalAmount += order.getProductCnt() * order.getProductPrice();
         }

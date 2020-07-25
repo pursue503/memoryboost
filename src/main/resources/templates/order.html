@@ -2,7 +2,9 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
-    <title>Title</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>결제</title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--
@@ -19,33 +21,30 @@
     <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/payment-style.css" />
+    <link rel="stylesheet" href="/css/order-style.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/js/reset.js"></script>
-    <script src="/js/payment.js"></script>
+    <script src="/js/order.js"></script>
 </head>
 <body>
 <header th:replace="header.html"></header>
 <div class="content-container payment">
+    <th:block th:text="${order}"></th:block>
     <h1 th:text="|주문 상품|"></h1>
     <div th:classappend="order-list">
-        <div th:each="num : ${#numbers.sequence(1, 5, 1)}" th:classappend="product">
+        <div th:each="order : ${order}" th:classappend="product">
             <div th:classappend="product-image">
-                <img th:src="|http://placehold.it/60x60|" />
+                <img th:src="${order.productThumbnail}" />
             </div>
             <div th:classappend="status">
-                <div th:classappend="product-name" th:text="|$productName|"></div>
-                <div th:classappend="|product-quantity char normal less|" th:text="|수량 : $productCnt|"></div>
+                <div th:classappend="product-name" th:text="${order.productName}"></div>
+                <div th:classappend="|product-quantity char normal less|" th:text="|수량 : ${order.productCnt}|"></div>
             </div>
-            <div th:classappend="product-price" th:text="|금액 :($Price)원|"></div>
+            <div th:classappend="|product-price char sub|" th:text="|${#numbers.formatInteger(order.productPrice, 0, 'COMMA')}원|"></div>
         </div>
     </div>
-    <!--<div th:classappend="result">
-        <div th:classappend="total" th:text="|상품가 : $numbers(전체곱한가격) 원|"></div>
-        <div th:classappend="shipment-fee" th:text="|배송비 : 2,500원|"></div>
-    </div>-->
         <h1 th:text="배송정보"></h1>
         <div th:classappend="select-addr">
             <input th:id="|base-addr|" th:type="radio" th:name="|addr-status|" checked />
@@ -53,17 +52,18 @@
             <input th:id="|new-addr|" th:type="radio" th:name="|addr-status|" />
             <label th:for="|new-addr|" th:classappend="|btn addr new|" th:text="|새주소 입력|"></label>
         </div>
-    <form>
+    <form id="order-form" method="POST" action="/order-complete">
+        <input th:type="hidden" th:each="order : ${order}" th:if="${order.cartNo != null}" th:name="cartList" th:value="${order.cartNo}" />
         <div th:classappend="shipment-info">
-            <input th:type="text" th:id="membername" th:name="membername" th:placeholder="받는사람" />
-            <input th:type="text" th:id="membertel" th:name="membertel" th:placeholder="전화번호" />
+            <input th:type="text" th:id="membername" th:name="membername" th:value="${#authentication.principal.memberName}" th:placeholder="받는사람" />
+            <input th:type="text" th:id="membertel" th:name="membertel" th:value="${#authentication.principal.memberTel}" th:placeholder="전화번호" />
             <div th:classappend="addr">
-                <input th:type="text" th:id="zipcode" th:classappend="memberZipcode" th:name="memberZipCode" th:placeholder="우편번호" readonly />
+                <input th:type="text" th:id="zipcode" th:classappend="memberZipcode" th:name="memberZipCode" th:value="${#authentication.principal.memberZipCode}" th:placeholder="우편번호" readonly />
                 <input th:type="button" th:classappend="searchZipCode" th:onclick="searchZipCode()" th:value="|우편번호 찾기|"><br>
-                <input th:type="text" th:id="address" th:classappend="|memberAddress add|" th:name="memberAddress" th:placeholder="주소" readonly />
+                <input th:type="text" th:id="address" th:classappend="|memberAddress add|" th:name="memberAddress" th:value="${#authentication.principal.memberAddress}" th:placeholder="주소" readonly />
             </div>
             <div th:classappend="div-detailaddr">
-                <input th:type="text" th:id="detailAddress" th:classappend="|memberDetailAddress add|" th:name="memberDetailAddress" th:placeholder="상세주소">
+                <input th:type="text" th:id="detailAddress" th:classappend="|memberDetailAddress add|" th:name="memberDetailAddress" th:value="${#authentication.principal.memberDetailAddress}" th:placeholder="상세주소">
             </div>
             <input th:type="text" th:id="comment" th:placeholder="|요청 사항|" th:name="comment" />
             <div th:classappend="|align-left horizontal|">
@@ -74,16 +74,16 @@
         <div th:classappend="payment-method">
             <div th:classappend="|final-info|">
                 <div th:classappend="|total align-left horizontal|">
-                    <div th:text="|가격|"></div>
-                    <div th:text="|$numbers(전체곱한가격)원|"></div>
+                    <div th:text="|금액 :|"></div>
+                    <div th:text="|${#numbers.formatInteger(totalAmount-2500, 0, 'COMMA')}원|"></div>
                 </div>
                 <div th:classappend="|shipment-fee align-left horizontal|">
-                    <div th:text="|배송비|"></div>
+                    <div th:text="|배송비 :|"></div>
                     <div th:text="|2,500원|"></div>
                 </div>
                 <div th:classappend="|final align-left horizontal|">
-                    <div th:text="|최종 금액|"></div>
-                    <div th:text="|$numbers(전체가격 + 배송비)원|"></div>
+                    <div th:text="|최종 금액 :|"></div>
+                    <div th:id="total-price" th:text="|${#numbers.formatInteger(totalAmount, 0, 'COMMA')}원|"></div>
                 </div>
             </div>
             <div th:classappend="|method align-mid horizontal|">
@@ -108,8 +108,31 @@
         <div th:classappend="|align-mid horizontal|">
             <button th:classappend="order" th:text="결제하기"></button>
         </div>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     </form>
 </div>
+<div th:classappend="|barrier|">
+    <div th:classappend="|align-mid horizontal|">
+        <h1 th:text="|결제 진행중..|"></h1>
+    </div>
+</div>
 <footer th:replace="footer.html"></footer>
+<script th:if="${#authentication.principal.memberName != null}" th:inline="javascript">
+    $(document).ready(function() {
+        var memberName = [[${#authentication.principal.memberName}]];
+        var memberTel = [[${#authentication.principal.memberTel}]];
+        var memberZipcode = [[${#authentication.principal.memberZipCode}]];
+        var memberAddress = [[${#authentication.principal.memberAddress}]];
+        var memberDetailAddress = [[${#authentication.principal.memberDetailAddress}]];
+        $(document).on("click", "#base-addr", function() {
+            $("#membername")[0].value = memberName;
+            $("#membertel")[0].value = memberTel;
+            $("#zipcode")[0].value = memberZipcode;
+            $("#address")[0].value = memberAddress;
+            $("#detailAddress")[0].value = memberDetailAddress;
+            $("#comment")[0].focus();
+        });
+    });
+</script>
 </body>
 </html>
