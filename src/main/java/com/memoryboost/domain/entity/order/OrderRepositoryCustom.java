@@ -3,6 +3,7 @@ package com.memoryboost.domain.entity.order;
 import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.vo.order.response.MemberOrderResponseVO;
 import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
+import com.memoryboost.domain.vo.orderdetail.OrderDetailPaymentInfoResponseVO;
 import com.memoryboost.domain.vo.orderdetail.OrderDetailProductResponseVO;
 
 import java.util.List;
@@ -17,5 +18,8 @@ public interface OrderRepositoryCustom {
 
     //상품 정보들
     List<OrderDetailProductResponseVO> findByOrderDetailProduct(Long orderNo, Member member);
+
+    //결제 정보들
+    List<OrderDetailPaymentInfoResponseVO> findByOrderDetailPaymentInfo(Long order, Member member);
 
 }
