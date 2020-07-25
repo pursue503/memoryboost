@@ -59,6 +59,7 @@ public class OrderMoveController {
     public String orderComplete(@RequestParam(value = "cartNo" , required = false) ArrayList<Long> cartList , OrderSaveRequestDTO orderSaveRequestDTO , Authentication authentication,
                                 OrderSingleProductSaveRequestDTO singleProductSaveRequestDTO, @RequestParam(value = "tid",required = false) String tid){
         try{
+            log.info(cartList.toString());
             log.info(singleProductSaveRequestDTO.toString());
             if(orderService.orderSave(authentication,cartList,orderSaveRequestDTO,singleProductSaveRequestDTO,tid)) {
                 return "redirect:/";

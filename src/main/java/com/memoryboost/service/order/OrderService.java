@@ -102,7 +102,7 @@ public class OrderService {
         }
 
         //장바 구니로 구매 한 건지 단일 제품 인지 확인.
-        if(!cartList.isEmpty()) { // 장바 구니 구매
+        if(cartList != null) { // 장바 구니 구매
             log.info("비어있지않음..");
             //회원의 전체 장바 구니 목록을 가져옴.
             List<MemberCartResponseVO> memberCartList = cartRepository.findByMemberCart(member);
