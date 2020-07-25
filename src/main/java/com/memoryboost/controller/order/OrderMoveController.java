@@ -54,7 +54,7 @@ public class OrderMoveController {
     public String kakaoSuccess(@RequestParam("pg_token") String pgToken , Authentication authentication,Model model) {
         log.info("들어옴!");
         model.addAttribute("tid", orderService.kaKaoPayApprovalVO(pgToken,authentication).getTid());
-        return "여기에 이벤트 발생시킬 url 써주세요";
+        return "payment/kakao-success";
     }
 
     @PostMapping("/order-complete")
