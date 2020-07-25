@@ -2,9 +2,12 @@ package com.memoryboost.domain.entity.order;
 
 import com.memoryboost.domain.entity.cart.QCart;
 import com.memoryboost.domain.entity.member.Member;
+import com.memoryboost.domain.entity.payment.bank.QBank;
+import com.memoryboost.domain.entity.payment.bank.QNoPassbook;
 import com.memoryboost.domain.entity.product.QProduct;
 import com.memoryboost.domain.vo.order.response.MemberOrderResponseVO;
 import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
+import com.memoryboost.domain.vo.orderdetail.OrderDetailDeliveryInfoResponseVO;
 import com.memoryboost.domain.vo.orderdetail.OrderDetailPaymentInfoResponseVO;
 import com.memoryboost.domain.vo.orderdetail.OrderDetailProductResponseVO;
 import com.querydsl.core.BooleanBuilder;
@@ -62,10 +65,26 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     }
 
     @Override
-    public List<OrderDetailPaymentInfoResponseVO> findByOrderDetailPaymentInfo(Long order, Member member) {
+    public OrderDetailPaymentInfoResponseVO findByOrderDetailPaymentInfo(Long orderNo, Member member) {
 
+        QOrder order = QOrder.order;
+        QNoPassbook noPassbook = QNoPassbook.noPassbook;
+        QBank bank = QBank.bank;
 
+        return queryFactory.select(Projections.fields(OrderDetailPaymentInfoResponseVO.class,
+                order.orderPaymentGb,order.orderTotalAmount,bank.bankName,bank.bankAccountNumber))
+                .from(order,noPassbook,bank).where(order.eq(noPassbook.order).and(noPassbook.bank.eq(bank)
+                .and(order.orderNo.eq(orderNo).and(order.member.eq(member))))).fetchOne();
+    }
 
-        return null;
+    @Override
+    public OrderDetailDeliveryInfoResponseVO findByOrderDetailDeliveryInfo(Long orderNo, Member member) {
+
+        QOrder order = QOrder.order;
+        QDeliveryInformation di = QDeliveryInformation.deliveryInformation;
+
+        return queryFactory.select(Projections.fields(OrderDetailDeliveryInfoResponseVO.class,
+                di.diRecipients.as("diRecipient"),di.diTel,di.diZipCode,di.diAddress,di.diDetailAddress,di.diComment))
+                .from(order,di).where(order.eq(di.order).and(order.orderNo.eq(orderNo).and(order.member.eq(member)))).fetchOne();
     }
 }

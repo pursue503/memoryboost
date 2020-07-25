@@ -12,9 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -71,10 +73,20 @@ public class OrderMoveController {
         }
     }
 
-//    //회원의 주문내역
-//    @GetMapping("/order/detail")
-//    public String orderDetail(@RequestParam("orderNo") Long orderNo , Authentication authentication) {
-//
-//    }
+    //회원의 주문내역
+    @GetMapping("/order/detail")
+    public String orderDetail(@RequestParam("orderNo") Long orderNo , Authentication authentication , Model model) {
+
+        try{
+            model.addAttribute("product", orderService.detailProductResponseVOList(orderNo,authentication));
+            model.addAttribute("payment",orderService.detailPaymentInfoResponseVO(orderNo,authentication));
+            model.addAttribute("delivery", orderService.detailDeliveryInfoResponseVO(orderNo,authentication));
+            return "주문내역 상세보기 페이지 ";
+        } catch (NullPointerException e) {
+            return "error";
+        }
+
+
+    }
 
 }

@@ -20,6 +20,9 @@ import com.memoryboost.domain.vo.kakao.KaKaoPayApprovalVO;
 import com.memoryboost.domain.vo.member.MemberCustomVO;
 import com.memoryboost.domain.vo.order.response.MemberOrderResponseVO;
 import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
+import com.memoryboost.domain.vo.orderdetail.OrderDetailDeliveryInfoResponseVO;
+import com.memoryboost.domain.vo.orderdetail.OrderDetailPaymentInfoResponseVO;
+import com.memoryboost.domain.vo.orderdetail.OrderDetailProductResponseVO;
 import com.memoryboost.util.kakao.KaKaoPay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -103,7 +106,6 @@ public class OrderService {
 
         //장바 구니로 구매 한 건지 단일 제품 인지 확인.
         if(cartList != null) { // 장바 구니 구매
-            log.info("비어있지않음..");
             //회원의 전체 장바 구니 목록을 가져옴.
             List<MemberCartResponseVO> memberCartList = cartRepository.findByMemberCart(member);
             for(MemberCartResponseVO memberCart : memberCartList) { // 회원 장바 구니와 같은것만 삭제.
@@ -121,7 +123,6 @@ public class OrderService {
 
 
         } else { // 단일구매
-            log.info("단일구매실행.");
             //cartNo 가 비어있을경우만 단품구매로 확인이됨
             Product product = productRepository.findById(singleProductSaveRequestDTO.getProductNo()).orElseThrow(NullPointerException::new);
             orderListRepository.save(OrderList.builder().order(order).product(product).productCnt(singleProductSaveRequestDTO.getProductCnt()).build());
@@ -142,6 +143,34 @@ public class OrderService {
                 .productCnt(productCnt).build();
         responseVOList.add(orderPaymentResponseVO);
         return responseVOList;
+    }
+
+    //주문 내역 상세 보기 서비스 3개
+
+    //상품
+    @Transactional(readOnly = true)
+    public List<OrderDetailProductResponseVO> detailProductResponseVOList(Long orderNo, Authentication authentication) {
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
+
+        return orderRepository.findByOrderDetailProduct(orderNo,member);
+    }
+    //받는 사람 정보
+    @Transactional(readOnly = true)
+    public OrderDetailDeliveryInfoResponseVO detailDeliveryInfoResponseVO(Long orderNo, Authentication authentication) {
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
+
+        return orderRepository.findByOrderDetailDeliveryInfo(orderNo,member);
+    }
+
+    //겱제 정보
+    @Transactional(readOnly = true)
+    public OrderDetailPaymentInfoResponseVO detailPaymentInfoResponseVO(Long orderNo, Authentication authentication) {
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
+
+        return orderRepository.findByOrderDetailPaymentInfo(orderNo,member);
     }
 
 }
