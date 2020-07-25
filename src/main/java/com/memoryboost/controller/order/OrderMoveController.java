@@ -32,7 +32,7 @@ public class OrderMoveController {
         List<OrderPaymentResponseVO> orderPaymentResponseVOList = orderService.orderPaymentReady(cartList);
         model.addAttribute("order", orderPaymentResponseVOList);
         model.addAttribute("totalAmount", orderService.orderTotalAmount(orderPaymentResponseVOList));
-        return "/order";
+        return "order";
     }
 
     //단품 주문
@@ -41,7 +41,7 @@ public class OrderMoveController {
         List<OrderPaymentResponseVO> orderPaymentResponseVOList = orderService.singleProduct(productNo,productCnt);
         model.addAttribute("order",orderPaymentResponseVOList);
         model.addAttribute("totalAmount", orderService.orderTotalAmount(orderPaymentResponseVOList));
-        return "/order";
+        return "order";
     }
 
     @GetMapping("/mypage-orderList")
@@ -52,7 +52,6 @@ public class OrderMoveController {
 
     @GetMapping("/kakaopay-success")
     public String kakaoSuccess(@RequestParam("pg_token") String pgToken , Authentication authentication,Model model) {
-        log.info("들어옴!");
         model.addAttribute("tid", orderService.kaKaoPayApprovalVO(pgToken,authentication).getTid());
         return "payment/kakao-success";
     }
