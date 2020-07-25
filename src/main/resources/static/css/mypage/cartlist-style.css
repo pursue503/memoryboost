@@ -130,7 +130,7 @@ td, th {
 }
 
 /* 주문하기 */
-div.frame > div.order {
+div.frame > form > div.order {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -139,11 +139,11 @@ div.frame > div.order {
     /*background-color: #FF9797;*/
 }
 
-div.frame > div.order > button {
+div.frame > form > div.order > button {
     width: 200px; height: 50px;
     font-size: 23pt;
 }
 
-div.frame > div.order > button:hover {
+div.frame > form > div.order > button:hover {
     opacity: 1.0;
 }

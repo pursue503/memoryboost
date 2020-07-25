@@ -9,7 +9,6 @@ $(document).ready(function() {
     var chkbox = $("input.chkbox");
     //총 금액 표시(체크 될때마다만)
     $(document).on("change", "input.chkbox", function(e) {
-        console.clear();
         for(let a of chkbox) {
             if(a.checked){
                 let form = $(".form-amount."+a.dataset.productnum)[0];
@@ -51,19 +50,22 @@ $(document).ready(function() {
 
     //주문하기
     $(document).on("click", ".btn.order", function(e) {
+        e.preventDefault();
         let chkbox = $("input.chkbox");
         let count = 0;
+        let cartList = new Array();
 
         for(let a of chkbox) {
             if(a.checked) {
-                count ++;
+                $("div.hidden-value").append("<input type='hidden' name='cartList' value="+a.value+" />");
+                count++;
             }
         }
 
         if(!count) {
             alert("주문할 상품을 선택해 주세요.");
         } else {
-            alert("결제 페이지로 갑니다.");
+            $("#form-submit").submit();
         }
     })
 });

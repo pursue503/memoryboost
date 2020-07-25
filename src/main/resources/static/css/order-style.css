@@ -20,6 +20,7 @@ div.payment > div.order-list {
 div.payment > div.order-list > div.product {
     display: flex;
     justify-content: space-between;
+    padding: 0 5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
@@ -135,12 +136,18 @@ div.payment > form > div.payment-method {
 /* 결제 금액 */
 div.payment > form > div.payment-method > div.final-info {
     padding: 5px 10px;
-    background-color: rgba(255, 125, 56, 0.15);
+    /*background-color: rgba(255, 125, 56, 0.15);*/
+    /*background-color: rgba(125, 255, 56, 0.15);*/
+    background-color: rgba(56, 125, 255, 0.15);
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 div.payment > form > div.payment-method > div.final-info > div {
     margin: 5px 0;
+}
+
+div.payment > form > div.payment-method > div.final-info > div > div:first-child {
+    margin-right: 5px;
 }
 
 div.payment > form > div.payment-method > div.method {
@@ -160,7 +167,6 @@ div.payment > form > div.payment-method > div.method > label.selected {
 }
 
 div.payment > form > div.payment-method > div.method > label:first-child {
-    /*background-color: rgba(255, 240, 50, 1.0);*/
     border-right: 0;
     border-radius: 5px 0 0 5px;
 }
@@ -197,6 +203,7 @@ div.payment > form > div.payment-method > div.cash > select.bank {
     height: 30px;
 }
 
+/* 결제하기 버튼 */
 button.order {
     cursor: pointer;
     outline: none;
@@ -208,6 +215,31 @@ button.order {
     background-color: var(--white);
     border: 1px solid var(--light-blue);
     border-radius: 5px;
+}
+
+div.barrier {
+    position: fixed;
+    top: 0; left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 200;
+}
+
+div.barrier.pop {
+    display: flex;
+}
+
+div.barrier > div {
+    width: 15%; height: 10%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+
+div.barrier > div > h1 {
+    opacity: 0.7;
 }
 
 /* 사라짐 */

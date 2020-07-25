@@ -29,4 +29,13 @@ public class EstimateController {
 
     @GetMapping("/mypage/orderlist")
     public String orderlistPage() { return "mypage/orderlist"; }
+
+    @GetMapping("/kakaopay")
+    public String kakaoPage() { return "kakaopay"; }
+
+    @GetMapping("/payment-complete")
+    public String kakaoSuccessPage() { return "payment/kakao-success"; }
+
+    @GetMapping("/popup")
+    public String popupTestPage() { return "popup"; }
 }

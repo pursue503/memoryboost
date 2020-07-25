@@ -19,25 +19,23 @@
     <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/slide-style.css" />
-    <link rel="stylesheet" href="/css/main-style.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/slide.js"></script>
 </head>
 <body>
-    <header th:replace="header.html"></header>
-    <div class="content-container">
-        <form id="mainform" method="get">
-            <input type="hidden" name="cr1" value="vl1" />
-            <input type="hidden" name="cr2" value="vl2" />
-            <input type="hidden" name="cr3" value="vl3" />
-            <input type="hidden" name="cr4" value="vl4" />
-        </form>
-        <button id="testbtn" th:text="팝업"></button>
-    </div>
-    <footer th:replace="footer.html"></footer>
+<div class="content-container">
+    <button id="testbtn" th:text="이동"></button>
+</div>
 </body>
+<script>
+    $(document).on("click", "#testbtn", function() {
+        let form = opener.document.getElementById("mainform");
+
+        form.submit();
+        window.close();
+    });
+
+    opener.popup = this;
+</script>
 </html>

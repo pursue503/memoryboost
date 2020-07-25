@@ -105,9 +105,12 @@
                 </tr>
             </table>
         </div>
-        <div th:classappend="order">
-            <button th:classappend="|btn order enlighten|" th:text="주문하기"></button>
-        </div>
+        <form id="form-submit" th:classappend="|align-mid horizontal|" action="/order" method="GET">
+            <div th:classappend="order">
+                <div th:classappend="|hidden-value hide|"></div>
+                <button th:classappend="|btn order enlighten|" th:text="주문하기"></button>
+            </div>
+        </form>
     </div>
 </div>
 <footer th:replace="footer.html"></footer>

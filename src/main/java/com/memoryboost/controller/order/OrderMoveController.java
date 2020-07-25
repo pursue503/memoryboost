@@ -27,20 +27,20 @@ public class OrderMoveController {
         List<OrderPaymentResponseVO> orderPaymentResponseVOList = orderService.orderPaymentReady(cartList);
         model.addAttribute("order", orderPaymentResponseVOList);
         model.addAttribute("totalAmount", orderService.orderTotalAmount(orderPaymentResponseVOList));
-        return "주소";
+        return "order";
     }
 
     @GetMapping("/mypage-orderList")
     public String myPageOrderList(Authentication authentication , Model model) {
         model.addAttribute("order", orderService.memberOrderResponseVOList(authentication));
-        return "주소";
+        return "mypage/orderlist";
     }
 
     @GetMapping("/kakaopay-success")
     public String kakaoSuccess(@RequestParam("pg_token") String pgToken , Authentication authentication) {
         log.info("들어옴!");
         log.info(orderService.kaKaoPayApprovalVO(pgToken,authentication).toString());
-        return "여기에 이벤트 발생시킬 url 써주세요";
+        return "payment/kakao-success";
     }
 
     @GetMapping("/order-complete")

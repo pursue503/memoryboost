@@ -13,6 +13,9 @@
     --light-blue: #3366ff;
 }
 
+/*background-color: rgba(255, 125, 56, 0.15); 붉은*/
+/*background-color: rgba(125, 255, 56, 0.15); 초록*/
+
 * {
     margin: 0; padding: 0; box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif, 'Noto Sans', sans-serif;

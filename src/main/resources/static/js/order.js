@@ -34,4 +34,31 @@ $(document).ready(function() {
 
         $("input#"+classname)[0].checked = true;
     });
+
+    //결제버튼 누르면 결제팝업을 띄움
+    $(document).on("click", "button.order", function(e) {
+        e.preventDefault();
+        let payMethod = $("input[type=radio][name=method]:checked")[0].value;
+        let regex = /[^0-9]/g;
+        let totalPrice = Number($("#total-price")[0].innerText.replace(regex,""));
+
+        let params = {};
+        params.totalAmount = totalPrice;
+
+        if(payMethod == 0) {
+            $.ajax({
+                type : "GET",
+                url : "/kakaopay-ready",
+                data : params
+            })
+            .done(function(response) {
+                window.open(response, 'kakaopay', 'width=500, height=500');
+            })
+            .fail(function(response) {
+                console.dir("통신 실패");
+            })
+        } else {
+            console.dir("무통장입금");
+        }
+    });
 });
