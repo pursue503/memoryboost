@@ -31,7 +31,6 @@
 <body>
 <header th:replace="header.html"></header>
 <div class="content-container payment">
-    <th:block th:text="${order}"></th:block>
     <h1 th:text="|주문 상품|"></h1>
     <div th:classappend="order-list">
         <div th:each="order : ${order}" th:classappend="product">
@@ -55,17 +54,17 @@
     <form id="order-form" method="POST" action="/order-complete">
         <input th:type="hidden" th:each="order : ${order}" th:if="${order.cartNo != null}" th:name="cartList" th:value="${order.cartNo}" />
         <div th:classappend="shipment-info">
-            <input th:type="text" th:id="membername" th:name="membername" th:value="${#authentication.principal.memberName}" th:placeholder="받는사람" />
-            <input th:type="text" th:id="membertel" th:name="membertel" th:value="${#authentication.principal.memberTel}" th:placeholder="전화번호" />
+            <input th:type="text" th:id="membername" th:name="diRecipient" th:value="${#authentication.principal.memberName}" th:placeholder="받는사람" />
+            <input th:type="text" th:id="membertel" th:name="diTel" th:value="${#authentication.principal.memberTel}" th:placeholder="전화번호" />
             <div th:classappend="addr">
-                <input th:type="text" th:id="zipcode" th:classappend="memberZipcode" th:name="memberZipCode" th:value="${#authentication.principal.memberZipCode}" th:placeholder="우편번호" readonly />
+                <input th:type="text" th:id="zipcode" th:classappend="memberZipcode" th:name="diZipCode" th:value="${#authentication.principal.memberZipCode}" th:placeholder="우편번호" readonly />
                 <input th:type="button" th:classappend="searchZipCode" th:onclick="searchZipCode()" th:value="|우편번호 찾기|"><br>
-                <input th:type="text" th:id="address" th:classappend="|memberAddress add|" th:name="memberAddress" th:value="${#authentication.principal.memberAddress}" th:placeholder="주소" readonly />
+                <input th:type="text" th:id="address" th:classappend="|memberAddress add|" th:name="diAddress" th:value="${#authentication.principal.memberAddress}" th:placeholder="주소" readonly />
             </div>
             <div th:classappend="div-detailaddr">
-                <input th:type="text" th:id="detailAddress" th:classappend="|memberDetailAddress add|" th:name="memberDetailAddress" th:value="${#authentication.principal.memberDetailAddress}" th:placeholder="상세주소">
+                <input th:type="text" th:id="detailAddress" th:classappend="|memberDetailAddress add|" th:name="diDetailAddress" th:value="${#authentication.principal.memberDetailAddress}" th:placeholder="상세주소">
             </div>
-            <input th:type="text" th:id="comment" th:placeholder="|요청 사항|" th:name="comment" />
+            <input th:type="text" th:id="comment" th:placeholder="|요청 사항|" th:name="diComment" />
             <div th:classappend="|align-left horizontal|">
                 <input th:type="checkbox" th:id="changeaddr" th:name="changeaddr" /><label th:classappend="changeaddr" th:for="changeaddr" th:text="|입력한 주소를 기본 배송지로|" />
             </div>
@@ -83,7 +82,7 @@
                 </div>
                 <div th:classappend="|final align-left horizontal|">
                     <div th:text="|최종 금액 :|"></div>
-                    <div th:id="total-price" th:text="|${#numbers.formatInteger(totalAmount, 0, 'COMMA')}원|"></div>
+                    <div th:text="|${#numbers.formatInteger(totalAmount, 0, 'COMMA')}원|"></div>
                 </div>
             </div>
             <div th:classappend="|method align-mid horizontal|">
@@ -100,15 +99,21 @@
                     <option th:value="sh" th:text="|신한 : 110-000-000000|" />
                 </select>
             </div>
-            <input th:classappend="hide" th:type="radio" th:id="kakao" th:name="method" th:value="0" checked />
-            <input th:classappend="hide" th:type="radio" th:id="nh" th:name="method" th:value="1" />
-            <input th:classappend="hide" th:type="radio" th:id="kb" th:name="method" th:value="2" />
-            <input th:classappend="hide" th:type="radio" th:id="sh" th:name="method" th:value="3" />
+            <input th:classappend="hide" th:type="radio" th:id="kakao" th:name="orderPaymentGb" th:value="0" checked />
+            <input th:classappend="hide" th:type="radio" th:id="nh" th:name="orderPaymentGb" th:value="1" />
+            <input th:classappend="hide" th:type="radio" th:id="kb" th:name="orderPaymentGb" th:value="2" />
+            <input th:classappend="hide" th:type="radio" th:id="sh" th:name="orderPaymentGb" th:value="3" />
+            <div id="bank"></div>
         </div>
         <div th:classappend="|align-mid horizontal|">
             <button th:classappend="order" th:text="결제하기"></button>
         </div>
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input th:id="total-price" th:type="hidden" th:name="orderTotalAmount" th:value="${totalAmount}" />
+        <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <th:block th:each="order : ${order}">
+            <input th:if="${order.cartNo == null}" th:type="hidden" th:name="productNo" th:value="${order.productNo}" />
+            <input th:if="${order.cartNo == null}" th:type="hidden" th:name="productCnt" th:value="${order.productCnt}" />
+        </th:block>
     </form>
 </div>
 <div th:classappend="|barrier|">
