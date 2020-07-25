@@ -47,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/members/mypage").hasRole(Role.USER.name())
                     .antMatchers("/cart").authenticated()
                     .antMatchers("/order").authenticated()
+                    .antMatchers("/order/single-product").authenticated()
                 .and()
                     //로그인설정
                     .formLogin()
