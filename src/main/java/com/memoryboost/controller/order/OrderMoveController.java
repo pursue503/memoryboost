@@ -57,12 +57,11 @@ public class OrderMoveController {
 
     @PostMapping("/order-complete")
     public String orderComplete(@RequestParam(value = "cartNo" , required = false) ArrayList<Long> cartList , OrderSaveRequestDTO orderSaveRequestDTO , Authentication authentication,
-                                OrderSingleProductSaveRequestDTO singleProductSaveRequestDTO){
-
+                                OrderSingleProductSaveRequestDTO singleProductSaveRequestDTO, @RequestParam("tid") String tid){
         try{
             log.info(singleProductSaveRequestDTO.toString());
             log.info(cartList.toString());
-            if(orderService.orderSave(authentication,cartList,orderSaveRequestDTO,singleProductSaveRequestDTO)) {
+            if(orderService.orderSave(authentication,cartList,orderSaveRequestDTO,singleProductSaveRequestDTO,tid)) {
                 return "redirect:/";
             } else {
                 return "error";
@@ -72,5 +71,11 @@ public class OrderMoveController {
             return "error";
         }
     }
+
+//    //회원의 주문내역
+//    @GetMapping("/order/detail")
+//    public String orderDetail(@RequestParam("orderNo") Long orderNo , Authentication authentication) {
+//
+//    }
 
 }

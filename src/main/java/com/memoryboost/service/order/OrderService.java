@@ -11,6 +11,8 @@ import com.memoryboost.domain.entity.payment.bank.Bank;
 import com.memoryboost.domain.entity.payment.bank.BankRepository;
 import com.memoryboost.domain.entity.payment.bank.NoPassbook;
 import com.memoryboost.domain.entity.payment.bank.NoPassbookRepository;
+import com.memoryboost.domain.entity.payment.kakao.KaKaoPayment;
+import com.memoryboost.domain.entity.payment.kakao.KaKaoPaymentRepository;
 import com.memoryboost.domain.entity.product.Product;
 import com.memoryboost.domain.entity.product.ProductRepository;
 import com.memoryboost.domain.vo.cart.response.MemberCartResponseVO;
@@ -42,7 +44,7 @@ public class OrderService {
     private final OrderListRepository orderListRepository;
     private final NoPassbookRepository noPassbookRepository;
     private final BankRepository bankRepository;
-
+    private final KaKaoPaymentRepository kaKaoPaymentRepository;
 
     @Transactional(readOnly = true)
     public List<OrderPaymentResponseVO> orderPaymentReady(List<Long> cartList){
@@ -70,7 +72,6 @@ public class OrderService {
         MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
         Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
 
-
         return kaKaoPay.kaKaoPayReady(member, "장바구니", totalAmout);
     }
 
@@ -83,7 +84,7 @@ public class OrderService {
 
     @Transactional
     public boolean orderSave(Authentication authentication , ArrayList<Long> cartList , OrderSaveRequestDTO saveRequestDTO,
-                                                OrderSingleProductSaveRequestDTO singleProductSaveRequestDTO) {
+                                                OrderSingleProductSaveRequestDTO singleProductSaveRequestDTO, String tid) {
         //회원정보가져오기
         MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
         Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
@@ -94,7 +95,7 @@ public class OrderService {
         //주문 상세 정보 입력.
         deliveryInformationRepository.save(saveRequestDTO.deliveryInformationEntity(order));
         if(order.getOrderPaymentGb() == 0) { //카카오 페이
-
+            kaKaoPaymentRepository.save(KaKaoPayment.builder().order(order).tid(tid).build());
         } else { // 무통장
             Bank bank = bankRepository.findById(saveRequestDTO.getBankNo()).orElseThrow(NullPointerException::new);
             noPassbookRepository.save(NoPassbook.builder().bank(bank).order(order).build());
@@ -126,11 +127,6 @@ public class OrderService {
             orderListRepository.save(OrderList.builder().order(order).product(product).productCnt(singleProductSaveRequestDTO.getProductCnt()).build());
 
         }
-
-
-
-
-
         return true;
     }
 
