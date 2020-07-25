@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    if(document.referrer.indexOf("cart") == -1) {
+        console.dir("바로 구매를 누르셨군");
+    } else {
+        console.dir("여러개 주문이군");
+    }
     //배송정보 초기화
     $(document).on("click", "#new-addr", function(e) {
         let info = $("div.shipment-info input[type=text]");
@@ -46,7 +51,8 @@ $(document).ready(function() {
         params.totalAmount = totalPrice;
 
         if(payMethod == 0) {
-            $.ajax({
+            console.dir("카카오페이");
+            /*$.ajax({
                 type : "GET",
                 url : "/kakaopay-ready",
                 data : params
@@ -56,9 +62,10 @@ $(document).ready(function() {
             })
             .fail(function(response) {
                 console.dir("통신 실패");
-            })
+            })*/
         } else {
             console.dir("무통장입금");
+            $("#order-form").submit();
         }
     });
 });

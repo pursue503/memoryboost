@@ -13,11 +13,12 @@ $(document).ready(function() {
 
 //수량 플러스 마이너스 버튼
 $(document).on("click", ".btn.amount", function(e) {
+    e.preventDefault();
     let productAmount = $("input.amount")[0].value;
     let productPrice = Number($("div.interaction > span.price")[0].dataset.value);
     let totalPrice = $("div.total-price > div.price")[0];
 
-    if(e.target.classList[2] == "down" && productAmount > 0) {
+    if(e.target.classList[2] == "down" && productAmount > 1) {
         $("input.amount")[0].value = --productAmount;
         totalPrice.innerHTML = (productPrice * productAmount).toLocaleString()+"원";
     } else if(e.target.classList[2] == "up") {
@@ -32,9 +33,9 @@ $(document).on("change", "input.amount", function(e) {
     let productPrice = Number($("div.interaction > span.price")[0].dataset.value);
     let totalPrice = $("div.total-price > div.price")[0];
 
-    if(!$.isNumeric(productAmount) || productAmount < 0) {
-        alert("수량은 0 이상만 입력 가능합니다.");
-        $("input.amount")[0].value = 0;
+    if(!$.isNumeric(productAmount) || productAmount < 1) {
+        alert("수량은 1 이상만 입력 가능합니다.");
+        $("input.amount")[0].value = 1;
         totalPrice.innerHTML = "0원";
     } else {
         totalPrice.innerHTML = (productPrice * productAmount).toLocaleString()+"원";
@@ -133,6 +134,7 @@ $(document).on("click", ".btn.page", function(e) {
 
 //장바구니
 $(document).on("click", "button.cart", function(e) {
+    e.preventDefault();
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
     let productNum = Number($("#product-number")[0].value);

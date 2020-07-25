@@ -30,7 +30,7 @@ public class OrderMoveController {
         List<OrderPaymentResponseVO> orderPaymentResponseVOList = orderService.orderPaymentReady(cartList);
         model.addAttribute("order", orderPaymentResponseVOList);
         model.addAttribute("totalAmount", orderService.orderTotalAmount(orderPaymentResponseVOList));
-        return "order";
+        return "/order";
     }
 
     //단품 주문
@@ -39,7 +39,7 @@ public class OrderMoveController {
         List<OrderPaymentResponseVO> orderPaymentResponseVOList = orderService.singleProduct(productNo,productCnt);
         model.addAttribute("order",orderPaymentResponseVOList);
         model.addAttribute("totalAmount", orderService.orderTotalAmount(orderPaymentResponseVOList));
-        return "주소";
+        return "/order";
     }
 
     @GetMapping("/mypage-orderList")
@@ -69,6 +69,7 @@ public class OrderMoveController {
             }
 
         } catch (NullPointerException e) {
+            e.printStackTrace();
             return "error";
         }
     }

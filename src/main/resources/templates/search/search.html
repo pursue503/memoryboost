@@ -344,7 +344,7 @@
                             </div>
                             <div class="interaction">
                                 <button th:data-num="${product.productNo}" class="btn addcart">장바구니</button>
-                                <button class="btn purchase">바로구매</button>
+                                <button th:data-num="${product.productNo}" class="btn purchase">바로구매</button>
                             </div>
                         </div>
                     </div>
@@ -366,6 +366,9 @@
                             th:value="${paging.startPage+10}" class="btn page"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
+    </form>
+    <form th:id="order-single" action="/order/single-product" method="GET">
+        <input th:type="hidden" th:name="productCnt" value="1" />
     </form>
 </div>
 <footer th:replace="footer.html"></footer>

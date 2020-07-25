@@ -30,6 +30,14 @@
 <body>
     <header th:replace="header.html"></header>
     <div class="content-container">
+        <form action="#">
+            <input type="text" name="test1" value="val1" />
+            <form>
+                <input type="text" name="test2" value="val2" />
+                <button>보내기in</button>
+            </form>
+            <button>보내기out</button>
+        </form>
         <form id="mainform" method="get">
             <input type="hidden" name="cr1" value="vl1" />
             <input type="hidden" name="cr2" value="vl2" />

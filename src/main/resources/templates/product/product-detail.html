@@ -72,26 +72,28 @@
                     <div th:classappend="shipment-fee" th:text="|${#numbers.formatInteger(2500, 0, 'COMMA')}원|"></div>
                 </div>
             </div>
-            <!-- 수량변경 -->
-            <div th:classappend="interaction">
-                <span th:classappend="|text normal less|" th:text="${product.productName}"></span>
-                <span th:classappend="|price char sub|" th:data-value="${product.productPrice}" th:text="${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}"></span>
-                <span th:classappend="product-amount">
-                    <button th:classappend="|btn amount down fas fa-minus|"></button>
-                    <input th:id="amount" th:classappend="amount" th:type="text" th:name="amount" th:value="1"/>
-                    <button th:classappend="|btn amount up fas fa-plus|"></button>
-                </span>
-            </div>
-            <!-- 총 가격 -->
-            <div th:classappend="total-price">
-                <div th:classappend="|char normal|" th:text="|총 금액|"></div>
-                <div th:classappend="|price text title danger|" th:text="|${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}원|"></div>
-            </div>
-            <!-- 장바구니, 구매 버튼 -->
-            <div th:classappend="buttons">
-                <button th:classappend="|cart fas fa-shopping-cart|" th:text="장바구니"></button>
-                <button th:classappend="|purchase|">구매하기</button>
-            </div>
+            <form th:id="order-single" action="/order/single-product" method="GET">
+                <!-- 수량변경 -->
+                <div th:classappend="interaction">
+                    <span th:classappend="|text normal less|" th:text="${product.productName}"></span>
+                    <span th:classappend="|price char sub|" th:data-value="${product.productPrice}" th:text="${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}"></span>
+                    <span th:classappend="product-amount">
+                        <button th:classappend="|btn amount down fas fa-minus|"></button>
+                        <input th:id="amount" th:classappend="amount" th:type="text" th:name="productCnt" th:value="1"/>
+                        <button th:classappend="|btn amount up fas fa-plus|"></button>
+                    </span>
+                </div>
+                <!-- 총 가격 -->
+                <div th:classappend="total-price">
+                    <div th:classappend="|char normal|" th:text="|총 금액|"></div>
+                    <div th:classappend="|price text title danger|" th:text="|${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}원|"></div>
+                </div>
+                <!-- 장바구니, 구매 버튼 -->
+                <div th:classappend="buttons">
+                    <button th:classappend="|cart fas fa-shopping-cart|" th:text="장바구니"></button>
+                    <button th:classappend="|purchase|" th:name="productNo" th:value="${product.productNo}">구매하기</button>
+                </div>
+            </form>
         </div>
     </div>
     <!-- 컨트롤 -->

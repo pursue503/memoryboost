@@ -85,7 +85,7 @@ div.product-detail > div.product > div.right > div.summary > div > div.count {
 }
 
 /* 수량 */
-div.product-detail > div.product > div.right > div.interaction {
+div.product-detail > div.product > div.right > form > div.interaction {
     display: flex;
     margin-top: 10px;
     padding: 10px 20px;
@@ -95,7 +95,7 @@ div.product-detail > div.product > div.right > div.interaction {
     background-color: var(--light-gray);
 }
 
-div.product-detail > div.product > div.right > div.interaction > span.product-amount {
+div.product-detail > div.product > div.right > form > div.interaction > span.product-amount {
     display: flex;
     background-color: var(--white);
     width: 110px; height: 30px;
@@ -103,13 +103,13 @@ div.product-detail > div.product > div.right > div.interaction > span.product-am
     border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
-div.product-detail > div.product > div.right > div.interaction > span.product-amount > .btn.amount {
+div.product-detail > div.product > div.right > form > div.interaction > span.product-amount > .btn.amount {
     width: 30px;
     border: 0;
     font-family: "Font Awesome 5 Free";
 }
 
-div.product-detail > div.product > div.right > div.interaction > span.product-amount > input.amount {
+div.product-detail > div.product > div.right > form > div.interaction > span.product-amount > input.amount {
     text-align: center;
     outline: none;
     border: 0;
@@ -118,7 +118,7 @@ div.product-detail > div.product > div.right > div.interaction > span.product-am
 }
 
 /* 총 금액 */
-div.product-detail > div.product > div.right > div.total-price {
+div.product-detail > div.product > div.right > form > div.total-price {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -129,19 +129,19 @@ div.product-detail > div.product > div.right > div.total-price {
     border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-div.product-detail > div.product > div.right > div.total-price > div:first-child {
+div.product-detail > div.product > div.right > form > div.total-price > div:first-child {
     margin-right: 10px;
 }
 
 /* 장바구니, 구매 */
-div.product-detail > div.product > div.right > div.buttons {
+div.product-detail > div.product > div.right > form > div.buttons {
     display: flex;
     width: 100%;
     justify-content: center;
     margin-top: 30px;
 }
 
-div.product-detail > div.product > div.right > div.buttons > button {
+div.product-detail > div.product > div.right > form > div.buttons > button {
     cursor: pointer;
     outline: none;
     background: none;
@@ -149,18 +149,18 @@ div.product-detail > div.product > div.right > div.buttons > button {
     width: 275px; height: 100px;
 }
 
-div.product-detail > div.product > div.right > div.buttons > button.cart {
+div.product-detail > div.product > div.right > form > div.buttons > button.cart {
     font-size: 20pt;
     color: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-right: 0;
 }
 
-div.product-detail > div.product > div.right > div.buttons > button.cart:hover {
+div.product-detail > div.product > div.right > form > div.buttons > button.cart:hover {
     color: var(--black);
 }
 
-div.product-detail > div.product > div.right > div.buttons > button.purchase {
+div.product-detail > div.product > div.right > form > div.buttons > button.purchase {
     color: var(--white);
     font-size: 20pt;
     background: var(--light-blue);

@@ -207,6 +207,8 @@ $(document).on("click", ".btn.addcart", function(e) {
             let toCartPage = confirm("장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
             if(toCartPage) {
                 location.href = "/mypage/cartList";
+            } else {
+                location.reload();
             }
         }
     })
@@ -218,7 +220,9 @@ $(document).on("click", ".btn.addcart", function(e) {
 //구매
 $(document).on("click", ".btn.purchase", function(e) {
     e.preventDefault();
-    console.dir("구매")
+    tag = "<input type='hidden' name='productNo' value='"+e.target.dataset.num+"' />";
+    $("#order-single").append(tag);
+    $("#order-single").submit();
 });
 
 //테스트
