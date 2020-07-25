@@ -43,7 +43,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     public List<MemberOrderResponseVO> findByMemberOrder(Member member) {
         QOrder order = QOrder.order;
         return queryFactory.select(Projections.fields(MemberOrderResponseVO.class,
-                order.orderNo,order.orderDate,order.orderSt,order.orderTrackingNumber,order.orderAmountTotal))
+                order.orderNo,order.orderDate,order.orderSt,order.orderTrackingNumber,order.orderTotalAmount))
                 .from(order).where(order.member.eq(member)).fetch();
     }
 }

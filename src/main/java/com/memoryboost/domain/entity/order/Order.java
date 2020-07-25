@@ -44,14 +44,14 @@ public class Order {
     private Long orderTrackingNumber;
 
     @Column
-    private Long orderAmountTotal;
+    private Long orderTotalAmount;
 
     @Builder
-    public Order(Member member, String orderSt, int orderPaymentGb, Long orderTrackingNumber, Long orderAmountTotal) {
+    public Order(Member member, String orderSt, int orderPaymentGb, Long orderTrackingNumber, Long orderTotalAmount) {
         this.member = member;
         this.orderSt = orderSt;
         this.orderPaymentGb = orderPaymentGb;
         this.orderTrackingNumber = orderTrackingNumber;
-        this.orderAmountTotal = orderAmountTotal;
+        this.orderTotalAmount = orderTotalAmount;
     }
 }
