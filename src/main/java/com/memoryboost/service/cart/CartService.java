@@ -63,8 +63,6 @@ public class CartService {
         Cart cart = cartRepository.findByCartNoAndMemberId(cartNo,member);
 
         cartRepository.delete(cart);
-
-
     }
 
 

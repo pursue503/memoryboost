@@ -1,5 +1,7 @@
 package com.memoryboost.controller.order;
 
+import com.memoryboost.domain.dto.order.request.OrderSaveRequestDTO;
+import com.memoryboost.domain.dto.order.request.OrderSingleProductSaveRequestDTO;
 import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
 import com.memoryboost.service.order.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -30,6 +33,15 @@ public class OrderMoveController {
         return "order";
     }
 
+    //단품 주문
+    @GetMapping("/order/single-product")
+    public String singleOrder(@RequestParam("productNo") Long productNo, @RequestParam("productCnt") int productCnt, Model model) {
+        List<OrderPaymentResponseVO> orderPaymentResponseVOList = orderService.singleProduct(productNo,productCnt);
+        model.addAttribute("order",orderPaymentResponseVOList);
+        model.addAttribute("totalAmount", orderService.orderTotalAmount(orderPaymentResponseVOList));
+        return "주소";
+    }
+
     @GetMapping("/mypage-orderList")
     public String myPageOrderList(Authentication authentication , Model model) {
         model.addAttribute("order", orderService.memberOrderResponseVOList(authentication));
@@ -43,9 +55,22 @@ public class OrderMoveController {
         return "payment/kakao-success";
     }
 
-    @GetMapping("/order-complete")
-    public String orderComplete(){
-        return null;
+    @PostMapping("/order-complete")
+    public String orderComplete(@RequestParam(value = "cartNo" , required = false) ArrayList<Long> cartList , OrderSaveRequestDTO orderSaveRequestDTO , Authentication authentication,
+                                OrderSingleProductSaveRequestDTO singleProductSaveRequestDTO){
+
+        try{
+            log.info(singleProductSaveRequestDTO.toString());
+            log.info(cartList.toString());
+            if(orderService.orderSave(authentication,cartList,orderSaveRequestDTO,singleProductSaveRequestDTO)) {
+                return "redirect:/";
+            } else {
+                return "error";
+            }
+
+        } catch (NullPointerException e) {
+            return "error";
+        }
     }
 
 }

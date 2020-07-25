@@ -8,9 +8,9 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "tb_delivery_infomation")
+@Table(name = "tb_delivery_information")
 @Entity
-public class DeliveryInfomation {
+public class DeliveryInformation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,8 +45,8 @@ public class DeliveryInfomation {
     private String diComment;
 
     @Builder
-    public DeliveryInfomation(Order order, String diRecipients, String diTel,
-                              String diZipCode, String diAddress, String diDetailAddress, String diComment) {
+    public DeliveryInformation(Order order, String diRecipients, String diTel,
+                               String diZipCode, String diAddress, String diDetailAddress, String diComment) {
         this.order = order;
         this.diRecipients = diRecipients;
         this.diTel = diTel;
