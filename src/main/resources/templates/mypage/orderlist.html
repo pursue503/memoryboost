@@ -33,7 +33,7 @@
         <div>
             <h3 th:text="|주문/배송|"></h3>
             <a th:href="@{/cart}" th:classappend="cartlist" th:text="|장바구니|"></a>
-            <a th:href="@{/mypage/orderlist}" th:classappend="orderlist" th:text="|주문목록|"></a>
+            <a th:href="@{/mypage-orderList}" th:classappend="orderlist" th:text="|주문목록|"></a>
         </div>
         <div>
             <h3 th:text="|계정|"></h3>
@@ -44,8 +44,32 @@
             <a th:href="@{/mypage/inquiry}" th:classappend="inquiry" th:text="|1:1문의|"></a>
         </div>
     </nav>
-    <div th:classappend="frame">
-        <h1>주문목록입니다. 여기서 확인하세요</h1>
+    <div th:classappend="|frame align-left vertical|">
+        <h1 th:text="주문정보"></h1>
+        <table>
+            <tr>
+                <th>주문번호</th>
+                <th>주문정보</th>
+                <th>날짜</th>
+                <th>트래킹넘버</th>
+                <th>상태</th>
+                <th>금액</th>
+            </tr>
+            <form action="/order/detail" method="GET">
+                <tr th:classappend="order" th:each="order : ${order}">
+                    <td th:classappend="order-number">
+                        <button th:name="orderNo" th:value="${order.orderNo}" th:text="${order.orderNo}"></button>
+                    </td>
+                    <td th:classappend="|order-info|">
+                        <button th:name="orderNo" th:value="${order.orderNo}" th:text="|주문정보간략히123123123|"></button>
+                    </td>
+                    <td th:text="${order.orderDate}"></td>
+                    <td th:text="${order.orderTrackingNumber}"></td>
+                    <td th:text="${order.orderSt}"></td>
+                    <td th:text="${order.orderAmountTotal}"></td>
+                </tr>
+            </form>
+        </table>
     </div>
 </div>
 <footer th:replace="footer.html"></footer>

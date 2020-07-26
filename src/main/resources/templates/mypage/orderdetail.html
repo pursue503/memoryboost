@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Title</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Noto Sans', sans-serif;
+
+    보통은(한/영 둘다) Noto Sans로 하고
+    정보표시는 Nanum Gothic Coding.
+    -->
+    <!-- fontawesome CDN -->
+    <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/mypage/base-style.css" />
+    <link rel="stylesheet" href="/css/mypage/orderdetail-style.css" />
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/js/reset.js"></script>
+    <script src="/js/mypage/orderdetail.js"></script>
+</head>
+<body>
+<header th:replace="header.html"></header>
+<div class="content-container inquiry">
+    <nav th:classappend="mypage">
+        <div>
+            <h3 th:text="|주문/배송|"></h3>
+            <a th:href="@{/cart}" th:classappend="cartlist" th:text="|장바구니|"></a>
+            <a th:href="@{/mypage-orderList}" th:classappend="orderlist" th:text="|주문목록|"></a>
+        </div>
+        <div>
+            <h3 th:text="|계정|"></h3>
+            <a th:href="@{/mypage/myinfo}" th:classappend="myinfo" th:text="|내정보|"></a>
+        </div>
+        <div>
+            <h3 th:text="|기타|"></h3>
+            <a th:href="@{/mypage/inquiry}" th:classappend="inquiry" th:text="|1:1문의|"></a>
+        </div>
+    </nav>
+    <div th:classappend="frame">
+        <h1 th:text="|주문 상품|"></h1>
+        <div th:classappend="order-list">
+            <table>
+                <tr>
+                    <th>상품번호</th>
+                    <th>상품명</th>
+                    <th>금액</th>
+                    <th>수량</th>
+                    <th></th>
+                </tr>
+                <tr th:each="product : ${product}">
+                    <td th:text="${product.productNo}"></td>
+                    <td th:classappend="product-name">
+                        <button th:text="${product.productName}" th:onclick="|location.href='/product-detail/${product.productNo}';|"></button>
+                    </td>
+                    <td th:text="${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}"></td>
+                    <td th:text="${product.productCnt}"></td>
+                    <td>
+                        <button th:text="|리뷰작성|"></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <h1 th:text="배송정보"></h1>
+        <form th:id="|addr-form|" th:classappend="|align-left vertical|">
+            <input th:type="text" th:id="diRecipient" th:placeholder="|받는사람|" th:name="diRecipient" th:value="${delivery.diRecipient}" />
+            <input th:type="text" th:id="diTel" th:placeholder="|전화번호|" th:name="diTel" th:value="${delivery.diTel}" />
+            <div th:classappend="addr">
+                <input th:value="${delivery.diZipCode}" th:type="text" th:id="zipcode" th:classappend="memberZipcode" th:name="diZipCode" th:placeholder="|우편번호|" readonly>
+                <input th:type="button" th:classappend="searchZipCode" onclick="searchZipCode()" th:value="|우편번호 찾기|"><br>
+                <input th:value="${delivery.diAddress}" th:type="text" th:id="address" th:classappend="|memberAddress add|" th:name="diAddress" th:placeholder="|주소|" readonly><br>
+            </div>
+            <div th:classappend="|div-detailaddr|">
+                <input th:value="${delivery.diDetailAddress}" th:type="text" th:id="detailAddress" th:classappend="|memberDetailAddress add|" th:name="diDetailAddress" th:placeholder="|상세주소|">
+            </div>
+            <input th:type="text" th:id="comment" th:placeholder="|요청 사항|" th:name="diComment" />
+            <button th:text="|배송정보 수정|"></button>
+        </form>
+        <h1 th:text="결제"></h1>
+        <div th:classappend="payment" th:if="${payment == null}">
+            <div th:text="|카카오페이|"></div>
+        </div>
+        <div th:classappend="payment" th:if="${payment != null}">
+            <div th:text="${payment.orderTotalAmount}"></div>
+            <div th:text="${payment.orderPaymentGb}"></div>
+            <div th:text="${payment.bankName}"></div>
+            <div th:text="${payment.bankAccountNumber}"></div>
+        </div>
+    </div>
+</div>
+<footer th:replace="footer.html"></footer>
+</body>
+</html>

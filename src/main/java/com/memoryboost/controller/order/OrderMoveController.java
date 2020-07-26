@@ -80,7 +80,7 @@ public class OrderMoveController {
             model.addAttribute("product", orderService.detailProductResponseVOList(orderNo,authentication));
             model.addAttribute("payment",orderService.detailPaymentInfoResponseVO(orderNo,authentication));
             model.addAttribute("delivery", orderService.detailDeliveryInfoResponseVO(orderNo,authentication));
-            return "주문내역 상세보기 페이지 ";
+            return "mypage/orderdetail";
         } catch (NullPointerException e) {
             return "error";
         }

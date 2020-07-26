@@ -25,17 +25,25 @@ td {
     padding: 5px 10px;
 }
 
-button {
+td.product-name {
+    text-align: left;
+}
+
+td.product-name > button {
     cursor: pointer;
     outline: none;
     background: none;
     border: 0;
 }
 
-button:hover {
+td.product-name > button:hover {
     text-decoration: underline;
 }
 
-td.order-info {
-    text-align: left;
+#addr-form {
+    width: 100%;
+}
+
+#addr-form > * {
+    width: 100%;
 }
