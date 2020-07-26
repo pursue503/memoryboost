@@ -1,5 +1,6 @@
 package com.memoryboost.domain.entity.order;
 
+import com.memoryboost.domain.dto.order.request.OrderInfoUpdateDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,4 +56,14 @@ public class DeliveryInformation {
         this.diDetailAddress = diDetailAddress;
         this.diComment = diComment;
     }
+
+    public void infoUpdate(OrderInfoUpdateDTO orderInfoUpdateDTO) {
+        this.diRecipients = orderInfoUpdateDTO.getDiRecipients();
+        this.diTel = orderInfoUpdateDTO.getDiTel();
+        this.diZipCode = orderInfoUpdateDTO.getDiZipCode();
+        this.diAddress = orderInfoUpdateDTO.getDiAddress();
+        this.diDetailAddress = orderInfoUpdateDTO.getDiDetailAddress();
+        this.diComment = orderInfoUpdateDTO.getDiComment();
+    }
+
 }

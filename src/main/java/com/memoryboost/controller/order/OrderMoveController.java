@@ -1,5 +1,6 @@
 package com.memoryboost.controller.order;
 
+import com.memoryboost.domain.dto.order.request.OrderInfoUpdateDTO;
 import com.memoryboost.domain.dto.order.request.OrderSaveRequestDTO;
 import com.memoryboost.domain.dto.order.request.OrderSingleProductSaveRequestDTO;
 import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
@@ -10,11 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +86,22 @@ public class OrderMoveController {
         } catch (NullPointerException e) {
             return "error";
         }
+    }
 
+    //주문 정보 업데이트
+    @PutMapping("/order/info")
+    public String orderInfoUpdate(OrderInfoUpdateDTO orderInfoUpdateDTO, Authentication authentication) {
+
+        try{
+            if(orderService.orderInfoUpdate(orderInfoUpdateDTO,authentication)) {
+                return "redirect:/order/detail?orderNo=" + orderInfoUpdateDTO.getOrderNo();
+            } else {
+                return "error";
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return "error";
+        }
 
     }
 

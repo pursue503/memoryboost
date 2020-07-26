@@ -11,7 +11,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "tb_product")
 @Entity
-@ToString
 public class Product {
 
     @Id

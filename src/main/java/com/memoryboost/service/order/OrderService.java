@@ -1,5 +1,6 @@
 package com.memoryboost.service.order;
 
+import com.memoryboost.domain.dto.order.request.OrderInfoUpdateDTO;
 import com.memoryboost.domain.dto.order.request.OrderSaveRequestDTO;
 import com.memoryboost.domain.dto.order.request.OrderSingleProductSaveRequestDTO;
 import com.memoryboost.domain.entity.cart.Cart;
@@ -179,6 +180,19 @@ public class OrderService {
         Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
 
         return orderRepository.findByOrderDetail(orderNo,member);
+    }
+
+    @Transactional
+    public boolean orderInfoUpdate(OrderInfoUpdateDTO orderInfoUpdateDTO, Authentication authentication) {
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
+
+        Order order = orderRepository.findByOrder(orderInfoUpdateDTO.getOrderNo(),member);
+        DeliveryInformation deliveryInformation = orderRepository.findByDeliveryInformation(order);
+
+        deliveryInformation.infoUpdate(orderInfoUpdateDTO);
+
+        return true;
     }
 
 }

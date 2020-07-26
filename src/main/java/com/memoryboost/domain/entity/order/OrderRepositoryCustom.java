@@ -35,4 +35,13 @@ public interface OrderRepositoryCustom {
     //재활용
     MemberOrderResponseVO findByOrderDetail(Long orderNo , Member member);
 
+
+    //배송 정보 업데이트
+
+    //주문 정보 가져오기 회원정보로 같이 조회
+    Order findByOrder(Long orderNo, Member member);
+
+    //배송지 정보 업데이트에 사용할 객체찾기
+    DeliveryInformation findByDeliveryInformation(Order order);
+
 }
