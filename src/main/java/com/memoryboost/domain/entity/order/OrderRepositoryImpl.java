@@ -129,4 +129,17 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 order.orderNo,order.orderDate,order.orderSt,order.orderTrackingNumber,order.orderTotalAmount))
                 .from(order).where(order.orderNo.eq(orderNo).and(order.member.eq(member))).fetchOne();
     }
+
+    @Override
+    public Order findByOrder(Long orderNo, Member member) {
+        QOrder order = QOrder.order;
+
+        return queryFactory.selectFrom(order).where(order.orderNo.eq(orderNo).and(order.member.eq(member))).fetchOne();
+    }
+
+    @Override
+    public DeliveryInformation findByDeliveryInformation(Order order) {
+        QDeliveryInformation deliveryInformation = QDeliveryInformation.deliveryInformation;
+        return queryFactory.selectFrom(deliveryInformation).where(deliveryInformation.order.eq(order)).fetchOne();
+    }
 }
