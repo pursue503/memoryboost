@@ -22,11 +22,17 @@ $(document).ready(function() {
         let form = $("#review-form")[0];
         let params = new FormData(form);
 
+        if($("#grade")[0].value == 0) {
+            alert("별점 평가를 해주세요");
+            return;
+        }
+
         $.ajax({
             type : "POST",
             url : "/review",
             data : params,
-            processData : false,
+            contentType: false,
+            processData: false,
             async : true,
             cache : false,
             beforeSend : function(xhr) {
@@ -36,7 +42,7 @@ $(document).ready(function() {
         .done(function(response) {
             if(response.result) {
                 alert("리뷰 작성 완료!");
-                opener.href.replace("/");
+                opener.location.reload();
                 window.close();
             } else {
                 alert("리뷰 작성에 실패.. 다시 시도해주세요.");

@@ -39,3 +39,25 @@ button:hover {
 td.order-info {
     text-align: left;
 }
+
+/* 페이징 *
+/* 후기 게시판 페이징 */
+#paging-form {
+    width: 100%;
+    padding-top: 10px;
+}
+
+div.paging {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+}
+
+div.paging > button.btn {
+    outline: none;
+    background: none;
+    border: 0;
+    font-size: 16px;
+    width: 30px; height: 30px;
+}
