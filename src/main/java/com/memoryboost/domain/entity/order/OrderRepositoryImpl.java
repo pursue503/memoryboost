@@ -46,13 +46,16 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     }
 
     @Override
-    public List<MemberOrderResponseVO> findByMemberOrder(Member member) {
+    public List<MemberOrderResponseVO> findByMemberOrder(Member member, int page) {
         QProduct product = QProduct.product;
         QOrderList orderList = QOrderList.orderList;
         QOrder order = QOrder.order;
         List<MemberOrderResponseVO> responseVOList = queryFactory.select(Projections.fields(MemberOrderResponseVO.class,
                 order.orderNo,order.orderDate,order.orderSt,order.orderTrackingNumber,order.orderTotalAmount))
-                .from(order).where(order.member.eq(member)).fetch();
+                .from(order).where(order.member.eq(member))
+                .orderBy(order.orderDate.desc())
+                .offset((page -1) * 12)
+                .limit(12).fetch();
 
         for(MemberOrderResponseVO responseVO : responseVOList) {
             responseVO.setProductNameList(queryFactory.select(product.productName)
@@ -61,6 +64,13 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                     .fetch());
         }
         return responseVOList;
+    }
+
+    @Override
+    public int findByMemberOrderPaging(Member member) {
+        QOrder order = QOrder.order;
+        return (int) queryFactory.select(order.count()).from(order)
+                .where(order.member.eq(member)).fetchCount();
     }
 
     @Override

@@ -64,10 +64,10 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public List<MemberOrderResponseVO> memberOrderResponseVOList(Authentication authentication) {
+    public List<MemberOrderResponseVO> memberOrderResponseVOList(Authentication authentication, int page) {
         MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
         Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
-        return orderRepository.findByMemberOrder(member);
+        return orderRepository.findByMemberOrder(member,page);
     }
 
 
