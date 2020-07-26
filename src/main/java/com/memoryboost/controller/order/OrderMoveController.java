@@ -1,5 +1,6 @@
 package com.memoryboost.controller.order;
 
+import com.memoryboost.domain.dto.estimate.request.EstimateRequestDTO;
 import com.memoryboost.domain.dto.order.request.OrderInfoUpdateDTO;
 import com.memoryboost.domain.dto.order.request.OrderSaveRequestDTO;
 import com.memoryboost.domain.dto.order.request.OrderSingleProductSaveRequestDTO;
@@ -13,10 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -42,6 +41,12 @@ public class OrderMoveController {
         model.addAttribute("order",orderPaymentResponseVOList);
         model.addAttribute("totalAmount", orderService.orderTotalAmount(orderPaymentResponseVOList));
         return "order";
+    }
+
+    @GetMapping("/order/estimate")
+    public String estimateOrder(@RequestBody List<EstimateRequestDTO> estimateRequestDTOList) {
+
+        return "true";
     }
 
     @GetMapping("/mypage-orderList")

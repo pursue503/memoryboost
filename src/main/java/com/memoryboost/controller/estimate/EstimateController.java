@@ -7,10 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 @Controller
 public class EstimateController {
-    @GetMapping("/estimate")
-    public String estimatePage() {
-        return "estimate";
-    }
 
     @GetMapping("/templates")
     public String templatePage() { return "basic"; }

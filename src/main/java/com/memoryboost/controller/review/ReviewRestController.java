@@ -24,6 +24,7 @@ public class ReviewRestController {
         Map<String , Boolean> resultMap = new HashMap<>();
 
         try{
+            log.info(reviewSaveRequestDTO.toString());
             resultMap.put("result",reviewService.productReviewSave(reviewSaveRequestDTO,authentication));
         } catch (NullPointerException e) {
             e.printStackTrace();

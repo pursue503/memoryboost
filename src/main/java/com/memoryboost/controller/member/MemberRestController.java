@@ -29,9 +29,9 @@ public class MemberRestController {
 
     //회원아이디 중복체크
     @GetMapping("/members/{memberLoginId}/overlap/check")
-    public Map<String,Boolean> loginIdOverlapCheck(@PathVariable("memberLoginId") String memberloginId){
+    public Map<String,Boolean> loginIdOverlapCheck(@PathVariable("memberLoginId") String memberLoginId){
         Map<String,Boolean> result = new HashMap<>();
-        result.put("result",memberService.loginIdOverlapCheck(memberloginId));
+        result.put("result",memberService.loginIdOverlapCheck(memberLoginId));
         return result;
 
     }

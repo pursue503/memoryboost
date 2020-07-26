@@ -29,6 +29,7 @@ $(document).ready(function() {
             processData : false,
             async : true,
             cache : false,
+            contentType: false,
             beforeSend : function(xhr) {
                 xhr.setRequestHeader(header, token);
             }
