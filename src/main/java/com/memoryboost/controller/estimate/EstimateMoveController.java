@@ -22,9 +22,13 @@ public class EstimateMoveController {
     public String estimate(ProductFilterSearchRequestDTO filterDTO,
                                @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
                                @RequestParam(value = "page",required = false,defaultValue = "1") int page,Model model) {
+        if(filterDTO == null || filterDTO.getCategory() == null) {
+            log.info("null");
+            filterDTO.setCategory("cpu");
+        }
         model.addAttribute("product",productService.filterSearch(filterDTO,order,page));
         model.addAttribute("paging",pagingService.filterSearchPaging(filterDTO, page));
-        return "search/search :: fragment-result";
+        return "redirect:/";
     }
 
     @GetMapping("/estimate-fragment-result")
@@ -34,7 +38,7 @@ public class EstimateMoveController {
                                Model model) {
         model.addAttribute("product",productService.filterSearch(filterDTO,order,page));
         model.addAttribute("paging",pagingService.filterSearchPaging(filterDTO, page));
-        return "search/search :: fragment-result";
+        return "";
     }
 
 }
