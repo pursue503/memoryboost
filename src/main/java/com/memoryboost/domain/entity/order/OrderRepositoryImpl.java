@@ -87,10 +87,19 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .where(order.eq(orderList.order).and(orderList.product.eq(product)).and(order.orderNo.eq(orderNo).and(order.member.eq(member))))
                 .fetch();
 
-        for(OrderDetailProductResponseVO responseVO : responseVOList) {
-            responseVO.setReviewFlag(queryFactory.select(productReview.count()).from(product,productReview)
-            .where(product.eq(productReview.productNo).and(product.productNo.eq(responseVO.getProductNo())).and(productReview.memberId.eq(member))).fetchCount() == 0 ? true : false);
+        Order orderEntity = queryFactory.selectFrom(order).where(order.orderNo.eq(orderNo).and(order.member.eq(member))).fetchOne();
+
+        if(orderEntity.getOrderSt() == 5 ) {
+            for(OrderDetailProductResponseVO responseVO : responseVOList) {
+                responseVO.setReviewFlag(queryFactory.select(productReview.count()).from(product,productReview)
+                        .where(product.eq(productReview.productNo).and(product.productNo.eq(responseVO.getProductNo())).and(productReview.memberId.eq(member))).fetchCount() == 0 ? true : false);
+            }
+        } else {
+            for(OrderDetailProductResponseVO responseVO : responseVOList) {
+                responseVO.setReviewFlag(false);
+            }
         }
+
 
         return responseVOList;
 
