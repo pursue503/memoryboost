@@ -1,4 +1,4 @@
-package com.memoryboost.service;
+package com.memoryboost.service.cart;
 
 import com.memoryboost.domain.entity.cart.Cart;
 import com.memoryboost.domain.entity.cart.CartRepository;

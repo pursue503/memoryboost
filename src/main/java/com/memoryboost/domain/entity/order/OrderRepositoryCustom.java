@@ -13,7 +13,12 @@ public interface OrderRepositoryCustom {
 
     List<OrderPaymentResponseVO> setOrderPayment(List<Long> cartList);
 
-    List<MemberOrderResponseVO> findByMemberOrder(Member member);
+    //회원의 주문 내역
+    List<MemberOrderResponseVO> findByMemberOrder(Member member,int page);
+
+    // 회원의 주문 내역 전체 개수
+    int findByMemberOrderPaging(Member member);
+
 
     //주문 한거 상세 보기
 

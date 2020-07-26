@@ -33,7 +33,7 @@ public class Order {
 
     //주문상태
     @Column(nullable = false)
-    private String orderSt;
+    private int orderSt;
 
     //결제방식 0 , 무통장 1, 카카오페이
     @Column(nullable = false)
@@ -47,7 +47,7 @@ public class Order {
     private Long orderTotalAmount;
 
     @Builder
-    public Order(Member member, String orderSt, int orderPaymentGb, Long orderTrackingNumber, Long orderTotalAmount) {
+    public Order(Member member, int orderSt, int orderPaymentGb, Long orderTrackingNumber, Long orderTotalAmount) {
         this.member = member;
         this.orderSt = orderSt;
         this.orderPaymentGb = orderPaymentGb;

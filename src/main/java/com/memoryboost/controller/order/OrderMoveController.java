@@ -4,6 +4,7 @@ import com.memoryboost.domain.dto.order.request.OrderSaveRequestDTO;
 import com.memoryboost.domain.dto.order.request.OrderSingleProductSaveRequestDTO;
 import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
 import com.memoryboost.service.order.OrderService;
+import com.memoryboost.service.paging.PagingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -24,7 +25,7 @@ import java.util.Map;
 public class OrderMoveController {
 
     private final OrderService orderService;
-
+    private final PagingService pagingService;
     //주문
     @GetMapping("/order")
     public String order(@RequestParam("cartList") ArrayList<Long> cartList, Model model){
@@ -45,8 +46,9 @@ public class OrderMoveController {
     }
 
     @GetMapping("/mypage-orderList")
-    public String myPageOrderList(Authentication authentication , Model model) {
-        model.addAttribute("order", orderService.memberOrderResponseVOList(authentication));
+    public String myPageOrderList(Authentication authentication , Model model , @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+        model.addAttribute("order", orderService.memberOrderResponseVOList(authentication,page));
+        model.addAttribute("paging", pagingService.memberOrderListPaging(authentication, page));
         return "mypage/orderlist";
     }
 

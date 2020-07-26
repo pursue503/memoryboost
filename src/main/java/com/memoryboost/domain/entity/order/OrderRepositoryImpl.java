@@ -5,6 +5,7 @@ import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.payment.bank.QBank;
 import com.memoryboost.domain.entity.payment.bank.QNoPassbook;
 import com.memoryboost.domain.entity.product.QProduct;
+import com.memoryboost.domain.entity.product.review.QProductReview;
 import com.memoryboost.domain.vo.order.response.MemberOrderResponseVO;
 import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
 import com.memoryboost.domain.vo.orderdetail.OrderDetailDeliveryInfoResponseVO;
@@ -46,13 +47,16 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     }
 
     @Override
-    public List<MemberOrderResponseVO> findByMemberOrder(Member member) {
+    public List<MemberOrderResponseVO> findByMemberOrder(Member member, int page) {
         QProduct product = QProduct.product;
         QOrderList orderList = QOrderList.orderList;
         QOrder order = QOrder.order;
         List<MemberOrderResponseVO> responseVOList = queryFactory.select(Projections.fields(MemberOrderResponseVO.class,
                 order.orderNo,order.orderDate,order.orderSt,order.orderTrackingNumber,order.orderTotalAmount))
-                .from(order).where(order.member.eq(member)).fetch();
+                .from(order).where(order.member.eq(member))
+                .orderBy(order.orderDate.desc())
+                .offset((page -1) * 12)
+                .limit(12).fetch();
 
         for(MemberOrderResponseVO responseVO : responseVOList) {
             responseVO.setProductNameList(queryFactory.select(product.productName)
@@ -64,15 +68,32 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     }
 
     @Override
+    public int findByMemberOrderPaging(Member member) {
+        QOrder order = QOrder.order;
+        return (int) queryFactory.select(order.count()).from(order)
+                .where(order.member.eq(member)).fetchCount();
+    }
+
+    @Override
     public List<OrderDetailProductResponseVO> findByOrderDetailProduct(Long orderNo, Member member) {
         QProduct product = QProduct.product;
         QOrder order = QOrder.order;
         QOrderList orderList = QOrderList.orderList;
-        return queryFactory.select(Projections.fields(OrderDetailProductResponseVO.class,
+        QProductReview productReview = QProductReview.productReview;
+
+        List<OrderDetailProductResponseVO> responseVOList = queryFactory.select(Projections.fields(OrderDetailProductResponseVO.class,
                 product.productNo,product.productName,product.productPrice,orderList.productCnt))
                 .from(order,product,orderList)
                 .where(order.eq(orderList.order).and(orderList.product.eq(product)).and(order.orderNo.eq(orderNo).and(order.member.eq(member))))
                 .fetch();
+
+        for(OrderDetailProductResponseVO responseVO : responseVOList) {
+            responseVO.setReviewFlag(queryFactory.select(productReview.count()).from(product,productReview)
+            .where(product.eq(productReview.productNo).and(product.productNo.eq(responseVO.getProductNo())).and(productReview.memberId.eq(member))).fetchCount() == 0 ? true : false);
+        }
+
+        return responseVOList;
+
     }
 
     @Override

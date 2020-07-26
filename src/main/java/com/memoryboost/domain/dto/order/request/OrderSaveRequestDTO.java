@@ -28,13 +28,13 @@ public class OrderSaveRequestDTO {
         if(orderPaymentGb == 0) { // 0 카카오 , 1 무통
             return Order.builder()
                     .member(member)
-                    .orderSt("입금 완료")
+                    .orderSt(2)
                     .orderPaymentGb(orderPaymentGb)
                     .orderTotalAmount(orderTotalAmount).build();
         } else {
             return Order.builder()
                     .member(member)
-                    .orderSt("입금 대기중")
+                    .orderSt(1)
                     .orderPaymentGb(orderPaymentGb)
                     .orderTotalAmount(orderTotalAmount).build();
         }

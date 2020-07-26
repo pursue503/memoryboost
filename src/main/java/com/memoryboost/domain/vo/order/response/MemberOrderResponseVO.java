@@ -14,7 +14,7 @@ public class MemberOrderResponseVO {
 
     private Long orderNo;
     private Date orderDate;
-    private String orderSt;
+    private int orderSt;
     private Long orderTrackingNumber;
     private Long orderAmountTotal;
     private List<String> productNameList;
