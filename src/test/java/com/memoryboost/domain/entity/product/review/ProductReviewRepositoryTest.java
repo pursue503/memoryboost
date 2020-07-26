@@ -74,4 +74,7 @@ public class ProductReviewRepositoryTest {
         assertThat(5).isEqualTo(reviewResponseDTOList.get(0).getReviewGrade());
 
     }
+
+
+
 }
