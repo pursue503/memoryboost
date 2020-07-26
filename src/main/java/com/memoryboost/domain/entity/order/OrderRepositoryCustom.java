@@ -26,4 +26,8 @@ public interface OrderRepositoryCustom {
     //배송 정보
     OrderDetailDeliveryInfoResponseVO findByOrderDetailDeliveryInfo(Long orderNo, Member member);
 
+    //주문 상세 정보에 대한 주문 상태들,,
+    //재활용
+    MemberOrderResponseVO findByOrderDetail(Long orderNo , Member member);
+
 }

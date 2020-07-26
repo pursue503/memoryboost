@@ -16,6 +16,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -46,10 +47,20 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
     @Override
     public List<MemberOrderResponseVO> findByMemberOrder(Member member) {
+        QProduct product = QProduct.product;
+        QOrderList orderList = QOrderList.orderList;
         QOrder order = QOrder.order;
-        return queryFactory.select(Projections.fields(MemberOrderResponseVO.class,
+        List<MemberOrderResponseVO> responseVOList = queryFactory.select(Projections.fields(MemberOrderResponseVO.class,
                 order.orderNo,order.orderDate,order.orderSt,order.orderTrackingNumber,order.orderTotalAmount))
                 .from(order).where(order.member.eq(member)).fetch();
+
+        for(MemberOrderResponseVO responseVO : responseVOList) {
+            responseVO.setProductNameList(queryFactory.select(product.productName)
+                    .from(order,product,orderList)
+                    .where(order.eq(orderList.order).and(orderList.product.eq(product)).and(order.orderNo.eq(responseVO.getOrderNo())))
+                    .fetch());
+        }
+        return responseVOList;
     }
 
     @Override
@@ -84,7 +95,17 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         QDeliveryInformation di = QDeliveryInformation.deliveryInformation;
 
         return queryFactory.select(Projections.fields(OrderDetailDeliveryInfoResponseVO.class,
-                di.diRecipients.as("diRecipient"),di.diTel,di.diZipCode,di.diAddress,di.diDetailAddress,di.diComment))
+                di.diNo,di.diRecipients.as("diRecipient"),di.diTel,di.diZipCode,di.diAddress,di.diDetailAddress,di.diComment))
                 .from(order,di).where(order.eq(di.order).and(order.orderNo.eq(orderNo).and(order.member.eq(member)))).fetchOne();
+    }
+    
+    //객체 재활용
+    @Override
+    public MemberOrderResponseVO findByOrderDetail(Long orderNo , Member member) {
+        QOrder order = QOrder.order;
+
+        return queryFactory.select(Projections.fields(MemberOrderResponseVO.class,
+                order.orderNo,order.orderDate,order.orderSt,order.orderTrackingNumber,order.orderTotalAmount))
+                .from(order).where(order.orderNo.eq(orderNo).and(order.member.eq(member))).fetchOne();
     }
 }

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,4 +17,6 @@ public class MemberOrderResponseVO {
     private String orderSt;
     private Long orderTrackingNumber;
     private Long orderAmountTotal;
+    private List<String> productNameList;
+
 }
