@@ -44,9 +44,8 @@ public class ReviewService {
 
     @Transactional
     public boolean productReviewSave(ReviewSaveRequestDTO reviewSaveRequestDTO, Authentication authentication) {
-//        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
-//        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
-        Member member = memberRepository.findById(2L).orElseThrow(NullPointerException::new);
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
         Product product = productRepository.findById(reviewSaveRequestDTO.getProductNo()).orElseThrow(NullPointerException::new);
 
         reviewRepository.save(reviewSaveRequestDTO.toEntity(product,member));
