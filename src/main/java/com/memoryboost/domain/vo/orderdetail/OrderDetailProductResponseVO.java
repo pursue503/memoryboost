@@ -16,6 +16,7 @@ public class OrderDetailProductResponseVO {
     private String productName;
     private int productPrice;
     private int productCnt;
+    private boolean reviewFlag;
 
 
 }
