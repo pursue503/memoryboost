@@ -78,6 +78,20 @@
                 </tr>
             </form>
         </table>
+        <form th:id="paging-form" action="/mypage-orderList" method="GET">
+            <div th:if="${#lists.size(order) > 0}" class="paging">
+                <button th:disabled="${paging.prev == false}"
+                        th:value="${paging.startPage-10}" class="btn page"><i class="fas fa-chevron-left"></i></button>
+                <button th:each="num : ${#numbers.sequence(paging.startPage, paging.startPage+9)}"
+                        th:disabled="${num > paging.endPage}"
+                        th:text="${num}"
+                        th:value="${num}"
+                        th:style="${num == paging.page} ? |color: var(--danger);|"
+                        class="btn page" name="page" ></button>
+                <button th:disabled="${paging.next == false}"
+                        th:value="${paging.startPage+10}" class="btn page"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </form>
     </div>
 </div>
 <footer th:replace="footer.html"></footer>
