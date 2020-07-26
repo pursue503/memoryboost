@@ -175,7 +175,7 @@ $(document).on("click", "button.cart", function(e) {
         } else if(response.result == true) {
             let toCartPage = confirm("장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
             if(toCartPage) {
-                location.href = "/members/mypage";
+                location.href = "/cart";
             }
         }
     })

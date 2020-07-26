@@ -159,7 +159,7 @@ $(document).on("click", ".btn.cartall", function(e) {
         } else if(response.result == true) {
             let toCartPage = confirm("장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
             if(toCartPage) {
-                location.href = "/mypage/cartList";
+                location.href = "/cart";
             }
         }
     })
@@ -206,7 +206,7 @@ $(document).on("click", ".btn.addcart", function(e) {
         } else if(response.result == true) {
             let toCartPage = confirm("장바구니에 추가했습니다. 장바구니로 이동하시겠습니까?");
             if(toCartPage) {
-                location.href = "/mypage/cartList";
+                location.href = "/cart";
             } else {
                 location.reload();
             }
