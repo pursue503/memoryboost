@@ -173,4 +173,12 @@ public class OrderService {
         return orderRepository.findByOrderDetailPaymentInfo(orderNo,member);
     }
 
+    @Transactional(readOnly = true)
+    public MemberOrderResponseVO singleMemberOrderResponseVO(Long orderNo, Authentication authentication) {
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
+
+        return orderRepository.findByOrderDetail(orderNo,member);
+    }
+
 }

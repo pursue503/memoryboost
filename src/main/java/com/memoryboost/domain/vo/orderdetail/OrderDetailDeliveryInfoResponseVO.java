@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class OrderDetailDeliveryInfoResponseVO {
 
+    private String diNo;
     private String diRecipient;
     private String diTel;
     private String diZipCode;
