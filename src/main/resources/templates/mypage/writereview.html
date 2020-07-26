@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>리뷰작성</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Noto Sans', sans-serif;
+
+    보통은(한/영 둘다) Noto Sans로 하고
+    정보표시는 Nanum Gothic Coding.
+    -->
+    <!-- fontawesome CDN -->
+    <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/mypage/writereview.css" />
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/reset.js"></script>
+    <script src="/js/mypage/writereview.js"></script>
+</head>
+<body>
+<div th:id="review">
+    <form th:id="review-form" th:classappend="|align-mid vertical|">
+        <table>
+            <tr>
+                <th th:text="|상품정보|"></th>
+            </tr>
+            <tr>
+                <td><a th:id="productName" target="_blank"></a></td>
+            </tr>
+            <tr>
+                <td>
+                    <input th:type="text" th:placeholder="|제목|" name="reviewTitle" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea th:cols="40" th:rows="8" th:placeholder="|내용을 입력해주세요|" name="reviewContent"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th th:text="|평가|"></th>
+            </tr>
+            <tr>
+                <td th:classappend="|align-left horizontal|">
+                    <div th:classappend="bg">
+                        <div th:classappend="star" data-value="1"></div>
+                        <div th:classappend="star" data-value="2"></div>
+                        <div th:classappend="star" data-value="3"></div>
+                        <div th:classappend="star" data-value="4"></div>
+                        <div th:classappend="star" data-value="5"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td th:classappend="|align-mid horizontal|">
+                    <button th:id="submit" th:text="|작성|"></button>
+                </td>
+            </tr>
+        </table>
+        <input th:id="productNo" th:type="hidden" name="productNo" />
+        <input th:id="grade" th:type="hidden" th:name="reviewGrade" th:value="0" />
+        <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    </form>
+</div>
+<script th:inline="javascript">
+</script>
+</body>
+</html>

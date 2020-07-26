@@ -1,0 +1,67 @@
+body, html {
+    padding: 0;
+    width: 400px; height: 400px;
+}
+
+div#review {
+    width: 400px; height: 400px;
+}
+
+table {
+    width: 400px; height: 400px;
+    border-collapse: collapse;
+}
+
+tr {
+    display: flex;
+}
+
+th {
+    width: 100%;
+    text-align: left;
+    padding: 5px;
+}
+
+td {
+    width: 100%;
+    padding: 5px;
+}
+
+div.bg {
+    display: flex;
+    background-image: url("/img/grade_big.png");
+    background-size: 150px 30px;
+    background-repeat: no-repeat;
+    width: 150px; height: 30px;
+    overflow: hidden;
+}
+
+div.star {
+    cursor: pointer;
+    opacity: 0;
+    background-image: url("/img/star_one.png");
+    background-repeat: no-repeat;
+    width: 30px; height: 30px;
+    overflow: hidden;
+}
+
+div.star.hover {
+    opacity: 1.0;
+}
+
+div.star.fixed {
+    opacity: 1.0;
+}
+
+input[type=text] {
+    outline: 0;
+    width: 100%;
+    padding: 5px;
+}
+
+textarea {
+    outline: 0;
+    width: 100%;
+    padding: 5px;
+    resize: none;
+}

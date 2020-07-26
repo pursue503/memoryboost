@@ -37,7 +37,7 @@
         </div>
         <div>
             <h3 th:text="|계정|"></h3>
-            <a th:href="@{/mypage/myinfo}" th:classappend="myinfo" th:text="|내정보|"></a>
+            <a th:href="@{/members/mypage}" th:classappend="myinfo" th:text="|내정보|"></a>
         </div>
         <div>
             <h3 th:text="|기타|"></h3>
@@ -61,11 +61,19 @@
                         <button th:name="orderNo" th:value="${order.orderNo}" th:text="${order.orderNo}"></button>
                     </td>
                     <td th:classappend="|order-info|">
-                        <button th:name="orderNo" th:value="${order.orderNo}" th:text="|주문정보간략히123123123|"></button>
+                        <button th:if="${#lists.size(order.productNameList) == 1}" th:name="orderNo" th:value="${order.orderNo}" th:text="${order.productNameList[0]}"></button>
+                        <button th:if="${#lists.size(order.productNameList) > 1}" th:name="orderNo" th:value="${order.orderNo}" th:text="|${order.productNameList[0]} 외 ${#lists.size(order.productNameList)-1}개|"></button>
                     </td>
                     <td th:text="${order.orderDate}"></td>
                     <td th:text="${order.orderTrackingNumber}"></td>
-                    <td th:text="${order.orderSt}"></td>
+                    <td th:with="status = ${order.orderSt}">
+                        <th:block th:if="${status == 1}" th:text="|입금 대기중|"></th:block>
+                        <th:block th:if="${status == 2}" th:text="|결제완료|"></th:block>
+                        <th:block th:if="${status == 3}" th:text="|배송준비중|"></th:block>
+                        <th:block th:if="${status == 4}" th:text="|배송중|"></th:block>
+                        <th:block th:if="${status == 5}" th:text="|배송완료|"></th:block>
+                        <th:block th:if="${status == 6}" th:text="|환불처리|"></th:block>
+                    </td>
                     <td th:text="${order.orderAmountTotal}"></td>
                 </tr>
             </form>

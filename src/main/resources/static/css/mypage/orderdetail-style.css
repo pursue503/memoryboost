@@ -7,6 +7,7 @@ div.frame > h1 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
+/* 주문 상품 리스트 */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -40,10 +41,53 @@ td.product-name > button:hover {
     text-decoration: underline;
 }
 
+
+/* 배송 정보 */
 #addr-form {
     width: 100%;
 }
 
 #addr-form > * {
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+#addr-form > input {
+    height: 40px;
+}
+
+#addr-form  input[type=text] {
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.6);
+    padding: 0 10px;
+}
+
+#addr-form > input[type=text]:focus {
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 1.0);
+}
+
+/* 주소입력 */
+#zipcode , #address, .searchZipCode, #detailAddress {
+    height: 40px;
+}
+
+input.searchZipCode {
+    cursor: pointer;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 0 5px;
+    margin-left: 10px;
+}
+
+#address {
+    margin-top: 10px;
+    width: 100%;
+}
+
+#detailAddress {
     width: 100%;
 }

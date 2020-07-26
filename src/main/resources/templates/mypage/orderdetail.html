@@ -66,14 +66,14 @@
                     <td th:text="${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}"></td>
                     <td th:text="${product.productCnt}"></td>
                     <td>
-                        <button th:text="|리뷰작성|"></button>
+                        <button th:data-productname="${product.productName}" th:data-productnum="${product.productNo}" th:if="${order.orderSt > 4 && product.reviewFlag}" th:classappend="|btn review|" th:text="|리뷰작성|"></button>
                     </td>
                 </tr>
             </table>
         </div>
         <h1 th:text="배송정보"></h1>
-        <form th:id="|addr-form|" th:classappend="|align-left vertical|">
-            <input th:type="text" th:id="diRecipient" th:placeholder="|받는사람|" th:name="diRecipient" th:value="${delivery.diRecipient}" />
+        <form th:id="|addr-form|" action="/order/info" th:classappend="|align-mid vertical|" method="POST">
+            <input th:type="text" th:id="diRecipient" th:placeholder="|받는사람|" th:name="diRecipients" th:value="${delivery.diRecipient}" />
             <input th:type="text" th:id="diTel" th:placeholder="|전화번호|" th:name="diTel" th:value="${delivery.diTel}" />
             <div th:classappend="addr">
                 <input th:value="${delivery.diZipCode}" th:type="text" th:id="zipcode" th:classappend="memberZipcode" th:name="diZipCode" th:placeholder="|우편번호|" readonly>
@@ -83,18 +83,22 @@
             <div th:classappend="|div-detailaddr|">
                 <input th:value="${delivery.diDetailAddress}" th:type="text" th:id="detailAddress" th:classappend="|memberDetailAddress add|" th:name="diDetailAddress" th:placeholder="|상세주소|">
             </div>
-            <input th:type="text" th:id="comment" th:placeholder="|요청 사항|" th:name="diComment" />
-            <button th:text="|배송정보 수정|"></button>
+            <input th:type="text" th:id="comment" th:placeholder="|요청 사항|" th:name="diComment" th:value="${delivery.diComment}"/>
+            <button th:if="${order.orderSt < 4}" th:text="|배송정보 수정|"></button>
+            <input th:type="hidden" th:name="orderNo" th:value="${order.orderNo}" />
+            <input th:type="hidden" th:name="_method" th:value="PUT" />
         </form>
         <h1 th:text="결제"></h1>
         <div th:classappend="payment" th:if="${payment == null}">
             <div th:text="|카카오페이|"></div>
         </div>
         <div th:classappend="payment" th:if="${payment != null}">
-            <div th:text="${payment.orderTotalAmount}"></div>
-            <div th:text="${payment.orderPaymentGb}"></div>
-            <div th:text="${payment.bankName}"></div>
-            <div th:text="${payment.bankAccountNumber}"></div>
+            <div th:text="|금액 : ${#numbers.formatInteger(payment.orderTotalAmount, 0, 'COMMA')}원|"></div>
+            <div>
+                <span th:text="${payment.bankName}"></span>
+                <span th:text="${payment.bankAccountNumber}"></span>
+                <span th:text="이건희"></span>
+            </div>
         </div>
     </div>
 </div>
