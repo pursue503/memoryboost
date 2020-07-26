@@ -1,0 +1,110 @@
+div.content-container.mypage > div.frame {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/*------비번확인*/
+div.frame > div.auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.frame > div.auth > input[type=password] {
+    width: 230px; height: 30px;
+    padding-left: 5px;
+}
+
+div.frame > div.auth > button.btn.auth {
+    width: 40px; height: 30px;
+    margin: 10px;
+}
+
+/*------정보수정*/
+div.frame > div.info {
+    display: none;
+}
+
+div.frame > div.info.pop {
+    display: inline-block;
+}
+
+div.frame > div.info.pop {
+    display: flex;
+    flex-direction: column;
+}
+
+div.frame > div.info.pop > form {
+    display: flex;
+    flex-direction: column;
+}
+
+div.frame > div.info > form input {
+    outline: none;
+    background: none;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.7);
+    margin: 10px; padding-left: 10px;
+    width: 300px; height: 40px;
+}
+
+div.frame > div.info > form > input:disabled {
+    background-color: var(--light);
+}
+
+div.frame > div.info > form > div.btns {
+    display: flex;
+    justify-content: center;
+}
+
+div.frame > div.info > form > div.btns > button.btn{
+    width: 70px; height: 30px;
+    margin: 10px;
+}
+
+div.frame > div.info > form > div.addr > input.memberZipcode {
+    width: 100px;
+}
+
+div.frame > div.info > form > div.addr > input.searchZipCode {
+    cursor: pointer;
+    width: 85px;
+    margin-left: 0;
+    font-size: 12px;
+    padding: 5px;
+    background-color: var(--light);
+    font-family: 'Nanum Gothic Coding', monospace;
+}
+
+div.frame > div.info > form > div.addr > input.searchZipCode:hover {
+    opacity: 0.7;
+}
+
+div.div-pw, div.div-name, div.div-div-detailaddr {
+    position: relative;
+}
+
+div.frame span.chksum {
+    position: absolute;
+    display: inline-block;
+    width: 20px; height: 20px;
+    background-size: 20px;
+    transform: translate(0, 19px);
+}
+
+div.frame span.chksum.true {
+    background-image: url("/img/verify_true.png");
+}
+
+div.frame span.chksum.false {
+    background-image: url("/img/verify_false.png");
+}
+
+.alert-small {
+    font-family: 'Nanum Gothic Coding', monospace;
+    color: var(--secondary);
+    font-size: 10px;
+    margin: 1px 0; margin-bottom: 5px; padding-left: 10px;
+    opacity: 0.8;
+}

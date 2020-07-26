@@ -13,13 +13,12 @@
         var html = "<input type='hidden' name='tid' value='"+tid+"' />";
         $(opener.document).find("#order-form").append(html);
         $(opener.document).find("#order-form").submit();
-        //toSuccessPage();
 
-        function toSuccessPage() {
-            //form.submit();
-            //opener.location.replace("/payment-complete");
-            //window.close();
-        }
+        setTimeout(execute, 1000);
+        function execute() {
+            window.close();
+        };
+        opener.popup = this;
     </script>
 </body>
 </html>

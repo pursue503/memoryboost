@@ -265,8 +265,8 @@ li {
 .align-left.vertical {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .align-mid.vertical {
@@ -279,8 +279,8 @@ li {
 .align-right.vertical {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-end;
 }
 
 /* 화면 전환 효과 */
