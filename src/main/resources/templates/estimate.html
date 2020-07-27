@@ -1,12 +1,131 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko" >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>견적</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Title</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Noto Sans', sans-serif;
+
+    보통은(한/영 둘다) Noto Sans로 하고
+    정보표시는 Nanum Gothic Coding.
+    -->
+    <!-- fontawesome CDN -->
+    <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/estimate-style.css" />
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/reset.js"></script>
+    <script src="/js/estimate.js"></script>
 </head>
 <body>
-    <header th:replace="header.html"></header>
-        메인컨텐츠
+<header th:replace="header.html"></header>
+<div class="content-container estimate">
+    <form th:id="search-form">
+        <!-- 임시 카테고리 값 -->
+        <input th:id="category" th:type="hidden" th:name="category" th:value="cpu" />
+        <div th:classappend="left">
+            <div th:classappend="filter">
+                <div th:replace="search/search :: filter-cpu"></div>
+            </div>
+            <div th:classappend="keyword">
+                <input th:id="estimate-keyword" th:type="text" th:placeholder="|검색어를 입력하세요|" th:name="keyword" />
+                <select th:name="order">
+                    <option th:value="popular" th:text="인기순" />
+                    <option th:value="priceAsc" th:text="낮은가격순" />
+                    <option th:value="priceDesc" th:text="높은가격순" />
+                </select>
+            </div>
+            <!-- 검색결과 fragment -->
+            <div th:id="replacethis" th:fragment="result">
+                <!-- 제품 리스트 -->
+                <div th:if="${#lists.size(product) < 1}" th:id="product-list" th:classappend="|product-list align-mid horizontal|">
+                    <h4>검색결과가 없습니다.</h4>
+                </div>
+                <div th:if="${#lists.size(product) > 0}" th:id="product-list" th:classappend="product-list">
+                    <div th:each="product : ${product}" th:classappend="product">
+                        <div th:classappend="|product-image align-mid horizontal|">
+                            <img th:src="${product.productThumbnail}" th:onclick="|productDetail(${product.productNo});|" />
+                        </div>
+                        <div th:classappend="|product-info align-left vertical|">
+                            <div th:classappend="|product-name align-left horizontal char sub less|" th:text="${product.productName}"
+                                 th:onclick="|productDetail(${product.productNo});|"></div>
+                            <div th:classappend="|product-price align-left horizontal|" th:text="|${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}원|"></div>
+                        </div>
+                        <div th:classappend="|buttons align-mid vertical|">
+                            <button th:data-category="${category}" th:data-productnum="${product.productNo}" th:classappend="|btn add|" th:text="추가"></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 페이징 -->
+                <div class="paging">
+                    <button th:disabled="${paging.prev == false}"
+                            th:value="${paging.startPage-10}" th:classappend="|btn page|"><i class="fas fa-chevron-left"></i></button>
+                    <button th:each="num : ${#numbers.sequence(paging.startPage, paging.startPage+9)}"
+                            th:disabled="${num > paging.endPage && num != 1}"
+                            th:text="${num}"
+                            th:name="|page|"
+                            th:value="${num}"
+                            th:style="${num == paging.page} ? |color: var(--danger);|"
+                            th:classappend="|btn page|"></button>
+                    <button th:disabled="${paging.next == false}"
+                            th:value="${paging.startPage+10}" th:classappend="|btn page|"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div th:classappend="right">
+        <div th:classappend="yourlist">
+            <!-- 타이틀 -->
+            <h3 th:classappend="|cpu selected|">CPU</h3>
+            <!-- 타이틀 아래에 위치한 묶음 -->
+            <div th:classappend="|category cpu selected|">
+                <!-- 제품 각각 -->
+            </div>
+            <!-- 카테고리 하나 끝 -->
+            <h3 th:classappend="motherboard">메인보드</h3>
+            <div th:classappend="|category motherboard|"></div>
+            <h3 th:classappend="vga">그래픽카드</h3>
+            <div th:classappend="|category vga|"></div>
+            <h3 th:classappend="memory">RAM</h3>
+            <div th:classappend="|category memory|"></div>
+            <h3 th:classappend="hdd">HDD</h3>
+            <div th:classappend="|category hdd|"></div>
+            <h3 th:classappend="ssd">SSD</h3>
+            <div th:classappend="|category ssd|"></div>
+            <h3 th:classappend="case">케이스</h3>
+            <div th:classappend="|category case|"></div>
+            <h3 th:classappend="power">파워</h3>
+            <div th:classappend="|category power|"></div>
+            <h3 th:classappend="keyboard">키보드</h3>
+            <div th:classappend="|category keyboard|"></div>
+            <h3 th:classappend="mouse">마우스</h3>
+            <div th:classappend="|category mouse|"></div>
+            <h3 th:classappend="monitor">모니터</h3>
+            <div th:classappend="|category monitor|"></div>
+        </div>
+        <div th:classappend="final">
+            <div th:classappend="|align-right horizontal|">
+                <button th:id="reset" th:text="초기화"></button>
+            </div>
+            <div th:classappend="|final-info|">
+                <span th:text="총금액"></span><span th:classappend="|total-price char title enlighten|" th:text="|0원|"></span>
+            </div>
+            <div th:classappend="|align-mid horizontal|">
+                <button th:id="order" th:text="|주문하기|"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="footer.html"></footer>
 </body>
 </html>

@@ -26,19 +26,34 @@ public class EstimateMoveController {
             log.info("null");
             filterDTO.setCategory("cpu");
         }
+        model.addAttribute("category", "cpu");
         model.addAttribute("product",productService.filterSearch(filterDTO,order,page));
         model.addAttribute("paging",pagingService.filterSearchPaging(filterDTO, page));
-        return "redirect:/";
+        return "/estimate";
     }
 
     @GetMapping("/estimate-fragment-result")
     public String estimateFragmentResult(ProductFilterSearchRequestDTO filterDTO,
+                               @RequestParam(value = "category", required = false, defaultValue = "cpu") String category,
                                @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
                                @RequestParam(value = "page",required = false,defaultValue = "1") int page,
                                Model model) {
+        model.addAttribute("category", category);
         model.addAttribute("product",productService.filterSearch(filterDTO,order,page));
         model.addAttribute("paging",pagingService.filterSearchPaging(filterDTO, page));
-        return "";
+        return "estimate :: result";
     }
 
+    @GetMapping("/filter-change")
+    public String filterChange(@RequestParam(value = "category") String category, Model model) {
+        model.addAttribute("category", category);
+        return "search/search :: filter-"+category;
+    }
+
+    @GetMapping("/add-fragment")
+    public String addFragment(@RequestParam(value = "productNo") Long productNo, @RequestParam(value = "category") String category, Model model) {
+        model.addAttribute("category", category);
+        model.addAttribute("product",productService.productDetail(productNo));
+        return "layout/estimate-layout :: added";
+    }
 }

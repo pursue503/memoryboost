@@ -19,4 +19,7 @@ public class EstimateController {
 
     @GetMapping("/writereview")
     public String writeReviewPage() { return "mypage/writereview"; }
+
+    @GetMapping("/estimatetest")
+    public String estimateTestPage() { return "/estimate"; }
 }

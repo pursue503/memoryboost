@@ -1,0 +1,322 @@
+div.content-container.estimate {
+    display: flex;
+    padding: 30px 0;
+    width: 1000px;
+}
+
+/* 왼쪽 */
+form#search-form {
+    flex-basis: 55%;
+    height: 720px;
+}
+div.left {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 필터 */
+div.filter {
+    width: 100%; height: 160px;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+}
+
+/* 스펙 */
+div.filter > div.criteria {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+div.filter > div.criteria > div.criteria-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 17px;
+    color: var(--light-blue);
+}
+
+div.filter > div.criteria > div.criteria-elem {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+div.filter > div.criteria > div.criteria-elem > div.checkbox-elem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+div.filter > div.criteria > div.criteria-elem > div.checkbox-elem > input[type=checkbox] {
+    margin: 3px;
+}
+
+div.filter > div.criteria > div.criteria-elem > div.checkbox-elem > label {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
+/* 키워드 검색, 정렬 */
+div.estimate div.keyword {
+    display: flex;
+    width: 100%; height: 30px;
+    border-left: 2px solid rgba(0, 0, 0, 0.8);
+    border-right: 2px solid rgba(0, 0, 0, 0.8);
+}
+
+div.estimate div.keyword > input[type=text] {
+    outline: 0;
+    background-color: var(--white);
+    border: 0;
+    border-right: 2px solid rgba(0, 0, 0, 0.8);
+    width: 80%; height: 100%;
+    padding: 7px;
+}
+
+div.estimate div.keyword > select {
+    outline: 0;
+    background-color: var(--white);
+    border: 0;
+    width: 20%; height: 100%
+    padding: 7px;
+}
+
+/* 제품 리스트 */
+div.product-list {
+    position: relative;
+    width: 100%; height: 500px;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    overflow-y: scroll;
+}
+
+div.product-list > div.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 500px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+div.product-list > div.product {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    width: 100%; height: 80px;
+}
+
+/* 이미지 */
+div.product-list > div.product > div.product-image {
+    width: 80px;
+}
+
+div.product-list > div.product > div.product-image > img {
+    cursor: pointer;
+    width: 60px; height: 60px;
+}
+
+div.product-list > div.product > div.product-image > img:hover {
+    opacity: 0.5;
+}
+
+/* 제품정보 */
+div.product-list > div.product > div.product-info {
+    flex-basis: 70%;
+}
+
+div.product-list > div.product > div.product-info > div.product-name {
+    cursor: pointer;
+}
+
+div.product-list > div.product > div.product-info > div.product-name:hover {
+    text-decoration: underline;
+}
+
+/* 추가 빼기 버튼 */
+div.product-list > div.product > div.buttons {
+    padding-right: 8px;
+}
+
+div.product-list > div.product > div.buttons > .btn {
+    outline: none;
+    margin: 2px;
+    width: 70px;
+}
+
+div.product-list > div.product > div.buttons > .btn.remove {
+    background-color: var(--danger);
+    /*border: 1px solid var(--danger);*/
+}
+
+div.product-list > div.product > div.buttons > .btn.remove:hover {
+    opacity: 1.0;
+}
+
+/* 페이징 */
+div.paging {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; height: 30px;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    border-top: 0;
+}
+
+div.paging > button.btn {
+    outline: none;
+    background: none;
+    border: 0;
+    font-size: 15px;
+    width: 20px; height: 20px;
+}
+
+/* 오른쪽 */
+div.right {
+    position: relative;
+    flex-basis: 45%;
+    display: flex;
+    flex-direction: column;
+    height: 720px;
+}
+
+div.right > div.loader {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* 내가 선택한 제품 */
+div.yourlist {
+    flex-basis: 90%;
+    width: 100%;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    border-left: 0;
+    overflow-y: scroll;
+}
+
+/* 타이틀 */
+div.yourlist > h3 {
+    cursor: pointer;
+    padding: 5px;
+    background-color: rgba(220, 220, 220, 0.3);
+}
+
+div.yourlist > h3.selected {
+    color: var(--white);
+    background-color: var(--light-blue);
+}
+
+/* 내부 틀 */
+div.yourlist > div.category {
+    display: flex;
+    flex-direction: column;
+    padding: 3px;
+    padding-left: 5px;
+    border: 3px solid rgba(220, 220, 220, 0.3);
+    border-top: 0;
+}
+
+div.yourlist > div.category.selected {
+    border: 3px solid var(--light-blue);
+    border-bottom: 3px solid var(--light-blue);
+    padding: 0px;
+    padding-left: 2px;
+
+}
+
+/* 각각 제품 */
+div.yourlist > div.category > div.added {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+div.yourlist > div.category > div.added:first-child {
+    border-top: 0;
+}
+
+div.yourlist > div.category > div.added > div.product-info {
+    flex-basis: 60%;
+}
+
+/* 수량 컨트롤 */
+div.yourlist > div.category > div.added > div.product-count {
+    flex-basis: 70px;
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+div.yourlist > div.category > div.added > div.product-count > .btn.count {
+    cursor: pointer;
+    border: 0
+    background-color: var(--light-gray);
+    width: 20px; height: 20px;
+    font-size: 10pt;
+}
+
+div.yourlist > div.category > div.added > div.product-count > input[name=count] {
+    outline: none;
+    background-color: var(--white);
+    border: 0;
+    width: 30px; height: 20px;
+    text-align: center;
+    padding: 2px;
+}
+
+/* 빼기 */
+div.yourlist > div.category > div.added > div.control {
+    width: 30px;
+}
+
+div.yourlist > div.category > div.added > div.control > .btn.remove {
+    cursor: pointer;
+    outline: none;
+    background: none;
+    border: 0;
+    font-size: 15pt;
+    color: rgba(0, 0, 0, 0.8);
+    transform: scaleY(0.8);
+}
+
+/* 결과 */
+div.final {
+    flex-basis: 10%;
+    width: 100%;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    border-top: 0;
+    border-left: 0;
+}
+
+div.final > div {
+    padding: 5px;
+}
+
+div.final > div.final-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+div.final > div:nth-child(3) {
+    padding: 0;
+}
+
+div.final > div:nth-child(3) > button {
+    cursor: pointer;
+    outline: none;
+    background-color: var(--warning);
+    border: 1px solid var(--warning);
+    color: var(--white);
+    width: 100%;
+    font-size: 20px;
+}

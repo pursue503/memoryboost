@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="added" th:data-productnum="${product.productNo}" th:classappend="|added ${product.productNo}|">
+    <!-- 제품정보 -->
+    <div th:classappend="product-info">
+        <div th:classappend="|product-name char sub less|" th:text="${product.productName}"></div>
+        <div th:classappend="|product-price char sub less|" th:data-price="${product.productPrice}" th:text="|${#numbers.formatInteger(product.productPrice, 0, 'COMMA')}원|"></div>
+    </div>
+    <!-- 수량 -->
+    <div th:classappend="|product-count|">
+        <button th:data-productnum="${product.productNo}" th:classappend="|btn count down|" th:text="|-|"></button>
+        <input th:data-productnum="${product.productNo}" th:type="text" th:classappend="|count|" th:name="|count|" th:value="1" />
+        <button th:data-productnum="${product.productNo}" th:classappend="|btn count up|" th:text="|+|"></button>
+    </div>
+    <!-- 제거버튼 -->
+    <div th:classappend="|control align-left horizontal|">
+        <button th:data-category="${category}" th:data-productnum="${product.productNo}" th:classappend="|btn remove|" th:text="|x|"></button>
+    </div>
+</div>
+</body>
+</html>

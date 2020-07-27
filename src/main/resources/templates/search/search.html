@@ -47,7 +47,7 @@
                 <label for="monitor">모니터</label><input id="monitor" class="category-radio" type="radio" name="category" value="monitor" />
             </div>
             <div class="criteria none" th:text="|카테고리를 선택해주세요.|"></div>
-            <div class="criteria cpu">
+            <div th:fragment="filter-cpu" class="criteria cpu">
                 <div class="criteria-title">
                     제조회사
                 </div>
@@ -81,7 +81,7 @@
                     <div class="checkbox-elem"><input class="btn chkbox" th:id="cpu-c8" type="checkbox" name="select3" value="I9" /><label for="cpu-c8">i9</label></div>
                 </div>
             </div>
-            <div class="criteria motherboard">
+            <div th:fragment="filter-motherboard" class="criteria motherboard">
                 <div class="criteria-title">
                     제조회사
                 </div>
@@ -110,7 +110,7 @@
                     <div class="checkbox-elem"><input class="btn chkbox" th:id="motherboard-c6" type="checkbox" name="select3" value="Z490" /><label for="motherboard-c6">Z490</label></div>
                 </div>
             </div>
-            <div class="criteria vga">
+            <div th:fragment="filter-vga" class="criteria vga">
                 <div class="criteria-title">
                     제조회사
                 </div>
@@ -140,7 +140,7 @@
                     <div class="checkbox-elem"><input class="btn chkbox" th:id="vga-c2" type="checkbox" name="select3" value="GTX" /><label for="vga-c2">GTX</label></div>
                 </div>
             </div>
-            <div class="criteria memory">
+            <div th:fragment="filter-memory" class="criteria memory">
                 <div class="criteria-title">
                     제조회사
                 </div>
@@ -158,7 +158,7 @@
                     <div class="checkbox-elem"><input class="btn chkbox" th:id="memory-b4" type="checkbox" name="select2" value="64G" /><label for="memory-b4">64G</label></div>
                 </div>
             </div>
-            <div class="criteria hdd">
+            <div th:fragment="filter-hdd" class="criteria hdd">
                 <div class="criteria-title">
                     제조회사
                 </div>
@@ -174,7 +174,7 @@
                     <div class="checkbox-elem"><input class="btn chkbox" th:id="hdd-b3" type="checkbox" name="select2" value="6TB" /><label for="hdd-b3">6TB</label></div>
                 </div>
             </div>
-            <div class="criteria ssd">
+            <div th:fragment="filter-ssd" class="criteria ssd">
                 <div class="criteria-title">
                     제조회사
                 </div>
@@ -190,7 +190,7 @@
                     <div class="checkbox-elem"><input class="btn chkbox" th:id="ssd-b3" type="checkbox" name="select2" value="1TB" /><label for="ssd-b3">1TB</label></div>
                 </div>
             </div>
-            <div class="criteria case">
+            <div th:fragment="filter-case" class="criteria case">
                 <div class="criteria-title">
                     제조회사
                 </div>
@@ -209,7 +209,7 @@
                     <div class="checkbox-elem"><input class="btn chkbox" th:id="case-b2" type="checkbox" name="select2" value="28540" /><label for="case-b2">28540</label></div>
                 </div>
             </div>
-            <div class="criteria power">
+            <div th:fragment="filter-power" class="criteria power">
                 <div class="criteria-title">
                     제조회사
                 </div>
@@ -225,7 +225,7 @@
                     <div class="checkbox-elem"><input class="btn chkbox" th:id="power-b3" type="checkbox" name="select2" value="700" /><label for="power-b3">700W</label></div>
                 </div>
             </div>
-            <div class="criteria keyboard">
+            <div th:fragment="filter-keyboard" class="criteria keyboard">
                 <div class="criteria-title">
                     제조회사
                 </div>
@@ -247,7 +247,7 @@
                     <div class="checkbox-elem"><input class="btn chkbox" th:id="keyboard-c1" type="checkbox" name="select3" value="기계식" /><label for="keyboard-c1">기계식</label></div>
                 </div>
             </div>
-            <div class="criteria mouse">
+            <div th:fragment="filter-mouse" class="criteria mouse">
                 <div class="criteria-title">
                     제조회사
                 </div>
@@ -261,7 +261,7 @@
                     <div class="checkbox-elem"><input class="btn chkbox" th:id="mouse-b1" type="checkbox" name="select2" value="유선" /><label for="mouse-b1">유선</label></div>
                 </div>
             </div>
-            <div class="criteria monitor">
+            <div th:fragment="filter-monitor" class="criteria monitor">
                 <div class="criteria-title">
                     제조회사
                 </div>
