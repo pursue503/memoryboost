@@ -3,7 +3,6 @@ package com.memoryboost.service.order;
 import com.memoryboost.domain.dto.estimate.request.EstimateRequestDTO;
 import com.memoryboost.domain.dto.order.request.OrderInfoUpdateDTO;
 import com.memoryboost.domain.dto.order.request.OrderSaveRequestDTO;
-import com.memoryboost.domain.dto.order.request.OrderSingleProductSaveRequestDTO;
 import com.memoryboost.domain.entity.cart.Cart;
 import com.memoryboost.domain.entity.cart.CartRepository;
 import com.memoryboost.domain.entity.member.Member;
@@ -32,6 +31,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +89,7 @@ public class OrderService {
 
     @Transactional
     public boolean orderSave(Authentication authentication , ArrayList<Long> cartList , OrderSaveRequestDTO saveRequestDTO,
-                                                OrderSingleProductSaveRequestDTO singleProductSaveRequestDTO, String tid) {
+                             HttpSession session, String tid) {
         //회원정보가져오기
         MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
         Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
@@ -124,11 +124,14 @@ public class OrderService {
             } // end MemberCartResponseVO
 
 
-        } else { // 단일구매
-            //cartNo 가 비어있을경우만 단품구매로 확인이됨
-            Product product = productRepository.findById(singleProductSaveRequestDTO.getProductNo()).orElseThrow(NullPointerException::new);
-            orderListRepository.save(OrderList.builder().order(order).product(product).productCnt(singleProductSaveRequestDTO.getProductCnt()).build());
+        } else { // 견적서 + 단품
 
+            List<OrderPaymentResponseVO> orderPaymentResponseVOList = (List<OrderPaymentResponseVO>) session.getAttribute("order");
+
+            for(OrderPaymentResponseVO orderPayment : orderPaymentResponseVOList) {
+                Product product = productRepository.findById(orderPayment.getProductNo()).orElseThrow(NullPointerException::new);
+                orderListRepository.save(OrderList.builder().order(order).product(product).productCnt(orderPayment.getProductCnt()).build());
+            }
         }
         return true;
     }

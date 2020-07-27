@@ -206,6 +206,9 @@ $(document).ready(function() {
         let added = $("div.added");
         let orderList = new Array();
 
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
         if(added.length) {
             let index = 0;
             for(let obj of added) {
@@ -219,16 +222,20 @@ $(document).ready(function() {
                 $("#order-form").append("<input type='hidden' name='list["+index+"].productCnt' value='"+productCount+"' />")
                 index++;
             }
-
-            $("#order-form").submit();
-            /*$.ajax({
-                type : "GET",
+            console.dir(JSON.stringify(orderList));
+            $.ajax({
+                type : "POST",
                 url : "/order/estimate",
                 data : JSON.stringify(orderList),
-                contentType:"application/json;charset=UTF-8"
+                contentType : "application/json",
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                }
             })
             .done(function(response) {
-                console.dir(response);
+                if(response) {
+                    location.href="/order/estimate";
+                }
             })
             .fail(function(response) {
                 console.dir("통신 실패");

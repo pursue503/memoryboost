@@ -72,7 +72,7 @@
             </table>
         </div>
         <h1 th:text="배송정보"></h1>
-        <form th:id="|addr-form|" action="/order/info" th:classappend="|align-mid vertical|" method="POST">
+            <form th:id="|addr-form|" action="/order/info" th:classappend="|align-mid vertical|" method="POST">
             <input th:type="text" th:id="diRecipient" th:placeholder="|받는사람|" th:name="diRecipients" th:value="${delivery.diRecipient}" />
             <input th:type="text" th:id="diTel" th:placeholder="|전화번호|" th:name="diTel" th:value="${delivery.diTel}" />
             <div th:classappend="addr">

@@ -23,13 +23,12 @@ public class EstimateMoveController {
                                @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
                                @RequestParam(value = "page",required = false,defaultValue = "1") int page,Model model) {
         if(filterDTO == null || filterDTO.getCategory() == null) {
-            log.info("null");
             filterDTO.setCategory("cpu");
         }
         model.addAttribute("category", "cpu");
         model.addAttribute("product",productService.filterSearch(filterDTO,order,page));
         model.addAttribute("paging",pagingService.filterSearchPaging(filterDTO, page));
-        return "/estimate";
+        return "estimate";
     }
 
     @GetMapping("/estimate-fragment-result")
