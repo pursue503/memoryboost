@@ -71,7 +71,7 @@ public class OrderMoveController {
                                 OrderSingleProductSaveRequestDTO singleProductSaveRequestDTO, @RequestParam(value = "tid",required = false) String tid){
         try{
             if(orderService.orderSave(authentication,cartList,orderSaveRequestDTO,singleProductSaveRequestDTO,tid)) {
-                return "redirect:/";
+                return "redirect:/mypage-orderList";
             } else {
                 return "error";
             }
