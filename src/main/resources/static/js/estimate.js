@@ -210,13 +210,17 @@ $(document).ready(function() {
         var header = $("meta[name='_csrf_header']").attr("content");
 
         if(added.length) {
+            let index = 0;
             for(let obj of added) {
                 let productNo = obj.dataset.productnum;
                 let productCount = $(obj).find("input.count")[0].value;
-                let product = { "productNo" : Number(productNo),
-                                "productCnt" : Number(productCount) };
-
-                orderList.push(product);
+                /*let product = new Object();
+                product.productNo = Number(productNo);
+                product.productCount = Number(productCount);
+                orderList.push(product);*/
+                $("#order-form").append("<input type='hidden' name='list["+index+"].productNo' value='"+productNo+"' />")
+                $("#order-form").append("<input type='hidden' name='list["+index+"].productCnt' value='"+productCount+"' />")
+                index++;
             }
             console.dir(JSON.stringify(orderList));
             $.ajax({
@@ -235,7 +239,7 @@ $(document).ready(function() {
             })
             .fail(function(response) {
                 console.dir("통신 실패");
-            });
+            });*/
         } else {
             alert("견적서가 비어있습니다.");
         }
