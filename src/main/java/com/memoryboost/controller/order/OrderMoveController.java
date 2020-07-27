@@ -44,9 +44,13 @@ public class OrderMoveController {
     }
 
     @GetMapping("/order/estimate")
-    public String estimateOrder(@RequestBody List<EstimateRequestDTO> estimateRequestDTOList) {
+    public String estimateOrder(@RequestBody List<EstimateRequestDTO> estimateRequestDTOList, Model model) {
 
-        return "true";
+        List<OrderPaymentResponseVO> orderPaymentResponseVOList = orderService.estimateOrder(estimateRequestDTOList);
+        model.addAttribute("order", orderPaymentResponseVOList);
+        model.addAttribute("totalAmount", orderService.orderTotalAmount(orderPaymentResponseVOList));
+
+        return "order";
     }
 
     @GetMapping("/mypage-orderList")

@@ -1,5 +1,6 @@
 package com.memoryboost.service.order;
 
+import com.memoryboost.domain.dto.estimate.request.EstimateRequestDTO;
 import com.memoryboost.domain.dto.order.request.OrderInfoUpdateDTO;
 import com.memoryboost.domain.dto.order.request.OrderSaveRequestDTO;
 import com.memoryboost.domain.dto.order.request.OrderSingleProductSaveRequestDTO;
@@ -146,6 +147,22 @@ public class OrderService {
         return responseVOList;
     }
 
+    //견적페이지 - > 결제페이지
+    @Transactional(readOnly = true)
+    public List<OrderPaymentResponseVO> estimateOrder(List<EstimateRequestDTO> estimateRequestDTOList) {
+
+        List<OrderPaymentResponseVO> responseVOList = new ArrayList<>();
+        for(EstimateRequestDTO requestDTO : estimateRequestDTOList) {
+            Product product = productRepository.findById(requestDTO.getProductNo()).orElseThrow(NullPointerException::new);
+
+            OrderPaymentResponseVO orderPaymentResponseVO = OrderPaymentResponseVO.builder().productNo(product.getProductNo())
+                    .productName(product.getProductName()).productThumbnail(product.getProductThumbnail()).productPrice(product.getProductPrice())
+                    .productCnt(requestDTO.getProductCnt()).build();
+            responseVOList.add(orderPaymentResponseVO);
+        }
+        return responseVOList;
+    }
+
     //주문 내역 상세 보기 서비스 3개
 
     //상품
@@ -194,5 +211,7 @@ public class OrderService {
 
         return true;
     }
+
+
 
 }
