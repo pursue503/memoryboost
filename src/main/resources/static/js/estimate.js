@@ -239,7 +239,7 @@ $(document).ready(function() {
             })
             .fail(function(response) {
                 console.dir("통신 실패");
-            });*/
+            });
         } else {
             alert("견적서가 비어있습니다.");
         }

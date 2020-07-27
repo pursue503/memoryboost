@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form action="/test" method="post" enctype="multipart/form-data">
+        <input type="file" name="fileTest">
+        <input type="submit" value="오우">
+        <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    </form>
+
+</body>
+</html>
