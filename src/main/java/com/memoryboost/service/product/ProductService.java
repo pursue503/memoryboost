@@ -55,12 +55,6 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<ProductSearchResponseDTO> estimateFilterSearch(ProductFilterSearchRequestDTO filterDTO, String order, int page , String keyword) {
 
-        if(keyword != null) {
-            if(keyword.trim().equals("")) {
-                List<ProductSearchResponseDTO> productSearchResponseDTOList = new ArrayList<>();
-                return productSearchResponseDTOList;
-            }
-        }
         return productRepository.estimateFilterSearch(filterDTO,order,page,keyword);
     }
 
