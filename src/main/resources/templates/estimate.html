@@ -2,8 +2,6 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Title</title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -39,6 +37,7 @@
             </div>
             <div th:classappend="keyword">
                 <input th:id="estimate-keyword" th:type="text" th:placeholder="|검색어를 입력하세요|" th:name="keyword" />
+                <button th:classappend="|clear-keyword notseen|" th:text="|x|"></button>
                 <select th:name="order">
                     <option th:value="popular" th:text="인기순" />
                     <option th:value="priceAsc" th:text="낮은가격순" />
