@@ -28,7 +28,7 @@ public class EstimateMoveController {
         model.addAttribute("category", "cpu");
         model.addAttribute("product",productService.filterSearch(filterDTO,order,page));
         model.addAttribute("paging",pagingService.filterSearchPaging(filterDTO, page));
-        return "/estimate";
+        return "estimate";
     }
 
     @GetMapping("/estimate-fragment-result")
