@@ -3,8 +3,8 @@ server:
 spring:
   servlet:
     multipart:
-      maxFileSize: 50MB
-      maxRequestSize: 50MB
+      maxFileSize: 2MB
+      maxRequestSize: 2MB
 
   devtools:
     livereload:
