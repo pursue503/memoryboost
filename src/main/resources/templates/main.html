@@ -21,7 +21,6 @@
     <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/slide-style.css" />
     <link rel="stylesheet" href="/css/main-style.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
@@ -30,18 +29,48 @@
 <body>
 <header th:replace="header.html"></header>
 <div class="content-container main">
-    <div class="a">
-        <button class="left" th:text="|<|"></button>
-        <button class="right" th:text="|>|"></button>
-        <div class="b">
-            <div class="image c">1</div>
-            <div class="image d">2</div>
-            <div class="image e">3</div>
+    <div th:classappend="|slide main|">
+        <button th:classappend="left" th:text="|<|"></button>
+        <button th:classappend="right" th:text="|>|"></button>
+        <div th:classappend="slide-wrapper">
+            <div th:classappend="|slide-content first|">
+                <div th:classappend="inner-content"></div>
+                <div th:classappend="inner-content"></div>
+            </div>
+            <div th:classappend="|slide-content second|">
+                <div th:classappend="inner-content"></div>
+                <div th:classappend="inner-content"></div>
+            </div>
+            <div th:classappend="|slide-content third|">
+                <div th:classappend="inner-content"></div>
+                <div th:classappend="inner-content"></div>
+            </div>
+        </div>
+    </div>
+    <div th:classappend="mid">
+        <div th:classappend="community">
+            <div th:classappend="review">
+                게시판1
+            </div>
+            <div th:classappend="review2">
+                게시판2
+            </div>
+        </div>
+        <div th:classappend="best-seller">
+            <div th:classappend="any-product">
+                아무 상품 걸어놓기
+            </div>
+        </div>
+    </div>
+    <div th:classappend="product-belt-slide">
+        <div th:classappend="belt-slide-wrapper">
+            <div th:classappend="|belt-content first|"></div>
+            <div th:classappend="|belt-content second|"></div>
+            <div th:classappend="|belt-content third|"></div>
         </div>
     </div>
 </div>
 <footer th:replace="footer.html"></footer>
-<script src="/js/slide.js"></script>
 <script src="/js/main.js"></script>
 </body>
 </html>
