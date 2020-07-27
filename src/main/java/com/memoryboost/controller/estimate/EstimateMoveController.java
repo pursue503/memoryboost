@@ -23,7 +23,6 @@ public class EstimateMoveController {
                                @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
                                @RequestParam(value = "page",required = false,defaultValue = "1") int page,Model model) {
         if(filterDTO == null || filterDTO.getCategory() == null) {
-            log.info("null");
             filterDTO.setCategory("cpu");
         }
         model.addAttribute("category", "cpu");

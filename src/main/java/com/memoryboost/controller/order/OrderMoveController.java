@@ -3,7 +3,6 @@ package com.memoryboost.controller.order;
 import com.memoryboost.domain.dto.estimate.request.EstimateRequestDTO;
 import com.memoryboost.domain.dto.order.request.OrderInfoUpdateDTO;
 import com.memoryboost.domain.dto.order.request.OrderSaveRequestDTO;
-import com.memoryboost.domain.dto.order.request.OrderSingleProductSaveRequestDTO;
 import com.memoryboost.domain.vo.order.response.OrderPaymentResponseVO;
 import com.memoryboost.service.order.OrderService;
 import com.memoryboost.service.paging.PagingService;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,20 +36,33 @@ public class OrderMoveController {
 
     //단품 주문
     @GetMapping("/order/single-product")
-    public String singleOrder(@RequestParam("productNo") Long productNo, @RequestParam("productCnt") int productCnt, Model model) {
+    public String singleOrder(@RequestParam("productNo") Long productNo, @RequestParam("productCnt") int productCnt, Model model , HttpSession session) {
         List<OrderPaymentResponseVO> orderPaymentResponseVOList = orderService.singleProduct(productNo,productCnt);
+        int totalAmount = orderService.orderTotalAmount(orderPaymentResponseVOList);
+
         model.addAttribute("order",orderPaymentResponseVOList);
-        model.addAttribute("totalAmount", orderService.orderTotalAmount(orderPaymentResponseVOList));
+        model.addAttribute("totalAmount", totalAmount);
+        session.setAttribute("order",orderPaymentResponseVOList);
+        session.setAttribute("totalAmount",totalAmount);
+
         return "order";
     }
 
-    @GetMapping("/order/estimate")
-    public String estimateOrder(@RequestBody List<EstimateRequestDTO> estimateRequestDTOList, Model model) {
+    @PostMapping("/order/estimate")
+    @ResponseBody
+    public Boolean estimateOrder(@RequestBody List<EstimateRequestDTO> estimateRequestDTOList, HttpSession session) {
 
         List<OrderPaymentResponseVO> orderPaymentResponseVOList = orderService.estimateOrder(estimateRequestDTOList);
-        model.addAttribute("order", orderPaymentResponseVOList);
-        model.addAttribute("totalAmount", orderService.orderTotalAmount(orderPaymentResponseVOList));
+        session.setAttribute("order", orderPaymentResponseVOList);
+        return true;
+    }
 
+    @GetMapping("/order/estimate")
+    public String estimateOrder(HttpSession session, Model model) {
+
+        List<OrderPaymentResponseVO> orderPaymentResponseVOList = (List<OrderPaymentResponseVO>) session.getAttribute("order");
+        model.addAttribute("order",orderPaymentResponseVOList);
+        model.addAttribute("totalAmount",orderService.orderTotalAmount(orderPaymentResponseVOList));
         return "order";
     }
 
@@ -68,9 +81,9 @@ public class OrderMoveController {
 
     @PostMapping("/order-complete")
     public String orderComplete(@RequestParam(value = "cartList" , required = false) ArrayList<Long> cartList , OrderSaveRequestDTO orderSaveRequestDTO , Authentication authentication,
-                                OrderSingleProductSaveRequestDTO singleProductSaveRequestDTO, @RequestParam(value = "tid",required = false) String tid){
+                                @RequestParam(value = "tid",required = false) String tid , HttpSession session){
         try{
-            if(orderService.orderSave(authentication,cartList,orderSaveRequestDTO,singleProductSaveRequestDTO,tid)) {
+            if(orderService.orderSave(authentication,cartList,orderSaveRequestDTO,session,tid)) {
                 return "redirect:/mypage-orderList";
             } else {
                 return "error";
@@ -100,8 +113,8 @@ public class OrderMoveController {
     //주문 정보 업데이트
     @PutMapping("/order/info")
     public String orderInfoUpdate(OrderInfoUpdateDTO orderInfoUpdateDTO, Authentication authentication) {
-
         try{
+            log.info("실행.");
             if(orderService.orderInfoUpdate(orderInfoUpdateDTO,authentication)) {
                 return "redirect:/order/detail?orderNo=" + orderInfoUpdateDTO.getOrderNo();
             } else {

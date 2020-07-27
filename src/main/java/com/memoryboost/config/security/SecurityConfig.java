@@ -6,6 +6,7 @@ import com.memoryboost.domain.entity.member.Role;
 import com.memoryboost.service.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -48,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/cart").authenticated()
                     .antMatchers("/order").authenticated()
                     .antMatchers("/order/single-product").authenticated()
+                    .antMatchers(HttpMethod.GET,"/order/estimate").authenticated()
                 .and()
                     //로그인설정
                     .formLogin()
