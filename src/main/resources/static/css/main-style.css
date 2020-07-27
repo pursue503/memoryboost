@@ -1,3 +1,50 @@
-.vertical-slide.two {
-    /*width: 700px; height: 400px;*/
+div.content-container.main {
+    padding: 10px 0;
+}
+
+div.a {
+    position: relative;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+div.a > button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    width: 20px; height: 40px;
+    transform: translate(0, -50%);
+    font-weight: bold;
+    z-index: 100;
+}
+
+button.left {
+    top: 50%; left: 0;
+}
+
+button.right {
+    top: 50%; right: 0;
+}
+
+div.b {
+    display: flex;
+    width: 1500px; height: 200px;
+}
+
+div.c {
+    width: 300px; height: 200px;
+    background-color: #FF9797;
+}
+
+div.d {
+    width: 300px; height: 200px;
+    background-color: #97FF97;
+}
+
+div.e {
+    width: 300px; height: 200px;
+    background-color: #9797FF;
 }

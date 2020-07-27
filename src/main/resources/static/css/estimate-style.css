@@ -70,9 +70,20 @@ div.estimate div.keyword > input[type=text] {
     outline: 0;
     background-color: var(--white);
     border: 0;
-    border-right: 2px solid rgba(0, 0, 0, 0.8);
     width: 80%; height: 100%;
     padding: 7px;
+}
+
+div.estimate div.keyword > button.clear-keyword {
+    cursor: pointer;
+    outline: none;
+    background: none;
+    border: none;
+    width: 32px;
+}
+
+div.estimate div.keyword > button.clear-keyword.notseen {
+    visibility: hidden;
 }
 
 div.estimate div.keyword > select {
@@ -81,6 +92,7 @@ div.estimate div.keyword > select {
     border: 0;
     width: 20%; height: 100%
     padding: 7px;
+    border-left: 2px solid rgba(0, 0, 0, 0.8);
 }
 
 /* 제품 리스트 */

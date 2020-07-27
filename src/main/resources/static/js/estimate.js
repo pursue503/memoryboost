@@ -4,6 +4,22 @@ $(document).ready(function() {
         $(".page[value=1]")[0].click();
     });
 
+    //검색어
+    $(document).on("keypress", "#estimate-keyword", function(e) {
+        if(e.which == 13)  {
+            e.preventDefault();
+            $(".page[value=1]")[0].click();
+        }
+    });
+
+    $(document).on("keyup", "#estimate-keyword", function(e) {
+        if(!isEmpty(e.target.value)) {
+            $("button.clear-keyword").removeClass("notseen");
+        } else {
+            $("button.clear-keyword").addClass("notseen");
+        }
+    });
+
     //정렬
     $(document).on("change", "select[name=order]", function(e) {
         $(".page[value=1]")[0].click();
@@ -63,7 +79,6 @@ $(document).ready(function() {
         $("div.category."+category).addClass("selected");
         $("input#category")[0].value = category;
 
-        $(".page[value=1]")[0].click();
 
         //필터 교체
         $.ajax({
@@ -73,6 +88,7 @@ $(document).ready(function() {
         })
         .done(function(fragment){
             $("div.criteria").replaceWith(fragment);
+            $(".page[value=1]")[0].click();
         })
         .fail(function(response){
             console.dir("통신 실패! [견적서:필터교체]");
@@ -176,11 +192,11 @@ $(document).ready(function() {
     //추가된 제품 초기화
     $(document).on("click", "#reset", function(e) {
         e.preventDefault();
-        $("div.added").remove();
-        $(".product-list .btn.remove").removeClass("remove");
-        $(".product-list .btn.remove").addClass("add");
-        for(let obj of $(".product-list .btn.remove")) {
-            obj.innerHTML = "추가";
+
+        let inquiry = confirm("견적서를 초기화 하시겠습니까?");
+        if(inquiry){
+            $("div.added").remove();
+            $("h3.cpu")[0].click();
         }
     });
 
@@ -194,11 +210,24 @@ $(document).ready(function() {
             for(let obj of added) {
                 let productNo = obj.dataset.productnum;
                 let productCount = $(obj).find("input.count")[0].value;
-                let product = { productNo : productNo,
-                                productCnt : productCount };
+                let product = { "productNo" : Number(productNo),
+                                "productCnt" : Number(productCount) };
 
                 orderList.push(product);
             }
+            console.dir(JSON.stringify(orderList));
+            $.ajax({
+                type : "GET",
+                url : "/order/estimate",
+                data : JSON.stringify(orderList),
+                contentType : "application/json"
+            })
+            .done(function(response) {
+                console.dir(response);
+            })
+            .fail(function(response) {
+                console.dir("통신 실패");
+            });
         } else {
             alert("견적서가 비어있습니다.");
         }
