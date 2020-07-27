@@ -161,24 +161,24 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             //where 에서 and or 명시 안하면 and 로 통일.
             //switch 문 을 안쓰고 해결할 수 있는 방법을 나중에 생각해보기..
             case "cpu":
-                if(filterDTO.nullCheck()) {
+                if (filterDTO.nullCheck()) {
                     builder.and(product.productCategory.eq(1));
                 }
 
                 jpaQuery.leftJoin(cpu).on(product.eq(cpu.productNo));
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
+                if (filterDTO.getSelect2() != null) {
 
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
@@ -186,10 +186,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                     }
                 }
 
-                if(filterDTO.getSelect3() != null) {
+                if (filterDTO.getSelect3() != null) {
 
-                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
-                        if(i == 0) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
                             builder.and(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
                             builder.or(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
@@ -200,15 +200,15 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 break;
 
             case "motherboard":
-                if(filterDTO.nullCheck()) {
+                if (filterDTO.nullCheck()) {
                     builder.and(product.productCategory.eq(2));
                 }
 
                 jpaQuery.leftJoin(motherboard).on(product.eq(motherboard.productNo));
-                if(filterDTO.getSelect1() != null) {
+                if (filterDTO.getSelect1() != null) {
 
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
@@ -217,9 +217,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 }
 
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
@@ -227,9 +227,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                     }
                 }
 
-                if(filterDTO.getSelect3() != null) {
-                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
                             builder.and(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
                             builder.or(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
@@ -241,16 +241,16 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 break;
 
             case "vga":
-                if(filterDTO.nullCheck()) {
+                if (filterDTO.nullCheck()) {
                     System.out.println("카테고리실행");
                     builder.and(product.productCategory.eq(3));
                 }
 
                 jpaQuery.leftJoin(vga).on(product.eq(vga.productNo));
-                if(filterDTO.getSelect1() != null) {
+                if (filterDTO.getSelect1() != null) {
 
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
@@ -258,18 +258,18 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect3() != null) {
-                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
                             builder.and(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
                             builder.or(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
@@ -280,24 +280,24 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 break;
 
             case "memory":
-                if(filterDTO.nullCheck()) {
+                if (filterDTO.nullCheck()) {
                     builder.and(product.productCategory.eq(4));
                 }
 
                 jpaQuery.leftJoin(memory).on(product.eq(memory.productNo));
 
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
@@ -308,24 +308,24 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 break;
 
             case "hdd":
-                if(filterDTO.nullCheck()) {
+                if (filterDTO.nullCheck()) {
                     builder.and(product.productCategory.eq(5));
                 }
 
                 jpaQuery.leftJoin(hdd).on(product.eq(hdd.productNo));
 
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
@@ -335,14 +335,14 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 break;
 
             case "ssd":
-                if(filterDTO.nullCheck()) {
+                if (filterDTO.nullCheck()) {
                     builder.and(product.productCategory.eq(6));
                 }
 
                 jpaQuery.leftJoin(ssd).on(product.eq(ssd.productNo));
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
@@ -350,9 +350,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                     }
                 }
 
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
@@ -362,23 +362,23 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 break;
 
             case "case":
-                if(filterDTO.nullCheck()) {
+                if (filterDTO.nullCheck()) {
                     builder.and(product.productCategory.eq(7));
                 }
 
                 jpaQuery.leftJoin(qCase).on(product.eq(qCase.productNo));
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
@@ -388,23 +388,23 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 break;
 
             case "power":
-                if(filterDTO.nullCheck()) {
+                if (filterDTO.nullCheck()) {
                     builder.and(product.productCategory.eq(8));
                 }
 
                 jpaQuery.leftJoin(power).on(product.eq(power.productNo));
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
@@ -414,32 +414,32 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 break;
 
             case "keyboard":
-                if(filterDTO.nullCheck()) {
+                if (filterDTO.nullCheck()) {
                     builder.and(product.productCategory.eq(9));
                 }
 
                 jpaQuery.leftJoin(keyboard).on(product.eq(keyboard.productNo));
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect3() != null) {
-                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
                             builder.and(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
                             builder.or(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
@@ -449,23 +449,23 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 break;
 
             case "mouse":
-                if(filterDTO.nullCheck()) {
+                if (filterDTO.nullCheck()) {
                     builder.and(product.productCategory.eq(10));
                 }
 
                 jpaQuery.leftJoin(mouse).on(product.eq(mouse.productNo));
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
@@ -475,33 +475,33 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 break;
             case "monitor":
-                if(filterDTO.nullCheck()) {
+                if (filterDTO.nullCheck()) {
                     builder.and(product.productCategory.eq(11));
                 }
 
                 jpaQuery.leftJoin(monitor).on(product.eq(monitor.productNo));
 
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect3() != null) {
-                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
                             builder.and(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
                             builder.or(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
@@ -557,19 +557,19 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             //switch 문 을 안쓰고 해결할 수 있는 방법을 나중에 생각해보기..
             case "cpu":
 
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
+                if (filterDTO.getSelect2() != null) {
 
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
@@ -577,10 +577,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                     }
                 }
 
-                if(filterDTO.getSelect3() != null) {
+                if (filterDTO.getSelect3() != null) {
 
-                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
-                        if(i == 0) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
                             builder.and(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
                             builder.or(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
@@ -593,10 +593,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "motherboard":
 
-                if(filterDTO.getSelect1() != null) {
+                if (filterDTO.getSelect1() != null) {
 
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
@@ -605,9 +605,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 }
 
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
@@ -615,9 +615,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                     }
                 }
 
-                if(filterDTO.getSelect3() != null) {
-                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
                             builder.and(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
                             builder.or(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
@@ -629,10 +629,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "vga":
 
-                if(filterDTO.getSelect1() != null) {
+                if (filterDTO.getSelect1() != null) {
 
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
@@ -640,18 +640,18 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect3() != null) {
-                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
                             builder.and(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
                             builder.or(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
@@ -664,18 +664,18 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "memory":
 
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
@@ -687,18 +687,18 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "hdd":
 
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
@@ -710,9 +710,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "ssd":
 
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
@@ -720,9 +720,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                     }
                 }
 
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
@@ -733,18 +733,18 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                         .where(builder).fetchCount();
 
             case "case":
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
@@ -756,18 +756,18 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "power":
 
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
@@ -780,27 +780,27 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "keyboard":
 
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect3() != null) {
-                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
                             builder.and(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
                             builder.or(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
@@ -812,18 +812,18 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "mouse":
 
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
@@ -835,27 +835,27 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                         .where(builder).fetchCount();
 
             case "monitor":
-                if(filterDTO.getSelect1() != null) {
-                    for(int i=0; i<filterDTO.getSelect1().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
                             builder.and(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
                         } else {
                             builder.or(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect2() != null) {
-                    for(int i=0; i<filterDTO.getSelect2().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
                             builder.and(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
                         } else {
                             builder.or(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
                         }
                     }
                 }
-                if(filterDTO.getSelect3() != null) {
-                    for(int i=0; i<filterDTO.getSelect3().length; i++) {
-                        if(i == 0) {
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
                             builder.and(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
                         } else {
                             builder.or(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
@@ -876,7 +876,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         QProductImage productImage = QProductImage.productImage;
         QProductReview productReview = QProductReview.productReview;
 
-        ProductDetailResponseVO productDetailResponseVO = queryFactory.select(Projections.fields(ProductDetailResponseVO.class,product.productNo, product.productName,
+        ProductDetailResponseVO productDetailResponseVO = queryFactory.select(Projections.fields(ProductDetailResponseVO.class, product.productNo, product.productName,
                 product.productCategory, product.productDescription, product.productThumbnail,
                 product.productPrice)).from(product).where(product.eq(productEntity))
                 .fetchOne();
@@ -884,7 +884,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         productDetailResponseVO.setProductImagePath(queryFactory.select(productImage.productImagePath)
                 .from(productImage).where(productImage.productNo.eq(productEntity)).fetch());
 
-        try{ // 리뷰가 1개도 없으면 nullpoint 에러가 발생. 0점을 넣어줌
+        try { // 리뷰가 1개도 없으면 nullpoint 에러가 발생. 0점을 넣어줌
             productDetailResponseVO.setGradeAvg(queryFactory.select(productReview.reviewGrade.avg().as("gradeAvg"))
                     .from(productReview).where(productReview.productNo.eq(productEntity)).fetchOne());
         } catch (NullPointerException e) {
@@ -892,11 +892,925 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         }
 
 
-        productDetailResponseVO.starListSetting(queryFactory.select(Projections.fields(ProductDetailReviewStarResponseVO.class,productReview.reviewGrade,
+        productDetailResponseVO.starListSetting(queryFactory.select(Projections.fields(ProductDetailReviewStarResponseVO.class, productReview.reviewGrade,
                 productReview.reviewGrade.count().as("gradeCount"))).from(productReview)
                 .where(productReview.productNo.eq(productEntity))
                 .groupBy(productReview.reviewGrade).orderBy(productReview.reviewGrade.desc()).fetch());
 
         return productDetailResponseVO;
     }
+
+    @Override
+    public List<ProductSearchResponseDTO> estimateFilterSearch(ProductFilterSearchRequestDTO filterDTO, String order, int page, String keyword) {
+        QProduct product = QProduct.product;
+        QProductReview productReview = QProductReview.productReview;
+
+        QCpu cpu = QCpu.cpu;
+        QMotherboard motherboard = QMotherboard.motherboard;
+        QVga vga = QVga.vga;
+        QMemory memory = QMemory.memory;
+        QHdd hdd = QHdd.hdd;
+        QSsd ssd = QSsd.ssd;
+        QCase qCase = QCase.case$;
+        QPower power = QPower.power;
+        QKeyboard keyboard = QKeyboard.keyboard;
+        QMouse mouse = QMouse.mouse;
+        QMonitor monitor = QMonitor.monitor;
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        JPAQuery<ProductSearchResponseDTO> jpaQuery = queryFactory.select(Projections.constructor(ProductSearchResponseDTO.class,
+                product.productNo, product.productName,
+                product.productCategory, product.productDescription,
+                product.productThumbnail, product.productPrice,
+                productReview.reviewGrade.avg().as("reviewGradeAvg"), productReview.reviewNo.count().as("reviewCount")))
+                .from(product)
+                .leftJoin(productReview).on(product.eq(productReview.productNo));
+
+        switch (filterDTO.getCategory().toLowerCase()) {
+            //where 에서 and or 명시 안하면 and 로 통일.
+            //switch 문 을 안쓰고 해결할 수 있는 방법을 나중에 생각해보기..
+            case "cpu":
+                if (filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(1));
+                }
+
+                jpaQuery.leftJoin(cpu).on(product.eq(cpu.productNo));
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                if (filterDTO.getSelect3() != null) {
+
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
+                            builder.and(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
+                        }
+                    }
+                }
+
+                break;
+
+            case "motherboard":
+                if (filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(2));
+                }
+
+                jpaQuery.leftJoin(motherboard).on(product.eq(motherboard.productNo));
+                if (filterDTO.getSelect1() != null) {
+
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+
+                }
+
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
+                            builder.and(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
+                        }
+                    }
+                }
+
+
+                break;
+
+            case "vga":
+                if (filterDTO.nullCheck()) {
+                    System.out.println("카테고리실행");
+                    builder.and(product.productCategory.eq(3));
+                }
+
+                jpaQuery.leftJoin(vga).on(product.eq(vga.productNo));
+                if (filterDTO.getSelect1() != null) {
+
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
+                            builder.and(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
+                        }
+                    }
+                }
+
+                break;
+
+            case "memory":
+                if (filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(4));
+                }
+
+                jpaQuery.leftJoin(memory).on(product.eq(memory.productNo));
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                break;
+
+            case "hdd":
+                if (filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(5));
+                }
+
+                jpaQuery.leftJoin(hdd).on(product.eq(hdd.productNo));
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+                break;
+
+            case "ssd":
+                if (filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(6));
+                }
+
+                jpaQuery.leftJoin(ssd).on(product.eq(ssd.productNo));
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+                break;
+
+            case "case":
+                if (filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(7));
+                }
+
+                jpaQuery.leftJoin(qCase).on(product.eq(qCase.productNo));
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+                break;
+
+            case "power":
+                if (filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(8));
+                }
+
+                jpaQuery.leftJoin(power).on(product.eq(power.productNo));
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+                break;
+
+            case "keyboard":
+                if (filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(9));
+                }
+
+                jpaQuery.leftJoin(keyboard).on(product.eq(keyboard.productNo));
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
+                            builder.and(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
+                        }
+                    }
+                }
+                break;
+
+            case "mouse":
+                if (filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(10));
+                }
+
+                jpaQuery.leftJoin(mouse).on(product.eq(mouse.productNo));
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                break;
+            case "monitor":
+                if (filterDTO.nullCheck()) {
+                    builder.and(product.productCategory.eq(11));
+                }
+
+                jpaQuery.leftJoin(monitor).on(product.eq(monitor.productNo));
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
+                            builder.and(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
+                        }
+                    }
+                }
+                break;
+        }
+
+        if(keyword != null){
+            if (!keyword.trim().equals("")) {
+                String[] searchArr = keyword.split(" ");
+                for (int i = 0; i < searchArr.length; i++) {
+                    if (i == 0) {
+                        builder.and(product.productName.contains(searchArr[i]));
+                    } else {
+                        builder.or(product.productName.contains(searchArr[i]));
+                    }
+                }
+            }
+        }
+
+
+        //builder where 넣기 + groupBy
+        jpaQuery.where(builder)
+                .groupBy(product.productNo, product.productName,
+                        product.productCategory, product.productDescription,
+                        product.productThumbnail, product.productPrice);
+
+        switch (order.toLowerCase()) {
+            case "popular":
+                jpaQuery.orderBy(productReview.reviewGrade.avg().desc());
+                break;
+            case "pricedesc":
+                jpaQuery.orderBy(product.productPrice.desc());
+                break;
+            case "priceasc":
+                jpaQuery.orderBy(product.productPrice.asc());
+                break;
+        }
+
+        jpaQuery.offset((page - 1) * 10).limit(10);
+
+        List<ProductSearchResponseDTO> responseDTOList = jpaQuery.fetch();
+
+        return responseDTOList;
+    }
+
+    @Override
+    public int countByEstimateFilterSearch(ProductFilterSearchRequestDTO filterDTO, String keyword) {
+        QCpu cpu = QCpu.cpu;
+        QMotherboard motherboard = QMotherboard.motherboard;
+        QVga vga = QVga.vga;
+        QMemory memory = QMemory.memory;
+        QHdd hdd = QHdd.hdd;
+        QSsd ssd = QSsd.ssd;
+        QCase qCase = QCase.case$;
+        QPower power = QPower.power;
+        QKeyboard keyboard = QKeyboard.keyboard;
+        QMouse mouse = QMouse.mouse;
+        QMonitor monitor = QMonitor.monitor;
+
+        QProduct product = QProduct.product;
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        JPAQuery<Long> jpaQuery;
+
+        switch (filterDTO.getCategory().toLowerCase()) {
+            //where 에서 and or 명시 안하면 and 로 통일.
+            //switch 문 을 안쓰고 해결할 수 있는 방법을 나중에 생각해보기..
+            case "cpu":
+
+                jpaQuery = queryFactory.select(cpu.count()).from(cpu);
+
+                if(keyword != null) {
+                    if (!keyword.trim().equals("")) {
+                        String[] searchArr = keyword.split(" ");
+                        for(String search : searchArr) {
+                            builder.and(product.productName.contains(search));
+                        }
+                        jpaQuery.leftJoin(product).on(cpu.productNo.eq(product));
+                    }
+                }
+
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(cpu.cpuCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(cpu.cpuGeneration.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                if (filterDTO.getSelect3() != null) {
+
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
+                            builder.and(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(cpu.cpuModel.upper().eq(filterDTO.getSelect3()[i]));
+                        }
+                    }
+                }
+
+                jpaQuery.where(builder);
+
+                return (int) jpaQuery.fetchCount();
+
+            case "motherboard":
+
+                jpaQuery = queryFactory.select(motherboard.count()).from(motherboard);
+
+                if (filterDTO.getSelect1() != null) {
+
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+
+                }
+
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardSocket.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
+                            builder.and(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(motherboard.motherboardChipset.upper().eq(filterDTO.getSelect3()[i]));
+                        }
+                    }
+                }
+
+                if(keyword != null) {
+                    if (!keyword.trim().equals("")) {
+                        String[] searchArr = keyword.split(" ");
+                        for(String search : searchArr) {
+                            builder.and(product.productName.contains(search));
+                        }
+                        jpaQuery.leftJoin(product).on(motherboard.productNo.eq(product));
+                    }
+                }
+
+                jpaQuery.where(builder);
+
+                return (int) jpaQuery.fetchCount();
+
+            case "vga":
+
+                jpaQuery = queryFactory.select(vga.count()).from(vga);
+
+                if (filterDTO.getSelect1() != null) {
+
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(vga.vgaCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(vga.vgaChipset.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
+                            builder.and(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(vga.vgaSeries.upper().eq(filterDTO.getSelect3()[i]));
+                        }
+                    }
+                }
+
+                if(keyword != null) {
+                    if (!keyword.trim().equals("")) {
+                        String[] searchArr = keyword.split(" ");
+                        for(String search : searchArr) {
+                            builder.and(product.productName.contains(search));
+                        }
+                        jpaQuery.leftJoin(product).on(vga.productNo.eq(product));
+                    }
+                }
+
+                jpaQuery.where(builder);
+
+                return (int) jpaQuery.fetchCount();
+
+            case "memory":
+
+                jpaQuery = queryFactory.select(memory.count()).from(memory);
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(memory.memoryCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(memory.memorySize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                if(keyword != null) {
+                    if (!keyword.trim().equals("")) {
+                        String[] searchArr = keyword.split(" ");
+                        for(String search : searchArr) {
+                            builder.and(product.productName.contains(search));
+                        }
+                        jpaQuery.leftJoin(product).on(memory.productNo.eq(product));
+                    }
+                }
+
+                jpaQuery.where(builder);
+
+                return (int) jpaQuery.fetchCount();
+
+            case "hdd":
+
+                jpaQuery = queryFactory.select(hdd.count()).from(hdd);
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(hdd.hddCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(hdd.hddSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                if(keyword != null) {
+                    if (!keyword.trim().equals("")) {
+                        String[] searchArr = keyword.split(" ");
+                        for(String search : searchArr) {
+                            builder.and(product.productName.contains(search));
+                        }
+                        jpaQuery.leftJoin(product).on(hdd.productNo.eq(product));
+                    }
+                }
+
+                jpaQuery.where(builder);
+
+                return (int) jpaQuery.fetchCount();
+
+            case "ssd":
+
+                jpaQuery = queryFactory.select(ssd.count()).from(ssd);
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(ssd.ssdCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(ssd.ssdSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                if(keyword != null) {
+                    if (!keyword.trim().equals("")) {
+                        String[] searchArr = keyword.split(" ");
+                        for(String search : searchArr) {
+                            builder.and(product.productName.contains(search));
+                        }
+                        jpaQuery.leftJoin(product).on(ssd.productNo.eq(product));
+                    }
+                }
+
+                jpaQuery.where(builder);
+
+                return (int) jpaQuery.fetchCount();
+
+            case "case":
+
+                jpaQuery = queryFactory.select(qCase.count()).from(qCase);
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(qCase.caseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(qCase.caseSize.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                if(keyword != null) {
+                    if (!keyword.trim().equals("")) {
+                        String[] searchArr = keyword.split(" ");
+                        for(String search : searchArr) {
+                            builder.and(product.productName.contains(search));
+                        }
+                        jpaQuery.leftJoin(product).on(qCase.productNo.eq(product));
+                    }
+
+                }
+
+                jpaQuery.where(builder);
+
+                return (int) jpaQuery.fetchCount();
+
+            case "power":
+
+                jpaQuery = queryFactory.select(power.count()).from(power);
+
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(power.powerCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(power.powerWatt.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                if(keyword != null) {
+                    if (!keyword.trim().equals("")) {
+                        String[] searchArr = keyword.split(" ");
+                        for(String search : searchArr) {
+                            builder.and(product.productName.contains(search));
+                        }
+                        jpaQuery.leftJoin(product).on(power.productNo.eq(product));
+                    }
+                }
+
+                jpaQuery.where(builder);
+
+                return (int) jpaQuery.fetchCount();
+
+            case "keyboard":
+
+                jpaQuery = queryFactory.select(keyboard.count()).from(keyboard);
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
+                            builder.and(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(keyboard.keyboardContact.upper().eq(filterDTO.getSelect3()[i]));
+                        }
+                    }
+                }
+
+                if(keyword != null) {
+                    if (!keyword.trim().equals("")) {
+                        String[] searchArr = keyword.split(" ");
+                        for(String search : searchArr) {
+                            builder.and(product.productName.contains(search));
+                        }
+                        jpaQuery.leftJoin(product).on(keyboard.productNo.eq(product));
+                    }
+                }
+
+                jpaQuery.where(builder);
+
+                return (int) jpaQuery.fetchCount();
+
+            case "mouse":
+
+                jpaQuery = queryFactory.select(mouse.count()).from(mouse);
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(mouse.mouseCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(mouse.mouseConnection.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+
+                if(keyword != null) {
+                    if (!keyword.trim().equals("")) {
+                        String[] searchArr = keyword.split(" ");
+                        for(String search : searchArr) {
+                            builder.and(product.productName.contains(search));
+                        }
+                        jpaQuery.leftJoin(product).on(mouse.productNo.eq(product));
+                    }
+                }
+
+                jpaQuery.where(builder);
+
+                return (int) jpaQuery.fetchCount();
+
+            case "monitor":
+
+                jpaQuery = queryFactory.select(monitor.count()).from(monitor);
+
+                if (filterDTO.getSelect1() != null) {
+                    for (int i = 0; i < filterDTO.getSelect1().length; i++) {
+                        if (i == 0) {
+                            builder.and(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        } else {
+                            builder.or(monitor.monitorCompany.upper().eq(filterDTO.getSelect1()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect2() != null) {
+                    for (int i = 0; i < filterDTO.getSelect2().length; i++) {
+                        if (i == 0) {
+                            builder.and(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
+                        } else {
+                            builder.or(monitor.monitorPanel.upper().eq(filterDTO.getSelect2()[i]));
+                        }
+                    }
+                }
+                if (filterDTO.getSelect3() != null) {
+                    for (int i = 0; i < filterDTO.getSelect3().length; i++) {
+                        if (i == 0) {
+                            builder.and(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
+                        } else {
+                            builder.or(monitor.monitorSize.upper().eq(filterDTO.getSelect3()[i]));
+                        }
+                    }
+                }
+
+                if(keyword != null) {
+                    if (!keyword.trim().equals("")) {
+                        String[] searchArr = keyword.split(" ");
+                        for(String search : searchArr) {
+                            builder.and(product.productName.contains(search));
+                        }
+                        jpaQuery.leftJoin(product).on(monitor.productNo.eq(product));
+                    }
+                }
+
+                jpaQuery.where(builder);
+
+                return (int) jpaQuery.fetchCount();
+        }
+
+
+        return 0;
+    }
+
 }

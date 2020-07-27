@@ -75,4 +75,15 @@ public class PagingService {
         return paging;
     }
 
+    @Transactional(readOnly = true)
+    public PagingUtil estimateFilterSearchPaging(ProductFilterSearchRequestDTO filterDTO, String keyword, int page) {
+
+        PagingUtil paging = new PagingUtil();
+        paging.setTotalResult(productRepository.countByEstimateFilterSearch(filterDTO,keyword));
+        paging.setPage(page);
+        paging.pageSetting();
+        return paging;
+
+    }
+
 }

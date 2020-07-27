@@ -30,6 +30,10 @@ public interface ProductRepositoryCustom {
 
     ProductDetailResponseVO productDetail(Product productEntity);
 
+    //견적서 쪽 필터 검색 키워드 추가.
+    List<ProductSearchResponseDTO> estimateFilterSearch(ProductFilterSearchRequestDTO filterDTO, String order, int page, String keyword);
 
+    //견적서 쪽 필터 검색 페이징
+    int countByEstimateFilterSearch(ProductFilterSearchRequestDTO filterDTO, String keyword);
 
 }

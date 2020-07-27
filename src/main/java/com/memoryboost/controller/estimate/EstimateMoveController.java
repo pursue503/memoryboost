@@ -34,13 +34,14 @@ public class EstimateMoveController {
 
     @GetMapping("/estimate-fragment-result")
     public String estimateFragmentResult(ProductFilterSearchRequestDTO filterDTO,
+                               @RequestParam(value = "keyword",required = false) String keyword,
                                @RequestParam(value = "category", required = false, defaultValue = "cpu") String category,
                                @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
                                @RequestParam(value = "page",required = false,defaultValue = "1") int page,
                                Model model) {
         model.addAttribute("category", category);
-        model.addAttribute("product",productService.filterSearch(filterDTO,order,page));
-        model.addAttribute("paging",pagingService.filterSearchPaging(filterDTO, page));
+        model.addAttribute("product",productService.estimateFilterSearch(filterDTO,order,page,keyword));
+        model.addAttribute("paging",pagingService.estimateFilterSearchPaging(filterDTO,keyword, page));
         return "estimate :: result";
     }
 
@@ -56,4 +57,7 @@ public class EstimateMoveController {
         model.addAttribute("product",productService.productDetail(productNo));
         return "layout/estimate-layout :: added";
     }
+
+
+
 }
