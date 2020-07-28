@@ -2,6 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>게시물 작성</title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -50,6 +52,7 @@
             <input th:type="text" th:name="title" th:placeholder="|제목|" />
             <textarea id="summernote" name="editordata"></textarea>
             <button th:text="작성완료"></button>
+            <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         </form>
     </div>
 </div>
