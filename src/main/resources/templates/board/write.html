@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>게시물 작성</title>
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <!--
+    한글 폰트
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-family: 'Noto Sans KR', sans-serif;
+    영문 폰트
+    font-family: 'Noto Sans', sans-serif;
+
+    보통은(한/영 둘다) Noto Sans로 하고
+    정보표시는 Nanum Gothic Coding.
+    -->
+    <!-- fontawesome CDN -->
+    <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link href="/css/summernote/summernote-lite.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/board/community-style.css" />
+    <link rel="stylesheet" href="/css/board/write-com.css" />
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/reset.js"></script>
+    <script src="/js/summernote/summernote-lite.js"></script>
+    <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+    <script src="/js/board/write-com.js"></script>
+
+</head>
+<body>
+<header th:replace="header.html"></header>
+<div class="content-container community">
+    <!-- 이곳에 내용을 입력 -->
+    <nav th:classappend="community">
+        <button th:classappend="selected" th:onclick="|location.href = '@{/community/estimate}';|" th:text="견적요청" />
+        <button th:onclick="|location.href = '@{/community/review}';|" th:text="이용후기" />
+        <button th:onclick="|location.href = '@{/community/notification}';|" th:text="공지사항" />
+        <button th:onclick="|location.href = '@{/community/update}';|" th:text="업데이트" />
+        <button th:onclick="|location.href = '@{/community/event}';|" th:text="이벤트" />
+    </nav>
+    <div th:classappend="content">
+        <div th:classappend="description">
+            <h1>견적요청</h1>
+            <span th:text="|자신의 견적을 평가 받거나 새로운 견적을 문의 해보세요!|"></span>
+        </div>
+        <form action="/write" method="post">
+            <input th:type="text" th:name="title" th:placeholder="|제목|" />
+            <textarea id="summernote" name="editordata"></textarea>
+            <button th:text="작성완료"></button>
+            <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        </form>
+    </div>
+</div>
+<footer th:replace="footer.html"></footer>
+</body>
+</html>

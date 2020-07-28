@@ -210,7 +210,6 @@ $(document).ready(function() {
         var header = $("meta[name='_csrf_header']").attr("content");
 
         if(added.length) {
-            let index = 0;
             for(let obj of added) {
                 let productNo = obj.dataset.productnum;
                 let productCount = $(obj).find("input.count")[0].value;
@@ -219,7 +218,7 @@ $(document).ready(function() {
                 product.productCount = Number(productCount);
                 orderList.push(product);
             }
-            console.dir(JSON.stringify(orderList));
+
             $.ajax({
                 type : "POST",
                 url : "/order/estimate",
