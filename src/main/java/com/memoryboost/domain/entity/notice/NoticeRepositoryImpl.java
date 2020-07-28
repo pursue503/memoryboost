@@ -56,7 +56,7 @@ public class NoticeRepositoryImpl implements NoticeRepositoryCustom {
 
         NoticeResponseDTO noticeResponseDTO = queryFactory.select(Projections.fields(NoticeResponseDTO.class,
                 notice.noticeNo,notice.noticeCategory,notice.noticeTitle,notice.noticeContent,notice.noticeDate))
-                .from(notice).fetchOne();
+                .from(notice).where(notice.noticeNo.eq(noticeNo)).fetchOne();
 
         return noticeResponseDTO;
     }
