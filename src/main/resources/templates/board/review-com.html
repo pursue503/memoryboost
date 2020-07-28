@@ -35,7 +35,7 @@
     <nav th:classappend="community">
         <button th:classappend="estimate" th:onclick="|location.href = '@{/community/estimate}';|" th:text="견적요청" />
         <button th:classappend="|review selected|" th:onclick="|location.href = '@{/community/review}';|" th:text="이용후기" />
-        <button th:classappend="notification" th:onclick="|location.href = '@{/community/notification}';|" th:text="공지사항" />
+        <button th:classappend="notification" th:onclick="|location.href = '@{/notice?category=1}';|" th:text="공지사항" />
         <button th:classappend="update" th:onclick="|location.href = '@{/community/update}';|" th:text="업데이트" />
         <button th:classappend="event" th:onclick="|location.href = '@{/community/event}';|" th:text="이벤트" />
     </nav>
