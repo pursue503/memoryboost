@@ -78,12 +78,10 @@ function uploadSummernoteImageFile(file, editor) {
 
     var data = new FormData();
     data.append("file", file);
-    console.dir(file.type);
-    console.dir(file.size);
 
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-
+    alert("ajax 실행");
     $.ajax({
         data : data,
         type : "POST",
@@ -94,6 +92,7 @@ function uploadSummernoteImageFile(file, editor) {
             xhr.setRequestHeader(header, token);
         },
         success : function(data) {
+            alert(data);
             //항상 업로드된 파일의 url이 있어야 한다.
             $(editor).summernote('insertImage', data);
             if(!isEmpty(data)) {

@@ -47,7 +47,7 @@
         <div th:classappend="description">
             <h1 th:appendclass="boardname">견적요청</h1>
         </div>
-        <form id="write-form" action="/write" method="post">
+        <form id="write-form" action="/write" method="get">
             <select th:classappend="category" th:name="category">
                 <option th:text="|조립후기|" th:value="0" />
                 <option th:text="|제품후기|" th:value="1" />

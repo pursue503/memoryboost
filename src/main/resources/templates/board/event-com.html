@@ -76,7 +76,6 @@
             </tr>
         </table>
         <div th:classappend="|control|">
-            <button sec:authorize="!isAnonymous()" th:classappend="write" th:text="글쓰기"></button>
             <button sec:authorize="hasRole('ROLE_ADMIN')" th:classappend="|write-noti|" th:text="공지쓰기"></button>
         </div>
         <form>

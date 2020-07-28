@@ -76,8 +76,7 @@
             </tr>
         </table>
         <div th:classappend="|control|">
-            <!--sec:authorize="hasRole('ROLE_ADMIN')"-->
-            <button th:classappend="|write-noti|" th:text="공지쓰기"></button>
+            <button sec:authorize="hasRole('ROLE_ADMIN')" th:classappend="|write-noti|" th:text="공지쓰기"></button>
         </div>
         <form>
             <div th:classappend="|search|">

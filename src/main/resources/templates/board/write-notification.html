@@ -48,9 +48,14 @@
             <h1>공지사항</h1>
             <span th:text="|중요한 공지 및 점검사항을 확인하세요.|"></span>
         </div>
-        <form id="write-form"  action="/write" method="post">
-            <input th:type="text" th:name="title" th:placeholder="|제목|" />
-            <textarea id="summernote" name="editordata"></textarea>
+        <form id="write-form"  action="/notice" method="POST">
+            <select th:classappend="category" th:name="noticeCategory">
+                <option th:text="|공지사항|" th:value="1" />
+                <option th:text="|업데이트|" th:value="2" />
+                <option th:text="|이벤트|" th:value="3" />
+            </select>
+            <input th:type="text" th:name="noticeTitle" th:placeholder="|제목|" />
+            <textarea id="summernote" name="noticeContent"></textarea>
             <button th:text="작성완료"></button>
             <button th:id="write-cancel" th:text="작성취소"></button>
             <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

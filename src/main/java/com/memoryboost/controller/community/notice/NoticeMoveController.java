@@ -30,7 +30,7 @@ public class NoticeMoveController {
         model.addAttribute("paging",pagingService.noticePaging(category,page));
 
         if(category == 1) {
-            return "공지사항 페이지";
+            return "board/notification-com";
         } else if(category == 2) {
             return "업데이트 페이지";
         } else {
