@@ -213,6 +213,10 @@ $(document).ready(function() {
             for(let obj of added) {
                 let productNo = obj.dataset.productnum;
                 let productCount = $(obj).find("input.count")[0].value;
+                let product = new Object();
+                product.productNo = Number(productNo);
+                product.productCount = Number(productCount);
+                orderList.push(product);
             }
 
             $.ajax({
