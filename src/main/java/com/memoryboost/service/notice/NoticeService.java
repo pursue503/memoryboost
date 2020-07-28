@@ -49,10 +49,13 @@ public class NoticeService {
     public boolean noticeSave(NoticeSaveRequestDTO noticeSaveRequestDTO , List<String> pathList) throws IOException {
 
         Notice notice = noticeRepository.save(noticeSaveRequestDTO.toEntity());
-        for(String filePath : pathList) {
-            String realPath = path.replace(dbPath,"");
-            noticeImageRepository.save(NoticeImage.builder().notice(notice).noticeImagePath(filePath).noticeRealImagePath(realPath + filePath).build());
+        if(pathList != null) {
+            for(String filePath : pathList) {
+                String realPath = path.replace(dbPath,"");
+                noticeImageRepository.save(NoticeImage.builder().notice(notice).noticeImagePath(filePath).noticeRealImagePath(realPath + filePath).build());
+            }
         }
+
 
         return true;
     }
