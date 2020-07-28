@@ -57,22 +57,26 @@ function lightNavigator() {
 
 //이미지 첨부
 function uploadSummernoteImageFile(file, editor) {
+    alert("실행");
     data = new FormData();
     data.append("file", file);
 
-    data.forEach(function(e){
-        console.dir(e);
-    })
-    $(editor).summernote('insertImage', data.url);
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
     $.ajax({
         data : data,
         type : "POST",
-        url : "/uploadSummernoteImageFile",
+        url : "/notice/image-upload",
         contentType : false,
         processData : false,
+        beforeSend : function(xhr) {
+            xhr.setRequestHeader(header, token);
+        },
         success : function(data) {
             //항상 업로드된 파일의 url이 있어야 한다.
-            $(editor).summernote('insertImage', data.url);
+            alert(data);
+            $(editor).summernote('insertImage', data);
         }
     });
 }

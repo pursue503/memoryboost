@@ -26,4 +26,5 @@ public class MainController {
         return "community";
     }
 
+
 }
