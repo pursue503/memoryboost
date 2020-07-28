@@ -3,6 +3,7 @@ package com.memoryboost.service.paging;
 import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
 import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.member.MemberRepository;
+import com.memoryboost.domain.entity.notice.NoticeRepository;
 import com.memoryboost.domain.entity.order.OrderRepository;
 import com.memoryboost.domain.entity.product.Product;
 import com.memoryboost.domain.entity.product.ProductRepository;
@@ -25,6 +26,7 @@ public class PagingService {
     private final ProductReviewRepository reviewRepository;
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
+    private final NoticeRepository noticeRepository;
 
     @Transactional(readOnly = true)
     public PagingUtil searchPaging(String keyword, int page) {
@@ -80,6 +82,16 @@ public class PagingService {
 
         PagingUtil paging = new PagingUtil();
         paging.setTotalResult(productRepository.countByEstimateFilterSearch(filterDTO,keyword));
+        paging.setPage(page);
+        paging.pageSetting();
+        return paging;
+
+    }
+
+    @Transactional(readOnly = true)
+    public PagingUtil noticePaging(int category, int page) {
+        PagingUtil paging = new PagingUtil();
+        paging.setTotalResult(noticeRepository.countByNoticeAll(category));
         paging.setPage(page);
         paging.pageSetting();
         return paging;

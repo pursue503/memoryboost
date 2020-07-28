@@ -54,7 +54,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         List<MemberOrderResponseVO> responseVOList = queryFactory.select(Projections.fields(MemberOrderResponseVO.class,
                 order.orderNo,order.orderDate,order.orderSt,order.orderTrackingNumber,order.orderTotalAmount))
                 .from(order).where(order.member.eq(member))
-                .orderBy(order.orderDate.desc())
+                .orderBy(order.orderNo.desc())
                 .offset((page -1) * 12)
                 .limit(12).fetch();
 
