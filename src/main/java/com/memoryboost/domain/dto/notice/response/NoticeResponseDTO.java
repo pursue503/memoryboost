@@ -20,6 +20,4 @@ public class NoticeResponseDTO {
     private String noticeContent;
     private Date noticeDate;
 
-    private List<String> noticeImagePath;
-
 }

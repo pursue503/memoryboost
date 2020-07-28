@@ -1,5 +1,6 @@
 package com.memoryboost.controller.community.notice;
 
+import com.memoryboost.service.notice.NoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +17,11 @@ import java.util.UUID;
 @RestController
 public class NoticeRestController {
 
+    private final NoticeService noticeService;
+
     @PostMapping("/notice/image-upload")
     public String noticeUpload(@RequestParam("file")MultipartFile multipartFile) {
-
-        return null;
+        return noticeService.noticeFileTempSave(multipartFile);
     }
 
 }

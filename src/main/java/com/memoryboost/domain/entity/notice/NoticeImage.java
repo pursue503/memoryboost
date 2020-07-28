@@ -24,12 +24,12 @@ public class NoticeImage {
     private String noticeImagePath;
 
     @Column(nullable = false)
-    private String noticeAllImagePath;
+    private String noticeRealImagePath;
 
     @Builder
-    public NoticeImage(Notice notice, String noticeImagePath, String noticeAllImagePath) {
+    public NoticeImage(Notice notice, String noticeImagePath, String noticeRealImagePath) {
         this.notice = notice;
         this.noticeImagePath = noticeImagePath;
-        this.noticeAllImagePath = noticeAllImagePath;
+        this.noticeRealImagePath = noticeRealImagePath;
     }
 }

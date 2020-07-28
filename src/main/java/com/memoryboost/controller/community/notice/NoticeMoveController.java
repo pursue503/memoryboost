@@ -24,19 +24,25 @@ public class NoticeMoveController {
     private final PagingService pagingService;
 
     @GetMapping("/notice")
-    public String noticeAllList(@RequestParam(value = "category", required = false, defaultValue = "0") int category,
+    public String noticeAllList(int category,
                                 @RequestParam(value = "page", required = false, defaultValue = "1") int page , Model model) {
         model.addAttribute("notice",noticeService.noticeListResponseDTOList(category, page));
         model.addAttribute("paging",pagingService.noticePaging(category,page));
 
-        return "page";
+        if(category == 1) {
+            return "공지사항 페이지";
+        } else if(category == 2) {
+            return "업데이트 페이지";
+        } else {
+            return "이벤트 페이지";
+        }
     }
 
     @PostMapping("/notice")
-    public String noticeSave(NoticeSaveRequestDTO noticeSaveRequestDTO , @RequestParam(value = "noticeFile")List<MultipartFile> multipartFileList) {
+    public String noticeSave(NoticeSaveRequestDTO noticeSaveRequestDTO , @RequestParam(value = "path", required = false) List<String> pathList) {
 
         try{
-            if(noticeService.noticeSave(noticeSaveRequestDTO,multipartFileList)) {
+            if(noticeService.noticeSave(noticeSaveRequestDTO,pathList)) {
                 return "redirect:/notice";
             }
         } catch (IOException e) {
