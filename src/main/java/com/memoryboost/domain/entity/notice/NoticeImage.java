@@ -23,9 +23,13 @@ public class NoticeImage {
     @Column(nullable = false)
     private String noticeImagePath;
 
+    @Column(nullable = false)
+    private String noticeAllImagePath;
+
     @Builder
-    public NoticeImage(Notice notice, String noticeImagePath) {
+    public NoticeImage(Notice notice, String noticeImagePath, String noticeAllImagePath) {
         this.notice = notice;
         this.noticeImagePath = noticeImagePath;
+        this.noticeAllImagePath = noticeAllImagePath;
     }
 }

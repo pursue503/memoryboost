@@ -54,7 +54,7 @@ public class NoticeService {
                 String reName = productS3Uploader.fileReName(multipartFile);
                 File file = new File(path + reName);
                 multipartFile.transferTo(file);
-                noticeImageRepository.save(NoticeImage.builder().notice(notice).noticeImagePath(dbPath + reName).build());
+                noticeImageRepository.save(NoticeImage.builder().notice(notice).noticeImagePath(dbPath + reName).noticeAllImagePath(path + reName).build());
             }
         }
         return true;
@@ -62,7 +62,18 @@ public class NoticeService {
 
     @Transactional
     public boolean noticeDelete(Long noticeNo) {
+
         Notice notice = noticeRepository.findById(noticeNo).orElseThrow(NullPointerException::new);
+
+        List<NoticeImage> noticeImageList = noticeRepository.findByNoticeImage(notice);
+
+        for(NoticeImage noticeImage : noticeImageList) {
+            File file = new File(noticeImage.getNoticeAllImagePath());
+            if(file.exists()) { // 파일 존재여부 확인.
+                file.delete(); //파일제
+                noticeImageRepository.delete(noticeImage); // 데이터삭제.
+            }
+        }
         noticeRepository.delete(notice);
         return true;
     }
