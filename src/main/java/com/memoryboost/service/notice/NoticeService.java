@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -81,6 +82,25 @@ public class NoticeService {
     @Transactional(readOnly = true)
     public NoticeResponseDTO noticeDetail(Long noticeNo) {
         return noticeRepository.findByNoticeNo(noticeNo);
+    }
+
+    //파일 저장
+    @Transactional
+    public String noticeFileTempSave(MultipartFile multipartFile) {
+        String fileRoot = "C:\\image\\";
+        String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+
+        String saveFileName = UUID.randomUUID() + extension;
+
+        File file = new File(fileRoot + saveFileName);
+
+        try{
+            multipartFile.transferTo(file);
+            return "/image/" + saveFileName;
+        } catch (IOException e ) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
