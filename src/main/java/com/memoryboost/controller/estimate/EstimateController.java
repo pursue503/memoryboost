@@ -22,4 +22,25 @@ public class EstimateController {
 
     @GetMapping("/estimatetest")
     public String estimateTestPage() { return "/estimate"; }
+
+    @GetMapping("/boardtest")
+    public String boardTestPage() { return "board/board"; }
+
+    @GetMapping("/community/estimate")
+    public String estimateBoardPage() { return "board/estimate-com"; }
+
+    @GetMapping("/community/review")
+    public String reviewBoardPage() { return "board/review-com"; }
+
+    @GetMapping("/community/notification")
+    public String notificationBoardPage() { return "board/notification-com"; }
+
+    @GetMapping("/community/update")
+    public String updateBoardPage() { return "board/update-com"; }
+
+    @GetMapping("/community/event")
+    public String eventBoardPage() { return "board/event-com"; }
+
+    @GetMapping("/community/write")
+    public String writeBoardPage() { return "board/write"; }
 }

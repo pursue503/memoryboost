@@ -30,8 +30,8 @@
 <header th:replace="header.html"></header>
 <div class="content-container main">
     <div th:classappend="|slide main|">
-        <button th:classappend="left" th:text="|<|"></button>
-        <button th:classappend="right" th:text="|>|"></button>
+        <button th:classappend="|left fas fa-chevron-left|"></button>
+        <button th:classappend="|right fas fa-chevron-right|"></button>
         <div th:classappend="slide-wrapper">
             <div th:classappend="|slide-content first|">
                 <div th:classappend="inner-content"></div>
@@ -45,6 +45,11 @@
                 <div th:classappend="inner-content"></div>
                 <div th:classappend="inner-content"></div>
             </div>
+        </div>
+        <div th:classappend="slide-page">
+            <div th:data-value="1" th:classappend="|page-btn selected|"></div>
+            <div th:data-value="2" th:classappend="|page-btn|"></div>
+            <div th:data-value="3" th:classappend="|page-btn|"></div>
         </div>
     </div>
     <div th:classappend="mid">

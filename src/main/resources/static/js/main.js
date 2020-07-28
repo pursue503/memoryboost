@@ -31,6 +31,14 @@ $(document).on("click", "button.right", function() {
     pushLeftMain();
 });
 
+//메인슬라이드 페이징
+$(document).on("click", ".page-btn", function(e){
+    let pageNum = e.target.dataset.value;
+
+    mainSlideIndex = pageNum - 1;
+    pushLeftMain();
+});
+
 //오른쪽버튼
 function pushLeftMain() {
     mainSlideIndex++;
@@ -46,6 +54,9 @@ function pushLeftMain() {
             $("div.slide-wrapper")[0].style.transform = "translate("+mainSlideDelta+", 0)";
         }
     }
+
+    $(".page-btn").removeClass("selected");
+    $(".page-btn")[mainSlideIndex-1].classList.add("selected");
 }
 
 //왼쪽버튼

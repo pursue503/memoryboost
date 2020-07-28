@@ -1,0 +1,136 @@
+div.content-container.community {
+    padding: 10px 0;
+    display: flex;
+}
+
+/* 네비게이션 */
+nav.community {
+    flex-basis: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    padding-top: 10px;
+}
+
+nav.community > button {
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    background: none;
+    width: 100%;
+    padding: 5px;
+    font-size: 20px;
+}
+
+nav.community > button.selected {
+    color: var(--warning);
+}
+
+nav.community > button:hover {
+    color: var(--warning);
+}
+
+div.content-container.community > h1 {
+    flex-basis: 80%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+/* 게시판 부분 */
+div.content {
+    width: 100%;
+    padding: 0 10px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+}
+
+th {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+tr {
+    width: 100%; height: 50px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+td {
+    text-align: center;
+    padding: 5px 10px;
+}
+
+td.num {
+    width: 70px;
+    max-width: 70px;
+}
+
+td.title {
+    cursor: pointer;
+    width: 650px;
+    max-width: 650px;
+    text-align: left;
+}
+
+td.title:hover {
+    text-decoration: underline;
+}
+
+td.writer, td.date {
+    width: 140px;
+    max-width: 140px;
+}
+
+td.view {
+    width: 54px;
+    max-width: 54px;
+}
+
+/* 글쓰기 */
+div.control {
+    padding: 2px;
+}
+
+div.control > button {
+    cursor: pointer;
+    width: 50px; height: 25px;
+}
+
+div.control > button:nth-child(2) {
+    width: 70px;
+}
+
+/* 검색 */
+div.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.search > * {
+    outline: none;
+    margin: 0 1px;
+}
+
+div.search > button {
+    width: 50px;
+}
+
+/* 페이징 */
+form > div.paging {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+form > div.paging > button.btn {
+    outline: none;
+    background: none;
+    border: 0;
+    font-size: 20px;
+    width: 40px; height: 40px;
+}
