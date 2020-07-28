@@ -20,7 +20,7 @@ public class Notice {
 
     // 분류
     @Column(nullable = false)
-    private String noticeCategory;
+    private int noticeCategory;
 
     // 제목
     @Column(nullable = false)
@@ -28,7 +28,7 @@ public class Notice {
 
     // 내용
     @Column(nullable = false)
-    private String noticeConten;
+    private String noticeContent;
 
     // 작성일자
     @Temporal(value = TemporalType.DATE)
@@ -37,9 +37,9 @@ public class Notice {
     private Date noticeDate;
 
     @Builder
-    public Notice(String noticeCategory, String noticeTitle, String noticeConten) {
+    public Notice(int noticeCategory, String noticeTitle, String noticeContent) {
         this.noticeCategory = noticeCategory;
         this.noticeTitle = noticeTitle;
-        this.noticeConten = noticeConten;
+        this.noticeContent = noticeContent;
     }
 }
