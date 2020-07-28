@@ -57,9 +57,29 @@ function lightNavigator() {
 
 //이미지 첨부
 function uploadSummernoteImageFile(file, editor) {
-    alert("실행");
-    data = new FormData();
+    var typeFilter = ["jpg", "jpeg", "png", "gif"];
+    var type = file.type.split("/")[1];
+    var typeFlag = 0;
+    for(let filter of typeFilter) {
+        if(type == filter) {
+            typeFlag = 1;
+        }
+    }
+
+    if(typeFlag == 0) {
+        alert("이미지는 [jpg, jpeg, png, gif]만 업로드 가능합니다.");
+        return;
+    }
+
+    if(file.size > 2097152) {
+        alert("이미지 크기는 2MB를 넘을 수 없습니다.");
+        return;
+    }
+
+    var data = new FormData();
     data.append("file", file);
+    console.dir(file.type);
+    console.dir(file.size);
 
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -75,8 +95,11 @@ function uploadSummernoteImageFile(file, editor) {
         },
         success : function(data) {
             //항상 업로드된 파일의 url이 있어야 한다.
-            alert(data);
             $(editor).summernote('insertImage', data);
+            if(!isEmpty(data)) {
+                let tag = "<input type='hidden' name='path' value='"+data+"' />"
+                $("#write-form").append(tag);
+            }
         }
     });
 }

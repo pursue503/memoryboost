@@ -250,8 +250,14 @@ jQuery.fn.serializeObject = function() {
     return obj;
 };
 
-//url에서 parameter 추출
-// url 에서 parameter 추출
+//url에서 어느 게시판인지 추출
+function getBoardName() {
+    var params = location.pathname.split("/")[2];
+
+    return params;
+}
+
+//url 에서 parameter 추출
 function getParam(sname) {
     var params = location.search.substr(location.search.indexOf("?") + 1);
     var sval = "";

@@ -43,4 +43,7 @@ public class EstimateController {
 
     @GetMapping("/community/write")
     public String writeBoardPage() { return "board/write"; }
+
+    @GetMapping("/notification")
+    public String writeNotificationPage() { return "board/write-notification"; }
 }
