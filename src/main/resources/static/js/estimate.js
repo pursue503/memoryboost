@@ -214,13 +214,10 @@ $(document).ready(function() {
             for(let obj of added) {
                 let productNo = obj.dataset.productnum;
                 let productCount = $(obj).find("input.count")[0].value;
-                /*let product = new Object();
+                let product = new Object();
                 product.productNo = Number(productNo);
                 product.productCount = Number(productCount);
-                orderList.push(product);*/
-                $("#order-form").append("<input type='hidden' name='list["+index+"].productNo' value='"+productNo+"' />")
-                $("#order-form").append("<input type='hidden' name='list["+index+"].productCnt' value='"+productCount+"' />")
-                index++;
+                orderList.push(product);
             }
             console.dir(JSON.stringify(orderList));
             $.ajax({

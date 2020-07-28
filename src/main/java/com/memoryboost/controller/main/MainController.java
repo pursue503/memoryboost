@@ -21,21 +21,9 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping("/test1")
-    public String test(){
-        return "test";
+    @GetMapping("/community")
+    public String community(){
+        return "community";
     }
-
-    @PostMapping("/test")
-    public String ec2Test(@RequestParam("fileTest")List<MultipartFile> multipartFileList) throws IOException {
-
-        for(MultipartFile multipartFile : multipartFileList) {
-            log.info("size" + multipartFile.getSize());
-            File file = new File("/home/ec2-user/notice/" + multipartFile.getOriginalFilename());
-            multipartFile.transferTo(file);
-        }
-        return "redirect:/";
-    }
-
 
 }
