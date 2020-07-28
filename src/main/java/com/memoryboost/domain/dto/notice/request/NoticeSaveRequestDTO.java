@@ -4,10 +4,12 @@ import com.memoryboost.domain.entity.notice.Notice;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class NoticeSaveRequestDTO {
 
     private int noticeCategory;

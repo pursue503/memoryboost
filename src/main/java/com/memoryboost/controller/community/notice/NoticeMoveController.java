@@ -40,10 +40,9 @@ public class NoticeMoveController {
 
     @PostMapping("/notice")
     public String noticeSave(NoticeSaveRequestDTO noticeSaveRequestDTO , @RequestParam(value = "path", required = false) List<String> pathList) {
-
         try{
             if(noticeService.noticeSave(noticeSaveRequestDTO,pathList)) {
-                return "redirect:/notice";
+                return "redirect:/notice?category=" + noticeSaveRequestDTO.getNoticeCategory() ;
             }
         } catch (IOException e) {
             e.printStackTrace();
