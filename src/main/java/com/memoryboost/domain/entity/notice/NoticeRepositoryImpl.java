@@ -58,15 +58,6 @@ public class NoticeRepositoryImpl implements NoticeRepositoryCustom {
                 notice.noticeNo,notice.noticeCategory,notice.noticeTitle,notice.noticeContent,notice.noticeDate))
                 .from(notice).fetchOne();
 
-        List<String> noticeImagePath = queryFactory.select(noticeImage.noticeImagePath).from(noticeImage)
-                .leftJoin(notice).on(noticeImage.notice.eq(notice)).where(notice.noticeNo.eq(noticeNo)).fetch();
-
-        if(noticeImage == null) {
-            noticeImagePath = new ArrayList<>();
-        }
-
-        noticeResponseDTO.setNoticeImagePath(noticeImagePath);
-
         return noticeResponseDTO;
     }
 

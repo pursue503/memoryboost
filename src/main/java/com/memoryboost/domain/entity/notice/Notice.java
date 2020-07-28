@@ -36,6 +36,11 @@ public class Notice {
     @Column(insertable = false,updatable = false)
     private Date noticeDate;
 
+    @Temporal(value = TemporalType.DATE)
+    @ColumnDefault("current_timestamp()")
+    @Column(insertable = false)
+    private Date noticeModifiedDate;
+
     @Builder
     public Notice(int noticeCategory, String noticeTitle, String noticeContent) {
         this.noticeCategory = noticeCategory;

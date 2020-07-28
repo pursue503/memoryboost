@@ -46,18 +46,14 @@ public class NoticeService {
     }
 
     @Transactional
-    public boolean noticeSave(NoticeSaveRequestDTO noticeSaveRequestDTO , List<MultipartFile> multipartFileList) throws IOException {
+    public boolean noticeSave(NoticeSaveRequestDTO noticeSaveRequestDTO , List<String> pathList) throws IOException {
 
         Notice notice = noticeRepository.save(noticeSaveRequestDTO.toEntity());
-
-        if(multipartFileList != null) {
-            for(MultipartFile multipartFile : multipartFileList) {
-                String reName = productS3Uploader.fileReName(multipartFile);
-                File file = new File(path + reName);
-                multipartFile.transferTo(file);
-                noticeImageRepository.save(NoticeImage.builder().notice(notice).noticeImagePath(dbPath + reName).noticeAllImagePath(path + reName).build());
-            }
+        for(String filePath : pathList) {
+            String realPath = path.replace(dbPath,"");
+            noticeImageRepository.save(NoticeImage.builder().notice(notice).noticeImagePath(filePath).noticeRealImagePath(realPath + filePath).build());
         }
+
         return true;
     }
 
@@ -69,7 +65,7 @@ public class NoticeService {
         List<NoticeImage> noticeImageList = noticeRepository.findByNoticeImage(notice);
 
         for(NoticeImage noticeImage : noticeImageList) {
-            File file = new File(noticeImage.getNoticeAllImagePath());
+            File file = new File(noticeImage.getNoticeRealImagePath());
             if(file.exists()) { // 파일 존재여부 확인.
                 file.delete(); //파일제
                 noticeImageRepository.delete(noticeImage); // 데이터삭제.
@@ -87,16 +83,17 @@ public class NoticeService {
     //파일 저장
     @Transactional
     public String noticeFileTempSave(MultipartFile multipartFile) {
-        String fileRoot = "C:\\image\\";
-        String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
 
+        //확장자 얻기
+        String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+        //파일 이름 랜덤 생성.
         String saveFileName = UUID.randomUUID() + extension;
 
-        File file = new File(fileRoot + saveFileName);
+        File file = new File(path + saveFileName);
 
         try{
             multipartFile.transferTo(file);
-            return "/image/" + saveFileName;
+            return dbPath + saveFileName;
         } catch (IOException e ) {
             e.printStackTrace();
         }
