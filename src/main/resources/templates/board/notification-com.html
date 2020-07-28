@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
-    <title>Title</title>
+    <title>공지사항</title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--
@@ -35,7 +35,7 @@
     <nav th:classappend="community">
         <button th:classappend="estimate" th:onclick="|location.href = '@{/community/estimate}';|" th:text="견적요청" />
         <button th:classappend="review" th:onclick="|location.href = '@{/community/review}';|" th:text="이용후기" />
-        <button th:classappend="|notification selected|" th:onclick="|location.href = '@{/community/notification}';|" th:text="공지사항" />
+        <button th:classappend="|notification selected|" th:onclick="|location.href = '@{/notice?category=1}';|" th:text="공지사항" />
         <button th:classappend="update" th:onclick="|location.href = '@{/community/update}';|" th:text="업데이트" />
         <button th:classappend="event" th:onclick="|location.href = '@{/community/event}';|" th:text="이벤트" />
     </nav>
@@ -44,7 +44,6 @@
             <h1>공지사항</h1>
             <span th:text="|중요한 공지 및 점검사항을 확인하세요.|"></span>
         </div>
-
         <table>
             <tr>
                 <th th:text="|No.|"></th>
@@ -53,26 +52,12 @@
                 <th th:text="작성날짜"></th>
                 <th th:text="조회수"></th>
             </tr>
-            <tr th:each="num : ${#numbers.sequence(0, 1, 1)}">
-                <td th:text="|공지|"></td>
-                <td th:classappend="|title|" th:text="|[공지사항]공지사항입니다. 잘 따르세요. 안따르면 추방.|"></td>
-                <td th:text="운영자"></td>
-                <td th:text="|1970-01-01|"></td>
-                <td th:text="|999|"></td>
-            </tr>
-            <tr>
-                <td th:text="0"></td>
-                <td th:classappend="|title|" th:text="|[조립후기]이번에 원기옥 모아서 맞춘 컴입니다. 피드백점 주세요.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|"></td>
-                <td th:text="테스트유저"></td>
-                <td th:text="|2020-07-28|"></td>
-                <td th:text="|1|"></td>
-            </tr>
-            <tr th:each="num : ${#numbers.sequence(15, 1, -1)}">
-                <td th:classappend="|num|" th:text="${num}"></td>
-                <td th:classappend="|title|" th:onclick="|location.href = '';|" th:text="|[조립후기]이번에 원기옥 모아서 맞춘 컴입니다. 피드백점 주세요.|"></td>
-                <td th:classappend="|writer|" th:text="테스트유저"></td>
-                <td th:classappend="|date|"th:text="|2020-07-28|"></td>
-                <td th:classappend="|view|"th:text="|1|"></td>
+            <tr th:each="notice : ${notice}">
+                <td th:classappend="|num|" th:text="${notice.noticeNo}"></td>
+                <td th:classappend="|title|" th:onclick="|location.href = '/notice/detail?noticeNo=${notice.noticeNo}';|" th:text="${notice.noticeTitle}"></td>
+                <td th:classappend="|writer|" th:text="|관리자|"></td>
+                <td th:classappend="|date|"th:text="${notice.noticeDate}"></td>
+                <td th:classappend="|view|"th:text="|0|"></td>
             </tr>
         </table>
         <div th:classappend="|control|">
@@ -90,16 +75,18 @@
                 <button th:text="검색"></button>
             </div>
             <div class="paging">
-                <button th:disabled="true"
-                        th:value="0" class="btn page"><i class="fas fa-chevron-left"></i></button>
-                <button th:each="num : ${#numbers.sequence(1, 10)}"
-                        th:disabled="${num > 1}"
+                <input th:type="hidden" th:name="category" th:value="1" />
+                <button th:disabled="${paging.prev == false}"
+                        th:value="${paging.startPage-10}" th:classappend="|btn page|"><i class="fas fa-chevron-left"></i></button>
+                <button th:each="num : ${#numbers.sequence(paging.startPage, paging.startPage+9)}"
+                        th:disabled="${num > paging.endPage && num != 1}"
                         th:text="${num}"
+                        th:name="|page|"
                         th:value="${num}"
-                        th:style="${num == 1} ? |color: var(--danger);|"
-                        class="btn page" name="page" ></button>
-                <button th:disabled="true"
-                        th:value="11" class="btn page"><i class="fas fa-chevron-right"></i></button>
+                        th:style="${num == paging.page} ? |color: var(--danger);|"
+                        th:classappend="|btn page|"></button>
+                <button th:disabled="${paging.next == false}"
+                        th:value="${paging.startPage+10}" th:classappend="|btn page|"><i class="fas fa-chevron-right"></i></button>
             </div>
         </form>
     </div>

@@ -66,7 +66,7 @@ public class NoticeMoveController {
     public String noticeDetail(@RequestParam("noticeNo") Long noticeNo , Model model) {
 
         model.addAttribute("notice", noticeService.noticeDetail(noticeNo));
-        return "상세보기페이지";
+        return "board/notification-detail";
     }
 
 }
