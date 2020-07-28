@@ -43,6 +43,16 @@
         <div th:classappend="description">
             <h1>공지사항</h1>
             <span th:text="|중요한 공지 및 점검사항을 확인하세요.|"></span>
+            <table>
+                <tr>
+                    <th th:text="${notice.noticeNo}"></th>
+                    <th th:text="${notice.noticeTitle}"></th>
+                    <th th:text="${notice.noticeDate}"></th>
+                </tr>
+                <tr>
+                    <td colspan="3" th:utext="${notice.noticeContent}" th:style="|text-align: justify; text-justify: distribute; text-align-last: justify;|"></td>
+                </tr>
+            </table>
         </div>
         <th:block th:text="${notice}"></th:block>
     </div>
