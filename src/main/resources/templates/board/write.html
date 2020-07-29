@@ -29,6 +29,7 @@
     <script src="/js/reset.js"></script>
     <script src="/js/summernote/summernote-lite.js"></script>
     <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+    <script src="/js/board/write-summernote.js"></script>
     <script src="/js/board/write-com.js"></script>
 
 </head>
@@ -73,6 +74,7 @@
                     $('#summernote').summernote('code', [[${post.postContent}]]);
                 </script>
             </th:block>
+            <input th:if="${post != null}" th:name="postNo" th:value="${post.postNo}" th:type="hidden" />
             <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         </form>
     </div>
