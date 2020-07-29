@@ -54,24 +54,117 @@
     </div>
     <div th:classappend="mid">
         <div th:classappend="community">
-            <div th:classappend="review">
-                게시판1
+            <div th:classappend="tab">
+                <h4>공지</h4>
+                <table th:classappend="notification">
+                    <tr th:each="num : ${#numbers.sequence(0, 5, 1)}">
+                        <td th:text="|${num+1}번째 공지입니다. 준수하세요.|"></td>
+                        <td th:text="|2020-07-29|"></td>
+                    </tr>
+                </table>
+                <h4>이벤트</h4>
+                <table th:classappend="event">
+                    <tr th:each="num : ${#numbers.sequence(0, 5, 1)}">
+                        <td th:text="|${num+1}번째 이벤트입니다. 환호하세요.|"></td>
+                        <td th:text="|2020-07-29|"></td>
+                    </tr>
+                </table>
             </div>
-            <div th:classappend="review2">
-                게시판2
+            <div th:classappend="tab">
+                <!--<h4>견적문의</h4>
+                <table>
+                    <tr th:each="num : ${#numbers.sequence(0, 5, 1)}">
+                        <td th:text="|${num+1}번째 견적문의입니다. 봐주세요.|"></td>
+                        <td th:text="|2020-07-29|"></td>
+                    </tr>
+                </table>-->
+                <h4>이용후기</h4>
+                <table th:classappend="review">
+                    <tr th:each="num : ${#numbers.sequence(0, 10, 1)}">
+                        <td th:text="|${num+1}번째 이용후기입니다. 부러워하세요.|"></td>
+                        <td th:text="|2020-07-29|"></td>
+                    </tr>
+                </table>
             </div>
         </div>
+        <!-- 상품 하나 -->
         <div th:classappend="best-seller">
             <div th:classappend="any-product">
-                아무 상품 걸어놓기
+                <h4 th:text="신제품"></h4>
+                <div th:classappend="|product-image align-mid horizontal|">
+                    <img th:src="|http://placehold.it/370x320|" />
+                </div>
             </div>
         </div>
     </div>
     <div th:classappend="product-belt-slide">
         <div th:classappend="belt-slide-wrapper">
-            <div th:classappend="|belt-content first|"></div>
-            <div th:classappend="|belt-content second|"></div>
-            <div th:classappend="|belt-content third|"></div>
+            <div th:classappend="|belt-content first|">
+                <div th:classappend="product">
+                    <div th:classappend="|product-image align-mid horizontal|">
+                        <img th:src="|http://placehold.it/180x180|" />
+                    </div>
+                    <div th:classappend="|product-info|">
+                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
+                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
+                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
+                    </div>
+                </div>
+                <div th:classappend="product">
+                    <div th:classappend="|product-image align-mid horizontal|">
+                        <img th:src="|http://placehold.it/180x180|" />
+                    </div>
+                    <div th:classappend="|product-info|">
+                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
+                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
+                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
+                    </div>
+                </div>
+            </div>
+            <div th:classappend="|belt-content second|">
+                <div th:classappend="product">
+                    <div th:classappend="|product-image align-mid horizontal|">
+                        <img th:src="|http://placehold.it/180x180|" />
+                    </div>
+                    <div th:classappend="|product-info|">
+                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
+                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
+                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
+                    </div>
+                </div>
+                <div th:classappend="product">
+                    <div th:classappend="|product-image align-mid horizontal|">
+                        <img th:src="|http://placehold.it/180x180|" />
+                    </div>
+                    <div th:classappend="|product-info|">
+                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
+                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
+                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
+                    </div>
+                </div>
+            </div>
+            <div th:classappend="|belt-content third|">
+                <div th:classappend="product">
+                    <div th:classappend="|product-image align-mid horizontal|">
+                        <img th:src="|http://placehold.it/180x180|" />
+                    </div>
+                    <div th:classappend="|product-info|">
+                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
+                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
+                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
+                    </div>
+                </div>
+                <div th:classappend="product">
+                    <div th:classappend="|product-image align-mid horizontal|">
+                        <img th:src="|http://placehold.it/180x180|" />
+                    </div>
+                    <div th:classappend="|product-info|">
+                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
+                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
+                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

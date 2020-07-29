@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="/css/reset.css" />
     <link href="/css/summernote/summernote-lite.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/board/community-style.css" />
-    <link rel="stylesheet" href="/css/board/write-com.css" />
+    <link rel="stylesheet" href="/css/board/write-notification.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
@@ -45,8 +45,8 @@
     </nav>
     <div th:classappend="content">
         <div th:classappend="description">
-            <h1>공지사항</h1>
-            <span th:text="|중요한 공지 및 점검사항을 확인하세요.|"></span>
+            <h1>공지작성</h1>
+            <div th:text="|공지를 작성합니다.|"></div>
         </div>
         <form id="write-form"  action="/notice" method="POST">
             <select th:classappend="category" th:name="noticeCategory">
@@ -54,10 +54,12 @@
                 <option th:text="|업데이트|" th:value="2" />
                 <option th:text="|이벤트|" th:value="3" />
             </select>
-            <input th:type="text" th:name="noticeTitle" th:placeholder="|제목|" />
+            <input th:classappend="title" th:type="text" th:name="noticeTitle" th:placeholder="|제목|" />
             <textarea id="summernote" name="noticeContent"></textarea>
-            <button th:text="작성완료"></button>
-            <button th:id="write-cancel" th:text="작성취소"></button>
+            <div th:classappend="control">
+                <button th:text="작성완료"></button>
+                <button th:id="write-cancel" th:text="작성취소"></button>
+            </div>
             <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         </form>
     </div>
