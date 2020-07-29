@@ -1,16 +1,21 @@
 package com.memoryboost.config.java;
 
-import org.springframework.context.annotation.Bean;
+import com.memoryboost.config.web.WebMvcConfig;
+import com.memoryboost.util.interceptor.LoginSuccessInterceptor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 @Configuration
-public class SpringConfig {
+public class SpringConfig extends WebMvcConfig {
 
-//    @Bean
-//    public JavaMailSender javaMailSender(){
-//        return new JavaMailSenderImpl();
-//    }
-
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // /members/sns-signup - 입력창은 제외
+        registry.addInterceptor(new LoginSuccessInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/members/sns-signup")
+                .excludePathPatterns("/css/**")
+                .excludePathPatterns("/js/**")
+                .excludePathPatterns("/img/**");
+    }
 }

@@ -35,14 +35,14 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
     @Override
     public QueryResults<Product> findByProductNameList(List<String> productNameList) {
-        QProduct produt = QProduct.product;
+        QProduct product = QProduct.product;
 
         BooleanBuilder builder = new BooleanBuilder();
 
         for (String s : productNameList) {
-            builder.and(produt.productName.contains(s));
+            builder.and(product.productName.contains(s));
         }
-        return queryFactory.selectFrom(produt)
+        return queryFactory.selectFrom(product)
                 .where(builder)
                 .offset(0)
                 .limit(10)
