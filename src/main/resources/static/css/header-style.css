@@ -1,186 +1,266 @@
+/* 평소 헤더 */
 header {
-    z-index: 100;
     position: fixed;
     top: 0; left: 0;
     display: flex;
-    width: 100%; height: 110px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%; height: 140px;
     background-color: var(--white);
-    box-shadow: 0 0 2px -1px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, 0.8);
+    padding: 5px 0;
+    z-index: 1000;
 }
 
-header > div.container {
-    position: absolute;
-}
-
-/* 로고, 검색 */
-header > div.funcs {
-    top: 20px; left: 20px;
-    display: flex;
-    align-items: center;
-    width: 1000px; height: 50px;
-}
-
-header > div.funcs > .logo {
-    cursor: pointer;
-    margin-right: 20px;
-}
-
-/* 검색 */
-header > div.funcs > div.search {
-    position: relative;
-}
-
-header > div.funcs > div.search > form {
-    display: flex;
-    align-items: center;
-    width: 600px; height: 45px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    padding-left: 10px;
-}
-
-header > div.funcs > div.search > form > input#keyword {
-    outline: none;
-    border: 0;
-    width: 88.5%; height: 30px;
-}
-
-header > div.funcs .btn {
-    background: none;
-    border: 0;
-    font-size: 25px;
-    color: var(--gray);
-    margin-right: 10px;
-}
-
-header > div.funcs .btn.reset {
-    visibility: hidden;
-}
-
-header > div.funcs.ontype .btn.reset {
-    visibility: visible;
-}
-
-/* 연관 검색어 */
-header > div.funcs > div.search.recommend > form {
-    border-radius: 5px 5px 0 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0);
-}
-
-header > div.funcs > div.search > div.keyword-list {
-    display: none;
-    z-index: 101;
-    position: absolute;
-    width: 100%;
-    background: var(--white);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-header > div.funcs > div.search.recommend > div.keyword-list {
-    display: inline-block;
-}
-
-header > div.funcs > div.search.recommend > div.keyword-list > ul > li {
-    cursor: pointer;
-    padding: 0 10px;
-}
-
-header > div.funcs > div.search.recommend > div.keyword-list > ul > li:hover {
-    background-color: var(--light-gray);
-}
-
-header > div.funcs > div.search.recommend > div.keyword-list > ul > li.keywordSelected {
-    background-color: var(--light-gray);
-}
-
-/* 오른쪽 버튼들 */
-header > div.buttons {
-    top: 20px; right: 20px;
-    display: flex;
-}
-
-header > div.buttons > div.greeting {
-    display: flex;
-    align-items: center;
-}
-
-header > div.buttons > div.greeting > span.username {
-    cursor: pointer;
-}
-
-header > div.buttons > div.greeting > span.username:hover {
-    opacity: 0.7;
-}
-
-header > div.buttons > button.btn {
-    width: 100px; height: 45px;
-    margin: 0 5px;
-    font-size: 16px;
-}
-
-/* 메뉴 */
-header > nav.header {
+/* 로고 */
+header > div.main-logo {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 75%; height: 40px;
-}
-
-header > nav.header > ul {
-    display: flex;
-    justify-content: space-between;
     width: 100%;
-    padding: 0 30%;
 }
 
-header > nav.header > ul > li > a > i {
-    margin-right: 5px;
+header > div.main-logo > img {
+    cursor: pointer;
+    width: 200px; height: auto;
 }
 
-/***************** 간소화 헤더 ****************/
-header.mini {
-    position: fixed;
-    top: 0; left: 0;
+/* 검색 */
+header > div.header-upper {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    background-color: var(--white);
-    width: 100%; height: 50px;
-    transition-duration: 0.2s;
+    width: 100%;
+    margin: 5px 0;
 }
 
-header.mini > div.funcs {
-    position: static;
+header > div.header-upper > div.search-div {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+header > div.header-upper > div.search-div > form#search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+}
+
+header > div.header-upper > div.search-div > form#search-form > input#search-input {
+    outline: none;
+    border: 0;
+    background-color: var(--white);
+    width: 500px; height: 35px;
+    padding: 5px 10px;
+}
+
+header > div.header-upper > div.search-div > form#search-form > button {
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    background-color: var(--white);
+    margin: 0;
+    height: 35px;
+    padding: 2px;
+    font-size: 16px;
+}
+
+header > div.header-upper > div.search-div > form#search-form > button#search-reset {
+    visibility: hidden;
+    width: 35px;
+}
+
+header > div.header-upper > div.search-div.typing > form#search-form > button#search-reset {
+    visibility: visible;
+}
+
+header > div.header-upper > div.search-div > form#search-form > button#search-submit {
+    width: 60px;
+    border-left: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+/* 검색어 자동완성 */
+header > div.header-upper > div.search-div > div.auto-keyword {
+    display: none;
+    position: absolute;
+    top: 37px; left: 0;
+    width: 90%;
+    border: 2px solid rgba(0, 0, 0, 0.6);
+    background-color: var(--white);
+    z-index: 1001;
+}
+
+header > div.header-upper > div.search-div.typing > div.auto-keyword {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+header > div.header-upper > div.search-div.typing > div.auto-keyword > div {
+    cursor: pointer;
+    width: 100%;
+}
+
+header > div.header-upper > div.search-div.typing > div.auto-keyword > div:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* 추천 검색어 */
+header > div.recommend-keyword {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 590px;
+}
+
+header > div.recommend-keyword > a {
     margin-left: 20px;
 }
 
-header.mini > div.funcs > div.search > form {
-    height: 35px;
+header > div.recommend-keyword > a:hover {
+    text-decoration: underline;
 }
 
-header.mini > div.container.buttons {
-    position: static;
-    margin-right: 10px;
-}
-
-header.mini > div.container.buttons > button.btn {
-    width: 70px; height: 25px;
-    font-size: 13px;
-}
-
-header.mini > nav.header {
-    display: absolute;
-    bottom: 5px; left: 78%;
+/* 계정 */
+header > div.account {
+    position: absolute;
+    top: 10px; right: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     width: 300px;
 }
 
-header.mini > nav.header > ul {
-    display: flex;
-    justify-content: space-between;
+header > div.account > a.user-name {
+    cursor: pointer;
+    color: var(--light-blue);
+    font-size: 18px;
+}
+
+header > div.account > a.user-name:hover {
+    opacity: 0.5;
+}
+
+header > div.account > span.greeting {
+    font-size: 16px;
+}
+
+header > div.account > button {
+    cursor: pointer;
+    outline: none;
+    border-radius: 3px;
+    background-color: var(--white);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+    padding: 3px;
+    width: 80px; height: 35px;
+    margin-right: 10px;
+}
+
+header > div.account > button.signout {
+    background-color: var(--light-blue);
+    border: 1px solid var(--light-blue);
+    color: var(--white);
+    margin: 0 10px;
+}
+
+header > div.account > button.signin {
+    background-color: var(--light-blue);
+    border: 1px solid var(--light-blue);
+    color: var(--white);
+}
+
+/* 메뉴 */
+header > div.menu {
     width: 100%;
-    padding: 5%;
-    margin-right: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+header > div.menu > a {
+    margin: 0 60px;
+}
+
+header > div.menu > a:hover {
+    opacity: 0.5;
+}
+
+/* 미니 헤더 */
+header.mini {
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
+    transition-duration: 0.3s;
+}
+
+/* 이미지 크기 줄임 */
+header.mini > div.main-logo {
+    width: auto;
+}
+
+header.mini > div.main-logo > img {
+    margin: 0 10px;
+    width: 150px;
+}
+
+/* 검색 */
+header.mini > div.header-upper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+}
+
+header.mini > div.header-upper > div.search-div > form#search-form > input#search-input {
+    width: 500px; height: 30px;
+    padding: 5px 10px;
+}
+
+header.mini > div.header-upper > div.search-div > form#search-form > button {
+    height: 30px;
+    padding: 2px;
+    font-size: 14px;
+}
+
+header.mini > div.header-upper > div.search-div > form#search-form > button#search-reset {
+    width: 30px;
+}
+
+header.mini > div.header-upper > div.search-div > form#search-form > button#search-submit {
+    width: 55px;
+}
+
+
+/* 검색어 자동완성 */
+header.mini > div.header-upper > div.search-div > div.auto-keyword {
+    top: 32px;
+    width: 534px;
+}
+
+/* 추천 검색어 숨김 */
+header.mini > div.recommend-keyword {
+    display: none;
+}
+
+/* 메뉴 숨김 */
+header.mini > div.menu {
+    display: none;
+}
+
+/* 계정 */
+header.mini > div.account {
+    top: 12px;
+}
+
+header.mini > div.account > button {
+    font-size: 13px;
+    padding: 1px;
+    width: 70px; height: 25px;
+    margin-right: 10px;
 }
