@@ -23,9 +23,13 @@ public class PostImage {
     @Column(nullable = false)
     private String postImagePath;
 
+    @Column(nullable = false)
+    private String postRealPath;
+
     @Builder
-    public PostImage(Post post, String postImagePath) {
+    public PostImage(Post post, String postImagePath, String postRealPath) {
         this.post = post;
         this.postImagePath = postImagePath;
+        this.postRealPath = postRealPath;
     }
 }

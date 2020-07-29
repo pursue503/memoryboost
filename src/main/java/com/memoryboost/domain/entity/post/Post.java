@@ -41,6 +41,12 @@ public class Post {
     @Column(nullable = false)
     private int postCategory;
 
+    //수정날짜
+    @Temporal(value = TemporalType.DATE)
+    @ColumnDefault("current_timestamp()")
+    @Column(insertable = false)
+    private Date postModifiedDate;
+
     @Builder
     public Post(Member member, String postTitle, String postContent, int postCategory) {
         this.member = member;

@@ -31,6 +31,7 @@ public class NoticeService {
     
     private static final String path = "/home/ec2-user/notice/";
     private static final String dbPath = "/notice/";
+
     @Transactional(readOnly = true)
     public List<NoticeListResponseDTO> noticeListResponseDTOList(int category, int page) {
 
@@ -84,7 +85,6 @@ public class NoticeService {
     }
 
     //파일 저장
-    @Transactional
     public String noticeFileTempSave(MultipartFile multipartFile) {
 
         //확장자 얻기

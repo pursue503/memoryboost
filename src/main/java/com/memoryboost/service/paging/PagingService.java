@@ -5,6 +5,7 @@ import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.member.MemberRepository;
 import com.memoryboost.domain.entity.notice.NoticeRepository;
 import com.memoryboost.domain.entity.order.OrderRepository;
+import com.memoryboost.domain.entity.post.PostRepository;
 import com.memoryboost.domain.entity.product.Product;
 import com.memoryboost.domain.entity.product.ProductRepository;
 import com.memoryboost.domain.entity.product.review.ProductReviewRepository;
@@ -27,6 +28,7 @@ public class PagingService {
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
     private final NoticeRepository noticeRepository;
+    private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
     public PagingUtil searchPaging(String keyword, int page) {
@@ -96,6 +98,15 @@ public class PagingService {
         paging.pageSetting();
         return paging;
 
+    }
+
+    @Transactional(readOnly = true)
+    public PagingUtil postPaging(int category, int page) {
+        PagingUtil paging = new PagingUtil();
+        paging.setTotalResult(postRepository.countByPostAllDesc(category));
+        paging.setPage(page);
+        paging.pageSetting();
+        return paging;
     }
 
 }
