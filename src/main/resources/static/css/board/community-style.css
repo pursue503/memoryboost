@@ -134,3 +134,37 @@ form > div.paging > button.btn {
     font-size: 20px;
     width: 40px; height: 40px;
 }
+
+/************** 디테일 부분 *****************/
+div.content.detail > table {
+    border-collapse: collapse;
+}
+
+div.content.detail th.detail-title {
+    text-align: left;
+    padding-left: 15px;
+}
+
+div.content.detail td.detail-writer {
+    text-align: left;
+}
+
+div.content.detail td.detail-date {
+    text-align: right;
+}
+
+div.content.detail tr.jump {
+    height: 30px;
+}
+
+div.content.detail tr.jump > th {
+    width: 80px;
+    text-align: center;
+    padding: 0;
+    font-weight: normal;
+}
+
+div.content.detail tr.jump > td {
+    text-align: left;
+    font-size: 14px;
+}

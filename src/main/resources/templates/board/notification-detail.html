@@ -20,13 +20,13 @@
     <!-- css -->
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/board/community-style.css" />
-    <link rel="stylesheet" href="/css/board/estimate-com.css" />
+    <link rel="stylesheet" href="/css/board/notification-com.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
     <script src="/js/shave.js"></script>
     <script src="/js/board/community.js"></script>
-    <script src="/js/board/estimate-com.js"></script>
+    <script src="/js/board/notification-com.js"></script>
 </head>
 <body>
 <header th:replace="header.html"></header>
@@ -39,22 +39,33 @@
         <button th:classappend="update" th:onclick="|location.href = '@{/community/update}';|" th:text="업데이트" />
         <button th:classappend="event" th:onclick="|location.href = '@{/community/event}';|" th:text="이벤트" />
     </nav>
-    <div th:classappend="content">
+    <div th:classappend="|content detail|">
         <div th:classappend="description">
             <h1>공지사항</h1>
             <span th:text="|중요한 공지 및 점검사항을 확인하세요.|"></span>
-            <table>
+            <table th:fragment="table(noticeNo)">
                 <tr>
-                    <th th:text="${notice.noticeNo}"></th>
-                    <th th:text="${notice.noticeTitle}"></th>
-                    <th th:text="${notice.noticeDate}"></th>
+                    <th th:classappend="detail-title" colspan="2" th:text="|제목 : ${notice.noticeTitle}|"></th>
                 </tr>
                 <tr>
-                    <td colspan="3" th:utext="${notice.noticeContent}" th:style="|text-align: justify; text-justify: distribute; text-align-last: justify;|"></td>
+                    <td th:classappend="detail-writer" th:text="|작성자 : 운영자|"></td>
+                    <td th:classappend="detail-date" th:text="|작성날짜 : ${notice.noticeDate}|"></td>
+                </tr>
+                <tr>
+                    <td th:classappend="detail-content" colspan="2" th:utext="${notice.noticeContent}" th:style="|text-align: justify; text-justify: distribute; text-align-last: justify;|"></td>
+                </tr>
+            </table>
+            <table>
+                <tr th:classappend="|jump|">
+                    <th th:classappend="detail-before" th:text="이전글"></th>
+                    <td th:classappend="detail-before" th:text="|이전글이 없습니다.|"></td>
+                </tr>
+                <tr th:classappend="|jump|">
+                    <th th:classappend="detail-next" th:text="다음글"></th>
+                    <td th:classappend="detail-next" th:text="|공지12312...|"></td>
                 </tr>
             </table>
         </div>
-        <th:block th:text="${notice}"></th:block>
     </div>
 </div>
 <footer th:replace="footer.html"></footer>

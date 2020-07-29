@@ -101,10 +101,13 @@ div.slide-content.third > div.inner-content:nth-child(2) {
     background-image: url("/img/slide6.png");
 }
 
+/* 중단 */
 div.mid {
     display: flex;
     justify-content: space-between;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
 }
+
 
 /* 게시판 */
 div.community {
@@ -113,31 +116,70 @@ div.community {
     width: 820px; height: 400px;
 }
 
-div.community > div {
+div.mid > div.community > div.tab{
     width: 400px;
-    background-color: var(--light-gray);
+    padding: 0 10px;
+}
+
+div.mid > div.community > div.tab > h4 {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 15px;
+}
+
+div.mid > div.community > div.tab > table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+div.mid > div.community > div.tab > table tr {
+    height: 25px;
+}
+
+div.mid > div.community > div.tab > table.review tr {
+    height: 32px;
+}
+
+div.mid > div.community > div.tab > table tr > td:first-child {
+    width: 75%
+    text-align: center;
+}
+
+div.mid > div.community > div.tab > table tr > td:nth-child(2) {
+    width: 25%;
+    text-align: right;
 }
 
 /* 상품 노출 한칸 */
 div.best-seller {
     float: right;
     width: 400px; height: 400px;
-    background-color: #FF9797;
+    padding: 15px;
+    margin-right: 10px;
 }
 
 div.best-seller > div.any-product {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background-color: #9797FF;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    /*background-color: #9797FF;*/
     width: 100%; height: 100%;
+}
+
+div.best-seller > div.any-product > h4 {
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+div.best-seller > div.any-product > div.product-image {
+    width: 100%; height: 360px;
 }
 
 /* 상품 노출 슬라이드 */
 div.product-belt-slide {
     width: 1300px; height: 200px;
     margin-top: 25px;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
     overflow: hidden;
 }
 
@@ -147,17 +189,42 @@ div.belt-slide-wrapper {
 }
 
 div.belt-content {
+    display: flex;
     width: 1300px; height: 200px;
 }
 
 div.belt-content.first {
-    background-color: #FF9797;
+    /*background-color: #FF9797;*/
 }
 
 div.belt-content.second {
-    background-color: #9797FF;
+    /*background-color: #9797FF;*/
 }
 
 div.belt-content.third {
-    background-color: #97FF97;
+    /*background-color: #97FF97;*/
+}
+
+div.belt-content > div.product {
+    flex-basis: 50%;
+    display: flex;
+}
+
+div.belt-content > div.product > div.product-image {
+    width: 200px;
+}
+
+div.belt-content > div.product > div.product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+div.belt-content > div.product > div.product-info > div {
+    padding-left: 10px;
+}
+
+div.belt-content > div.product > div.product-info > div.product-name {
+
 }

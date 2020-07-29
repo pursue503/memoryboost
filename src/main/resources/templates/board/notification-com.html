@@ -44,7 +44,7 @@
             <h1>공지사항</h1>
             <span th:text="|중요한 공지 및 점검사항을 확인하세요.|"></span>
         </div>
-        <table>
+        <table th:fragment="notification">
             <tr>
                 <th th:text="|No.|"></th>
                 <th th:text="제목"></th>
@@ -52,12 +52,17 @@
                 <th th:text="작성날짜"></th>
                 <th th:text="조회수"></th>
             </tr>
-            <tr th:each="notice : ${notice}">
+            <tr th:if="${#lists.size(notice) > 0}" th:each="notice : ${notice}">
                 <td th:classappend="|num|" th:text="${notice.noticeNo}"></td>
                 <td th:classappend="|title|" th:onclick="|location.href = '/notice/detail?noticeNo=${notice.noticeNo}';|" th:text="${notice.noticeTitle}"></td>
                 <td th:classappend="|writer|" th:text="|관리자|"></td>
                 <td th:classappend="|date|"th:text="${notice.noticeDate}"></td>
                 <td th:classappend="|view|"th:text="|0|"></td>
+            </tr>
+            <tr th:unless="${#lists.size(notice) > 0}" th:each="notice : ${notice}">
+                <td>
+                    결과가 없습니다.
+                </td>
             </tr>
         </table>
         <div th:classappend="|control|">

@@ -11,7 +11,7 @@ var beltSlideLength = $("div.belt-slide-wrapper").children().length;
 var firstBeltContent = beltSlide.firstElementChild;
 var lastBeltContent = beltSlide.lastElementChild;
 var beltContentWidth = 1300;
-var beltSlideSpeed = 1000;
+var beltSlideSpeed = 400;
 var beltSlideIndex = 1;
 
 ////////////////////////////메인슬라이드
@@ -132,5 +132,5 @@ function pushRightBelt() {
 }
 
 function automatedBeltSlide() {
-    setInterval(pushLeftBelt, 3000);
+    setInterval(pushLeftBelt, 4500);
 }

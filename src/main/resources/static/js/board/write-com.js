@@ -36,12 +36,6 @@ function changeBoardName() {
         $("select.category").remove();
     } else if(boardName == "review") {
         h1.innerHTML = "이용후기";
-    } else if(boardName == "update") {
-        h1.innerHTML = "업데이트";
-        $("select.category").remove();
-    } else if(boardName == "event") {
-        h1.innerHTML = "이벤트";
-        $("select.category").remove();
     }
 }
 
