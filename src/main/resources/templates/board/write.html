@@ -71,7 +71,9 @@
                     <button th:value="${post.postNo}" th:id="edit-cancel" th:text="수정취소"></button>
                 </div>
                 <script th:inline="javascript">
-                    $('#summernote').summernote('code', [[${post.postContent}]]);
+                    $(document).ready(function() {
+                        $("#summernote").summernote("code", [[${post.postContent}]]);
+                    });
                 </script>
             </th:block>
             <input th:if="${post != null}" th:name="postNo" th:value="${post.postNo}" th:type="hidden" />
