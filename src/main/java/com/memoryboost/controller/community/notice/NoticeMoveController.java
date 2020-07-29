@@ -78,8 +78,8 @@ public class NoticeMoveController {
 
     @PutMapping("/notice")
     @ResponseBody
-    public Long noticeUpdate(NoticeUpdateRequestDTO noticeUpdateRequestDTO) {
-        return noticeService.noticeUpdate(noticeUpdateRequestDTO);
+    public Long noticeUpdate(NoticeUpdateRequestDTO noticeUpdateRequestDTO, @RequestParam(value = "path", required = false) List<String > pathList) {
+        return noticeService.noticeUpdate(noticeUpdateRequestDTO, pathList);
     }
 
 }

@@ -105,9 +105,17 @@ public class NoticeService {
     }
 
     @Transactional
-    public Long noticeUpdate(NoticeUpdateRequestDTO noticeUpdateRequestDTO) {
+    public Long noticeUpdate(NoticeUpdateRequestDTO noticeUpdateRequestDTO , List<String> pathList) {
         Notice notice = noticeRepository.findById(noticeUpdateRequestDTO.getNoticeNo()).orElseThrow(NullPointerException::new);
         notice.noticeUpdate(noticeUpdateRequestDTO);
+
+        if(pathList != null) {
+            for(String filePath : pathList) {
+                String realPath = path.replace(dbPath,"");
+                noticeImageRepository.save(NoticeImage.builder().notice(notice).noticeImagePath(filePath).noticeRealImagePath(realPath + filePath).build());
+            }
+        }
+
         return notice.getNoticeNo();
     }
 
