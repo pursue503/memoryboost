@@ -53,8 +53,7 @@ $(document).ready(function() {
             }
         })
         .done(function(response) {
-            console.dir(response);
-            //location.replace("/post/detail?postNo="+response);
+            location.replace("/post/detail?postNo="+response);
         })
         .fail(function(response) {
             console.dir("통신 실패[일반게시판:수정]");
@@ -88,7 +87,6 @@ function uploadSummernoteImageFile(file, editor) {
 
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
-    alert("ajax 실행");
     $.ajax({
         data : data,
         type : "POST",
@@ -99,7 +97,6 @@ function uploadSummernoteImageFile(file, editor) {
             xhr.setRequestHeader(header, token);
         },
         success : function(data) {
-            alert(data);
             $(editor).summernote('insertImage', data);
             if(!isEmpty(data)) {
                 let tag = "<input type='hidden' name='file' value='"+data+"' />"

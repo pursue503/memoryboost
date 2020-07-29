@@ -84,7 +84,7 @@ public class PostMoveController {
 
     @PutMapping("/post")
     @ResponseBody
-    public Long postUpdate(PostUpdateRequestDTO postUpdateRequestDTO , @RequestParam("file")List<String> pathList) {
+    public Long postUpdate(PostUpdateRequestDTO postUpdateRequestDTO , @RequestParam(value = "file", required = false)List<String> pathList) {
         log.info(postUpdateRequestDTO.toString());
         return postService.postUpdate(postUpdateRequestDTO,pathList);
     }
