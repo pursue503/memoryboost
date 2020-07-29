@@ -67,7 +67,7 @@ public class PostMoveController {
         }
     }
 
-    @GetMapping("/post")
+    @GetMapping("/post/detail")
     public String postDetail(@RequestParam("postNo") Long postNo, Model model) {
 
         model.addAttribute("post", postService.postDetail(postNo));
