@@ -16,48 +16,49 @@
     <!-- fontawesome CDN -->
     <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
     <!-- 스타일 -->
+    <!--<link rel="stylesheet" href="/css/header-style.css" />-->
     <link rel="stylesheet" href="/css/header-style.css" />
     <!-- 스크립트 -->
     <script src="/js/header.js"></script>
 </head>
 <body>
-    <header th:fragment="header">
-        <div class="container funcs">
-            <img class="logo small" src="/img/logo_main.png" onclick="location.href='/'" />
-            <div class="search">
-                <form id="form-keyword" action="/search" method="GET">
-                    <input id="keyword" name="keyword" type="text" placeholder="검색어를 입력해주세요."/>
-                    <div class="search buttons">
-                        <button class="btn reset" type="reset"><i class="fas fa-times"></i></button>
-                        <button class="btn search" type="submit"><i class="fas fa-search"></i></button>
-                    </div>
+    <header th:classappend="mini1" th:fragment="header">
+        <div th:classappend="main-logo">
+            <img th:src="@{/img/logo-main.gif}" th:onclick="|location.href = '/';|"/>
+        </div>
+        <div th:classappend="header-upper">
+            <div th:classappend="|search-div|">
+                <form th:id="search-form" th:action="|/search|" th:method="GET">
+                    <input th:id="search-input" th:type="text" th:name="keyword" th:placeholder="|검색어를 입력하세요.|" />
+                    <button th:id="search-reset" th:type="reset" th:text="|x|"></button>
+                    <button th:id="search-submit" th:text="검색"></button>
                 </form>
-                <div class="keyword-list">
-                </div>
+                <div th:classappend="auto-keyword"></div>
             </div>
         </div>
-        <!--<div class="container buttons">
-            <button class="btn signup" onclick="location.href='/members/signup'">회원가입</button>
-            <button class="btn signin enlighten" onclick="location.href='/members/signin'">로그인</button>
-        </div>-->
-        <!-- 로그인에 따라 보여지는 버튼 다름 -->
-        <div class="container buttons" sec:authorize="isAuthenticated()">
-            <div class="greeting">
-                <span class="username" sec:authentication="principal.memberName" onclick="location.href='/members/mypage'"></span><span>님 환영합니다</span>
-            </div>
-            <button class="btn signout enlighten" onclick="location.href='/members/logout'">로그아웃</button>
+        <div th:classappend="recommend-keyword">
+            <span th:text="추천검색어"></span>
+            <a th:classappend="|text normal less|" th:href="|/search?keyword=amd|">AMD</a>
+            <a th:classappend="|text normal less|" th:href="|/search?keyword=인텔|">인텔</a>
+            <a th:classappend="|text normal less|" th:href="|/search?keyword=rtx|">RTX</a>
+            <a th:classappend="|text normal less|" th:href="|/search?keyword=레오폴드|">레오폴드</a>
         </div>
-        <div class="container buttons" sec:authorize="isAnonymous()">
-            <button class="btn signup" onclick="location.href='/members/signup'">회원가입</button>
-            <button class="btn signin enlighten" onclick="location.href='/members/signin'">로그인</button>
+        <div sec:authorize="isAnonymous()" th:classappend="account">
+            <button th:classappend="signup" th:onclick="location.href='/members/signup'" th:text="회원가입"></button>
+            <button th:classappend="signin" th:onclick="location.href='/members/signin'" th:text="로그인"></button>
         </div>
-        <nav class="header">
-            <ul>
-                <li class="nav second"><a href="/estimate"><i class="fas fa-cogs"></i>컴퓨터견적</a></li>
-                <li class="nav second"><a href="/community/estimate"><i class="far fa-comment-alt"></i>게시판</a></li>
-                <li class="nav second"><a href="#"><i class="far fa-question-circle"></i>1:1문의</a></li>
-            </ul>
-        </nav>
+        <div sec:authorize="isAuthenticated()" th:classappend="account">
+            <a th:classappend="user-name" th:href="@{/members/mypage}" th:text="|${#authentication.principal.memberName}|"></a><span th:classappend="greeting" th:text="|님 환영합니다|"></span>
+            <button th:classappend="signout" th:onclick="location.href='/members/logout'" th:text="로그아웃"></button>
+        </div>
+
+        <div th:classappend="menu">
+            <a th:classappend="menu-estimate" th:href="@{/estimate}" th:text="컴퓨터견적"></a>
+            <a th:classappend="menu-notice" th:href="@{/notice?category=1}" th:text="공지사항"></a>
+            <a th:classappend="menu-review" th:href="@{/community/review}" th:text="이용후기"></a>
+            <a th:classappend="menu-update" th:href="@{/community/update}" th:text="새소식"></a>
+            <a th:classappend="menu-event" th:href="@{/community/event}" th:text="이벤트"></a>
+        </div>
     </header>
 </body>
 </html>
