@@ -2,6 +2,7 @@ package com.memoryboost.domain.entity.notice;
 
 import com.memoryboost.domain.dto.notice.response.NoticeListResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeResponseDTO;
+import com.memoryboost.domain.entity.member.QMember;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;

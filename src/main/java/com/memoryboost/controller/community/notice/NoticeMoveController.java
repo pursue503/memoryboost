@@ -24,7 +24,7 @@ public class NoticeMoveController {
     private final PagingService pagingService;
 
     @GetMapping("/notice")
-    public String noticeAllList(int category,
+    public String noticeAllList(@RequestParam(value = "category") int category,
                                 @RequestParam(value = "page", required = false, defaultValue = "1") int page , Model model) {
         model.addAttribute("notice",noticeService.noticeListResponseDTOList(category, page));
         model.addAttribute("paging",pagingService.noticePaging(category,page));
