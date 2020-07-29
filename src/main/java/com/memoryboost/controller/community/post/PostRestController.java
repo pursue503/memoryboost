@@ -17,6 +17,7 @@ public class PostRestController {
 
     @PostMapping("/post/image-upload")
     public String noticeUpload(@RequestParam("file") MultipartFile multipartFile) {
+        log.info("post 이미지 업로드 요청 ..");
         return postService.postFileTempSave(multipartFile);
     }
 

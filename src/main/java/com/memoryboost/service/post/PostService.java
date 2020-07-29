@@ -76,6 +76,7 @@ public class PostService {
 
         try{
             multipartFile.transferTo(file);
+            log.info("post 업로드 성공");
             return dbPath + saveFileName;
         } catch (IOException e ) {
             e.printStackTrace();
