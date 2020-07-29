@@ -1,6 +1,7 @@
 package com.memoryboost.service.notice;
 
 import com.memoryboost.domain.dto.notice.request.NoticeSaveRequestDTO;
+import com.memoryboost.domain.dto.notice.request.NoticeUpdateRequestDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeListResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeResponseDTO;
 import com.memoryboost.domain.entity.notice.Notice;
@@ -101,6 +102,13 @@ public class NoticeService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Transactional
+    public Long noticeUpdate(NoticeUpdateRequestDTO noticeUpdateRequestDTO) {
+        Notice notice = noticeRepository.findById(noticeUpdateRequestDTO.getNoticeNo()).orElseThrow(NullPointerException::new);
+        notice.noticeUpdate(noticeUpdateRequestDTO);
+        return notice.getNoticeNo();
     }
 
 }

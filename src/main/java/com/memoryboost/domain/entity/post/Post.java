@@ -1,12 +1,15 @@
 package com.memoryboost.domain.entity.post;
 
+import com.memoryboost.domain.dto.post.request.PostUpdateRequestDTO;
 import com.memoryboost.domain.entity.member.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter
@@ -42,7 +45,7 @@ public class Post {
     private int postCategory;
 
     //수정날짜
-    @Temporal(value = TemporalType.DATE)
+    @UpdateTimestamp
     @ColumnDefault("current_timestamp()")
     @Column(insertable = false)
     private Date postModifiedDate;
@@ -54,4 +57,10 @@ public class Post {
         this.postContent = postContent;
         this.postCategory = postCategory;
     }
+
+    public void postUpdate(PostUpdateRequestDTO postUpdateRequestDTO) {
+        this.postTitle = postUpdateRequestDTO.getPostTitle();
+        this.postContent = postUpdateRequestDTO.getPostContent();
+    }
+
 }

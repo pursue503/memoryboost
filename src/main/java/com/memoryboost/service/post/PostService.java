@@ -1,6 +1,7 @@
 package com.memoryboost.service.post;
 
 import com.memoryboost.domain.dto.post.request.PostSaveRequestDTO;
+import com.memoryboost.domain.dto.post.request.PostUpdateRequestDTO;
 import com.memoryboost.domain.dto.post.response.PostListResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostRequestDTO;
 import com.memoryboost.domain.entity.member.Member;
@@ -111,6 +112,13 @@ public class PostService {
     @Transactional(readOnly = true)
     public PostRequestDTO postDetail(Long postNo) {
         return postRepository.findByPost(postNo);
+    }
+
+    @Transactional
+    public Long postUpdate(PostUpdateRequestDTO postUpdateRequestDTO) {
+        Post post = postRepository.findById(postUpdateRequestDTO.getPostNo()).orElseThrow(NullPointerException::new);
+        post.postUpdate(postUpdateRequestDTO);
+        return post.getPostNo();
     }
 
 }

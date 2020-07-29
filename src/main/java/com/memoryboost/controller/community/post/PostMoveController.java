@@ -1,6 +1,7 @@
 package com.memoryboost.controller.community.post;
 
 import com.memoryboost.domain.dto.post.request.PostSaveRequestDTO;
+import com.memoryboost.domain.dto.post.request.PostUpdateRequestDTO;
 import com.memoryboost.service.paging.PagingService;
 import com.memoryboost.service.post.PostService;
 import lombok.RequiredArgsConstructor;
@@ -67,11 +68,24 @@ public class PostMoveController {
         }
     }
 
-    @GetMapping("/post")
+    @GetMapping("/post/detail")
     public String postDetail(@RequestParam("postNo") Long postNo, Model model) {
 
         model.addAttribute("post", postService.postDetail(postNo));
         return "post 상세보기";
+    }
+
+    @GetMapping("/post/update")
+    public String postUpdatePage(@RequestParam("postNo") Long postNo, Model model) {
+
+        model.addAttribute("post",postService.postDetail(postNo));
+        return "업데이트 페이지";
+    }
+
+    @PutMapping("/post")
+    @ResponseBody
+    public Long postUpdate(PostUpdateRequestDTO postUpdateRequestDTO) {
+        return postUpdate(postUpdateRequestDTO);
     }
 
 }

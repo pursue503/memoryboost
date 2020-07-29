@@ -1,6 +1,7 @@
 package com.memoryboost.controller.community.notice;
 
 import com.memoryboost.domain.dto.notice.request.NoticeSaveRequestDTO;
+import com.memoryboost.domain.dto.notice.request.NoticeUpdateRequestDTO;
 import com.memoryboost.service.notice.NoticeService;
 import com.memoryboost.service.paging.PagingService;
 import lombok.RequiredArgsConstructor;
@@ -67,6 +68,18 @@ public class NoticeMoveController {
 
         model.addAttribute("notice", noticeService.noticeDetail(noticeNo));
         return "board/notification-detail";
+    }
+
+    @GetMapping("/notice/update")
+    public String noticeUpdatePage(@RequestParam("noticeNo") Long noticeNo, Model model) {
+        model.addAttribute("notice", noticeService.noticeDetail(noticeNo));
+        return "업데이트 페이지";
+    }
+
+    @PutMapping("/notice")
+    @ResponseBody
+    public Long noticeUpdate(NoticeUpdateRequestDTO noticeUpdateRequestDTO) {
+        return noticeService.noticeUpdate(noticeUpdateRequestDTO);
     }
 
 }

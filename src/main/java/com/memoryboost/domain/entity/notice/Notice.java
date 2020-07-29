@@ -1,9 +1,11 @@
 package com.memoryboost.domain.entity.notice;
 
+import com.memoryboost.domain.dto.notice.request.NoticeUpdateRequestDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -36,7 +38,8 @@ public class Notice {
     @Column(insertable = false,updatable = false)
     private Date noticeDate;
 
-    @Temporal(value = TemporalType.DATE)
+//    @Temporal(value = TemporalType.DATE)
+    @UpdateTimestamp
     @ColumnDefault("current_timestamp()")
     @Column(insertable = false)
     private Date noticeModifiedDate;
@@ -47,4 +50,10 @@ public class Notice {
         this.noticeTitle = noticeTitle;
         this.noticeContent = noticeContent;
     }
+
+    public void noticeUpdate(NoticeUpdateRequestDTO noticeUpdateRequestDTO) {
+        this.noticeTitle = noticeUpdateRequestDTO.getNoticeTitle();
+        this.noticeContent = noticeUpdateRequestDTO.getNoticeContent();
+    }
+
 }
