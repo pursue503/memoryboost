@@ -31,15 +31,15 @@ public class PostMoveController {
         model.addAttribute("paging",pagingService.postPaging(category,page));
 
         if(category == 1) {
-            return "이용후기 페이지";
+            return "board/review-com";
         } else {
-            return "견적 요청 페이지";
+            return "board/estimate-com";
         }
 
     }
 
     @PostMapping("/post")
-    public String postSave(PostSaveRequestDTO postSaveRequestDTO, @RequestParam("file")List<String> pathList , Authentication authentication) {
+    public String postSave(PostSaveRequestDTO postSaveRequestDTO, @RequestParam(value = "file", required = false)List<String> pathList , Authentication authentication) {
 
 
         try{
@@ -72,14 +72,14 @@ public class PostMoveController {
     public String postDetail(@RequestParam("postNo") Long postNo, Model model) {
 
         model.addAttribute("post", postService.postDetail(postNo));
-        return "post 상세보기";
+        return "board/post-detail";
     }
 
     @GetMapping("/post/update")
     public String postUpdatePage(@RequestParam("postNo") Long postNo, Model model) {
 
         model.addAttribute("post",postService.postDetail(postNo));
-        return "업데이트 페이지";
+        return "board/write";
     }
 
     @PutMapping("/post")

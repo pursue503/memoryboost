@@ -33,8 +33,8 @@
 <div class="content-container community">
     <!-- 이곳에 내용을 입력 -->
     <nav th:classappend="community">
-        <button th:classappend="estimate" th:onclick="|location.href = '@{/community/estimate}';|" th:text="견적요청" />
-        <button th:classappend="review" th:onclick="|location.href = '@{/community/review}';|" th:text="이용후기" />
+        <button th:classappend="review" th:onclick="|location.href = '@{/post?category=1}';|" th:text="이용후기" />
+        <button th:classappend="estimate" th:onclick="|location.href = '@{/post?category=2}';|" th:text="견적요청" />
         <button th:classappend="|notification selected|" th:onclick="|location.href = '@{/notice?category=1}';|" th:text="공지사항" />
         <button th:classappend="update" th:onclick="|location.href = '@{/community/update}';|" th:text="업데이트" />
         <button th:classappend="event" th:onclick="|location.href = '@{/community/event}';|" th:text="이벤트" />
@@ -44,7 +44,7 @@
             <h1>공지사항</h1>
             <span th:text="|중요한 공지 및 점검사항을 확인하세요.|"></span>
         </div>
-        <table th:fragment="notification">
+        <table>
             <tr>
                 <th th:text="|No.|"></th>
                 <th th:text="제목"></th>

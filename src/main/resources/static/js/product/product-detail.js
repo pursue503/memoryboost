@@ -3,8 +3,15 @@ var descriptionOffset = 0;
 var reviewOffset = 0;
 var shipmentOffset = 0;
 
+var controlTabHeight = 0;
+var descriptionHeight = 0;
+var reviewHeight = 0;
+var shipmentHeight = 0;
+
+
 $(document).ready(function() {
     window.scrollTo(0, 0);
+
     controlTabOffset = document.querySelector("div.control-tab").offsetTop; //인디케이터 바닥
     descriptionOffset = Number(document.querySelector("div.description-image").offsetTop);
     reviewOffset = Number(document.querySelector("div.product-review").offsetTop);

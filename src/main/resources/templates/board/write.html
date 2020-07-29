@@ -4,7 +4,7 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>게시물 작성</title>
+    <title th:text="|이용후기/견적요청|"></title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--
@@ -35,29 +35,44 @@
 <body>
 <header th:replace="header.html"></header>
 <div class="content-container community">
-    <!-- 이곳에 내용을 입력 -->
     <nav th:classappend="community">
-        <button th:classappend="estimate" th:onclick="|location.href = '@{/community/estimate}';|" th:text="견적요청" />
-        <button th:classappend="review" th:onclick="|location.href = '@{/community/review}';|" th:text="이용후기" />
+        <button th:classappend="${post != null && post.postCategory == 1} ? |review selected| : |review|" th:onclick="|location.href = '@{/post?category=1}';|" th:text="이용후기" />
+        <button th:classappend="${post != null && post.postCategory == 2} ? |estimate selected| : |estimate|" th:onclick="|location.href = '@{/post?category=2}';|" th:text="견적요청" />
         <button th:classappend="notification" th:onclick="|location.href = '@{/notice?category=1}';|" th:text="공지사항" />
         <button th:classappend="update" th:onclick="|location.href = '@{/community/update}';|" th:text="업데이트" />
         <button th:classappend="event" th:onclick="|location.href = '@{/community/event}';|" th:text="이벤트" />
     </nav>
     <div th:classappend="content">
-        <div th:classappend="description">
-            <h1 th:appendclass="boardname">견적요청</h1>
+        <div th:if="${post == null}" th:classappend="description">
+            <h1 th:text="|이용후기/견적요청 작성|"></h1>
         </div>
-        <form id="write-form" action="/write" method="get">
-            <select th:classappend="category" th:name="category">
-                <option th:text="|조립후기|" th:value="0" />
-                <option th:text="|제품후기|" th:value="1" />
+        <div th:if="${post != null}" th:classappend="description">
+            <h1 th:text="|이용후기/견적요청 수정|"></h1>
+        </div>
+        <form id="write-form"  action="/post" method="POST">
+            <select th:disabled="${post != null}" th:classappend="category" th:name="postCategory">
+                <option th:text="|이용후기|" th:value="1" />
+                <option th:text="|견적요청|" th:value="2" />
             </select>
-            <input th:classappend="title" th:type="text" th:name="title" th:placeholder="|제목|" />
-            <textarea id="summernote" name="editordata"></textarea>
-            <div th:classappend="control">
-                <button th:text="작성완료"></button>
-                <button th:id="write-cancel" th:text="작성취소"></button>
-            </div>
+            <th:block th:if="${post == null}">
+                <input th:classappend="title" th:type="text" th:name="postTitle" th:placeholder="|제목|" />
+                <textarea th:id="summernote" th:name="postContent"></textarea>
+                <div th:classappend="control">
+                    <button th:text="작성완료"></button>
+                    <button th:id="write-cancel" th:text="작성취소"></button>
+                </div>
+            </th:block>
+            <th:block th:if="${post != null}">
+                <input th:value="${post.postTitle}" th:classappend="title" th:type="text" th:name="postTitle" th:placeholder="|제목|" />
+                <textarea th:id="summernote" th:name="postContent"></textarea>
+                <div th:classappend="control">
+                    <button th:value="${post.postNo}" th:id="edit-complete" th:text="수정완료"></button>
+                    <button th:value="${post.postNo}" th:id="edit-cancel" th:text="수정취소"></button>
+                </div>
+                <script th:inline="javascript">
+                    $('#summernote').summernote('code', [[${post.postContent}]]);
+                </script>
+            </th:block>
             <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         </form>
     </div>
