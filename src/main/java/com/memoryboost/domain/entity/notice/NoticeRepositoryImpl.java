@@ -1,5 +1,6 @@
 package com.memoryboost.domain.entity.notice;
 
+import com.memoryboost.domain.dto.main.NoticeMainPageResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeListResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeResponseDTO;
 import com.memoryboost.domain.entity.member.QMember;
@@ -66,5 +67,14 @@ public class NoticeRepositoryImpl implements NoticeRepositoryCustom {
     public List<NoticeImage> findByNoticeImage(Notice notice) {
         QNoticeImage noticeImage = QNoticeImage.noticeImage;
         return queryFactory.selectFrom(noticeImage).where(noticeImage.notice.eq(notice)).fetch();
+    }
+
+    @Override
+    public List<NoticeMainPageResponseDTO> mainPageNoticeAndEventList(int category) {
+        QNotice notice = QNotice.notice;
+        return queryFactory.select(Projections.fields(NoticeMainPageResponseDTO.class,
+                notice.noticeNo,notice.noticeTitle,notice.noticeCategory,notice.noticeDate))
+                .from(notice).where(notice.noticeCategory.eq(category)).orderBy(notice.noticeNo.desc())
+                .offset(0).limit(6).fetch();
     }
 }

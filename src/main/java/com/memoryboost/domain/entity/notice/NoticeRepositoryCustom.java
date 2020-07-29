@@ -1,5 +1,6 @@
 package com.memoryboost.domain.entity.notice;
 
+import com.memoryboost.domain.dto.main.NoticeMainPageResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeListResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeResponseDTO;
 
@@ -17,5 +18,8 @@ public interface NoticeRepositoryCustom {
     //삭제
     //공지 사항 이미지 정보 가져 오기.
     List<NoticeImage> findByNoticeImage(Notice notice);
+
+    //메인페이지 공지사항 , 이벤트
+    List<NoticeMainPageResponseDTO> mainPageNoticeAndEventList(int category);
 
 }

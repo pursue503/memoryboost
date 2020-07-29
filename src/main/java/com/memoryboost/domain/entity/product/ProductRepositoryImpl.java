@@ -1,6 +1,7 @@
 package com.memoryboost.domain.entity.product;
 
 import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
+import com.memoryboost.domain.dto.main.ProductMainPageRandomResponseDTO;
 import com.memoryboost.domain.dto.product.response.ProductSearchResponseDTO;
 import com.memoryboost.domain.entity.product.detail.cpu.QCpu;
 import com.memoryboost.domain.entity.product.detail.hdd.QHdd;
@@ -1808,9 +1809,14 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 return (int) jpaQuery.fetchCount();
         }
-
-
         return 0;
     }
 
+    @Override
+    public ProductMainPageRandomResponseDTO newProduct() {
+        QProduct product = QProduct.product;
+        return queryFactory.select(Projections.fields(ProductMainPageRandomResponseDTO.class,
+                product.productNo,product.productThumbnail))
+                .from(product).orderBy(product.productNo.desc()).offset(0).limit(1).fetchOne();
+    }
 }

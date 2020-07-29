@@ -1,5 +1,6 @@
 package com.memoryboost.domain.entity.post;
 
+import com.memoryboost.domain.dto.main.PostMainPageResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostListResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostRequestDTO;
 import com.memoryboost.domain.entity.member.QMember;
@@ -61,5 +62,14 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 post.postNo,post.postTitle,post.postContent,post.postCategory,post.post.postDate,member.memberId,member.memberName))
                 .from(post).leftJoin(member).on(post.member.eq(member))
                 .where(post.postNo.eq(postNo)).fetchOne();
+    }
+
+    @Override
+    public List<PostMainPageResponseDTO> mainPagePost() {
+        QPost post = QPost.post;
+        return queryFactory.select(Projections.fields(PostMainPageResponseDTO.class,
+                post.postNo,post.postTitle,post.postCategory,post.postDate))
+                .from(post).where(post.postCategory.eq(1)).orderBy(post.postNo.desc())
+                .offset(0).limit(11).fetch();
     }
 }

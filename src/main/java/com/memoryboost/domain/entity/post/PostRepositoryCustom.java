@@ -1,5 +1,6 @@
 package com.memoryboost.domain.entity.post;
 
+import com.memoryboost.domain.dto.main.PostMainPageResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostListResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostRequestDTO;
 
@@ -19,5 +20,7 @@ public interface PostRepositoryCustom {
     List<PostImage> findByPostImage(Post post);
     //댓글도 삭제
     List<PostReply> findByPostReply(Post post);
+
+    List<PostMainPageResponseDTO> mainPagePost();
 
 }

@@ -57,16 +57,16 @@
             <div th:classappend="tab">
                 <h4>공지</h4>
                 <table th:classappend="notification">
-                    <tr th:each="num : ${#numbers.sequence(0, 5, 1)}">
-                        <td th:text="|${num+1}번째 공지입니다. 준수하세요.|"></td>
-                        <td th:text="|2020-07-29|"></td>
+                    <tr th:each="notice : ${notice}">
+                        <td th:text="|${notice.noticeTitle}|" th:onclick="|location.href='/notice/detail?noticeNo=${notice.noticeNo}';|"></td>
+                        <td th:text="|${notice.noticeDate}|"></td>
                     </tr>
                 </table>
                 <h4>이벤트</h4>
                 <table th:classappend="event">
-                    <tr th:each="num : ${#numbers.sequence(0, 5, 1)}">
-                        <td th:text="|${num+1}번째 이벤트입니다. 환호하세요.|"></td>
-                        <td th:text="|2020-07-29|"></td>
+                    <tr th:each="event : ${event}">
+                        <td th:text="|${event.noticeTitle}|" th:onclick="|location.href='/notice/detail?noticeNo=${event.noticeNo}';|"></td>
+                        <td th:text="|${event.noticeDate}|"></td>
                     </tr>
                 </table>
             </div>
@@ -80,9 +80,9 @@
                 </table>-->
                 <h4>이용후기</h4>
                 <table th:classappend="review">
-                    <tr th:each="num : ${#numbers.sequence(0, 10, 1)}">
-                        <td th:text="|${num+1}번째 이용후기입니다. 부러워하세요.|"></td>
-                        <td th:text="|2020-07-29|"></td>
+                    <tr th:each="post : ${post}">
+                        <td th:text="|${post.postTitle}|" th:onclick="|location.href='/post/detail?postNo=${post.postNo}'|"></td>
+                        <td th:text="|${post.postDate}|"></td>
                     </tr>
                 </table>
             </div>
@@ -92,7 +92,7 @@
             <div th:classappend="any-product">
                 <h4 th:text="신제품"></h4>
                 <div th:classappend="|product-image align-mid horizontal|">
-                    <img th:src="|http://placehold.it/370x320|" />
+                    <img th:src="|${newProduct.productThumbnail}|" th:onclick="|location.href='/product-detail/${newProduct.productNo}'|" width="370" height="320" />
                 </div>
             </div>
         </div>

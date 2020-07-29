@@ -1,6 +1,7 @@
 package com.memoryboost.domain.entity.product;
 
 import com.memoryboost.domain.dto.product.request.ProductFilterSearchRequestDTO;
+import com.memoryboost.domain.dto.main.ProductMainPageRandomResponseDTO;
 import com.memoryboost.domain.dto.product.response.ProductSearchResponseDTO;
 import com.memoryboost.domain.vo.product.response.ProductDetailResponseVO;
 import com.querydsl.core.QueryResults;
@@ -35,5 +36,8 @@ public interface ProductRepositoryCustom {
 
     //견적서 쪽 필터 검색 페이징
     int countByEstimateFilterSearch(ProductFilterSearchRequestDTO filterDTO, String keyword);
+
+    //최신상품
+    ProductMainPageRandomResponseDTO newProduct();
 
 }
