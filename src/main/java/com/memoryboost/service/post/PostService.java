@@ -115,9 +115,17 @@ public class PostService {
     }
 
     @Transactional
-    public Long postUpdate(PostUpdateRequestDTO postUpdateRequestDTO) {
+    public Long postUpdate(PostUpdateRequestDTO postUpdateRequestDTO, List<String> pathList) {
         Post post = postRepository.findById(postUpdateRequestDTO.getPostNo()).orElseThrow(NullPointerException::new);
         post.postUpdate(postUpdateRequestDTO);
+
+        if(pathList != null) {
+            for(String filePath : pathList) {
+                String realPath = path.replace(dbPath,"");
+                postImageRepository.save(PostImage.builder().post(post).postImagePath(filePath).postRealPath(realPath).build());
+            }
+        }
+
         return post.getPostNo();
     }
 
