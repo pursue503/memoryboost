@@ -15,7 +15,6 @@ $(document).ready(function() {
 
     //이미지 첨부
     function uploadSummernoteImageFile(file, editor) {
-        alert("파일 업로드는 되는것인가 1");
         var typeFilter = ["jpg", "jpeg", "png", "gif"];
         var type = file.type.split("/")[1];
         var typeFlag = 0;
@@ -47,16 +46,14 @@ $(document).ready(function() {
             contentType : false,
             processData : false,
             beforeSend : function(xhr) {
-                alert("파일 업로드는 되는것인가 2");
                 xhr.setRequestHeader(header, token);
             },
             success : function(data) {
-                alert("파일 업로드는 되는것인가 3");
                 $(editor).summernote('insertImage', data);
                 if(!isEmpty(data)) {
-                    alert("파일 업로드는 되는것인가 4");
                     let tag = "<input type='hidden' name='file' value='"+data+"' />"
                     $("#write-form").append(tag);
+                    console.dir(data);
                 }
             }
         });
