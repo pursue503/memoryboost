@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
-    <title>Title</title>
+    <title th:text="|이용후기|"></title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--
@@ -20,13 +20,11 @@
     <!-- css -->
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/board/community-style.css" />
-    <link rel="stylesheet" href="/css/board/estimate-com.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
     <script src="/js/shave.js"></script>
     <script src="/js/board/community.js"></script>
-    <script src="/js/board/estimate-com.js"></script>
 </head>
 <body>
 <header th:replace="header.html"></header>
@@ -65,10 +63,10 @@
             </tr>
         </table>
         <div th:classappend="|control|">
-            <button sec:authorize="!isAnonymous()" th:classappend="write" th:onclick="|location.href='/write';|" th:text="글쓰기"></button>
+            <button th:classappend="write" th:onclick="|location.href='/write';|" th:text="글쓰기"></button>
         </div>
         <form action="/post" method="GET">
-            <div th:classappend="|search|">
+            <div th:if="${1 > 2}" th:classappend="|search|">
                 <select th:name="filter">
                     <option th:text="전체" />
                     <option th:text="제목" />

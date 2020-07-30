@@ -22,10 +22,15 @@ form > input.title {
     margin-bottom: 5px; padding: 0 5px;
 }
 
+form > div.control {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 form > div.control > button {
     width: 70px; height: 32px;
     padding: 3px;
     font-size: 16px;
-    margin: 5px 0;
-    margin-top: 5px;
+    margin: 5px 2px;
 }

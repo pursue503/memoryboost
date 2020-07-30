@@ -4,7 +4,8 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>Title</title>
+    <title th:if="${post != null && post.postCategory == 1}" th:text="|이용후기|"></title>
+    <title th:if="${post != null && post.postCategory == 2}" th:text="|견적요청|"></title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--

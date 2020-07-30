@@ -34,25 +34,3 @@ footer > div.contact {
 footer > div.contact img {
     width: 50px; height: 50px;
 }
-/*
-footer > div.info {
-    display: flex;
-    justify-content: space-between;
-}
-
-footer > div.info > div.detail {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-footer > div.info > div.contact {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-footer > div.info > div.contact img {
-    width: 50px; height: 50px;
-}
-*/

@@ -224,27 +224,3 @@ $(document).on("click", ".btn.purchase", function(e) {
     $("#order-single").append(tag);
     $("#order-single").submit();
 });
-
-//테스트
-$(document).on("click", "#testform > input[type=submit]", function(e) {
-    e.preventDefault();
-    var form = $("#testform")[0];
-    var params = new FormData(form);
-    var temp = $("#ff, sf").serialize();
-
-    console.dir(params);
-    console.dir(temp);
-    /*$.ajax({
-        type : "GET",
-        url : "/search-filter",
-        data : params,
-        processData: false,
-        contentType: false,
-    })
-    .done(function(fragment) {
-        console.dir(fragment);
-    })
-    .fail(function(response) {
-        console.dir("통신 실패");
-    })*/
-})

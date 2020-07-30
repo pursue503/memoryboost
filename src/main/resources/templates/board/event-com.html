@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
-    <title>Title</title>
+    <title th:text="|이벤트|"></title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--
@@ -20,13 +20,11 @@
     <!-- css -->
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/board/community-style.css" />
-    <link rel="stylesheet" href="/css/board/estimate-com.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
     <script src="/js/shave.js"></script>
     <script src="/js/board/community.js"></script>
-    <script src="/js/board/estimate-com.js"></script>
 </head>
 <body>
 <header th:replace="header.html"></header>
@@ -53,7 +51,7 @@
                 <th th:text="조회수"></th>
             </tr>
             <tr th:if="${#lists.size(notice) > 0}" th:each="notice : ${notice}">
-                <td th:classappend="|num|" th:text="${notice.noticeNo}"></td>
+                <td th:classappend="|num|" th:text="${notice.noticeNumber}"></td>
                 <td th:classappend="|title|" th:onclick="|location.href = '/notice/detail?noticeNo=${notice.noticeNo}';|" th:text="${notice.noticeTitle}"></td>
                 <td th:classappend="|writer|" th:text="|관리자|"></td>
                 <td th:classappend="|date|"th:text="${notice.noticeDate}"></td>
@@ -69,7 +67,7 @@
             <button sec:authorize="hasRole('ROLE_ADMIN')" th:classappend="|write-noti|" th:onclick="|location.href='/write-notification';|" th:text="공지쓰기"></button>
         </div>
         <form>
-            <div th:classappend="|search|">
+            <div th:if="${1 > 2}" th:classappend="|search|">
                 <select th:name="filter">
                     <option th:text="전체" />
                     <option th:text="제목" />
