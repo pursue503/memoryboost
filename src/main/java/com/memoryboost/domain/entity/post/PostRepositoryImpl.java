@@ -6,6 +6,7 @@ import com.memoryboost.domain.dto.post.response.PostPrevNextResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostReplyListResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostResponseDTO;
 import com.memoryboost.domain.entity.member.QMember;
+import com.memoryboost.domain.vo.post.PostPrevNextVO;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -94,9 +95,9 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 
         QPost post = QPost.post;
 
-        Long prev = queryFactory.select(post.postNo).from(post).where(post.postNo.lt(postNo).and(post.postCategory.eq(category)))
+        PostPrevNextVO prev = queryFactory.select(Projections.fields(PostPrevNextVO.class,post.postNo,post.postTitle)).from(post).where(post.postNo.lt(postNo).and(post.postCategory.eq(category)))
                 .orderBy(post.postNo.desc()).offset(0).limit(1).fetchOne();
-        Long next = queryFactory.select(post.postNo).from(post).where(post.postNo.gt(postNo).and(post.postCategory.eq(category))).offset(0).limit(1).fetchOne();
+        PostPrevNextVO next = queryFactory.select(Projections.fields(PostPrevNextVO.class,post.postNo,post.postTitle)).from(post).where(post.postNo.gt(postNo).and(post.postCategory.eq(category))).offset(0).limit(1).fetchOne();
 
 
         return new PostPrevNextResponseDTO(prev,next);

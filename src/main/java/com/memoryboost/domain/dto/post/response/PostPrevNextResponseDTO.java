@@ -1,5 +1,6 @@
 package com.memoryboost.domain.dto.post.response;
 
+import com.memoryboost.domain.vo.post.PostPrevNextVO;
 import lombok.*;
 
 @Getter
@@ -9,7 +10,7 @@ import lombok.*;
 @ToString
 public class PostPrevNextResponseDTO {
 
-    private Long prev;
-    private Long next;
+    private PostPrevNextVO prev;
+    private PostPrevNextVO next;
 
 }

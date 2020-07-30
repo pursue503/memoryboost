@@ -1,5 +1,7 @@
 package com.memoryboost.domain.entity.post;
 
+import com.memoryboost.domain.dto.post.response.PostPrevNextResponseDTO;
+import com.memoryboost.domain.vo.post.PostPrevNextVO;
 import com.memoryboost.service.post.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
