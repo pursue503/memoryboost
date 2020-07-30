@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
                     .invalidateHttpSession(true) // 세션초기화
-                    .deleteCookies("remeber-me")
+                    .deleteCookies("remember-me")
                     .logoutSuccessUrl("/")
                 .and()
                     //자동로그인

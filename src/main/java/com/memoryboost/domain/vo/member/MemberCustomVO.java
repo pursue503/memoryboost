@@ -77,7 +77,7 @@ public class MemberCustomVO implements UserDetails, CredentialsContainer, OAuth2
 
     @Override
     public String getUsername() {
-        return memberName;
+        return memberLoginId;
     }
 
     @Override
