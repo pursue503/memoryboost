@@ -13,9 +13,6 @@
     --light-blue: #3366ff;
 }
 
-/*background-color: rgba(255, 125, 56, 0.15); 붉은*/
-/*background-color: rgba(125, 255, 56, 0.15); 초록*/
-
 * {
     margin: 0; padding: 0; box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif, 'Noto Sans', sans-serif;
@@ -26,16 +23,6 @@ a, a:visited {
     color: var(--black);
 }
 
-/*
-html, body {
-    height: 100%;
-}
-
-body {
-    margin: 0 auto;
-    padding-top: 150px;
-    background-color: var(--white);
-}*/
 html {
     min-width: 100vh;
 }
@@ -151,10 +138,6 @@ button.btn {
 button.btn:hover {
     opacity: 0.5;
 }
-
-/*button.btn:active {
-    transform: scale(0.98);
-}*/
 
 button.btn:focus {
     border: 1px solid rgba(0, 0, 0, 1.0);

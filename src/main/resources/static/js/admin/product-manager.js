@@ -166,7 +166,6 @@ $(document).on("click", "button.btn.file", function(e) {
     e.preventDefault();
     let thisClassName = e.target.classList[2];
     $("input."+thisClassName).click();
-    //document.getElementById("productThumbnail").click();
 });
 
 $(document).on("change", "input[type=file]", function(e) {
@@ -214,8 +213,6 @@ $(document).on("click", "button#btn-submit", function(e) {
     })
     .done(function(response) {
         if(response.result) { //상품 등록 성공
-            /*$("form#product-form")[0].reset();
-            $("input#productName")[0].focus();*/
             $(".btn.category")[selected].click();
             $("span.msg.success").toggleClass("pop");
             setTimeout(execute, 300);
