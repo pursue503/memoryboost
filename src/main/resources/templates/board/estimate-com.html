@@ -34,9 +34,9 @@
     <nav th:classappend="community">
         <button th:classappend="review" th:onclick="|location.href = '@{/post?category=1}';|" th:text="이용후기" />
         <button th:classappend="|estimate selected|" th:onclick="|location.href = '@{/post?category=2}';|" th:text="견적요청" />
-        <button th:classappend="notification" th:onclick="|location.href = '@{/notice?category=1}';|" th:text="공지사항" />
-        <button th:classappend="update" th:onclick="|location.href = '@{/community/update}';|" th:text="업데이트" />
-        <button th:classappend="event" th:onclick="|location.href = '@{/community/event}';|" th:text="이벤트" />
+        <button th:classappend="notification" th:onclick="|location.href = '@{/notice?category=1}';|"th:text="공지사항" />
+        <button th:classappend="update" th:onclick="|location.href = '@{/notice?category=2}';|" th:text="업데이트" />
+        <button th:classappend="event" th:onclick="|location.href = '@{/notice?category=3}';|" th:text="이벤트" />
     </nav>
     <div th:classappend="content">
         <div th:classappend="description">
@@ -66,7 +66,6 @@
         </table>
         <div th:classappend="|control|">
             <button sec:authorize="!isAnonymous()" th:classappend="write" th:onclick="|location.href='/write';|" th:text="글쓰기"></button>
-            <button sec:authorize="hasRole('ROLE_ADMIN')" th:classappend="|write-noti|" th:text="공지쓰기"></button>
         </div>
         <form action="/post" method="GET">
             <div th:classappend="|search|">

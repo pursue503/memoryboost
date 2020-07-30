@@ -18,7 +18,7 @@ $(document).ready(function() {
     });
 
     /* 수정완료 */
-    $(document).on("click", "#edit-complete", function(e) {
+    $(document).on("click", "#post-edit-complete", function(e) {
         e.preventDefault();
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
@@ -42,5 +42,36 @@ $(document).ready(function() {
         .fail(function(response) {
             console.dir("통신 실패[일반게시판:수정]");
         });
+    });
+
+    /* 댓글 삭제 */
+    $(document).on("click", "button.btn-delete-reply", function(e) {
+        var deleteFlag = confirm("댓글을 삭제 하시겠습니까?");
+
+        if(deleteFlag) {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+            var replyNo = e.target.value;
+            //var postNo = $("#postNo")[0].value;
+            $.ajax({
+                type : "delete",
+                url : "/reply",
+                data : {  replyNo : replyNo },
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                }
+            })
+            .done(function(response) {
+                if(response) {
+                    location.reload(true);
+                    //location.replace("/post?category="+postNo);
+                } else {
+                    alert("삭제 실패");
+                }
+            })
+            .fail(function(response) {
+                console.dir("통신 실패");
+            });
+        }
     });
 });

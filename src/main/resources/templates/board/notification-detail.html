@@ -2,6 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Title</title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -26,20 +28,20 @@
     <script src="/js/reset.js"></script>
     <script src="/js/shave.js"></script>
     <script src="/js/board/community.js"></script>
-    <script src="/js/board/notification-com.js"></script>
+    <script src="/js/board/write-notification-com.js"></script>
 </head>
 <body>
 <header th:replace="header.html"></header>
 <div class="content-container community">
-    <!-- 이곳에 내용을 입력 -->
     <nav th:classappend="community">
-        <button th:classappend="|review|" th:onclick="|location.href = '@{/post?category=1}';|" th:text="이용후기" />
-        <button th:classappend="|estimate|" th:onclick="|location.href = '@{/post?category=2}';|" th:text="견적요청" />
-        <button th:classappend="${notice.noticeCategory == 1} ? |notification selected| : |notification|" th:onclick="|location.href = '@{/notice?category=1}';|" th:text="공지사항" />
-        <button th:classappend="update" th:onclick="|location.href = '@{/community/update}';|" th:text="업데이트" />
-        <button th:classappend="event" th:onclick="|location.href = '@{/community/event}';|" th:text="이벤트" />
+        <button th:onclick="|location.href = '@{/post?category=1}';|" th:classappend="review"  th:text="이용후기" />
+        <button th:onclick="|location.href = '@{/post?category=2}';|" th:classappend="estimate" th:text="견적요청" />
+        <button th:onclick="|location.href = '@{/notice?category=1}';|" th:classappend="${notice != null && notice.noticeCategory == 1} ? |notification selected| : |notification|" th:text="공지사항" />
+        <button th:onclick="|location.href = '@{/notice?category=2}';|" th:classappend="${notice != null && notice.noticeCategory == 2} ? |update selected| : |update|" th:text="업데이트" />
+        <button th:onclick="|location.href = '@{/notice?category=3}';|" th:classappend="${notice != null && notice.noticeCategory == 3} ? |event selected| : |event|" th:text="이벤트" />
     </nav>
     <div th:classappend="|content detail|">
+        <input th:id="category" th:type="hidden" th:value="${notice.noticeCategory}" />
         <div th:classappend="description">
             <th:block th:if="${notice.noticeCategory == 1}">
                 <h1>공지사항</h1>
@@ -49,37 +51,37 @@
                 <h1 th:text="|업데이트|"></h1>
                 <span th:text="|새로운 사항들을 확인하세요|"></span>
             </th:block>
-            <th:block th:if="${notice.noticeCategory == 2}">
+            <th:block th:if="${notice.noticeCategory == 3}">
                 <h1 th:text="|이벤트|"></h1>
                 <span th:text="|각종 이벤트를 확인하세요|"></span>
             </th:block>
-            <table th:fragment="table(noticeNo)">
-                <tr>
-                    <th th:classappend="detail-title" colspan="2" th:text="|제목 : ${notice.noticeTitle}|"></th>
-                </tr>
-                <tr>
-                    <td th:classappend="detail-writer" th:text="|작성자 : 운영자|"></td>
-                    <td th:classappend="detail-date" th:text="|작성날짜 : ${notice.noticeDate}|"></td>
-                </tr>
-                <tr>
-                    <td th:classappend="detail-content" colspan="2" th:utext="${notice.noticeContent}" th:style="|text-align: justify; text-justify: distribute; text-align-last: justify;|"></td>
-                </tr>
-            </table>
-            <div sec:authorize="hasRole('ROLE_ADMIN')" th:classappend="|control|">
-                <button th:classappend="|notice-edit|" th:text="|수정|"></button>
-                <button th:classappend="|notice-delete|" th:text="|삭제|"></button>
-            </div>
-            <table>
-                <tr th:classappend="|jump|">
-                    <th th:classappend="detail-before" th:text="이전글"></th>
-                    <td th:classappend="detail-before" th:text="|이전글이 없습니다.|"></td>
-                </tr>
-                <tr th:classappend="|jump|">
-                    <th th:classappend="detail-next" th:text="다음글"></th>
-                    <td th:classappend="detail-next" th:text="|공지12312...|"></td>
-                </tr>
-            </table>
         </div>
+        <table th:fragment="table(noticeNo)">
+            <tr>
+                <th th:classappend="detail-title" colspan="2" th:text="|제목 : ${notice.noticeTitle}|"></th>
+            </tr>
+            <tr>
+                <td th:classappend="detail-writer" th:text="|작성자 : 운영자|"></td>
+                <td th:classappend="detail-date" th:text="|작성날짜 : ${notice.noticeDate}|"></td>
+            </tr>
+            <tr>
+                <td th:classappend="detail-content" colspan="2" th:utext="${notice.noticeContent}" th:style="|text-align: justify; text-justify: distribute; text-align-last: justify;|"></td>
+            </tr>
+        </table>
+        <div sec:authorize="hasRole('ROLE_ADMIN')" th:classappend="|control|">
+            <button th:value="${notice.noticeNo}" th:classappend="|notice-edit|" th:text="|수정|"></button>
+            <button th:value="${notice.noticeNo}" th:classappend="|notice-delete|" th:text="|삭제|"></button>
+        </div>
+        <table>
+            <tr th:classappend="|jump|">
+                <th th:classappend="detail-before" th:text="이전글"></th>
+                <td th:classappend="detail-before" th:text="|이전글이 없습니다.|"></td>
+            </tr>
+            <tr th:classappend="|jump|">
+                <th th:classappend="detail-next" th:text="다음글"></th>
+                <td th:classappend="detail-next" th:text="|공지12312...|"></td>
+            </tr>
+        </table>
     </div>
 </div>
 <footer th:replace="footer.html"></footer>

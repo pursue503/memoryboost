@@ -33,9 +33,9 @@ public class NoticeMoveController {
         if(category == 1) {
             return "board/notification-com";
         } else if(category == 2) {
-            return "업데이트 페이지";
+            return "board/update-com";
         } else {
-            return "이벤트 페이지";
+            return "board/event-com";
         }
     }
 
@@ -73,7 +73,7 @@ public class NoticeMoveController {
     @GetMapping("/notice/update")
     public String noticeUpdatePage(@RequestParam("noticeNo") Long noticeNo, Model model) {
         model.addAttribute("notice", noticeService.noticeDetail(noticeNo));
-        return "업데이트 페이지";
+        return "board/write-notification";
     }
 
     @PutMapping("/notice")

@@ -168,3 +168,58 @@ div.content.detail tr.jump > td {
     text-align: left;
     font-size: 14px;
 }
+
+/****************** 댓글 부분 ***************/
+div.content.detail > div.reply {
+    margin-top: 10px;
+}
+
+div.content.detail > div.reply > h5 {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+div.reply > div.insert-reply > form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 5px; margin: 5px 0;
+    background-color: rgba(100, 100, 100, 0.1);
+    border-radius: 3px;
+}
+
+div.reply > div.insert-reply > form > span.reply-user {
+    margin: 0 5px;
+}
+
+div.reply > div.insert-reply > form > input.replyContent {
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+    background-color: var(--white);
+    width: 700px;
+    padding: 2px 5px; margin: 0 5px;
+}
+
+div.reply > table.list-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0;
+}
+
+div.reply > table.list-table tr.list-tr {
+    height: 30px;
+    min-height: 30px;
+}
+
+div.reply > table.list-table tr.list-tr > td.list-user {
+    width: 100px;
+}
+
+div.reply > table.list-table tr.list-tr > td.list-content {
+    text-align: left;
+}
+
+div.reply > table.list-table tr.list-tr > td.list-date {
+    width: 130px;
+}
