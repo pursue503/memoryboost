@@ -11,6 +11,7 @@ import com.memoryboost.domain.entity.notice.NoticeRepository;
 import com.memoryboost.util.product.ProductS3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -117,6 +118,42 @@ public class NoticeService {
         }
 
         return notice.getNoticeNo();
+    }
+
+    @Transactional(readOnly = true)
+    @Scheduled(cron = "* 0 03 * * *")
+    public void noticeImageRemove(){
+
+        log.info("공지사항 잔여 이미지 삭제를 시작합니다.");
+
+        log.info("공지사항 이미지 목록을 DB 에서 가져옵니다.");
+
+        List<NoticeImage> noticeImageList = noticeImageRepository.findAll();
+
+        log.info("공지사항 디렉토리 파일들을 가져 옵니다.");
+
+        File dirFile = new File(path);
+
+        File[] files = dirFile.listFiles();
+
+        boolean flag = true;
+
+        log.info("공지사항 잔여 이미지 삭제를 실행합니다.");
+
+        for(File file : files) {
+            flag = true;
+            for(NoticeImage noticeImage : noticeImageList) {
+                if(file.getName().equals(noticeImage.getNoticeImagePath().replace(dbPath,""))) {
+                    flag = false;
+                }
+            }
+            if(flag) {
+                file.delete();
+            }
+        }
+
+        log.info("공지 사항 파일 삭제 완료.");
+
     }
 
 }
