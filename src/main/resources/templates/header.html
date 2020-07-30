@@ -28,7 +28,7 @@
         </div>
         <div th:classappend="header-upper">
             <div th:classappend="|search-div|">
-                <form th:id="search-form" th:action="|/search|" th:method="GET">
+                <form th:id="header-search-form" th:action="|/search|" th:method="GET">
                     <input th:id="search-input" th:type="text" th:name="keyword" th:placeholder="|검색어를 입력하세요.|" />
                     <button th:id="search-reset" th:type="reset" th:text="|x|"></button>
                     <button th:id="search-submit" th:text="검색"></button>

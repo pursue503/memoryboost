@@ -41,7 +41,7 @@ header > div.header-upper > div.search-div {
     flex-direction: column;
 }
 
-header > div.header-upper > div.search-div > form#search-form {
+header > div.header-upper > div.search-div > form#header-search-form {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,7 +49,7 @@ header > div.header-upper > div.search-div > form#search-form {
     border-radius: 2px;
 }
 
-header > div.header-upper > div.search-div > form#search-form > input#search-input {
+header > div.header-upper > div.search-div > form#header-search-form > input#search-input {
     outline: none;
     border: 0;
     background-color: var(--white);
@@ -57,7 +57,7 @@ header > div.header-upper > div.search-div > form#search-form > input#search-inp
     padding: 5px 10px;
 }
 
-header > div.header-upper > div.search-div > form#search-form > button {
+header > div.header-upper > div.search-div > form#header-search-form > button {
     cursor: pointer;
     outline: none;
     border: 0;
@@ -68,16 +68,16 @@ header > div.header-upper > div.search-div > form#search-form > button {
     font-size: 16px;
 }
 
-header > div.header-upper > div.search-div > form#search-form > button#search-reset {
+header > div.header-upper > div.search-div > form#header-search-form > button#search-reset {
     visibility: hidden;
     width: 35px;
 }
 
-header > div.header-upper > div.search-div.typing > form#search-form > button#search-reset {
+header > div.header-upper > div.search-div.typing > form#header-search-form > button#search-reset {
     visibility: visible;
 }
 
-header > div.header-upper > div.search-div > form#search-form > button#search-submit {
+header > div.header-upper > div.search-div > form#header-search-form > button#search-submit {
     width: 60px;
     border-left: 2px solid rgba(0, 0, 0, 0.5);
 }
@@ -217,22 +217,22 @@ header.mini > div.header-upper {
     width: 50%;
 }
 
-header.mini > div.header-upper > div.search-div > form#search-form > input#search-input {
+header.mini > div.header-upper > div.search-div > form#header-search-form > input#search-input {
     width: 500px; height: 30px;
     padding: 5px 10px;
 }
 
-header.mini > div.header-upper > div.search-div > form#search-form > button {
+header.mini > div.header-upper > div.search-div > form#header-search-form > button {
     height: 30px;
     padding: 2px;
     font-size: 14px;
 }
 
-header.mini > div.header-upper > div.search-div > form#search-form > button#search-reset {
+header.mini > div.header-upper > div.search-div > form#header-search-form > button#search-reset {
     width: 30px;
 }
 
-header.mini > div.header-upper > div.search-div > form#search-form > button#search-submit {
+header.mini > div.header-upper > div.search-div > form#header-search-form > button#search-submit {
     width: 55px;
 }
 

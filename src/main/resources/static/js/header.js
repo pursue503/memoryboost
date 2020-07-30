@@ -93,7 +93,7 @@ $(document).ready(function() {
         $("input#search-input")[0].value = e.target.innerHTML;
         setTimeout(execute, 50);
         function execute() {
-            $("form#search-form").submit();
+            $("form#header-search-form").submit();
         }
     });
 });
