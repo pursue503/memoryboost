@@ -4,7 +4,9 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>Title</title>
+    <title th:if="${notice != null && notice.noticeCategory == 1}" th:text="|공지사항|"></title>
+    <title th:if="${notice != null && notice.noticeCategory == 2}" th:text="|업데이트|"></title>
+    <title th:if="${notice != null && notice.noticeCategory == 3}" th:text="|이벤트|"></title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--
@@ -22,7 +24,6 @@
     <!-- css -->
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/board/community-style.css" />
-    <link rel="stylesheet" href="/css/board/notification-com.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>

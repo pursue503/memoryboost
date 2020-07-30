@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
-    <title>Title</title>
+    <title th:text="|이벤트|"></title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--
@@ -51,7 +51,7 @@
                 <th th:text="조회수"></th>
             </tr>
             <tr th:if="${#lists.size(notice) > 0}" th:each="notice : ${notice}">
-                <td th:classappend="|num|" th:text="${notice.noticeNo}"></td>
+                <td th:classappend="|num|" th:text="${notice.noticeNumber}"></td>
                 <td th:classappend="|title|" th:onclick="|location.href = '/notice/detail?noticeNo=${notice.noticeNo}';|" th:text="${notice.noticeTitle}"></td>
                 <td th:classappend="|writer|" th:text="|관리자|"></td>
                 <td th:classappend="|date|"th:text="${notice.noticeDate}"></td>

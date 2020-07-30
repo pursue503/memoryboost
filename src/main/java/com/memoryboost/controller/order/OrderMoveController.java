@@ -131,4 +131,7 @@ public class OrderMoveController {
 
     }
 
+    //리뷰 작성
+    @GetMapping("/writereview")
+    public String writeReviewPage() { return "mypage/writereview"; }
 }

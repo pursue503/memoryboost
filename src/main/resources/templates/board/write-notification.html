@@ -4,7 +4,8 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>공지사항 작성</title>
+    <title th:if="${notice == null}" th:text="|공지/업데이트/이벤트 작성|"></title>
+    <title th:if="${notice != null}" th:text="|공지/업데이트/이벤트 수정|"></title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <!--
@@ -82,26 +83,6 @@
             <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         </form>
     </div>
-    <!--<div th:classappend="content">
-        <div th:classappend="description">
-            <h1>공지작성</h1>
-            <div th:text="|공지를 작성합니다.|"></div>
-        </div>
-        <form id="write-form"  action="/notice" method="POST">
-            <select th:classappend="category" th:name="noticeCategory">
-                <option th:text="|공지사항|" th:value="1" />
-                <option th:text="|업데이트|" th:value="2" />
-                <option th:text="|이벤트|" th:value="3" />
-            </select>
-            <input th:classappend="title" th:type="text" th:name="noticeTitle" th:placeholder="|제목|" />
-            <textarea id="summernote" name="noticeContent"></textarea>
-            <div th:classappend="control">
-                <button th:text="작성완료"></button>
-                <button th:id="write-cancel" th:text="작성취소"></button>
-            </div>
-            <input th:type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        </form>
-    </div>-->
 </div>
 <footer th:replace="footer.html"></footer>
 </body>

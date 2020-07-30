@@ -82,4 +82,7 @@ public class NoticeMoveController {
         return noticeService.noticeUpdate(noticeUpdateRequestDTO, pathList);
     }
 
+    @GetMapping("/write-notification")
+    public String writeNotificationPage() { return "board/write-notification"; }
+
 }

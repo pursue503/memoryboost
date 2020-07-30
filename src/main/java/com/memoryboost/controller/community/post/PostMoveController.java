@@ -104,4 +104,6 @@ public class PostMoveController {
         return postService.postReplyDelete(replyNo);
     }
 
+    @GetMapping("/write")
+    public String writeBoardPage() { return "board/write"; }
 }
