@@ -165,10 +165,40 @@ public class PostService {
         return postRepository.postPrevAndNext(postNo,category);
     }
 
-//    //게시글 등록중 작성을안하고 취소를 눌렀을 경우 남아있는 이미지들을 삭제.
-//    @Scheduled(cron = "*  * * * *")
-//    public void postImageRemove(){
-//        log.info("스케쥴 실행.");
-//    }
+    //게시글 등록중 작성을안하고 취소를 눌렀을 경우 남아있는 이미지들을 삭제.
+    @Transactional(readOnly = true)
+    @Scheduled(cron = "* 10 * * * *")
+    public void postImageRemove(){
+        log.info("스케쥴 실행.");
+
+        log.info("post image 목록 가져오기.");
+
+        List<PostImage> postImageList = postImageRepository.findAll();
+
+        log.info("post 디렉토리 파일들 가져오기.");
+
+        File dirFile = new File(path);
+
+        File[] files = dirFile.listFiles();
+
+        log.info("db에있는 이름이 존재하지 않을시 삭제.");
+
+        boolean flag = true;
+
+        for(File file : files) {
+            flag = true;
+            for(PostImage postImage : postImageList) {
+                if(file.getName().equals(postImage.getPostImagePath().replace(dbPath,""))) {
+                    log.info("같은 파일 존재!!");
+                    flag = false;
+                }
+            }
+            if(flag) {
+                log.info("db에 이파일 이름이 없음 현재 파일을 삭제합니다.");
+                file.delete();
+            }
+        }
+
+    }
 
 }
