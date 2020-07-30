@@ -13,6 +13,7 @@ import com.memoryboost.domain.entity.post.*;
 import com.memoryboost.domain.vo.member.MemberCustomVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -163,5 +164,11 @@ public class PostService {
     public PostPrevNextResponseDTO postPrevNext(Long postNo,int category) {
         return postRepository.postPrevAndNext(postNo,category);
     }
+
+//    //게시글 등록중 작성을안하고 취소를 눌렀을 경우 남아있는 이미지들을 삭제.
+//    @Scheduled(cron = "*  * * * *")
+//    public void postImageRemove(){
+//        log.info("스케쥴 실행.");
+//    }
 
 }

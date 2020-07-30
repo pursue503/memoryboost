@@ -14,10 +14,7 @@ public class LoginSuccessInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("interceptor 실행!");
         //로그인 회원의 권한 검사.
-
-
         try{
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             MemberCustomVO memberCustomVO = (MemberCustomVO) principal;
