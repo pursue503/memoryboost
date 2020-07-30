@@ -122,8 +122,13 @@ div.mid > div.community > div.tab{
 }
 
 div.mid > div.community > div.tab > h4 {
+    cursor: pointer;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     margin-top: 15px;
+}
+
+div.mid > div.community > div.tab > h4:hover {
+    color: var(--gray);
 }
 
 div.mid > div.community > div.tab > table {
@@ -133,6 +138,14 @@ div.mid > div.community > div.tab > table {
 
 div.mid > div.community > div.tab > table tr {
     height: 25px;
+}
+
+div.mid > div.community > div.tab > table tr > td:first-child {
+    cursor: pointer;
+}
+
+div.mid > div.community > div.tab > table tr > td:first-child:hover {
+    text-decoration: underline;
 }
 
 div.mid > div.community > div.tab > table.review tr {
@@ -162,8 +175,16 @@ div.best-seller > div.any-product {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    /*background-color: #9797FF;*/
     width: 100%; height: 100%;
+}
+
+div.best-seller > div.any-product img {
+    cursor: pointer;
+    width: 320px; height: 320px;
+}
+
+div.best-seller > div.any-product img:hover {
+    opacity: 0.5;
 }
 
 div.best-seller > div.any-product > h4 {
@@ -214,6 +235,15 @@ div.belt-content > div.product > div.product-image {
     width: 200px;
 }
 
+div.belt-content > div.product > div.product-image > img {
+    cursor: pointer;
+    width: 150px; height: 150px;
+}
+
+div.belt-content > div.product > div.product-image > img:hover {
+    opacity: 0.5;
+}
+
 div.belt-content > div.product > div.product-info {
     display: flex;
     flex-direction: column;
@@ -226,5 +256,9 @@ div.belt-content > div.product > div.product-info > div {
 }
 
 div.belt-content > div.product > div.product-info > div.product-name {
+    cursor: pointer;
+}
 
+div.belt-content > div.product > div.product-info > div.product-name:hover {
+    text-decoration: underline;
 }

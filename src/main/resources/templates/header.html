@@ -16,13 +16,12 @@
     <!-- fontawesome CDN -->
     <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
     <!-- 스타일 -->
-    <!--<link rel="stylesheet" href="/css/header-style.css" />-->
     <link rel="stylesheet" href="/css/header-style.css" />
     <!-- 스크립트 -->
     <script src="/js/header.js"></script>
 </head>
 <body>
-    <header th:classappend="mini1" th:fragment="header">
+    <header th:fragment="header">
         <div th:classappend="main-logo">
             <img th:src="@{/img/logo-main.gif}" th:onclick="|location.href = '/';|"/>
         </div>
@@ -55,9 +54,9 @@
         <div th:classappend="menu">
             <a th:classappend="menu-estimate" th:href="@{/estimate}" th:text="컴퓨터견적"></a>
             <a th:classappend="menu-notice" th:href="@{/notice?category=1}" th:text="공지사항"></a>
-            <a th:classappend="menu-review" th:href="@{/community/review}" th:text="이용후기"></a>
-            <a th:classappend="menu-update" th:href="@{/community/update}" th:text="새소식"></a>
-            <a th:classappend="menu-event" th:href="@{/community/event}" th:text="이벤트"></a>
+            <a th:classappend="menu-review" th:href="@{/post?category=1}" th:text="이용후기"></a>
+            <a th:classappend="menu-update" th:href="@{/notice?category=2}" th:text="새소식"></a>
+            <a th:classappend="menu-event" th:href="@{/notice?category=3}" th:text="이벤트"></a>
         </div>
     </header>
 </body>

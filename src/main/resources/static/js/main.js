@@ -89,14 +89,6 @@ beltSlide.style.transform = "translate("+(-beltContentWidth)+"px, 0)";
 
 automatedBeltSlide();
 
-$(document).on("click", "button.left", function() {
-    pushRightBelt();
-});
-
-$(document).on("click", "button.right", function() {
-    pushLeftBelt();
-});
-
 //오른쪽버튼
 function pushLeftBelt() {
     beltSlideIndex++;
@@ -123,7 +115,7 @@ function pushRightBelt() {
     if(beltSlideIndex == 0) {
         setTimeout(execute, beltSlideSpeed);
         beltSlideIndex = 3;
-        let beltSlideDelta = (beltContentWidth * -1 * beltSlideIndex) + "px";
+        let beltSlideDelta = (beltContentWidth * -1 * beltSlideIndex)/2 + "px";
         function execute() {
             $("div.belt-slide-wrapper")[0].style.transition = "0ms";
             $("div.belt-slide-wrapper")[0].style.transform = "translate("+beltSlideDelta+", 0)";
@@ -132,5 +124,5 @@ function pushRightBelt() {
 }
 
 function automatedBeltSlide() {
-    setInterval(pushLeftBelt, 4500);
+    setInterval(pushLeftBelt, 5000);
 }

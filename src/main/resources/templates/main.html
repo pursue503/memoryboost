@@ -21,13 +21,17 @@
     <script src="https://kit.fontawesome.com/88eb152a32.js" crossorigin="anonymous"></script>
     <!-- css -->
     <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/header-style.css" />
+    <link rel="stylesheet" href="/css/footer-style.css" />
     <link rel="stylesheet" href="/css/main-style.css" />
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
+    <script src="/js/header.js"></script>
+    <script src="/js/footer.js"></script>
 </head>
 <body>
-<header th:replace="header.html"></header>
+<header th:replace="header.html :: header"></header>
 <div class="content-container main">
     <div th:classappend="|slide main|">
         <button th:classappend="|left fas fa-chevron-left|"></button>
@@ -55,14 +59,14 @@
     <div th:classappend="mid">
         <div th:classappend="community">
             <div th:classappend="tab">
-                <h4>공지</h4>
+                <h4 th:onclick="|location.href='/notice?category=1';|" th:text="공지"></h4>
                 <table th:classappend="notification">
                     <tr th:each="notice : ${notice}">
                         <td th:text="|${notice.noticeTitle}|" th:onclick="|location.href='/notice/detail?noticeNo=${notice.noticeNo}';|"></td>
                         <td th:text="|${notice.noticeDate}|"></td>
                     </tr>
                 </table>
-                <h4>이벤트</h4>
+                <h4 th:onclick="|location.href='/notice?category=3';|" th:text="이벤트"></h4>
                 <table th:classappend="event">
                     <tr th:each="event : ${event}">
                         <td th:text="|${event.noticeTitle}|" th:onclick="|location.href='/notice/detail?noticeNo=${event.noticeNo}';|"></td>
@@ -71,14 +75,7 @@
                 </table>
             </div>
             <div th:classappend="tab">
-                <!--<h4>견적문의</h4>
-                <table>
-                    <tr th:each="num : ${#numbers.sequence(0, 5, 1)}">
-                        <td th:text="|${num+1}번째 견적문의입니다. 봐주세요.|"></td>
-                        <td th:text="|2020-07-29|"></td>
-                    </tr>
-                </table>-->
-                <h4>이용후기</h4>
+                <h4 th:onclick="|location.href='/post?category=1';|" th:text="이용후기"></h4>
                 <table th:classappend="review">
                     <tr th:each="post : ${post}">
                         <td th:text="|${post.postTitle}|" th:onclick="|location.href='/post/detail?postNo=${post.postNo}'|"></td>
@@ -100,75 +97,45 @@
     <div th:classappend="product-belt-slide">
         <div th:classappend="belt-slide-wrapper">
             <div th:classappend="|belt-content first|">
-                <div th:classappend="product">
+                <div th:each="index : ${#numbers.sequence(0, 1, 1)}" th:classappend="product">
                     <div th:classappend="|product-image align-mid horizontal|">
-                        <img th:src="|http://placehold.it/180x180|" />
+                        <img th:onclick="|location.href = '/product-detail/${product[index].productNo}';|" th:src="${product[index].productThumbnail}" />
                     </div>
                     <div th:classappend="|product-info|">
-                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
-                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
-                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
-                    </div>
-                </div>
-                <div th:classappend="product">
-                    <div th:classappend="|product-image align-mid horizontal|">
-                        <img th:src="|http://placehold.it/180x180|" />
-                    </div>
-                    <div th:classappend="|product-info|">
-                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
-                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
-                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
+                        <div th:onclick="|location.href = '/product-detail/${product[index].productNo}';|" th:classappend="|product-name char normal|" th:text="|${product[index].productName}|"></div>
+                        <div th:classappend="|product-description char sub less|" th:text="|${product[index].productDescription}|"></div>
+                        <div th:classappend="|product-price char normal enlighten|" th:text="|${#numbers.formatInteger(product[index].productPrice, 3, 'COMMA')}원|"></div>
                     </div>
                 </div>
             </div>
             <div th:classappend="|belt-content second|">
-                <div th:classappend="product">
+                <div th:each="index : ${#numbers.sequence(2, 3, 1)}" th:classappend="product">
                     <div th:classappend="|product-image align-mid horizontal|">
-                        <img th:src="|http://placehold.it/180x180|" />
+                        <img th:onclick="|location.href = '/product-detail/${product[index].productNo}';|" th:src="${product[index].productThumbnail}" />
                     </div>
                     <div th:classappend="|product-info|">
-                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
-                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
-                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
-                    </div>
-                </div>
-                <div th:classappend="product">
-                    <div th:classappend="|product-image align-mid horizontal|">
-                        <img th:src="|http://placehold.it/180x180|" />
-                    </div>
-                    <div th:classappend="|product-info|">
-                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
-                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
-                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
+                        <div th:onclick="|location.href = '/product-detail/${product[index].productNo}';|" th:classappend="|product-name char normal|" th:text="|${product[index].productName}|"></div>
+                        <div th:classappend="|product-description char sub less|" th:text="|${product[index].productDescription}|"></div>
+                        <div th:classappend="|product-price char normal enlighten|" th:text="|${#numbers.formatInteger(product[index].productPrice, 3, 'COMMA')}원|"></div>
                     </div>
                 </div>
             </div>
             <div th:classappend="|belt-content third|">
-                <div th:classappend="product">
+                <div th:each="index : ${#numbers.sequence(4, 5, 1)}" th:classappend="product">
                     <div th:classappend="|product-image align-mid horizontal|">
-                        <img th:src="|http://placehold.it/180x180|" />
+                        <img th:onclick="|location.href = '/product-detail/${product[index].productNo}';|" th:src="${product[index].productThumbnail}" />
                     </div>
                     <div th:classappend="|product-info|">
-                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
-                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
-                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
-                    </div>
-                </div>
-                <div th:classappend="product">
-                    <div th:classappend="|product-image align-mid horizontal|">
-                        <img th:src="|http://placehold.it/180x180|" />
-                    </div>
-                    <div th:classappend="|product-info|">
-                        <div th:classappend="|product-name char title|" th:text="|여기에 제품 이름을 입력|"></div>
-                        <div th:classappend="|product-description char sub less|" th:text="|여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력. 여기에 제품 설명을 입력.|"></div>
-                        <div th:classappend="|product-price char normal enlighten|" th:text="|(여기에 가격을 입력)원|"></div>
+                        <div th:onclick="|location.href = '/product-detail/${product[index].productNo}';|" th:classappend="|product-name char normal|" th:text="|${product[index].productName}|"></div>
+                        <div th:classappend="|product-description char sub less|" th:text="|${product[index].productDescription}|"></div>
+                        <div th:classappend="|product-price char normal enlighten|" th:text="|${#numbers.formatInteger(product[index].productPrice, 3, 'COMMA')}원|"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<footer th:replace="footer.html"></footer>
+<footer th:replace="footer.html :: footer"></footer>
 <script src="/js/main.js"></script>
 </body>
 </html>
