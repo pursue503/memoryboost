@@ -52,7 +52,7 @@
                 <th th:text="조회수"></th>
             </tr>
             <tr th:if="${#lists.size(post) > 0}" th:each="post : ${post}">
-                <td th:classappend="|num|" th:text="${post.postNo}"></td>
+                <td th:classappend="|num|" th:text="${post.postNumber}"></td>
                 <td th:classappend="|title|" th:onclick="|location.href = '/post/detail?postNo=${post.postNo}';|" th:text="${post.postTitle}"></td>
                 <td th:classappend="|writer|" th:text="${post.memberName}"></td>
                 <td th:classappend="|date|"th:text="${post.postDate}"></td>

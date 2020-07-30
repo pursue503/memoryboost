@@ -1,9 +1,5 @@
 package com.memoryboost.domain.entity.post;
 
-import com.memoryboost.domain.dto.post.request.PostUpdateRequestDTO;
-import com.memoryboost.domain.dto.post.response.PostListResponseDTO;
-import com.memoryboost.domain.dto.post.response.PostReplyListResponseDTO;
-import com.memoryboost.domain.dto.post.response.PostRequestDTO;
 import com.memoryboost.service.post.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -11,8 +7,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -48,13 +42,5 @@ public class PostRepositoryTest {
 //    }
 //
 
-//    @Test
-//    public void replyTest(){
-//
-//        List<PostReplyListResponseDTO> postReplyListResponseDTOList = postRepository.findByPostReply(1L);
-//
-//        postReplyListResponseDTOList.forEach(reply -> log.info(reply.toString()));
-//
-//    }
 
 }

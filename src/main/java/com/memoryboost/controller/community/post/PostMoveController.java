@@ -3,6 +3,7 @@ package com.memoryboost.controller.community.post;
 import com.memoryboost.domain.dto.post.request.PostReplySaveRequestDTO;
 import com.memoryboost.domain.dto.post.request.PostSaveRequestDTO;
 import com.memoryboost.domain.dto.post.request.PostUpdateRequestDTO;
+import com.memoryboost.domain.dto.post.response.PostResponseDTO;
 import com.memoryboost.service.paging.PagingService;
 import com.memoryboost.service.post.PostService;
 import lombok.RequiredArgsConstructor;
@@ -71,9 +72,10 @@ public class PostMoveController {
 
     @GetMapping("/post/detail")
     public String postDetail(@RequestParam("postNo") Long postNo, Model model) {
-
-        model.addAttribute("post", postService.postDetail(postNo));
+        PostResponseDTO postResponseDTO = postService.postDetail(postNo);
+        model.addAttribute("post", postResponseDTO);
         model.addAttribute("reply",postService.postReplyList(postNo));
+        model.addAttribute("select", postService.postPrevNext(postResponseDTO.getPostNo(),postResponseDTO.getPostCategory()));
         return "board/post-detail";
     }
 

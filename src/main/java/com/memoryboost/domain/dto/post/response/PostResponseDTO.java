@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @ToString
-public class PostRequestDTO {
+public class PostResponseDTO {
 
     private Long postNo;
     private String postTitle;

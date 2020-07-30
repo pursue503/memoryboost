@@ -4,8 +4,9 @@ import com.memoryboost.domain.dto.post.request.PostReplySaveRequestDTO;
 import com.memoryboost.domain.dto.post.request.PostSaveRequestDTO;
 import com.memoryboost.domain.dto.post.request.PostUpdateRequestDTO;
 import com.memoryboost.domain.dto.post.response.PostListResponseDTO;
+import com.memoryboost.domain.dto.post.response.PostPrevNextResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostReplyListResponseDTO;
-import com.memoryboost.domain.dto.post.response.PostRequestDTO;
+import com.memoryboost.domain.dto.post.response.PostResponseDTO;
 import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.member.MemberRepository;
 import com.memoryboost.domain.entity.post.*;
@@ -113,7 +114,7 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public PostRequestDTO postDetail(Long postNo) {
+    public PostResponseDTO postDetail(Long postNo) {
         return postRepository.findByPost(postNo);
     }
 
@@ -156,6 +157,11 @@ public class PostService {
 
         postReplyRepository.delete(postReply);
         return post.getPostNo();
+    }
+
+    @Transactional(readOnly = true)
+    public PostPrevNextResponseDTO postPrevNext(Long postNo,int category) {
+        return postRepository.postPrevAndNext(postNo,category);
     }
 
 }

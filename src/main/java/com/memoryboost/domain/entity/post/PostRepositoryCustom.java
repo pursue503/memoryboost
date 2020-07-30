@@ -2,8 +2,9 @@ package com.memoryboost.domain.entity.post;
 
 import com.memoryboost.domain.dto.main.PostMainPageResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostListResponseDTO;
+import com.memoryboost.domain.dto.post.response.PostPrevNextResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostReplyListResponseDTO;
-import com.memoryboost.domain.dto.post.response.PostRequestDTO;
+import com.memoryboost.domain.dto.post.response.PostResponseDTO;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface PostRepositoryCustom {
     int countByPostAllDesc(int category);
 
     //상세 보기
-    PostRequestDTO findByPost(Long postNo);
+    PostResponseDTO findByPost(Long postNo);
     //댓글 가져오기
     List<PostReplyListResponseDTO> findByPostReply(Long postNo);
 
@@ -26,6 +27,8 @@ public interface PostRepositoryCustom {
     List<PostReply> findByPostReply(Post post);
 
     List<PostMainPageResponseDTO> mainPagePost();
+
+    PostPrevNextResponseDTO postPrevAndNext(Long postNo , int category);
 
 
 }

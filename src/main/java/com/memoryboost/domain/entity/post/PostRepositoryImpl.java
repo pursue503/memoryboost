@@ -2,8 +2,9 @@ package com.memoryboost.domain.entity.post;
 
 import com.memoryboost.domain.dto.main.PostMainPageResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostListResponseDTO;
+import com.memoryboost.domain.dto.post.response.PostPrevNextResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostReplyListResponseDTO;
-import com.memoryboost.domain.dto.post.response.PostRequestDTO;
+import com.memoryboost.domain.dto.post.response.PostResponseDTO;
 import com.memoryboost.domain.entity.member.QMember;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -54,12 +55,12 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public PostRequestDTO findByPost(Long postNo) {
+    public PostResponseDTO findByPost(Long postNo) {
 
         QMember member = QMember.member;
         QPost post = QPost.post;
 
-        return queryFactory.select(Projections.fields(PostRequestDTO.class,
+        return queryFactory.select(Projections.fields(PostResponseDTO.class,
                 post.postNo,post.postTitle,post.postContent,post.postCategory,post.post.postDate,member.memberId,member.memberName))
                 .from(post).leftJoin(member).on(post.member.eq(member))
                 .where(post.postNo.eq(postNo)).fetchOne();
@@ -87,4 +88,18 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .fetch();
 
     }
+
+    @Override
+    public PostPrevNextResponseDTO postPrevAndNext(Long postNo, int category) {
+
+        QPost post = QPost.post;
+
+        Long prev = queryFactory.select(post.postNo).from(post).where(post.postNo.lt(postNo).and(post.postCategory.eq(category)))
+                .orderBy(post.postNo.desc()).offset(0).limit(1).fetchOne();
+        Long next = queryFactory.select(post.postNo).from(post).where(post.postNo.gt(postNo).and(post.postCategory.eq(category))).offset(0).limit(1).fetchOne();
+
+
+        return new PostPrevNextResponseDTO(prev,next);
+    }
+
 }
