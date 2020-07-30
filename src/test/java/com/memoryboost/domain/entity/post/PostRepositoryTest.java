@@ -2,6 +2,7 @@ package com.memoryboost.domain.entity.post;
 
 import com.memoryboost.domain.dto.post.request.PostUpdateRequestDTO;
 import com.memoryboost.domain.dto.post.response.PostListResponseDTO;
+import com.memoryboost.domain.dto.post.response.PostReplyListResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostRequestDTO;
 import com.memoryboost.service.post.PostService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,15 +47,14 @@ public class PostRepositoryTest {
 //
 //    }
 //
+
 //    @Test
-//    public void testestst() {
-//        PostUpdateRequestDTO postUpdateRequestDTO = new PostUpdateRequestDTO();
-//        postUpdateRequestDTO.setPostNo(1L);
-//        postUpdateRequestDTO.setPostTitle("수asdsda정fdfd");
-//        postUpdateRequestDTO.setPostContent("수adsfasfdafs정합asdsdaasdsad니다.");
+//    public void replyTest(){
 //
+//        List<PostReplyListResponseDTO> postReplyListResponseDTOList = postRepository.findByPostReply(1L);
 //
-//       postService.postUpdate(postUpdateRequestDTO);
+//        postReplyListResponseDTOList.forEach(reply -> log.info(reply.toString()));
+//
 //    }
 
 }

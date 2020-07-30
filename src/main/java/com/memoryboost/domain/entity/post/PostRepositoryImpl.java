@@ -2,6 +2,7 @@ package com.memoryboost.domain.entity.post;
 
 import com.memoryboost.domain.dto.main.PostMainPageResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostListResponseDTO;
+import com.memoryboost.domain.dto.post.response.PostReplyListResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostRequestDTO;
 import com.memoryboost.domain.entity.member.QMember;
 import com.querydsl.core.types.Projections;
@@ -71,5 +72,19 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 post.postNo,post.postTitle,post.postCategory,post.postDate))
                 .from(post).where(post.postCategory.eq(1)).orderBy(post.postNo.desc())
                 .offset(0).limit(11).fetch();
+    }
+
+    @Override
+    public List<PostReplyListResponseDTO> findByPostReply(Long postNo) {
+        QMember member = QMember.member;
+        QPost post = QPost.post;
+        QPostReply postReply = QPostReply.postReply;
+
+        return queryFactory.select(Projections.fields(PostReplyListResponseDTO.class,
+                postReply.postReplyNo,member.memberName,postReply.postReplyContent,postReply.member.memberId,postReply.postReplyDate))
+                .from(member,post,postReply).where(post.eq(postReply.post).and(postReply.member.eq(member))
+                .and(post.postNo.eq(postNo))).orderBy(postReply.postReplyDate.desc())
+                .fetch();
+
     }
 }

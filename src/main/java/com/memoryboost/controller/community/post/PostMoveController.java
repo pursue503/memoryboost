@@ -1,5 +1,6 @@
 package com.memoryboost.controller.community.post;
 
+import com.memoryboost.domain.dto.post.request.PostReplySaveRequestDTO;
 import com.memoryboost.domain.dto.post.request.PostSaveRequestDTO;
 import com.memoryboost.domain.dto.post.request.PostUpdateRequestDTO;
 import com.memoryboost.service.paging.PagingService;
@@ -72,6 +73,7 @@ public class PostMoveController {
     public String postDetail(@RequestParam("postNo") Long postNo, Model model) {
 
         model.addAttribute("post", postService.postDetail(postNo));
+        model.addAttribute("reply",postService.postReplyList(postNo));
         return "board/post-detail";
     }
 
@@ -87,6 +89,17 @@ public class PostMoveController {
     public Long postUpdate(PostUpdateRequestDTO postUpdateRequestDTO , @RequestParam(value = "file", required = false)List<String> pathList) {
         log.info(postUpdateRequestDTO.toString());
         return postService.postUpdate(postUpdateRequestDTO,pathList);
+    }
+
+    @PostMapping("/reply")
+    public String postReplySave(PostReplySaveRequestDTO postReplySaveRequestDTO , Authentication authentication ) {
+        return "redirect:/post/detail?postNo=" + postService.postReplySave(postReplySaveRequestDTO, authentication);
+    }
+
+    @DeleteMapping("/reply")
+    @ResponseBody
+    public Long postReplyDelete(@RequestParam("replyNo") Long replyNo) {
+        return postService.postReplyDelete(replyNo);
     }
 
 }

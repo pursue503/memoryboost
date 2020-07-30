@@ -1,8 +1,10 @@
 package com.memoryboost.service.post;
 
+import com.memoryboost.domain.dto.post.request.PostReplySaveRequestDTO;
 import com.memoryboost.domain.dto.post.request.PostSaveRequestDTO;
 import com.memoryboost.domain.dto.post.request.PostUpdateRequestDTO;
 import com.memoryboost.domain.dto.post.response.PostListResponseDTO;
+import com.memoryboost.domain.dto.post.response.PostReplyListResponseDTO;
 import com.memoryboost.domain.dto.post.response.PostRequestDTO;
 import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.member.MemberRepository;
@@ -127,6 +129,32 @@ public class PostService {
             }
         }
 
+        return post.getPostNo();
+    }
+
+    @Transactional
+    public Long postReplySave(PostReplySaveRequestDTO postReplySaveRequestDTO , Authentication authentication) {
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
+        Post post = postRepository.findById(postReplySaveRequestDTO.getPostNo()).orElseThrow(NullPointerException::new);
+
+        postReplyRepository.save(PostReply.builder().member(member).post(post).postReplyContent(postReplySaveRequestDTO.getPostReplyContent()).build());
+
+        return post.getPostNo();
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostReplyListResponseDTO> postReplyList(Long postNo) {
+        return postRepository.findByPostReply(postNo);
+    }
+
+    @Transactional
+    public Long postReplyDelete(Long replyNo) {
+
+        PostReply postReply = postReplyRepository.findById(replyNo).orElseThrow(NullPointerException::new);
+        Post post = postRepository.findById(postReply.getPost().getPostNo()).orElseThrow(NullPointerException::new);
+
+        postReplyRepository.delete(postReply);
         return post.getPostNo();
     }
 
