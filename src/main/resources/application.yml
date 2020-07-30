@@ -1,5 +1,7 @@
 server:
   port: 8181
+  tomcat:
+    use-relative-redirects: true
 spring:
   servlet:
     multipart:
