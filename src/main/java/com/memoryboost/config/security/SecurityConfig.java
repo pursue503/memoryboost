@@ -44,12 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //csrf 잠시 비활성
         http.authorizeRequests()
                 //페이지 권한 설정
-                    .antMatchers("/").permitAll()
-                    .antMatchers("/members/mypage").hasRole(Role.USER.name())
-                    .antMatchers("/cart").authenticated()
-                    .antMatchers("/order").authenticated()
-                    .antMatchers("/order/single-product").authenticated()
-                    .antMatchers(HttpMethod.GET,"/order/estimate").authenticated()
+
                 .and()
                     //로그인설정
                     .formLogin()
