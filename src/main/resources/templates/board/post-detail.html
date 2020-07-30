@@ -41,7 +41,6 @@
     </nav>
     <div th:classappend="|content detail|">
         <input th:id="category" th:type="hidden" th:value="${post.postCategory}" />
-        <!--<input th:id="postNo" th:type="hidden" th:value="${post.postNo}" />-->
         <div th:classappend="description">
             <th:block th:if="${post.postCategory == 1}">
                 <h1 th:text="|이용후기|"></h1>
@@ -78,8 +77,10 @@
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <button th:text="작성"></button>
                 </form>
-                <input sec:authorize="isAnonymous()" th:type="text" th:value="|로그인이 필요한 서비스입니다.|" th:disabled="true" />
-                <button sec:authorize="isAnonymous()" th:text="로그인" th:onclick="|location.href = '/members/signin';|"></button>
+                <div th:classappend="|need-login|">
+                    <input sec:authorize="isAnonymous()" th:type="text" th:value="|로그인이 필요한 서비스입니다.|" th:disabled="true" />
+                    <button sec:authorize="isAnonymous()" th:text="로그인" th:onclick="|location.href = '/members/signin';|"></button>
+                </div>
             </div>
             <table th:classappend="list-table">
                 <tr th:each="reply : ${reply}" th:classappend="list-tr" >
@@ -92,17 +93,35 @@
                     <td th:classappend="list-date"th:text="${reply.postReplyDate}"></td>
                 </tr>
             </table>
-            <table>
-                <tr th:classappend="|jump|">
-                    <th th:classappend="detail-before" th:text="이전글"></th>
-                    <td th:classappend="detail-before" th:text="|이전글이 없습니다.|"></td>
-                </tr>
-                <tr th:classappend="|jump|">
-                    <th th:classappend="detail-next" th:text="다음글"></th>
-                    <td th:classappend="detail-next" th:text="|공지12312...|"></td>
-                </tr>
-            </table>
         </div>
+        <table th:classappend="jump-table">
+            <!--다음글-->
+            <tr th:if="${select.next != null}" th:classappend="|jump next|">
+                <th th:classappend="detail-next">
+                    <button th:onclick="|location.href='/post/detail?postNo=${select.next.postNo}';|" th:classappend="|fas fa-caret-up|" th:text="다음글"></button>
+                </th>
+                <td th:onclick="|location.href='/post/detail?postNo=${select.next.postNo}';|" th:classappend="detail-next" th:text="${select.next.postTitle}"></td>
+            </tr>
+            <tr th:if="${select.next == null}" th:classappend="|jump next|">
+                <th th:classappend="detail-next">
+                    <button th:classappend="|fas fa-caret-up no-result|" th:text="다음글" th:disabled="true"></button>
+                </th>
+                <td th:classappend="|detail-next no-result|" th:text="|다음글이 없습니다.|"></td>
+            </tr>
+            <!--이전글-->
+            <tr th:if="${select.prev != null}" th:classappend="|jump prev|">
+                <th th:onclick="|location.href='/post/detail?postNo=${select.prev.postNo}';|" th:classappend="detail-before">
+                    <button th:classappend="|fas fa-caret-down|" th:text="이전글"></button>
+                </th>
+                <td th:onclick="|location.href='/post/detail?postNo=${select.prev.postNo}';|" th:classappend="detail-before" th:text="${select.prev.postTitle}"></td>
+            </tr>
+            <tr th:if="${select.prev == null}" th:classappend="|jump prev|">
+                <th th:classappend="detail-before">
+                    <button th:classappend="|fas fa-caret-down no-result|" th:text="이전글" th:disabled="true"></button>
+                </th>
+                <td th:classappend="|detail-before no-result|" th:text="|이전글이 없습니다.|"></td>
+            </tr>
+        </table>
     </div>
 </div>
 <footer th:replace="footer.html"></footer>

@@ -169,7 +169,67 @@ div.content.detail tr.jump > td {
     font-size: 14px;
 }
 
-/****************** 댓글 부분 ***************/
+/* 버튼 */
+div.content.detail > div.control {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+div.content.detail > div.control > button {
+    margin: 5px 2px;
+}
+
+/* 이전 다음글 */
+div.content.detail > table.jump-table {
+    border-collapse: collapse;
+    margin-top: 0;
+}
+
+div.content.detail > table.jump-table * {
+    border: 0;
+    background: none;
+}
+
+div.content.detail > table.jump-table th > button {
+    cursor: pointer;
+    outline: none;
+    background: none;
+    border: 0;
+}
+
+div.content.detail > table.jump-table th > button.no-result {
+    cursor: default;
+}
+
+div.content.detail > table.jump-table th > button:hover {
+    text-decoration: underline;
+}
+
+div.content.detail > table.jump-table th > button.no-result:hover {
+    text-decoration: none;
+}
+
+div.content.detail > table.jump-table td {
+    cursor: pointer;
+    font-size: 13px;
+}
+
+div.content.detail > table.jump-table td.no-result {
+    cursor: default;
+    font-size: 13px;
+    color: var(--gray);
+}
+
+div.content.detail > table.jump-table td:hover {
+    text-decoration: underline;
+}
+
+div.content.detail > table.jump-table td.no-result:hover {
+    text-decoration: none;
+}
+
+/* 댓글 */
 div.content.detail > div.reply {
     margin-top: 10px;
 }
@@ -179,7 +239,7 @@ div.content.detail > div.reply > h5 {
     width: 100%;
 }
 
-div.reply > div.insert-reply > form {
+div.reply > div.insert-reply > form, div.reply > div.insert-reply > div.need-login {
     display: flex;
     align-items: center;
     width: 100%;
@@ -192,7 +252,7 @@ div.reply > div.insert-reply > form > span.reply-user {
     margin: 0 5px;
 }
 
-div.reply > div.insert-reply > form > input.replyContent {
+div.reply > div.insert-reply > form > input.replyContent, div.insert-reply > div.need-login > input[type=text] {
     outline: none;
     border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 3px;
