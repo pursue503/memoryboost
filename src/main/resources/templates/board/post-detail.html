@@ -32,16 +32,16 @@
 <body>
 <header th:replace="header.html"></header>
 <div class="content-container community">
-    <!-- 이곳에 내용을 입력 -->
     <nav th:classappend="community">
-        <button th:classappend="${post.postCategory == 1} ? |review selected| : |review|" th:onclick="|location.href = '@{/post?category=1}';|" th:text="이용후기" />
-        <button th:classappend="${post.postCategory == 2} ? |estimate selected| : |estimate|" th:onclick="|location.href = '@{/post?category=2}';|" th:text="견적요청" />
-        <button th:classappend="notification" th:onclick="|location.href = '@{/notice?category=1}';|" th:text="공지사항" />
-        <button th:classappend="update" th:onclick="|location.href = '@{/community/update}';|" th:text="업데이트" />
-        <button th:classappend="event" th:onclick="|location.href = '@{/community/event}';|" th:text="이벤트" />
+        <button th:onclick="|location.href = '@{/post?category=1}';|" th:classappend="${post != null && post.postCategory == 1} ? |review selected| : |review|" th:text="이용후기" />
+        <button th:onclick="|location.href = '@{/post?category=2}';|" th:classappend="${post != null && post.postCategory == 2} ? |estimate selected| : |estimate|" th:text="견적요청" />
+        <button th:onclick="|location.href = '@{/notice?category=1}';|" th:classappend="notification" th:text="공지사항" />
+        <button th:onclick="|location.href = '@{/notice?category=2}';|" th:classappend="update" th:text="업데이트" />
+        <button th:onclick="|location.href = '@{/notice?category=3}';|" th:classappend="event" th:text="이벤트" />
     </nav>
     <div th:classappend="|content detail|">
         <input th:id="category" th:type="hidden" th:value="${post.postCategory}" />
+        <!--<input th:id="postNo" th:type="hidden" th:value="${post.postNo}" />-->
         <div th:classappend="description">
             <th:block th:if="${post.postCategory == 1}">
                 <h1 th:text="|이용후기|"></h1>
@@ -51,22 +51,47 @@
                 <h1 th:text="|견적요청|"></h1>
                 <span th:text="|자신의 견적을 평가 받거나 새로운 견적을 문의 해보세요.|"></span>
             </th:block>
-            <table>
-                <tr>
-                    <th th:classappend="detail-title" colspan="2" th:text="|제목 : ${post.postTitle}|"></th>
-                </tr>
-                <tr>
-                    <td th:classappend="detail-writer" th:text="|작성자 : ${post.memberName}|"></td>
-                    <td th:classappend="detail-date" th:text="|작성날짜 : ${post.postDate}|"></td>
-                </tr>
-                <tr>
-                    <td th:classappend="detail-content" colspan="2" th:utext="${post.postContent}" th:style="|text-align: justify; text-justify: distribute; text-align-last: justify;|"></td>
+        </div>
+        <table>
+            <tr>
+                <th th:classappend="detail-title" colspan="2" th:text="|제목 : ${post.postTitle}|"></th>
+            </tr>
+            <tr>
+                <td th:classappend="detail-writer" th:text="|작성자 : ${post.memberName}|"></td>
+                <td th:classappend="detail-date" th:text="|작성날짜 : ${post.postDate}|"></td>
+            </tr>
+            <tr>
+                <td th:classappend="detail-content" colspan="2" th:utext="${post.postContent}" th:style="|text-align: justify; text-justify: distribute; text-align-last: justify;|"></td>
+            </tr>
+        </table>
+        <div sec:authorize="!isAnonymous()" th:if="|${post.memberId == #authentication.principal.memberId}|" th:classappend="|control|">
+            <button th:value="${post.postNo}" th:classappend="|post-edit|" th:text="|수정|"></button>
+            <button th:value="${post.postNo}" th:classappend="|post-delete|" th:text="|삭제|"></button>
+        </div>
+        <div th:classappend="reply">
+            <h5>댓글</h5>
+            <div th:classappend="insert-reply">
+                <form sec:authorize="!isAnonymous()" action="/reply" method="POST">
+                    <span th:classappend="reply-user" th:text="|${#authentication.principal.memberName}|"></span>
+                    <input  th:type="text" th:classappend="replyContent" th:name="postReplyContent" />
+                    <input th:type="hidden" th:name="postNo" th:value="${post.postNo}"/>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button th:text="작성"></button>
+                </form>
+                <input sec:authorize="isAnonymous()" th:type="text" th:value="|로그인이 필요한 서비스입니다.|" th:disabled="true" />
+                <button sec:authorize="isAnonymous()" th:text="로그인" th:onclick="|location.href = '/members/signin';|"></button>
+            </div>
+            <table th:classappend="list-table">
+                <tr th:each="reply : ${reply}" th:classappend="list-tr" >
+                    <td th:classappend="list-user" th:text="${reply.memberName}"></td>
+                    <td th:classappend="list-content"th:text="${reply.postReplyContent}"></td>
+                    <td th:classappend="list-delete">
+                        <button sec:authorize="!isAnonymous()" th:if="${#authentication.principal.memberId == reply.memberId}"
+                                th:classappend="btn-delete-reply" th:value="${reply.postReplyNo}" th:text="삭제"></button>
+                    </td>
+                    <td th:classappend="list-date"th:text="${reply.postReplyDate}"></td>
                 </tr>
             </table>
-            <div sec:authorize="!isAnonymous()" th:if="|${post.memberId == #authentication.principal.memberId}|" th:classappend="|control|">
-                <button th:value="${post.postNo}" th:classappend="|post-edit|" th:text="|수정|"></button>
-                <button th:value="${post.postNo}" th:classappend="|post-delete|" th:text="|삭제|"></button>
-            </div>
             <table>
                 <tr th:classappend="|jump|">
                     <th th:classappend="detail-before" th:text="이전글"></th>
