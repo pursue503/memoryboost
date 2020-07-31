@@ -48,11 +48,11 @@ public class OrderMoveController {
         return "order";
     }
 
+    //시큐리티에서 무조건 가능하게해야함
     @PostMapping("/order/estimate")
     @ResponseBody
     public Boolean estimateOrder(@RequestBody List<EstimateRequestDTO> estimateRequestDTOList, HttpSession session) {
 
-        log.info("dddddd");
         log.info(estimateRequestDTOList.toString());
         List<OrderPaymentResponseVO> orderPaymentResponseVOList = orderService.estimateOrder(estimateRequestDTOList);
         session.setAttribute("order", orderPaymentResponseVOList);
