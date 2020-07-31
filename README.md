@@ -28,6 +28,6 @@ MemoryBoost 는 심플하게 제작된 컴퓨터 주변기기 및 컴퓨터 부�
  ## 프로젝트 담당 역할
  + Front-end : [이건희](https://github.com/bangchisi)
  + Back-end : [조재현](https://github.com/pursue503)
- + publish : [조재현](https://github.com/pursue503)
+ + 배포 : [조재현](https://github.com/pursue503)
  
  
