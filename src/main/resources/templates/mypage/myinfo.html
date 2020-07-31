@@ -27,7 +27,6 @@
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/js/reset.js"></script>
-    <script src="/js/mypage/myinfo.js"></script>
     <script src="/js/member/member.js"></script>
 </head>
 <body>
@@ -175,7 +174,7 @@
         .done(function(response) {
             if(response) {
                 alert("정보수정을 완료했습니다!");
-                location.replace("/members/mypage");
+                location.replace("/members/logout");
             }
         })
         .fail(function(response) {

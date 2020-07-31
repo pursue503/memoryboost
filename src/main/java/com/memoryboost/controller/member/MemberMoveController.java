@@ -50,4 +50,7 @@ public class MemberMoveController {
         return "redirect:/oauth2/authorization/kakao";
     }
 
+    @GetMapping("/member/leave")
+    public String leaveMember() { return "mypage/leave"; }
+
 }

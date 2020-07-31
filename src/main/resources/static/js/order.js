@@ -58,12 +58,16 @@ $(document).ready(function() {
         //let regex = /[^0-9]/g;
         //let totalPrice = Number($("#total-price")[0].innerText.replace(regex,""));
         let totalPrice = Number($("#total-price")[0].value);
+
         let params = {};
 
         params.totalAmount = totalPrice;
 
         if(payMethod == 0) {
-            console.dir("카카오페이");
+            if(totalPrice > 1000000) {
+                alert("죄송합니다. 카카오페이 API 테스트결제는 100만원 초과된 금액은 지원하지 않습니다. 무통장 결제를 선택해주세요.");
+                return;
+            }
             $.ajax({
                 type : "GET",
                 url : "/kakaopay-ready",
@@ -76,7 +80,6 @@ $(document).ready(function() {
                 console.dir("통신 실패");
             })
         } else {
-            console.dir("무통장입금");
             $("#order-form").submit();
         }
     });
