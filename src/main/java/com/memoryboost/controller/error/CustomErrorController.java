@@ -28,7 +28,7 @@ public class CustomErrorController implements ErrorController {
         HttpStatus httpStatus = HttpStatus.valueOf(Integer.valueOf(status.toString()));
 
         if(status.equals(404)) {
-            return "404페이지~";
+            return "404";
         } else if(status.equals(403)) {
             return "403";
         }

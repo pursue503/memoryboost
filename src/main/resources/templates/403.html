@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|Memoryboost|"></title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/error-style.css" />
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="/js/error.js"></script>
+</head>
+<body>
+    <div th:classappend="|content forbidden|">
+        <img th:id="logo" th:src="@{/img/logo-main.gif}" />
+        <div th:classappend="|error-text code|" th:text="|403|"></div>
+        <div th:classappend="|error-text status|" th:text="|Forbidden|"></div>
+        <div th:classappend="timer">
+            <span th:id="count" th:text="5"></span><span th:text="|초 후 메인페이지로 돌아갑니다.|"></span>
+        </div>
+    </div>
+</body>
+</html>
