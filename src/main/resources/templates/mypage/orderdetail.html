@@ -73,7 +73,7 @@
             </table>
         </div>
         <h1 th:text="배송정보"></h1>
-            <form th:id="|addr-form|" action="/order/info" th:classappend="|align-mid vertical|" method="POST">
+        <form th:id="|addr-form|" action="/order/info" th:classappend="|align-mid vertical|" method="POST">
             <input th:type="text" th:id="diRecipient" th:placeholder="|받는사람|" th:name="diRecipients" th:value="${delivery.diRecipient}" />
             <input th:type="text" th:id="diTel" th:placeholder="|전화번호|" th:name="diTel" th:value="${delivery.diTel}" />
             <div th:classappend="addr">
@@ -87,6 +87,7 @@
             <input th:type="text" th:id="comment" th:placeholder="|요청 사항|" th:name="diComment" th:value="${delivery.diComment}"/>
             <button th:if="${order.orderSt < 4}" th:text="|배송정보 수정|"></button>
             <input th:type="hidden" th:name="orderNo" th:value="${order.orderNo}" />
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             <input th:type="hidden" th:name="_method" th:value="PUT" />
         </form>
         <h1 th:text="결제"></h1>

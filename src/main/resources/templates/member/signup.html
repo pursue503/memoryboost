@@ -61,10 +61,6 @@
             <input type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
             <span class="chksum detailaddr false"></span>
         </div>
-        <!--<div class="div-condition">
-            <input type="checkbox" id="condition" />
-            <span class="alert-small" ><label for="condition"><span id="private-condition" class="private-condition">개인정보처리방침</span>에 동의합니다.</label></span>
-        </div>-->
         <input id="submit" type="submit" value="회원가입" disabled />
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </form>

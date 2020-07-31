@@ -1,0 +1,28 @@
+div.frame {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form#leave-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form#leave-form > input[type=password] {
+    width: 300px; height: 30px;
+    margin: 20px 0; padding: 5px;
+}
+
+button.leave {
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    background-color: var(--warning);
+    width: 300px; height: 70px;
+    font-size: 30px;
+    color: var(--white);
+}

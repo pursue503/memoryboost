@@ -27,7 +27,6 @@
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/js/reset.js"></script>
-    <script src="/js/mypage/leave.js"></script>
 </head>
 <body>
 <header th:replace="header.html"></header>
@@ -49,16 +48,48 @@
         </div>
     </nav>
     <div th:classappend="frame">
-        <h1 th:text="|회원탈퇴|"></h1>
-        <div th:if="${#authentication.principal.memberSns.toString().equals('memoryboost')}" class="auth">
-            <input type="password" placeholder="비밀번호를 한번 더 입력해주세요"/>
-            <button class="btn auth">확인</button>
-        </div>
-        <form th:id="leave-form" action="#" method="GET"><!-- DELETE로 바꿀 예정 -->
-            <div th:classappend="|t|"></div>
+        <form th:id="leave-form" method="POST"><!-- DELETE로 바꿀 예정 -->
+            <h1 th:classappend="|leave-text char danger|" th:text="|회원탈퇴를 하려면 비밀번호를 한번 더 입력해주세요|"></h1>
+            <input th:type="password" th:name="pw" th:placeholder="|비밀번호를 입력해주세요|" />
+            <button th:classappend="leave" th:type="submit" th:text="회원탈퇴"></button>
         </form>
     </div>
 </div>
 <footer th:replace="footer.html"></footer>
 </body>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $(document).on("click", "button.leave", function(e) {
+            e.preventDefault();
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            //내정보. 처음비번확인
+            let editAuth = $("input[type=password]")[0];
+            let memberId = [[${#authentication.principal.memberId}]];
+            if(!isEmpty(editAuth.value)) {
+                $.ajax({
+                    method : "POST",
+                    url : "/members/mypage/pw-check/"+memberId,
+                    data : { memberPw : editAuth.value },
+                    dataType : "json",
+                    beforeSend : function(xhr) {
+                        xhr.setRequestHeader(header,token);
+                    }
+                })
+                .done(function(response) {
+                    if(response.result) {
+                        proceedLeave();
+                    } else {
+                        alert("비밀번호를 확인해주세요");
+                    }
+                })
+                .fail(function(response) {
+                    console.dir("통신 실패");
+                });
+            }
+        });
+    });
+</script>
+<script th:src="@{/js/mypage/leave.js}"></script>
 </html>

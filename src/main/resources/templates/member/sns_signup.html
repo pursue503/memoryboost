@@ -1,14 +1,9 @@
-<div class="utmost-container">
-    <div class="inner-container signup">
-
-    </div>
-
-</div>
-
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title th:text="|SNS회원 정보입력|"></title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -78,6 +73,8 @@
     (function() {
         $(document).on("click", "#submit", function(e) {
             e.preventDefault();
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             let form = $("form#signup-form")[0];
             let params = new FormData(form);
 
@@ -86,7 +83,10 @@
                 url : "/members/sns",
                 data : params,
                 processData: false,
-                contentType: false
+                contentType: false,
+                beforeSend : function() {
+                    xhr.setRequestHeader(header,token);
+                }
             })
             .done(function(response) {
                 if(response) {

@@ -2,6 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title th:text="|아이디/비밀번호 찾기|"></title>
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -98,10 +100,14 @@
         let emailCode = $("#sec-code")[0];
         let btn = $(".btn.code")[0];
         if(!isEmpty(memberLoginId.value) && !isEmpty(emailCode.value)) {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
             $.ajax({
                 method : "PUT",
                 url : "/members/pw/"+memberLoginId.value+"/"+emailCode.value,
                 beforeSend : function() {
+                    xhr.setRequestHeader(header,token);
                     btn.innerHTML = "<img src='/img/ajax-loader.gif' />";
                     btn.disabled = true;
                 }
