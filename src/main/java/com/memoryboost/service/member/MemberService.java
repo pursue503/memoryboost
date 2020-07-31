@@ -85,7 +85,6 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     private MemberEmailRepository emailRepository;
 
     //자사서비스 이름 sns 구분명
-    @Autowired
     private String memoryboost = "memoryboost";
 
     //삭제용 repository
