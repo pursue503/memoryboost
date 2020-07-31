@@ -25,7 +25,7 @@ public class OrderSaveRequestDTO {
     private String diComment;
 
     public Order orderEntity(Member member) {
-        if(orderPaymentGb == 0) { // 0 카카오 , 1 무통
+        if(orderPaymentGb == 0) { // 0 카카오 , 1 2 3 무통장
             return Order.builder()
                     .member(member)
                     .orderSt(2)
@@ -35,7 +35,7 @@ public class OrderSaveRequestDTO {
             return Order.builder()
                     .member(member)
                     .orderSt(1)
-                    .orderPaymentGb(orderPaymentGb)
+                    .orderPaymentGb(1) // 무조건 1넣어줌 01 01 구분
                     .orderTotalAmount(orderTotalAmount).build();
         }
     }

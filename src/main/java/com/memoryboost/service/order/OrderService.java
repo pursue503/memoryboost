@@ -102,6 +102,8 @@ public class OrderService {
         if(order.getOrderPaymentGb() == 0) { //카카오 페이
             kaKaoPaymentRepository.save(KaKaoPayment.builder().order(order).tid(tid).build());
         } else { // 무통장
+            log.info("bankNo : " + saveRequestDTO.getBankNo());
+            log.info("Gb : " + saveRequestDTO.getOrderPaymentGb());
             Bank bank = bankRepository.findById(saveRequestDTO.getBankNo()).orElseThrow(NullPointerException::new);
             noPassbookRepository.save(NoPassbook.builder().bank(bank).order(order).build());
         }

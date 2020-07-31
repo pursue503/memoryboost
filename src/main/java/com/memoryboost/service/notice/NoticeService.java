@@ -54,7 +54,7 @@ public class NoticeService {
         Notice notice = noticeRepository.save(noticeSaveRequestDTO.toEntity());
         if(pathList != null) {
             for(String filePath : pathList) {
-                String realPath = path.replace(dbPath,"");
+                String realPath = path + filePath;
                 noticeImageRepository.save(NoticeImage.builder().notice(notice).noticeImagePath(filePath).noticeRealImagePath(realPath + filePath).build());
             }
         }

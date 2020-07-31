@@ -61,7 +61,7 @@ public class PostService {
 
         if(pathList != null) {
             for(String filePath : pathList) {
-                String realPath = path.replace(dbPath,"");
+                String realPath = path + filePath;
                 postImageRepository.save(PostImage.builder().post(post).postImagePath(filePath).postRealPath(realPath).build());
             }
         }

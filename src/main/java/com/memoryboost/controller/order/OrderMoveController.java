@@ -62,9 +62,7 @@ public class OrderMoveController {
     @GetMapping("/order/estimate")
     public String estimateOrder(HttpSession session, Model model) {
 
-        log.info("Ddd");
         List<OrderPaymentResponseVO> orderPaymentResponseVOList = (List<OrderPaymentResponseVO>) session.getAttribute("order");
-        log.info(orderPaymentResponseVOList.toString());
         model.addAttribute("order",orderPaymentResponseVOList);
         model.addAttribute("totalAmount",orderService.orderTotalAmount(orderPaymentResponseVOList));
         return "order";
