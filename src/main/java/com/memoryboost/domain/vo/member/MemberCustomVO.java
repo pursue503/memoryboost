@@ -33,6 +33,7 @@ public class MemberCustomVO implements UserDetails, CredentialsContainer, OAuth2
     private Map<String, Object> attributes;
     private String nameAttributeKey;
 
+    //자사
     public MemberCustomVO(Member member, List<GrantedAuthority> authorities) {
         this.memberId = member.getMemberId();
         this.memberLoginId = member.getMemberLoginId();
@@ -48,10 +49,17 @@ public class MemberCustomVO implements UserDetails, CredentialsContainer, OAuth2
         this.authorities = Collections.unmodifiableSet(new LinkedHashSet<>(this.sortAuthorities(authorities)));
     }
 
+    //sns
     public MemberCustomVO(Member member,Collection<? extends GrantedAuthority> authorities, Map<String, Object> attributes, String nameAttributeKey) {
         this.authorities = Collections.unmodifiableSet(new LinkedHashSet<>(this.sortAuthorities(authorities)));
         this.attributes = Collections.unmodifiableMap(new LinkedHashMap<>(attributes));
         this.nameAttributeKey = nameAttributeKey;
+
+        if(member.getMemberEmail() == null) { // 로그인아이디가 무조건필요함.
+            this.memberLoginId = "temp";
+        } else {
+            this. memberLoginId = member.getMemberEmail();
+        }
 
         this.memberId = member.getMemberId();
         this.memberEmail = member.getMemberEmail();
