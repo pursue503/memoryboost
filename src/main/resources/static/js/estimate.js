@@ -215,7 +215,7 @@ $(document).ready(function() {
                 let productCount = $(obj).find("input.count")[0].value;
                 let product = new Object();
                 product.productNo = Number(productNo);
-                product.productCount = Number(productCount);
+                product.productCnt = Number(productCount);
                 orderList.push(product);
             }
 
