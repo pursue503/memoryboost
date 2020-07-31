@@ -3,6 +3,18 @@ package com.memoryboost.service.member;
 import com.memoryboost.domain.dto.member.memoryboost.request.MemberUpdateRequestDTO;
 import com.memoryboost.domain.dto.member.memoryboost.response.MemberFindByLoginIdResponseDTO;
 import com.memoryboost.domain.dto.member.sns.MemberSNSInfoUpdateRequestDTO;
+import com.memoryboost.domain.entity.cart.Cart;
+import com.memoryboost.domain.entity.cart.CartRepository;
+import com.memoryboost.domain.entity.order.*;
+import com.memoryboost.domain.entity.payment.bank.NoPassbook;
+import com.memoryboost.domain.entity.payment.bank.NoPassbookRepository;
+import com.memoryboost.domain.entity.payment.kakao.KaKaoPayment;
+import com.memoryboost.domain.entity.payment.kakao.KaKaoPaymentRepository;
+import com.memoryboost.domain.entity.post.*;
+import com.memoryboost.domain.entity.product.review.ProductReview;
+import com.memoryboost.domain.entity.product.review.ProductReviewRepository;
+import com.memoryboost.domain.entity.refund.Refund;
+import com.memoryboost.domain.entity.refund.RefundRepository;
 import com.memoryboost.domain.vo.member.MemberCustomVO;
 import com.memoryboost.util.email.MemoryBoostMailTemplate;
 import com.memoryboost.domain.dto.member.memoryboost.request.MemberSaveRequestDTO;
@@ -15,6 +27,7 @@ import com.memoryboost.domain.vo.member.MemberOAuth2VO;
 import com.memoryboost.domain.vo.member.MemberVO;
 import com.memoryboost.util.email.MemoryBoostMailhandler;
 import com.memoryboost.util.email.MemoryBoostPwAuthCodeDelete;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -35,6 +48,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,35 +57,51 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class MemberService implements UserDetailsService, OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     //이메일 전송 객체
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     //회원
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     //이메일
-    @Autowired
-    private MemberEmailRepository memberEmailRepository;
+    private final MemberEmailRepository memberEmailRepository;
 
     //비밀번호 암호화
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     //이메일 전송 템플릿 ( 코드생성 메일양식생성 )
-    @Autowired
-    private MemoryBoostMailTemplate mailTemplate;
+    private final MemoryBoostMailTemplate mailTemplate;
 
     //memberEmail
-    @Autowired
-    private MemberEmailRepository emailRepository;
+    private final MemberEmailRepository emailRepository;
 
     //자사서비스 이름 sns 구분명
     private final String memoryboost = "memoryboost";
+
+    //삭제용 repository
+
+    //게시판
+    private final PostRepository postRepository;
+    private final PostImageRepository postImageRepository;
+    private final PostReplyRepository postReplyRepository;
+
+    //주문
+    private final OrderRepository orderRepository;
+    private final OrderListRepository orderListRepository;
+    private final RefundRepository refundRepository;
+    private final NoPassbookRepository noPassbookRepository;
+    private final DeliveryInformationRepository deliveryInformationRepository;
+    private final KaKaoPaymentRepository kaKaoPaymentRepository;
+
+    //장바구니
+    private final CartRepository cartRepository;
+
+    //리뷰
+    private final ProductReviewRepository productReviewRepository;
 
     //회원로그인
     @Override // 로그인관리.
@@ -292,7 +322,94 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         member.memberUpdate(updateRequestDTO,passwordEncoder);
 
         return true;
+    }
 
+    @Transactional
+    public Boolean memberLeave(Authentication authentication) {
+        //회원 탈퇴 진행 회원정보 가져오기
+        MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
+        Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
+
+        //게시판 삭제 시작
+        List<Post> postList = memberRepository.findByMemberPostAll(member);
+        for(Post post : postList) {
+            //이미지삭제
+            List<PostImage> postImageList = memberRepository.findByMemberPostImageAll(post);
+            for(PostImage postImage : postImageList) {
+                File file = new File(postImage.getPostRealPath());
+                if(file.exists()) {
+                    file.delete();
+                }
+                postImageRepository.delete(postImage);
+            }
+            //댓글 삭제
+            List<PostReply> postReplyList = memberRepository.findByMemberPostReplyAll(post,member);
+            for(PostReply postReply : postReplyList) {
+                postReplyRepository.delete(postReply);
+            }
+            postRepository.delete(post);
+        }
+
+        //댓글만 작성한 사람일수도 있으니 댓글삭제 시작
+        List<PostReply> postReplyList = memberRepository.findByMemberPostReplyOnly(member);
+        for(PostReply postReply : postReplyList) {
+            postReplyRepository.delete(postReply);
+        }
+
+        //주문쪽 삭제 시작
+        List<Order> orderList = memberRepository.findByMemberOrderAll(member);
+
+        for(Order order : orderList) {
+            if(order.getOrderPaymentGb() == 0) { //카카오
+                KaKaoPayment kaKaoPayment = memberRepository.findByMemberOrderKaKaoPayment(order);
+                kaKaoPaymentRepository.delete(kaKaoPayment);
+            } else { // 1 무통장
+                NoPassbook noPassbook = memberRepository.findByMemberNoPassBook(order);
+                noPassbookRepository.delete(noPassbook);
+            }
+            
+            if(order.getOrderSt() == 6) { // 6 환불
+                List<Refund> refundList = memberRepository.findByMemberRefundAll(order);
+                for(Refund refund : refundList) {
+                    refundRepository.delete(refund);
+                }
+            }
+            
+            DeliveryInformation deliveryInformation = memberRepository.findByMemberOrderDeliveryInformation(order);
+            deliveryInformationRepository.delete(deliveryInformation);
+
+            List<OrderList> orderDetailList = memberRepository.findByMemberOrderListAll(order);
+            for(OrderList orderDetail : orderDetailList) {
+                orderListRepository.delete(orderDetail);
+            }
+
+            orderRepository.delete(order);
+        }
+
+        //장바 구니 삭제
+        List<Cart> cartList = memberRepository.findByMemberCartAll(member);
+
+        for(Cart cart : cartList) {
+            cartRepository.delete(cart);
+        }
+
+        //리뷰삭제
+        List<ProductReview> productReviewList = memberRepository.findByMemberProductReviewAll(member);
+
+        for(ProductReview productReview : productReviewList) {
+            productReviewRepository.delete(productReview);
+        }
+
+        List<MemberEmail> memberEmailList = memberRepository.findByMemberAuthCodeAll(member);
+        for(MemberEmail memberEmail : memberEmailList) {
+            emailRepository.delete(memberEmail);
+        }
+
+
+        //마무리로 회원탈퇴
+        memberRepository.delete(member);
+
+        return true;
     }
 
 }

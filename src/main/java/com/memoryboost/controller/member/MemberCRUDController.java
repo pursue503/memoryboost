@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -85,6 +87,21 @@ public class MemberCRUDController {
         } catch (NullPointerException e) {
             return false; // 회원아이디가 존재하지 않음.
         }
+    }
+
+    @DeleteMapping("/members")
+    @ResponseBody
+    public Map<String , Boolean> memberLeave(Authentication authentication) {
+
+        Map<String , Boolean> resultMap = new HashMap<>();
+        try{
+            resultMap.put("result",memberService.memberLeave(authentication));
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("result", false);
+        }
+
+        return resultMap;
     }
 
 

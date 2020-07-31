@@ -73,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/writereview").authenticated()
                     .antMatchers("/kakaopay-ready").authenticated()
                     .antMatchers("/review").authenticated()
+                    .antMatchers("/admin/product-manager").hasRole(Role.ADMIN.name())
                     .anyRequest().permitAll()
                 .and()
                     //로그인설정

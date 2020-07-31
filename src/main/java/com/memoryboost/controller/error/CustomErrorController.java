@@ -29,6 +29,8 @@ public class CustomErrorController implements ErrorController {
 
         if(status.equals(404)) {
             return "404페이지~";
+        } else if(status.equals(403)) {
+            return "403";
         }
 
         return null;
