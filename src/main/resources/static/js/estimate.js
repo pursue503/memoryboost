@@ -20,6 +20,12 @@ $(document).ready(function() {
         }
     });
 
+    $(document).on("click", "button.clear-keyword", function(e) {
+        e.preventDefault()
+        $("#estimate-keyword")[0].value = "";
+        $(".page[value=1]")[0].click();
+    });
+
     //정렬
     $(document).on("change", "select[name=order]", function(e) {
         $(".page[value=1]")[0].click();
@@ -31,8 +37,6 @@ $(document).ready(function() {
 
         let form = $("#search-form");
         let params = form.serialize();
-        //let form = $("#search-form")[0];
-        //let params = new FormData(form);
         params += "&page="+e.target.value;
 
         $.ajax({
