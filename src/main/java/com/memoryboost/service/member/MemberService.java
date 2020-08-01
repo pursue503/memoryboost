@@ -27,6 +27,7 @@ import com.memoryboost.domain.vo.member.MemberOAuth2VO;
 import com.memoryboost.domain.vo.member.MemberVO;
 import com.memoryboost.util.email.MemoryBoostMailhandler;
 import com.memoryboost.util.email.MemoryBoostPwAuthCodeDelete;
+import com.memoryboost.util.email.MemoryBoostSignUpMailSenderThread;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -201,7 +202,10 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
             mailhandler.setTo(member.getMemberEmail()); // 받는사람 회원이메일
             mailhandler.setSubject("MemoryBoost 회원가입 인증!");
             mailhandler.setText(mailTemplate.signUpAuthMailTemplate(memberEmail));
-            mailhandler.send();
+
+            Thread thread = new Thread(new MemoryBoostSignUpMailSenderThread(mailhandler));
+            thread.start();
+
         } catch (MessagingException e) {
             return false;
         }
