@@ -34,7 +34,7 @@
 <header th:replace="header.html"></header>
 <div class="content-container signup">
     <h1 class="signup-title">추가정보 입력</h1>
-    <form th:id="signup-form" class="signup-form" method="post">
+    <form th:id="signup-form" class="signup-form">
         <div class="div-name">
             <input th:value="${#authentication.principal.memberName}" type="text" id="memberName" class="memberName" name="memberName" placeholder="이름" disabled />
         </div>
@@ -54,8 +54,6 @@
         <input th:id="submit" th:type="submit" value="회원가입" disabled />
     </form>
 </div>
-<script th:inline="javascript">
-</script>
 <footer th:replace="footer.html"></footer>
 </body>
 </html>

@@ -17,13 +17,12 @@ $(document).ready(function() {
     })();
     $(document).on("click", "#submit", function(e) {
         e.preventDefault();
-        alert("asd");
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
         let form = $("form#signup-form")[0];
         let params = new FormData(form);
         $.ajax({
-            type : "put",
+            type : "PUT",
             url : "/members/sns",
             data : params,
             processData: false,
@@ -34,7 +33,7 @@ $(document).ready(function() {
         })
         .done(function(response) {
             if(response) {
-                alert("회원가입을 완료했습니다!");
+                alert("회원가입을 완료했습니다! 다시 로그인 해주세요.");
                 location.replace("/");
             }
         })
@@ -42,32 +41,4 @@ $(document).ready(function() {
             console.dir("통신 실패");
         })
     });
-    /*(function() {
-        $(document).on("click", "#submit", function(e) {
-            e.preventDefault();
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-            let form = $("form#signup-form")[0];
-            let params = new FormData(form);
-            $.ajax({
-                type : "put",
-                url : "/members/sns",
-                data : params,
-                processData: false,
-                contentType: false,
-                beforeSend : function(xhr) {
-                    xhr.setRequestHeader(header,token);
-                }
-            })
-            .done(function(response) {
-                if(response) {
-                    alert("회원가입을 완료했습니다!");
-                    location.replace("/");
-                }
-            })
-            .fail(function(response) {
-                console.dir("통신 실패");
-            })
-        });
-    })();*/
 });
