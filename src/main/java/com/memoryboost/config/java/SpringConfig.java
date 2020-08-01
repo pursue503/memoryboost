@@ -14,6 +14,7 @@ public class SpringConfig extends WebMvcConfig {
         registry.addInterceptor(new LoginSuccessInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/members/sns-signup")
+                .excludePathPatterns("/members/sns")
                 .excludePathPatterns("/css/**")
                 .excludePathPatterns("/js/**")
                 .excludePathPatterns("/img/**");
