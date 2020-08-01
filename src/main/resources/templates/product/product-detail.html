@@ -97,7 +97,7 @@
         </div>
     </div>
     <!-- 컨트롤 -->
-    <div th:classappend="control-tab">
+    <div th:id="control-tab" th:classappend="control-tab">
         <div th:classappend="control">
             <div th:classappend="|btn control detail|">상세정보</div>
             <div th:classappend="|btn control review|">후기</div>
@@ -108,13 +108,13 @@
         </div>
     </div>
     <!-- 상세설명 이미지 -->
-    <div th:classappend="description-image">
+    <div th:id="description-image" th:classappend="description-image">
         <th:block th:each="image : ${product.productImagePath}">
             <img th:src="${image}" />
         </th:block>
     </div>
     <!-- 후기 -->
-    <div th:classappend="product-review">
+    <div th:id="product-review" th:classappend="product-review">
         <!-- 후기 타이틀(몇명인지) -->
         <div th:classappend="title">
             <th:block th:with="count = ${product.grade1+product.grade2+product.grade3+product.grade4+product.grade5}">
@@ -237,7 +237,7 @@
         </div>
     </div>
     <!-- 배송/교환/환불 안내 -->
-    <div th:classappend="shipment-guide">
+    <div th:id="shipment-guide" th:classappend="shipment-guide">
         <h1 th:text="|배송/교환/환불 안내|"></h1>
         <h2>배송</h2>
         <table>
