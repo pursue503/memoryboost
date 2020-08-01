@@ -28,78 +28,33 @@
     <!-- 스크립트 -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="/js/reset.js"></script>
+    <script src="/js/member/sns-signup.js"></script>
 </head>
 <body>
 <header th:replace="header.html"></header>
 <div class="content-container signup">
     <h1 class="signup-title">추가정보 입력</h1>
-    <form id="signup-form" class="signup-form" action="/members/sns" method="POST">
+    <form th:id="signup-form" class="signup-form" method="post">
         <div class="div-name">
-            <input th:value="${#authentication.principal.memberName}" type="text" id="memberName" class="memberName" name="memberName" placeholder="이름" readonly />
+            <input th:value="${#authentication.principal.memberName}" type="text" id="memberName" class="memberName" name="memberName" placeholder="이름" disabled />
         </div>
         <div class="div-email">
-            <input th:value="${#authentication.principal.memberEmail}" type="text" id="memberEmail" class="memberEmail" name="memberEmail" placeholder="이메일" readonly />
+            <input th:value="${#authentication.principal.memberEmail}" type="text" id="memberEmail" class="memberEmail" name="memberEmail" placeholder="이메일" disabled />
         </div>
-        <input type="text" class="memberTel" name="memberTel" placeholder="전화번호"/>
+        <input type="text" class="memberTel" th:name="memberTel" placeholder="전화번호"/>
         <div class="addr">
-            <input type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" readonly>
+            <input type="text" id="zipcode" class="memberZipcode" th:name="memberZipCode" placeholder="우편번호" readonly>
             <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>
-            <input type="text" id="address" class="memberAddress add" name="memberAddress" placeholder="주소" readonly><br>
+            <input type="text" id="address" class="memberAddress add" th:name="memberAddress" placeholder="주소" readonly><br>
         </div>
         <div class="div-detailaddr">
-            <input type="text" id="detailAddress" class="memberDetailAddress add" name="memberDetailAddress" placeholder="상세주소">
+            <input type="text" id="detailAddress" class="memberDetailAddress add" th:name="memberDetailAddress" placeholder="상세주소">
             <span class="chksum detailaddr false"></span>
         </div>
-        <input id="submit" type="submit" value="회원가입" disabled />
-        <input type="hidden" name="_method" value="put"/>
+        <input th:id="submit" th:type="submit" value="회원가입" disabled />
     </form>
 </div>
-<script type="text/javascript">
-    //상세주소
-    (function() {
-        document.getElementById("detailAddress").addEventListener("keyup", function() {
-            let memberDetailAddress = document.getElementById("detailAddress");
-            let statusDetailAddr = document.querySelector(".chksum.detailaddr");
-            if(isEmpty(memberDetailAddress.value)) { //비어있음
-                statusDetailAddr.classList.remove("true");
-                statusDetailAddr.classList.add("false");
-                document.getElementById("submit").disabled = true;
-            } else { //비어있지 않음
-                statusDetailAddr.classList.remove("false");
-                statusDetailAddr.classList.add("true");
-                document.getElementById("submit").disabled = false;
-            }
-        });
-    })();
-    (function() {
-        $(document).on("click", "#submit", function(e) {
-            e.preventDefault();
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-            let form = $("form#signup-form")[0];
-            let params = new FormData(form);
-
-            $.ajax({
-                type : "PUT",
-                url : "/members/sns",
-                data : params,
-                processData: false,
-                contentType: false,
-                beforeSend : function() {
-                    xhr.setRequestHeader(header,token);
-                }
-            })
-            .done(function(response) {
-                if(response) {
-                    alert("회원가입을 완료했습니다!");
-                    location.replace("/");
-                }
-            })
-            .fail(function(response) {
-                console.dir("통신 실패");
-            })
-        });
-    })();
+<script th:inline="javascript">
 </script>
 <footer th:replace="footer.html"></footer>
 </body>
