@@ -74,14 +74,32 @@
             <button th:value="${notice.noticeNo}" th:classappend="|notice-edit|" th:text="|수정|"></button>
             <button th:value="${notice.noticeNo}" th:classappend="|notice-delete|" th:text="|삭제|"></button>
         </div>
-        <table>
-            <tr th:classappend="|jump|">
-                <th th:classappend="detail-before" th:text="이전글"></th>
-                <td th:classappend="detail-before" th:text="|이전글이 없습니다.|"></td>
+        <table th:classappend="jump-table">
+            <!--다음글-->
+            <tr th:if="${select.next != null}" th:classappend="|jump next|">
+                <th th:classappend="detail-next">
+                    <button th:onclick="|location.href='/notice/detail?noticeNo=${select.next.noticeNo}';|" th:classappend="|fas fa-caret-up|" th:text="다음글"></button>
+                </th>
+                <td th:onclick="|location.href='/notice/detail?noticeNo=${select.next.noticeNo}';|" th:classappend="detail-next" th:text="${select.next.noticeTitle}"></td>
             </tr>
-            <tr th:classappend="|jump|">
-                <th th:classappend="detail-next" th:text="다음글"></th>
-                <td th:classappend="detail-next" th:text="|공지12312...|"></td>
+            <tr th:if="${select.next == null}" th:classappend="|jump next|">
+                <th th:classappend="detail-next">
+                    <button th:classappend="|fas fa-caret-up no-result|" th:text="다음글" th:disabled="true"></button>
+                </th>
+                <td th:classappend="|detail-next no-result|" th:text="|다음글이 없습니다.|"></td>
+            </tr>
+            <!--이전글-->
+            <tr th:if="${select.prev != null}" th:classappend="|jump prev|">
+                <th th:onclick="|location.href='/notice/detail?noticeNo=${select.prev.noticeNo}';|" th:classappend="detail-before">
+                    <button th:classappend="|fas fa-caret-down|" th:text="이전글"></button>
+                </th>
+                <td th:onclick="|location.href='/notice/detail?noticeNo=${select.prev.noticeNo}';|" th:classappend="detail-before" th:text="${select.prev.noticeTitle}"></td>
+            </tr>
+            <tr th:if="${select.prev == null}" th:classappend="|jump prev|">
+                <th th:classappend="detail-before">
+                    <button th:classappend="|fas fa-caret-down no-result|" th:text="이전글" th:disabled="true"></button>
+                </th>
+                <td th:classappend="|detail-before no-result|" th:text="|이전글이 없습니다.|"></td>
             </tr>
         </table>
     </div>
