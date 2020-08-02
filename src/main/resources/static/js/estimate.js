@@ -76,7 +76,7 @@ $(document).ready(function() {
     //카테고리 선택
     $(document).on("click", "div.yourlist > h3", function(e) {
         let category = this.classList[0];
-
+        $("#estimate-keyword")[0].value = "";
         $("div.yourlist > h3").removeClass("selected");
         $("div.category").removeClass("selected");
         $(this).addClass("selected");

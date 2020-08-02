@@ -18,6 +18,10 @@
     font-family: 'Noto Sans KR', sans-serif, 'Noto Sans', sans-serif;
 }
 
+.btn.fas {
+    font-family: "Font Awesome 5 Free";
+}
+
 a, a:visited {
     text-decoration: none;
     color: var(--black);

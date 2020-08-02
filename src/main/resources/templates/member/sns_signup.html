@@ -39,7 +39,9 @@
             <input th:value="${#authentication.principal.memberName}" type="text" id="memberName" class="memberName" name="memberName" placeholder="이름" disabled />
         </div>
         <div class="div-email">
-            <input th:value="${#authentication.principal.memberEmail}" type="text" id="memberEmail" class="memberEmail" name="memberEmail" placeholder="이메일" disabled />
+            <input th:if="${#authentication.principal.memberEmail != null}" th:value="${#authentication.principal.memberEmail}" type="text" th:id="memberEmail" th:classappend="memberEmail" name="memberEmail" placeholder="이메일" readonly />
+            <input th:if="${#authentication.principal.memberEmail == null}" type="text" th:id="memberEmail" th:classappend="memberEmail" name="memberEmail" placeholder="이메일" />
+            <span class="chksum email false"></span>
         </div>
         <input type="text" class="memberTel" th:name="memberTel" placeholder="전화번호"/>
         <div class="addr">
@@ -50,6 +52,9 @@
         <div class="div-detailaddr">
             <input type="text" id="detailAddress" class="memberDetailAddress add" th:name="memberDetailAddress" placeholder="상세주소">
             <span class="chksum detailaddr false"></span>
+        </div>
+        <div th:classappend="condition">
+            <input th:type="checkbox" th:id="condition"/><label th:for="condition"><span th:classappend="condition">이용약관</span>에 동의합니다</label>
         </div>
         <input th:id="submit" th:type="submit" value="회원가입" disabled />
     </form>

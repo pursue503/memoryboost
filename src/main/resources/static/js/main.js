@@ -14,6 +14,8 @@ var beltContentWidth = 1300;
 var beltSlideSpeed = 400;
 var beltSlideIndex = 1;
 
+var intervalId = 0;
+
 ////////////////////////////메인슬라이드
 mainSlide.insertBefore(lastMainContent.cloneNode(true), firstMainContent);
 mainSlide.append(firstMainContent.cloneNode(true));
@@ -24,15 +26,31 @@ mainSlide.style.transform = "translate("+(-mainContentWidth)+"px, 0)";
 automatedMainSlide();
 
 $(document).on("click", "button.left", function() {
+    clearInterval(intervalId);
+    intervalId = setInterval(pushLeftMain, 6000);
+    $("button.left")[0].disabled = true;
+    setTimeout(leftButtonReload, 800);
+    function leftButtonReload() {
+        $("button.left")[0].disabled = false;
+    }
     pushRightMain();
 });
 
 $(document).on("click", "button.right", function() {
+    clearInterval(intervalId);
+    intervalId = setInterval(pushLeftMain, 6000);
+    $("button.right")[0].disabled = true;
+    setTimeout(rightButtonReload, 800);
+    function rightButtonReload() {
+        $("button.right")[0].disabled = false;
+    }
     pushLeftMain();
 });
 
 //메인슬라이드 페이징
 $(document).on("click", ".page-btn", function(e){
+    clearInterval(intervalId);
+    intervalId = setInterval(pushLeftMain, 6000);
     let pageNum = e.target.dataset.value;
 
     mainSlideIndex = pageNum - 1;
@@ -77,7 +95,7 @@ function pushRightMain() {
 }
 
 function automatedMainSlide() {
-    setInterval(pushLeftMain, 6000);
+    intervalId = setInterval(pushLeftMain, 6000);
 }
 
 /////////////////////////////벨트 슬라이드

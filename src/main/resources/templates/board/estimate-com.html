@@ -80,7 +80,7 @@
             <div class="paging">
                 <input th:type="hidden" th:name="category" th:value="2" />
                 <button th:disabled="${paging.prev == false}"
-                        th:value="${paging.startPage-10}" th:classappend="|btn page|"><i class="fas fa-chevron-left"></i></button>
+                        th:value="${paging.startPage-10}" th:classappend="|btn page fas fa-chevron-left|"></button>
                 <button th:each="num : ${#numbers.sequence(paging.startPage, paging.startPage+9)}"
                         th:disabled="${num > paging.endPage && num != 1}"
                         th:text="${num}"
@@ -89,7 +89,7 @@
                         th:style="${num == paging.page} ? |color: var(--danger);|"
                         th:classappend="|btn page|"></button>
                 <button th:disabled="${paging.next == false}"
-                        th:value="${paging.startPage+10}" th:classappend="|btn page|"><i class="fas fa-chevron-right"></i></button>
+                        th:value="${paging.startPage+10}" th:classappend="|btn page fas fa-chevron-right|"></button>
             </div>
         </form>
     </div>
