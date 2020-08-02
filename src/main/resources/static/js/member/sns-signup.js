@@ -1,4 +1,26 @@
 $(document).ready(function() {
+    var reEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //이메일
+
+    if(!isEmpty($("#memberEmail")[0].value)) {
+        $(".chksum.email").removeClass("false");
+        $(".chksum.email").addClass("true");
+    }
+    //이메일
+    $(document).on("keyup", "#memberEmail", function(e) {
+        if(isEmpty(memberEmail.value) || !reEmail.test(memberEmail.value)) {
+            $(".chksum.email").removeClass("true");
+            $(".chksum.email").addClass("false");
+        } else {
+            $(".chksum.email").removeClass("false");
+            $(".chksum.email").addClass("true");
+        }
+        if(isEmpty($("input#detailAddress")[0].value)) {
+            document.getElementById("submit").disabled = true;
+        } else {
+            document.getElementById("submit").disabled = false;
+        }
+    });
+
     //상세주소
     (function() {
         document.getElementById("detailAddress").addEventListener("keyup", function() {
@@ -15,8 +37,19 @@ $(document).ready(function() {
             }
         });
     })();
+
+    $(document).on("click", "span.condition", function(e) {
+        e.preventDefault();
+    });
+
     $(document).on("click", "#submit", function(e) {
         e.preventDefault();
+
+        if(!$("input#condition")[0].checked) {
+            alert("이용약관에 동의해주세요.");
+            return;
+        }
+
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
         let form = $("form#signup-form")[0];
