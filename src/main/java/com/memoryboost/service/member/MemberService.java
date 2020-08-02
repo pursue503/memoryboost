@@ -166,8 +166,8 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
         //registrationId = sns 구분
 
-        Member member = memberRepository.findByMemberEmailAndMemberSns(attributes.getMemberEmail(),registrationId)
-                .map(entity -> entity.snsUpdate(attributes.getMemberEmail(),attributes.getMemberName()))//정보 업데이트
+        Member member = memberRepository.findByMemberSnsIdAndMemberSns(attributes.getMemberSnsId(),registrationId)
+                .map(entity -> entity.snsUpdate(attributes.getMemberName()))//정보 업데이트
                 .orElse(attributes.toEntity()); // 존재하지않으면 DTO 정보로 build
 
         return memberRepository.save(member);

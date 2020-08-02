@@ -21,14 +21,18 @@ public class OAuthAttributesDTO {
     //서비스명, google , naver, kako
     private String registrationId;
 
+    //소셜 로그인 ID 값
+    private Long memberSnsId;
+
     @Builder
-    public OAuthAttributesDTO(Map<String,Object> attributes, String nameAttributeKey, String memberEmail
-            , String memberName, String registrationId) {
+    public OAuthAttributesDTO(Map<String, Object> attributes, String nameAttributeKey, String memberEmail,
+                              String memberName, String registrationId, Long memberSnsId) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.memberEmail = memberEmail;
         this.memberName = memberName;
         this.registrationId = registrationId;
+        this.memberSnsId = memberSnsId;
     }
 
     // 1. OAuth2USer에서 반환하는 사용자 정보는 Map 이기 때문에 값 하나하나를 변환해야만함
@@ -46,17 +50,21 @@ public class OAuthAttributesDTO {
 
     private static OAuthAttributesDTO ofGoogle(String userNameAttributeName, Map<String,Object> attributes,
                                                String registrationId) {
+        System.out.println(attributes.toString());
         return OAuthAttributesDTO.builder()
                 .memberEmail((String) attributes.get("email"))
                 .memberName((String) attributes.get("name"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .registrationId(registrationId)
+                .memberSnsId((Long) attributes.get("sub"))
                 .build();
     }
 
     private static OAuthAttributesDTO ofNaver(String userNameAttributeName,Map<String,Object> attributes,
                                               String registrationId) {
+        //네이버는 어차피 지원이 안되니 수정하지 않겠습니다.
+        // 나중에 서비스가 가능해지면 sns id 를 넣어주도록 하겠습니다.
         Map<String,Object> response = (Map<String, Object>) attributes.get("response"); //네이버 JSON key값
 
         return OAuthAttributesDTO.builder()
@@ -81,17 +89,18 @@ public class OAuthAttributesDTO {
                 .attributes(profile)
                 .nameAttributeKey(userNameAttributeName)
                 .registrationId(registrationId)
+                .memberSnsId((Long) attributes.get("id"))
                 .build();
     }
 
     // User 엔티티를 생성 , OAuthAttributes 에서 엔티티를 생성하는 시점은 처음 가입할때
-    // 외부 로그인이기 때문에 권한을GUEST를주고 추후 정보 입력하면 회원으로 업데이트
     public Member toEntity(){
         return Member.builder()
                 .memberEmail(memberEmail)
                 .memberName(memberName)
                 .memberAuth(Role.USER)
                 .memberSns(registrationId) // 외부로그인
+                .memberSnsId(memberSnsId)
                 .build();
     }
 

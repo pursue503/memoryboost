@@ -60,12 +60,18 @@ public class Member {
     private Role memberAuth;
 
     //회원이메일
+    @Column
     private String memberEmail;
+
+    //SNS 고유 아이디
+    @Column
+    private Long memberSnsId;
+
 
     @Builder
     public Member(String memberLoginId, String memberPw, String memberName, String memberTel, String memberZipCode,
                   String memberAddress, String memberDetailAddress, String memberSns,
-                  Role memberAuth, String memberEmail) {
+                  Role memberAuth, String memberEmail , Long memberSnsId) {
         this.memberLoginId = memberLoginId;
         this.memberPw = memberPw;
         this.memberName = memberName;
@@ -76,6 +82,7 @@ public class Member {
         this.memberSns = memberSns;
         this.memberAuth = memberAuth;
         this.memberEmail = memberEmail;
+        this.memberSnsId = memberSnsId;
     }
 
 
@@ -86,8 +93,7 @@ public class Member {
 
     //외부로그인중 이미 존재하는 계정이면 새로운 정보로 업데이트 시켜줌,
     //외부로그인은 id pw 가 없다.
-    public Member snsUpdate(String memberEmail, String memberName) {
-        this.memberEmail = memberEmail;
+    public Member snsUpdate(String memberName) {
         this.memberName = memberName;
         return this; // 리턴해서 현재정보를 사용하기 위함.
     }
