@@ -50,8 +50,9 @@
     </nav>
     <div th:classappend="frame">
         <form th:id="leave-form" method="POST"><!-- DELETE로 바꿀 예정 -->
-            <h1 th:classappend="|leave-text char danger|" th:text="|회원탈퇴를 하려면 비밀번호를 한번 더 입력해주세요|"></h1>
-            <input th:type="password" th:name="pw" th:placeholder="|비밀번호를 입력해주세요|" />
+            <h1 th:if="${#authentication.principal.memberSns == 'memoryboost'}" th:classappend="|leave-text char danger|" th:text="|회원탈퇴를 하려면 비밀번호를 한번 더 입력해주세요|"></h1>
+            <h1 th:if="${#authentication.principal.memberSns != 'memoryboost'}" th:classappend="|leave-text char danger|" th:text="|회원탈퇴를 진행합니까?|"></h1>
+            <input th:if="${#authentication.principal.memberSns == 'memoryboost'}" th:type="password" th:name="pw" th:placeholder="|비밀번호를 입력해주세요|" />
             <button th:classappend="leave" th:type="submit" th:text="회원탈퇴"></button>
         </form>
     </div>
@@ -65,29 +66,33 @@
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
 
-            //내정보. 처음비번확인
-            let editAuth = $("input[type=password]")[0];
-            let memberId = [[${#authentication.principal.memberId}]];
-            if(!isEmpty(editAuth.value)) {
-                $.ajax({
-                    method : "POST",
-                    url : "/members/mypage/pw-check/"+memberId,
-                    data : { memberPw : editAuth.value },
-                    dataType : "json",
-                    beforeSend : function(xhr) {
-                        xhr.setRequestHeader(header,token);
-                    }
-                })
-                .done(function(response) {
-                    if(response.result) {
-                        proceedLeave();
-                    } else {
-                        alert("비밀번호를 확인해주세요");
-                    }
-                })
-                .fail(function(response) {
-                    console.dir("통신 실패");
-                });
+            //내정보. 처음비번확인(일반유저만)
+            if([[${#authentication.principal.memberSns}]] == "memoryboost") {
+                let editAuth = $("input[type=password]")[0];
+                let memberId = [[${#authentication.principal.memberId}]];
+                if(!isEmpty(editAuth.value)) {
+                    $.ajax({
+                        method : "POST",
+                        url : "/members/mypage/pw-check/"+memberId,
+                        data : { memberPw : editAuth.value },
+                        dataType : "json",
+                        beforeSend : function(xhr) {
+                            xhr.setRequestHeader(header,token);
+                        }
+                    })
+                    .done(function(response) {
+                        if(response.result) {
+                            proceedLeave();
+                        } else {
+                            alert("비밀번호를 확인해주세요");
+                        }
+                    })
+                    .fail(function(response) {
+                        console.dir("통신 실패");
+                    });
+                }
+            } else {
+                proceedLeave();
             }
         });
     });
