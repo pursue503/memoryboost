@@ -67,7 +67,7 @@
                 <td th:classappend="detail-date" th:text="|작성날짜 : ${notice.noticeDate}|"></td>
             </tr>
             <tr>
-                <td th:classappend="detail-content" colspan="2" th:utext="${notice.noticeContent}" th:style="|text-align: justify; text-justify: distribute; text-align-last: justify;|"></td>
+                <td th:classappend="detail-content" colspan="2" th:utext="${notice.noticeContent}"></td>
             </tr>
         </table>
         <div sec:authorize="hasRole('ROLE_ADMIN')" th:classappend="|control|">

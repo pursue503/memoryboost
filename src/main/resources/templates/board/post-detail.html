@@ -62,7 +62,7 @@
                 <td th:classappend="detail-date" th:text="|작성날짜 : ${post.postDate}|"></td>
             </tr>
             <tr>
-                <td th:classappend="detail-content" colspan="2" th:utext="${post.postContent}" th:style="|text-align: justify; text-justify: distribute; text-align-last: justify;|"></td>
+                <td th:classappend="detail-content" colspan="2" th:utext="${post.postContent}"></td>
             </tr>
         </table>
         <div sec:authorize="!isAnonymous()" th:if="|${post.memberId == #authentication.principal.memberId}|" th:classappend="|control|">
