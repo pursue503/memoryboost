@@ -65,13 +65,13 @@ public class Member {
 
     //SNS 고유 아이디
     @Column
-    private Long memberSnsId;
+    private String memberSnsId;
 
 
     @Builder
     public Member(String memberLoginId, String memberPw, String memberName, String memberTel, String memberZipCode,
                   String memberAddress, String memberDetailAddress, String memberSns,
-                  Role memberAuth, String memberEmail , Long memberSnsId) {
+                  Role memberAuth, String memberEmail , String memberSnsId) {
         this.memberLoginId = memberLoginId;
         this.memberPw = memberPw;
         this.memberName = memberName;
@@ -107,6 +107,7 @@ public class Member {
     //SNS 회원 정보 업데이트 entity 는 메소드 종료시 영속성에서 변경된 데이터를 업데이트함
     //그래서 return this 를 할필요가 없음 사용을 안할거기때문. 위에 두메소드는 사용을위해여 return this
     public void snsMemberInfoUpdate(MemberSNSInfoUpdateRequestDTO updateRequestDTO){
+        this.memberEmail = updateRequestDTO.getMemberEmail();
         this.memberTel = updateRequestDTO.getMemberTel();
         this.memberZipCode = updateRequestDTO.getMemberZipCode();
         this.memberAddress = updateRequestDTO.getMemberAddress();

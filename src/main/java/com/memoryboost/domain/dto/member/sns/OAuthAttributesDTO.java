@@ -22,11 +22,11 @@ public class OAuthAttributesDTO {
     private String registrationId;
 
     //소셜 로그인 ID 값
-    private Long memberSnsId;
+    private String memberSnsId;
 
     @Builder
     public OAuthAttributesDTO(Map<String, Object> attributes, String nameAttributeKey, String memberEmail,
-                              String memberName, String registrationId, Long memberSnsId) {
+                              String memberName, String registrationId, String memberSnsId) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.memberEmail = memberEmail;
@@ -51,13 +51,16 @@ public class OAuthAttributesDTO {
     private static OAuthAttributesDTO ofGoogle(String userNameAttributeName, Map<String,Object> attributes,
                                                String registrationId) {
         System.out.println(attributes.toString());
+
+
+
         return OAuthAttributesDTO.builder()
                 .memberEmail((String) attributes.get("email"))
                 .memberName((String) attributes.get("name"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .registrationId(registrationId)
-                .memberSnsId((Long) attributes.get("sub"))
+                .memberSnsId((String) attributes.get("sub"))
                 .build();
     }
 
@@ -83,13 +86,16 @@ public class OAuthAttributesDTO {
         Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile"); // 위에서 profile 닉네임이 들어있음
         profile.put("email",kakaoAccount.get("email")); //email값 넣어놓기
         profile.put("id", attributes.get("id")); // id값 설정 카카오는 값들이 분산 되어있음. 필요한 값들을 한곳에 몰아줌.
+
+        String memberSnsId = attributes.get("id") + "";
+
         return OAuthAttributesDTO.builder()
                 .memberEmail((String) profile.get("email"))
                 .memberName((String) profile.get("nickname"))
                 .attributes(profile)
                 .nameAttributeKey(userNameAttributeName)
                 .registrationId(registrationId)
-                .memberSnsId((Long) attributes.get("id"))
+                .memberSnsId(memberSnsId)
                 .build();
     }
 

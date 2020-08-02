@@ -2,6 +2,7 @@ package com.memoryboost.domain.entity.notice;
 
 import com.memoryboost.domain.dto.main.NoticeMainPageResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeListResponseDTO;
+import com.memoryboost.domain.dto.notice.response.NoticePrevNextResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeResponseDTO;
 
 import java.util.List;
@@ -21,5 +22,8 @@ public interface NoticeRepositoryCustom {
 
     //메인페이지 공지사항 , 이벤트
     List<NoticeMainPageResponseDTO> mainPageNoticeAndEventList(int category);
+
+    //이전 다음
+    NoticePrevNextResponseDTO noticePrevAndNext(Long noticeNo, int category);
 
 }

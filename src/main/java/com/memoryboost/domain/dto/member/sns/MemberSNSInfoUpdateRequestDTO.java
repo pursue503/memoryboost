@@ -10,16 +10,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MemberSNSInfoUpdateRequestDTO {
 
+    private String memberEmail;
     private String memberTel;
     private String memberZipCode;
     private String memberAddress;
     private String memberDetailAddress;
 
-    @Builder
-    public MemberSNSInfoUpdateRequestDTO(String memberTel, String memberZipCode, String memberAddress, String memberDetailAddress) {
-        this.memberTel = memberTel;
-        this.memberZipCode = memberZipCode;
-        this.memberAddress = memberAddress;
-        this.memberDetailAddress = memberDetailAddress;
-    }
 }

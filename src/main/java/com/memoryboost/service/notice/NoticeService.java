@@ -3,6 +3,7 @@ package com.memoryboost.service.notice;
 import com.memoryboost.domain.dto.notice.request.NoticeSaveRequestDTO;
 import com.memoryboost.domain.dto.notice.request.NoticeUpdateRequestDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeListResponseDTO;
+import com.memoryboost.domain.dto.notice.response.NoticePrevNextResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeResponseDTO;
 import com.memoryboost.domain.entity.notice.Notice;
 import com.memoryboost.domain.entity.notice.NoticeImage;
@@ -153,7 +154,11 @@ public class NoticeService {
         }
 
         log.info("공지 사항 파일 삭제 완료.");
+    }
 
+    @Transactional(readOnly = true)
+    public NoticePrevNextResponseDTO noticePrevNextResponseDTO(Long noticeNo, int category) {
+        return noticeRepository.noticePrevAndNext(noticeNo,category);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.memoryboost.domain.entity.notice;
 
 import com.memoryboost.domain.dto.notice.response.NoticeListResponseDTO;
+import com.memoryboost.domain.dto.notice.response.NoticePrevNextResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -40,6 +41,13 @@ public class NoticeRepositoryTest {
 //
 //        log.info(noticeResponseDTO.toString());
 //
+//    }
+
+//    @Test
+//    public void noticePreveNextTest(){
+//
+//        NoticePrevNextResponseDTO noticePrevNextResponseDTO = noticeRepository.noticePrevAndNext(20L,1);
+//        log.info(noticePrevNextResponseDTO.toString());
 //    }
 
 }

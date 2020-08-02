@@ -123,7 +123,6 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     //회원로그인
     @Override // 로그인관리.
     public UserDetails loadUserByUsername(String memberLoginId) throws UsernameNotFoundException {
-
         Member member = memberRepository.findByMemberLoginIdAndMemberSns(memberLoginId,memoryboost);
 
         if(member == null) throw new UsernameNotFoundException(memberLoginId);
@@ -165,7 +164,7 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     private Member saveOrUpdate(OAuthAttributesDTO attributes , String registrationId) {
 
         //registrationId = sns 구분
-
+        log.info(attributes.getMemberSnsId() + "");
         Member member = memberRepository.findByMemberSnsIdAndMemberSns(attributes.getMemberSnsId(),registrationId)
                 .map(entity -> entity.snsUpdate(attributes.getMemberName()))//정보 업데이트
                 .orElse(attributes.toEntity()); // 존재하지않으면 DTO 정보로 build

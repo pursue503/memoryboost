@@ -2,8 +2,10 @@ package com.memoryboost.domain.entity.notice;
 
 import com.memoryboost.domain.dto.main.NoticeMainPageResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeListResponseDTO;
+import com.memoryboost.domain.dto.notice.response.NoticePrevNextResponseDTO;
 import com.memoryboost.domain.dto.notice.response.NoticeResponseDTO;
 import com.memoryboost.domain.entity.member.QMember;
+import com.memoryboost.domain.vo.notice.NoticePrevNextVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -76,5 +78,20 @@ public class NoticeRepositoryImpl implements NoticeRepositoryCustom {
                 notice.noticeNo,notice.noticeTitle,notice.noticeCategory,notice.noticeDate))
                 .from(notice).where(notice.noticeCategory.eq(category)).orderBy(notice.noticeNo.desc())
                 .offset(0).limit(6).fetch();
+    }
+
+    @Override
+    public NoticePrevNextResponseDTO noticePrevAndNext(Long noticeNo, int category) {
+
+        QNotice notice = QNotice.notice;
+
+        NoticePrevNextVO prev = queryFactory.select(Projections.fields(NoticePrevNextVO.class,
+                notice.noticeNo,notice.noticeTitle)).from(notice).where(notice.noticeNo.lt(noticeNo).and(notice.noticeCategory.eq(category)))
+                .orderBy(notice.noticeNo.desc()).offset(0).limit(1).fetchOne();
+
+        NoticePrevNextVO next = queryFactory.select(Projections.fields(NoticePrevNextVO.class,
+                notice.noticeNo, notice.noticeTitle)).from(notice).where(notice.noticeNo.gt(noticeNo).and(notice.noticeCategory.eq(category)))
+                .offset(0).limit(1).fetchOne();
+        return new NoticePrevNextResponseDTO(prev,next);
     }
 }
