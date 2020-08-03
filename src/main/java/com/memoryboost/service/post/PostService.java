@@ -54,6 +54,10 @@ public class PostService {
     @Transactional
     public boolean postSave(PostSaveRequestDTO postSaveRequestDTO, Authentication authentication, List<String> pathList) {
 
+        if(postSaveRequestDTO.patternCheck()) {
+            return false;
+        }
+
         MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
         Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(NullPointerException::new);
 

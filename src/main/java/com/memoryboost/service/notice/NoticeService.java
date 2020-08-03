@@ -52,6 +52,10 @@ public class NoticeService {
     @Transactional
     public boolean noticeSave(NoticeSaveRequestDTO noticeSaveRequestDTO , List<String> pathList) throws IOException {
 
+        if(noticeSaveRequestDTO.patternCheck()) { // true == 공백 또는 null
+            return false;
+        }
+
         Notice notice = noticeRepository.save(noticeSaveRequestDTO.toEntity());
         if(pathList != null) {
             for(String filePath : pathList) {
@@ -108,6 +112,7 @@ public class NoticeService {
 
     @Transactional
     public Long noticeUpdate(NoticeUpdateRequestDTO noticeUpdateRequestDTO , List<String> pathList) {
+
         Notice notice = noticeRepository.findById(noticeUpdateRequestDTO.getNoticeNo()).orElseThrow(NullPointerException::new);
         notice.noticeUpdate(noticeUpdateRequestDTO);
 

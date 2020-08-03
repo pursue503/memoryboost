@@ -2,7 +2,9 @@ package com.memoryboost.domain.dto.member.memoryboost.request;
 
 import com.memoryboost.domain.entity.member.Member;
 import com.memoryboost.domain.entity.member.Role;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,11 +32,21 @@ public class MemberSaveRequestDTO {
         Matcher pwMatcher = pw.matcher(this.memberPw);
         Pattern email = Pattern.compile("^[\\d\\w]+@(=?.*?[\\w]+)[\\d\\w]*\\.[\\w]+(\\.[\\w]+){0,1}$");
         Matcher emailMatcher = email.matcher(this.memberEmail);
+        Pattern tel = Pattern.compile("^(0[0-9]{1,2}|01[0-9]{1})-([0-9]{3,4})-([0-9]{4})$");
+        Matcher telMatcher = tel.matcher(this.memberTel);
         //find = 같다면 true
         if(idMatcher.find()) {
             if(pwMatcher.find()) {
                 if(emailMatcher.find()){
-                    return true;
+                    if(telMatcher.find()) {
+                        if(!memberZipCode.equals("") && memberZipCode != null) {
+                            if(!memberAddress.equals("") && memberAddress != null) {
+                                if(!memberDetailAddress.equals("") && memberDetailAddress != null) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -1013,7 +1013,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             case "vga":
                 if (filterDTO.nullCheck()) {
-                    System.out.println("카테고리실행");
                     builder.and(product.productCategory.eq(3));
                 }
 

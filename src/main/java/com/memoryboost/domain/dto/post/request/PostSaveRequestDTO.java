@@ -19,4 +19,16 @@ public class PostSaveRequestDTO {
         return Post.builder().member(member).postTitle(postTitle).postContent(postContent).postCategory(postCategory).build();
     }
 
+    public boolean patternCheck(){
+
+        if(postTitle.trim().equals("") || postTitle == null) {
+            return true;
+        }
+        if(postContent.trim().equals("") || postContent == null) {
+            return true;
+        }
+        return false;
+
+    }
+
 }

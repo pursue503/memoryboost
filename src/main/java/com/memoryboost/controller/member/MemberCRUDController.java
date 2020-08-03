@@ -67,7 +67,7 @@ public class MemberCRUDController {
     @ResponseBody
     public Boolean snsMemberInfoUpdate(Authentication authentication, MemberSNSInfoUpdateRequestDTO updateRequestDTO){
         try{
-            return memberService.snsMemberInfoUpate(authentication,updateRequestDTO);
+            return memberService.snsMemberInfoUpdate(authentication,updateRequestDTO);
         }catch (IllegalArgumentException e) {
             return false;
         }

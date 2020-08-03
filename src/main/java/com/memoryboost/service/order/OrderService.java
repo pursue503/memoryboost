@@ -27,6 +27,7 @@ import com.memoryboost.domain.vo.orderdetail.OrderDetailProductResponseVO;
 import com.memoryboost.util.kakao.KaKaoPay;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -217,6 +218,18 @@ public class OrderService {
         return true;
     }
 
+    @Transactional
+    @Scheduled(cron = "* 0 04 * * *")
+    public void orderStUpdate(){
 
+        List<Order> orderList = orderRepository.findByOrderStLessThan(5);
+
+        for(Order order : orderList) {
+            order.orderStUpdate();
+        }
+
+        log.info("orderSt 업데이트 완료.");
+
+    }
 
 }

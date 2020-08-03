@@ -236,8 +236,13 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     
     //SNS 접속자 정보 업데이트
     @Transactional
-    public Boolean snsMemberInfoUpate(Authentication authentication,MemberSNSInfoUpdateRequestDTO updateRequestDTO){
+    public Boolean snsMemberInfoUpdate(Authentication authentication,MemberSNSInfoUpdateRequestDTO updateRequestDTO){
         //업데이트
+
+        if(!updateRequestDTO.patternCheck()) { // 정규식 맞으면 true ! 반전
+            return false;
+        }
+
 
         MemberCustomVO memberCustomVO = (MemberCustomVO) authentication.getPrincipal();
 
@@ -325,12 +330,8 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     @Transactional
     public boolean memberUpdate(Authentication authentication, MemberUpdateRequestDTO updateRequestDTO) {
 
-        Pattern pw = Pattern.compile("^(?=.*?[^\\s])[\\w\\d]{6,12}$");
-        Matcher pwMatcher = pw.matcher(updateRequestDTO.getMemberPw());
-        if(updateRequestDTO.getMemberPw() != null && !updateRequestDTO.getMemberPw().equals("")) {
-            if (!pwMatcher.find()) {
-                return false;
-            }
+        if(!updateRequestDTO.patternCheck()) {
+            return false;
         }
 
 

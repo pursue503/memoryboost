@@ -54,4 +54,11 @@ public class Order {
         this.orderTrackingNumber = orderTrackingNumber;
         this.orderTotalAmount = orderTotalAmount;
     }
+
+    public void orderStUpdate(){
+
+        this.orderSt++;
+
+    }
+
 }

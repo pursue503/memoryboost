@@ -52,7 +52,7 @@ public class PostMoveController {
             e.printStackTrace();
             return "error";
         }
-        return null;
+        return "error";
     }
 
     @DeleteMapping("/post")

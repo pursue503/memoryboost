@@ -67,4 +67,13 @@ public class OrderRepositoryTest {
 //
 //    }
 
+//    @Test
+//    public void orderStTest(){
+//
+//        List<Order> orderList = orderRepository.findByOrderStLessThan(5);
+//
+//        orderList.forEach(order -> log.info(order.getOrderSt() + ""));
+//
+//    }
+
 }

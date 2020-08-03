@@ -20,4 +20,17 @@ public class NoticeSaveRequestDTO {
         return Notice.builder().noticeCategory(noticeCategory).noticeTitle(noticeTitle).noticeContent(noticeContent).build();
     }
 
+    public boolean patternCheck(){
+
+        if(noticeTitle.trim().equals("") || noticeTitle == null ) {
+            return true;
+        }
+        if(noticeTitle.trim().equals("") || noticeTitle == null) {
+            return true;
+        }
+
+        return false;
+
+    }
+
 }
