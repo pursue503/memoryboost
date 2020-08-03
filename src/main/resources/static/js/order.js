@@ -54,6 +54,22 @@ $(document).ready(function() {
     //결제버튼 누르면 결제팝업을 띄움
     $(document).on("click", "button.order", function(e) {
         e.preventDefault();
+        let memberName = $("#membername")[0].value;
+        let memberTel = $("#membertel")[0].value;
+        let memberZipcode = $("#zipcode")[0].value;
+        let memberAddress = $("#address")[0].value;
+        let memberDetailAddress = $("#detailAddress")[0].value;
+
+        if(isEmpty(memberName) || isEmpty(memberTel) || isEmpty(memberZipcode) || isEmpty(memberAddress) || isEmpty(memberDetailAddress)) {
+            alert("배송정보를 모두 입력해주세요");
+            return;
+        }
+
+        if(isEmpty($("#cash-name")[0].value)) {
+            alert("입금자명을 입력해주세요.");
+            return;
+        }
+
         let payMethod = $("input[type=radio][name=orderPaymentGb]:checked")[0].value;
         //let regex = /[^0-9]/g;
         //let totalPrice = Number($("#total-price")[0].innerText.replace(regex,""));

@@ -234,6 +234,7 @@ div.product-detail > div.control-tab.onfix {
 div.product-detail > div.description-image {
     /*background-color: var(--light-gray);*/
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;

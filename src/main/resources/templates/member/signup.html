@@ -32,7 +32,7 @@
 <header th:replace="header.html"></header>
 <div class="content-container signup">
     <h1 class="signup-title">회원가입</h1>
-    <form class="signup-form liftup" action="/members" method="POST">
+    <form id="signup-form" class="signup-form liftup" action="/members" method="POST">
         <div class="div-id">
             <input type="text" id="memberLoginId" class="memberLoginId" name="memberLoginId" placeholder="아이디"/>
             <span class="chksum id false"></span>
@@ -52,7 +52,10 @@
             <input type="text" id="memberEmail" class="memberEmail" name="memberEmail" placeholder="이메일"/>
             <span class="chksum email false"></span>
         </div>
-        <input type="text" class="memberTel" name="memberTel" placeholder="전화번호"/>
+        <div th:classappend="div-tel">
+            <input type="text" id="memberTel" class="memberTel" name="memberTel" placeholder="전화번호 ('-' 포함)"/>
+            <span class="chksum tel false"></span>
+        </div>
         <div class="addr">
             <input type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" readonly>
             <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>
@@ -65,7 +68,9 @@
         <div th:classappend="condition">
             <input th:type="checkbox" th:id="condition"/><label th:for="condition"><span th:classappend="condition">이용약관</span>에 동의합니다</label>
         </div>
-        <input id="submit" type="submit" value="회원가입" disabled />
+        <!--<input id="submit" th:classappend="signup-submit" type="submit" value="회원가입" disabled />-->
+        <input type="submit" th:id="hidden-submit" th:style="|display: none;|"/>
+        <button th:id="submit" th:classappend="signup-button" th:text="회원가입" disabled></button>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </form>
 
@@ -87,15 +92,17 @@
         (function() {
             document.getElementById("memberEmail").addEventListener("keyup", validateSignup);
         })();
+        //전화번호
+        (function() {
+            document.getElementById("memberTel").addEventListener("keyup", validateSignup);
+        })();
+        //주소
+        (function() {
+            document.getElementById("detailAddress").addEventListener("focus", validateSignup);
+        })();
         //상세주소
         (function() {
             document.getElementById("detailAddress").addEventListener("keyup", validateSignup);
-        })();
-        //회원가입 완료(성공)
-        (function() {
-            document.getElementById("submit").addEventListener("click", function() {
-                alert("회원가입을 완료했습니다!");
-            });
         })();
     </script>
 </div>

@@ -6,6 +6,18 @@ $(document).ready(function() {
             a.classList.add("lifted");
         }
     }
+
+    //회원가입 완료(성공)
+    $(document).on("click", ".signup-button", function(e) {
+        e.preventDefault();
+        if($("#condition")[0].checked) {
+            alert("회원가입에 성공했습니다. 이메일 인증을 해주세요.");
+            $("#hidden-submit").click();
+        } else {
+            alert("이용약관에 동의해주세요");
+            return;
+        }
+    });
 });
 
 //주소검색 API
@@ -63,18 +75,22 @@ var validateSignup = function() {
     let memberPwConfirm = document.getElementById("memberPwConfirm");
     let memberName = document.getElementById("memberName");
     let memberEmail = document.getElementById("memberEmail");
+    let memberTel = document.getElementById("memberTel");
+    let memberZipcode = document.getElementById("zipcode");
+    let memberAddress = document.getElementById("address");
     let memberDetailAddress = document.getElementById("detailAddress");
     //아이콘
     let statusId = document.querySelector(".chksum.id");
     let statusPw = document.querySelector(".chksum.pw");
     let statusName = document.querySelector(".chksum.name");
     let statusEmail = document.querySelector(".chksum.email");
+    let statusTel = document.querySelector(".chksum.tel");
     let statusDetailAddr = document.querySelector(".chksum.detailaddr");
     //정규식
     let reId = /^[a-zA-Z0-9]{4,12}$/ //아이디
     let rePw = /^[a-zA-Z0-9]{6,}$/ //비밀번호
     let reEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //이메일
-
+    let reTel = /^(0[0-9]{1,2}|01[0-9]{1})-([0-9]{3,4})-([0-9]{4})$/g; //전화번호
     //아이디
     if(isEmpty(memberLoginId.value) || !reId.test(memberLoginId.value)) {
         statusId.classList.remove("true");
@@ -108,8 +124,16 @@ var validateSignup = function() {
         statusEmail.classList.remove("false");
         statusEmail.classList.add("true");
     }
+    /* 전화번호 */
+    if(isEmpty(memberTel.value) || !reTel.test(memberTel.value)) {
+        statusTel.classList.remove("true");
+        statusTel.classList.add("false");
+    } else {
+        statusTel.classList.remove("false");
+        statusTel.classList.add("true");
+    }
     //상세주소
-    if(isEmpty(memberDetailAddress.value)) {
+    if(isEmpty(memberDetailAddress.value) || isEmpty(memberZipcode.value) || isEmpty(memberAddress.value)) {
         statusDetailAddr.classList.remove("true");
         statusDetailAddr.classList.add("false");
     } else {

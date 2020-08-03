@@ -1,5 +1,14 @@
 $(document).ready(function() {
     var reEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //이메일
+    let reTel = /^(0[0-9]{1,2}|01[0-9]{1})-([0-9]{3,4})-([0-9]{4})$/; //전화번호
+
+    let memberTel = document.getElementById("memberTel");
+    let statusTel = document.querySelector(".chksum.tel");
+
+    let memberZipcode = document.getElementById("zipcode");
+    let memberAddress = document.getElementById("address");
+    let memberDetailAddress = document.getElementById("detailAddress");
+    let statusDetailAddr = document.querySelector(".chksum.detailaddr");
 
     if(!isEmpty($("#memberEmail")[0].value)) {
         $(".chksum.email").removeClass("false");
@@ -21,12 +30,34 @@ $(document).ready(function() {
         }
     });
 
+    //전화번호
+    $(document).on("keyup", "#memberTel", function() {
+        if(isEmpty(memberTel.value) || !reTel.test(memberTel.value)) {
+            statusTel.classList.remove("true");
+            statusTel.classList.add("false");
+        } else {
+            statusTel.classList.remove("false");
+            statusTel.classList.add("true");
+        }
+    });
+
+    //주소
+    (function() {
+        document.getElementById("detailAddress").addEventListener("focus", function() {
+            if(isEmpty(memberDetailAddress.value) || isEmpty(memberZipcode.value) || isEmpty(memberAddress.value)) {
+                statusDetailAddr.classList.remove("true");
+                statusDetailAddr.classList.add("false");
+            } else {
+                statusDetailAddr.classList.remove("false");
+                statusDetailAddr.classList.add("true");
+            }
+        });
+    })();
+
     //상세주소
     (function() {
         document.getElementById("detailAddress").addEventListener("keyup", function() {
-            let memberDetailAddress = document.getElementById("detailAddress");
-            let statusDetailAddr = document.querySelector(".chksum.detailaddr");
-            if(isEmpty(memberDetailAddress.value)) { //비어있음
+            if(isEmpty(memberDetailAddress.value) || isEmpty(memberZipcode.value) || isEmpty(memberAddress.value)) { //비어있음
                 statusDetailAddr.classList.remove("true");
                 statusDetailAddr.classList.add("false");
                 document.getElementById("submit").disabled = true;

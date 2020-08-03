@@ -43,7 +43,10 @@
             <input th:if="${#authentication.principal.memberEmail == null}" type="text" th:id="memberEmail" th:classappend="memberEmail" name="memberEmail" placeholder="이메일" />
             <span class="chksum email false"></span>
         </div>
-        <input type="text" class="memberTel" th:name="memberTel" placeholder="전화번호"/>
+        <div th:classappend="div-tel">
+            <input type="text" id="memberTel" class="memberTel" name="memberTel" placeholder="전화번호 ('-' 포함)"/>
+            <span class="chksum tel false"></span>
+        </div>
         <div class="addr">
             <input type="text" id="zipcode" class="memberZipcode" th:name="memberZipCode" placeholder="우편번호" readonly>
             <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>

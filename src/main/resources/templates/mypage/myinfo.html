@@ -66,7 +66,10 @@
                     <input th:value="${#authentication.principal.memberName}" class="memberName" type="text" name="memberName" placeholder="이름" />
                     <span class="chksum name true"></span>
                 </div>
-                <input th:value="${#authentication.principal.memberTel}" class="memberTel" type="text" name="memberTel" placeholder="전화번호" />
+                <div th:classappend="div-tel">
+                    <input th:value="${#authentication.principal.memberTel}" type="text" id="memberTel" class="memberTel" name="memberTel" placeholder="전화번호 ('-' 포함)"/>
+                    <span class="chksum tel true"></span>
+                </div>
                 <div class="addr">
                     <input th:value="${#authentication.principal.memberZipCode}" type="text" id="zipcode" class="memberZipcode" name="memberZipCode" placeholder="우편번호" readonly>
                     <input type="button" class="searchZipCode" onclick="searchZipCode()" value="우편번호 찾기"><br>
@@ -93,7 +96,6 @@
         let editAuth = $("div.auth > input[type=password]")[0];
         let memberId = [[${#authentication.principal.memberId}]]+"";
 
-        console.dir(editAuth.value);
         if(!isEmpty(editAuth.value)) {
             $.ajax({
                 method : "POST",
@@ -118,14 +120,15 @@
         }
     });
     //input 변화 감지
-    $(document).on("keyup", ".memberName, .memberDetailAddress", function(e) {
+    $(document).on("keyup", ".memberName, .memberDetailAddress, #memberTel", function(e) {
+        let reTel = /^(0[0-9]{1,2}|01[0-9]{1})-([0-9]{3,4})-([0-9]{4})$/; //전화번호
         if(isEmpty($(".memberName")[0].value)) {
             $(".chksum.name").removeClass("true").addClass("false");
             $(".btn.edit")[0].disabled = true;
         } else {
             $(".chksum.name").removeClass("false").addClass("true");
         }
-        if(isEmpty($(".memberDetailAddress")[0].value)) {
+        if(isEmpty($(".memberDetailAddress")[0].value) || isEmpty($("#zipcode")[0].value) || isEmpty($("#address")[0].value)) {
             $(".chksum.detailaddr").removeClass("true").addClass("false");
             $(".btn.edit")[0].disabled = true;
         } else {
@@ -133,6 +136,13 @@
         }
         if(!isEmpty($(".memberName")[0].value) && !isEmpty($(".memberDetailAddress")[0].value)) {
             $(".btn.edit")[0].disabled = false;
+        }
+        if(isEmpty($("#memberTel")[0].value) || !reTel.test(memberTel.value)) {
+            $(".chksum.tel").removeClass("true");
+            $(".chksum.tel").addClass("false");
+        } else {
+            $(".chksum.tel").removeClass("false");
+            $(".chksum.tel").addClass("true");
         }
     });
     //내정보. 수정 눌렀을때 검증(작업중)
@@ -146,11 +156,10 @@
             let passwordConfirm = $(".memberPwConfirm")[0];
 
             if(isEmpty(password.value) && isEmpty(passwordConfirm.value)) {
-                console.dir("비번 안바꿈");
+                console.clear();
             } else {
-                console.dir("비번 바꿈");
                 if(!validatePassword(password, passwordConfirm)) {
-                    alert("비밀번호를 확인해주세요");
+                    alert("변경할 비밀번호를 확인해주세요");
                     return;
                 }
             }
@@ -158,28 +167,42 @@
             requestURL = "/members/sns";
         }
 
-        let form = $("form#edit-info")[0];
-        let params = new FormData(form);
+        var submitFlag = true;
 
-        $.ajax({
-            type : "PUT",
-            url : requestURL,
-            data : params,
-            processData: false,
-            contentType: false,
-            beforeSend : function(xhr) {
-                xhr.setRequestHeader(header,token);
+        for(let chk of $(".chksum")) {
+            if(chk.classList[2] == "false") {
+                submitFlag = false;
+                break;
             }
-        })
-        .done(function(response) {
-            if(response) {
-                alert("정보수정을 완료했습니다!");
-                location.replace("/members/logout");
-            }
-        })
-        .fail(function(response) {
-            console.dir("통신 실패");
-        })
+        }
+
+        if(submitFlag) {
+            let form = $("form#edit-info")[0];
+            let params = new FormData(form);
+
+            $.ajax({
+                type : "PUT",
+                url : requestURL,
+                data : params,
+                processData: false,
+                contentType: false,
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header,token);
+                }
+            })
+            .done(function(response) {
+                if(response) {
+                    alert("정보수정을 완료했습니다! 다시 로그인 해주세요.");
+                    location.replace("/members/logout");
+                }
+            })
+            .fail(function(response) {
+                console.dir("통신 실패");
+            })
+        } else {
+            alert("필수 정보를 형식에 맞게 입력해주세요.");
+            return;
+        }
     });
 </script>
 </body>

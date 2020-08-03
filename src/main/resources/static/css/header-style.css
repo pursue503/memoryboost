@@ -180,7 +180,7 @@ header > div.menu {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 header > div.menu > a {

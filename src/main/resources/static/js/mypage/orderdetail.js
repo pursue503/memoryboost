@@ -9,4 +9,22 @@ $(document).ready(function() {
         let a ='status=no, height=' + 450  + ', width=' + 450  + ', left='+ popX + ', top='+ popY
         window.open("/writereview?productNo="+productNo+"&productName="+productName, 'review', a);
     })
+
+    $(document).on("click", "#submit-button", function(e) {
+        e.preventDefault();
+        let submitFlag = true;
+        for(let obj of $(".required")) {
+            if(isEmpty(obj.value)) {
+                submitFlag = false;
+                break;
+            }
+        }
+
+        if(submitFlag) {
+            alert("배송정보가 수정됐습니다.")
+            $("#addr-form").submit();
+        } else {
+            alert("배송정보를 모두 입력해주세요.")
+        }
+    });
 });
