@@ -89,6 +89,10 @@ td.view {
     max-width: 54px;
 }
 
+td.detail-content {
+    text-align: left;
+}
+
 /* 글쓰기 */
 div.control {
     display: flex;

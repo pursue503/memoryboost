@@ -17,9 +17,26 @@ $(document).ready(function() {
         }
     });
 
+
     /* 수정완료 */
     $(document).on("click", "#post-edit-complete", function(e) {
         e.preventDefault();
+
+        let postTitle = $("input.title")[0].value;
+        let postContent = $("#summernote")[0].value.replace(/<p>/gi,"").replace(/<\/p>/gi,"").replace(/<br>/gi,"").replace(/&nbsp;/gi,"").replace(/\s/gi, "");
+
+        let submitFlag = true;
+        if(isEmpty(postTitle) || isEmpty(postContent)) {
+            submitFlag = false;
+        }
+
+        if(submitFlag) {
+            $("#write-form").submit();
+        } else {
+            alert("내용을 입력해주세요.");
+            return;
+        }
+
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
         var postNo = e.target.value;

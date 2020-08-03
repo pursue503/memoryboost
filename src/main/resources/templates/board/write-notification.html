@@ -46,7 +46,7 @@
         <button th:classappend="${notice != null && notice.noticeCategory == 2} ? |update selected| : |update|" th:onclick="|location.href = '@{/notice?category=2}';|" th:text="업데이트" />
         <button th:classappend="${notice != null && notice.noticeCategory == 3} ? |event selected| : |event|" th:onclick="|location.href = '@{/notice?category=3}';|" th:text="이벤트" />
     </nav>
-    <div th:classappend="content">
+    <div th:classappend="|content notice-div|">
         <div th:if="${notice == null}" th:classappend="description">
             <h1 th:text="|공지/업데이트/이벤트 작성|"></h1>
         </div>
@@ -63,7 +63,7 @@
                 <input th:classappend="title" th:type="text" th:name="noticeTitle" th:placeholder="|제목|" />
                 <textarea th:id="summernote" th:name="noticeContent"></textarea>
                 <div th:classappend="control">
-                    <button th:text="작성완료"></button>
+                    <button th:id="notice-complete" th:text="작성완료"></button>
                     <button th:id="write-cancel" th:text="작성취소"></button>
                 </div>
             </th:block>

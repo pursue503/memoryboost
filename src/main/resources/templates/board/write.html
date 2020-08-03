@@ -45,7 +45,7 @@
         <button th:classappend="update" th:onclick="|location.href = '@{/notice?category=2}';|" th:text="업데이트" />
         <button th:classappend="event" th:onclick="|location.href = '@{/notice?category=3}';|" th:text="이벤트" />
     </nav>
-    <div th:classappend="content">
+    <div th:classappend="|content post-div|">
         <div th:if="${post == null}" th:classappend="description">
             <h1 th:text="|이용후기/견적요청 작성|"></h1>
         </div>
@@ -61,7 +61,7 @@
                 <input th:classappend="title" th:type="text" th:name="postTitle" th:placeholder="|제목|" />
                 <textarea th:id="summernote" th:name="postContent"></textarea>
                 <div th:classappend="control">
-                    <button th:text="작성완료"></button>
+                    <button th:id="post-complete" th:text="작성완료"></button>
                     <button th:id="write-cancel" th:text="작성취소"></button>
                 </div>
             </th:block>
@@ -72,6 +72,7 @@
                     <button th:value="${post.postNo}" th:id="post-edit-complete" th:text="수정완료"></button>
                     <button th:value="${post.postNo}" th:id="edit-cancel" th:text="수정취소"></button>
                 </div>
+                <input th:type="hidden" th:name="_method" th:value="put" />
                 <script th:inline="javascript">
                     $(document).ready(function() {
                         $("#summernote").summernote("code", [[${post.postContent}]]);

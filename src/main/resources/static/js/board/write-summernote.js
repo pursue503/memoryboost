@@ -13,6 +13,25 @@ $(document).ready(function() {
           }
     });
 
+    //저장
+    $(document).on("click", "#post-complete", function(e) {
+        e.preventDefault();
+        let postTitle = $("input.title")[0].value;
+        let postContent = $("#summernote")[0].value.replace(/<p>/gi,"").replace(/<\/p>/gi,"").replace(/<br>/gi,"").replace(/&nbsp;/gi,"").replace(/\s/gi, "");
+
+        let submitFlag = true;
+        if(isEmpty(postTitle) || isEmpty(postContent)) {
+            submitFlag = false;
+        }
+
+        if(submitFlag) {
+            $("#write-form").submit();
+        } else {
+            alert("내용을 입력해주세요.");
+            return;
+        }
+    });
+
     //이미지 첨부
     function uploadSummernoteImageFile(file, editor) {
         var typeFilter = ["jpg", "jpeg", "png", "gif"];
