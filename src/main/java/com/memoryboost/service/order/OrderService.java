@@ -219,7 +219,7 @@ public class OrderService {
     }
 
     @Transactional
-    @Scheduled(cron = "* 0 04 * * *")
+    @Scheduled(cron = "* * 04 * * *")
     public void orderStUpdate(){
 
         List<Order> orderList = orderRepository.findByOrderStLessThan(5);
