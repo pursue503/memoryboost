@@ -96,9 +96,15 @@ div.content-container.search > form > div.controller {
     margin: 5px 0;
 }
 
-div.content-container.search > form > div.controller > button.btn.cartall {
+div.content-container.search > form > div.controller > div.btn.cartall {
+    cursor: pointer;
     float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 80px; height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
 div.content-container.search > form > div.controller > div.order {
