@@ -65,14 +65,7 @@ $(document).ready(function() {
             return;
         }
 
-        if(isEmpty($("#cash-name")[0].value)) {
-            alert("입금자명을 입력해주세요.");
-            return;
-        }
-
         let payMethod = $("input[type=radio][name=orderPaymentGb]:checked")[0].value;
-        //let regex = /[^0-9]/g;
-        //let totalPrice = Number($("#total-price")[0].innerText.replace(regex,""));
         let totalPrice = Number($("#total-price")[0].value);
 
         let params = {};
@@ -96,6 +89,10 @@ $(document).ready(function() {
                 console.dir("통신 실패");
             })
         } else {
+            if(isEmpty($("#cash-name")[0].value)) {
+                alert("입금자명을 입력해주세요.");
+                return;
+            }
             $("#order-form").submit();
         }
     });
