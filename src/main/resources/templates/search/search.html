@@ -395,6 +395,8 @@
 
                 var params = new Array();
 
+                let chkZero = 0;
+
                 for(let a of chkbox) {
                     if(a.checked) {
                         let obj = {
@@ -403,7 +405,13 @@
                         };
 
                         params.push(obj);
+                        chkZero++;
                     }
+                }
+
+                if(chkZero == 0) {
+                    alert("추가하려는 제품을 선택해주세요.");
+                    return;
                 }
 
                 $.ajax({
@@ -444,7 +452,7 @@
                 if(signinFlag) {
                     location.href = "/members/signin";
                 } else {
-                    return false;
+                    return;
                 }
             } else {
                 var token = $("meta[name='_csrf']").attr("content");

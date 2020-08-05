@@ -54,7 +54,7 @@
             <tr th:if="${#lists.size(notice) > 0}" th:each="notice : ${notice}">
                 <td th:classappend="|num|" th:text="${notice.noticeNumber}"></td>
                 <td th:classappend="|title|" th:onclick="|location.href = '/notice/detail?noticeNo=${notice.noticeNo}';|" th:text="${notice.noticeTitle}"></td>
-                <td th:classappend="|writer|" th:text="|관리자|"></td>
+                <td th:classappend="|writer|" th:text="|운영자|"></td>
                 <td th:classappend="|date|"th:text="${notice.noticeDate}"></td>
                 <td th:classappend="|view|"th:text="|0|"></td>
             </tr>
