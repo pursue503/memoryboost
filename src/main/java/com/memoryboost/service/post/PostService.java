@@ -171,7 +171,7 @@ public class PostService {
 
     //게시글 등록중 작성을안하고 취소를 눌렀을 경우 남아있는 이미지들을 삭제.
     @Transactional(readOnly = true)
-    @Scheduled(cron = "* 0 02 * * *")
+    @Scheduled(cron = "0 0 02 * * *")
     public void postImageRemove(){
         log.info("PostImageRemove 실행 합니다.");
 

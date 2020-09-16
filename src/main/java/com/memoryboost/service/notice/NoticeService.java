@@ -127,7 +127,7 @@ public class NoticeService {
     }
 
     @Transactional(readOnly = true)
-    @Scheduled(cron = "* * 03 * * *")
+    @Scheduled(cron = "0 0 03 * * *")
     public void noticeImageRemove(){
 
         log.info("공지사항 잔여 이미지 삭제를 시작합니다.");
