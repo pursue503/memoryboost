@@ -54,9 +54,9 @@ public class KaKaoPay {
         params.add("quantity" , "1");
         params.add("total_amount" , totalAmount);
         params.add("tax_free_amount", "0");
-        params.add("approval_url", "http://localhost:8181/kakaopay-success"); //결제 성공페이지
-        params.add("cancel_url" , "http://localhost:8181/kakaoCancel");
-        params.add("fail_url", "http://localhost:8181/kakaoFail");
+        params.add("approval_url", "http://memoryboost.kr/kakaopay-success"); //결제 성공페이지
+        params.add("cancel_url" , "http://memoryboost.kr/kakaoCancel");
+        params.add("fail_url", "http://memoryboost.kr/kakaoFail");
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<>(params,headers);
 
