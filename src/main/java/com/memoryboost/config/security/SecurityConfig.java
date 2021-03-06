@@ -4,6 +4,7 @@ import com.memoryboost.config.security.custom.MemoryBoostSNSSuccessHandler;
 import com.memoryboost.config.security.custom.MemoryBoostSuccessHandler;
 import com.memoryboost.domain.entity.member.Role;
 import com.memoryboost.service.member.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -16,17 +17,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private MemberService memberService;
+    private final MemberService memberService;
 
-    @Autowired
-    private MemoryBoostSuccessHandler memoryBoostSuccessHandler;
+    private final MemoryBoostSuccessHandler memoryBoostSuccessHandler;
 
-    @Autowired
-    private MemoryBoostSNSSuccessHandler memoryBoostSNSSuccessHandler;
+    private final MemoryBoostSNSSuccessHandler memoryBoostSNSSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

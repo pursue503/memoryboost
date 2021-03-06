@@ -4,6 +4,7 @@ import com.memoryboost.domain.dto.member.memoryboost.request.MemberUpdateRequest
 import com.memoryboost.domain.dto.member.sns.MemberSNSInfoUpdateRequestDTO;
 import com.memoryboost.domain.dto.member.memoryboost.request.MemberSaveRequestDTO;
 import com.memoryboost.service.member.MemberService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,13 +18,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@RequiredArgsConstructor
 @Controller
 public class MemberCRUDController {
 
     //회원의 CRUD등을 관리하는 컨트롤러
 
-    @Autowired
-    private MemberService memberService;
+
+    private final MemberService memberService;
 
     //회원가입
     @PostMapping("/members")

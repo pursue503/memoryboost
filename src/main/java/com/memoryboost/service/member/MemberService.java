@@ -28,7 +28,6 @@ import com.memoryboost.util.email.MemoryBoostPwAuthCodeDelete;
 import com.memoryboost.util.email.MemoryBoostSignUpMailSenderThread;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
