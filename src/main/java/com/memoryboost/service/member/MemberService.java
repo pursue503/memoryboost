@@ -26,8 +26,8 @@ import com.memoryboost.util.email.MemoryBoostMailTemplate;
 import com.memoryboost.util.email.MemoryBoostMailhandler;
 import com.memoryboost.util.email.MemoryBoostPwAuthCodeDelete;
 import com.memoryboost.util.email.MemoryBoostSignUpMailSenderThread;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -52,27 +52,32 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
 public class MemberService implements UserDetailsService, OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     //이메일 전송 객체
-    private final JavaMailSender javaMailSender;
+    @Autowired
+    private  JavaMailSender javaMailSender;
 
     //회원
-    private final MemberRepository memberRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
     //이메일
-    private final MemberEmailRepository memberEmailRepository;
+    @Autowired
+    private MemberEmailRepository memberEmailRepository;
 
     //비밀번호 암호화
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //이메일 전송 템플릿 ( 코드생성 메일양식생성 )
-    private final MemoryBoostMailTemplate mailTemplate;
+    @Autowired
+    private MemoryBoostMailTemplate mailTemplate;
 
     //memberEmail
-    private final MemberEmailRepository emailRepository;
+    @Autowired
+    private MemberEmailRepository emailRepository;
 
     //자사서비스 이름 sns 구분명
     private String memoryboost = "memoryboost";
@@ -80,23 +85,34 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     //삭제용 repository
 
     //게시판
-    private final PostRepository postRepository;
-    private final PostImageRepository postImageRepository;
-    private final PostReplyRepository postReplyRepository;
+    @Autowired
+    private PostRepository postRepository;
+    @Autowired
+    private PostImageRepository postImageRepository;
+    @Autowired
+    private PostReplyRepository postReplyRepository;
 
     //주문
-    private final OrderRepository orderRepository;
-    private final OrderListRepository orderListRepository;
-    private final RefundRepository refundRepository;
-    private final NoPassbookRepository noPassbookRepository;
-    private final DeliveryInformationRepository deliveryInformationRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private OrderListRepository orderListRepository;
+    @Autowired
+    private RefundRepository refundRepository;
+    @Autowired
+    private NoPassbookRepository noPassbookRepository;
+    @Autowired
+    private DeliveryInformationRepository deliveryInformationRepository;
+    @Autowired
     private KaKaoPaymentRepository kaKaoPaymentRepository;
 
     //장바구니
-    private final CartRepository cartRepository;
+    @Autowired
+    private CartRepository cartRepository;
 
     //리뷰
-    private final ProductReviewRepository productReviewRepository;
+    @Autowired
+    private ProductReviewRepository productReviewRepository;
 
     //회원로그인
     @Override // 로그인관리.
