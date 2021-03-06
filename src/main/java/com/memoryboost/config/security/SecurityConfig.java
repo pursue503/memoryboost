@@ -21,7 +21,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final MemberService memberService;
+    @Autowired
+    private MemberService memberService;
 
     private final MemoryBoostSuccessHandler memoryBoostSuccessHandler;
 
