@@ -42,7 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //csrf 잠시 비활성
-        http.authorizeRequests()
+        http.cors().disable()
+                .authorizeRequests()
                 //페이지 권한 설정
                     .antMatchers("/cart").authenticated()
                     .antMatchers(HttpMethod.POST,"/notice").authenticated()
