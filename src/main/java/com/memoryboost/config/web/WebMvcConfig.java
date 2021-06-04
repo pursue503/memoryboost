@@ -1,6 +1,7 @@
 package com.memoryboost.config.web;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,5 +21,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/product/**")
                 .addResourceLocations("https://memoryboost-product-images.s3.ap-northeast-2.amazonaws.com/product/");
 
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("*");
     }
 }
