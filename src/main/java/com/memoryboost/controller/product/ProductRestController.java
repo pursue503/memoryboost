@@ -22,22 +22,22 @@ public class ProductRestController {
     private final PagingService pagingService;
 
 //    //검색 비동기
-//    @GetMapping("/search-asyn")
-//    public Map<String, Object> searchAsyn(@RequestParam("keyword") String keyword,
-//                                          @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
-//                                          @RequestParam(value = "page",required = false,defaultValue = "1") int page,
-//                                          @RequestParam(value = "layout", required = false, defaultValue = "list")  String layout){
-//        Map<String,Object> resultMap = new HashMap<>();
-//
-//        if(keyword.trim().equals("")) {
-//            resultMap.put("product", null);
-//            return resultMap;
-//        }
-//        resultMap.put("product",productService.productSearch(keyword,order,page));
-//        resultMap.put("paging", pagingService.searchPaging(keyword,page));
-//        resultMap.put("layout", layout);
-//        return resultMap;
-//    }
+    @GetMapping("/search-asyn")
+    public Map<String, Object> searchAsyn(@RequestParam("keyword") String keyword,
+                                          @RequestParam(value = "order", required = false, defaultValue = "popular") String order,
+                                          @RequestParam(value = "page",required = false,defaultValue = "1") int page,
+                                          @RequestParam(value = "layout", required = false, defaultValue = "list")  String layout){
+        Map<String,Object> resultMap = new HashMap<>();
+
+        if(keyword.trim().equals("")) {
+            resultMap.put("product", null);
+            return resultMap;
+        }
+        resultMap.put("product",productService.productSearch(keyword,order,page));
+        resultMap.put("paging", pagingService.searchPaging(keyword,page));
+        resultMap.put("layout", layout);
+        return resultMap;
+    }
 
 
 

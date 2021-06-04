@@ -50,9 +50,6 @@ public class OAuthAttributesDTO {
 
     private static OAuthAttributesDTO ofGoogle(String userNameAttributeName, Map<String,Object> attributes,
                                                String registrationId) {
-        System.out.println(attributes.toString());
-
-
 
         return OAuthAttributesDTO.builder()
                 .memberEmail((String) attributes.get("email"))

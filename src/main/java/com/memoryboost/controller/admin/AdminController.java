@@ -22,14 +22,14 @@ public class AdminController {
 
     private final AdminService adminService;
 
-//    @PostMapping("/product/upload")
-//    @ResponseBody
-//    public Map<String, Boolean> productUpload(ProductSaveRequestDTO productSaveRequestDTO, @RequestParam("thumbnail") MultipartFile thumbnailFile,
-//                                              @RequestParam("detailImages") List<MultipartFile> detailImageList,
-//                                              ProductDetailSaveRequestDTO productDetailSaveRequestDTO){
-//        Map<String,Boolean> resultMap = new HashMap<>();
-//        resultMap.put("result",adminService.productUpload(productSaveRequestDTO,thumbnailFile,detailImageList,productDetailSaveRequestDTO));
-//        return resultMap;
-//    }
+    @PostMapping("/product/upload")
+    @ResponseBody
+    public Map<String, Boolean> productUpload(ProductSaveRequestDTO productSaveRequestDTO, @RequestParam("thumbnail") MultipartFile thumbnailFile,
+                                              @RequestParam("detailImages") List<MultipartFile> detailImageList,
+                                              ProductDetailSaveRequestDTO productDetailSaveRequestDTO){
+        Map<String,Boolean> resultMap = new HashMap<>();
+        resultMap.put("result",adminService.productUpload(productSaveRequestDTO,thumbnailFile,detailImageList,productDetailSaveRequestDTO));
+        return resultMap;
+    }
 
 }

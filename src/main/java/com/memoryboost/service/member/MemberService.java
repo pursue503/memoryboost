@@ -144,7 +144,6 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
-
         OAuthAttributesDTO attributes = OAuthAttributesDTO.
                 of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
