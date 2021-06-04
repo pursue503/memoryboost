@@ -39,6 +39,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -138,6 +139,8 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         log.info(oAuth2User.getAttributes().toString());
+        log.info(userRequest.getAccessToken().getScopes().toString());
+        log.info(userRequest.getAccessToken().getTokenValue());
 
         OAuthAttributesDTO attributes = OAuthAttributesDTO.
                 of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
