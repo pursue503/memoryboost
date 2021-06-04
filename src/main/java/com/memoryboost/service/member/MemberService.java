@@ -1,10 +1,16 @@
 package com.memoryboost.service.member;
 
+import com.memoryboost.domain.dto.member.memoryboost.request.MemberSaveRequestDTO;
 import com.memoryboost.domain.dto.member.memoryboost.request.MemberUpdateRequestDTO;
 import com.memoryboost.domain.dto.member.memoryboost.response.MemberFindByLoginIdResponseDTO;
 import com.memoryboost.domain.dto.member.sns.MemberSNSInfoUpdateRequestDTO;
+import com.memoryboost.domain.dto.member.sns.OAuthAttributesDTO;
 import com.memoryboost.domain.entity.cart.Cart;
 import com.memoryboost.domain.entity.cart.CartRepository;
+import com.memoryboost.domain.entity.email.MemberEmail;
+import com.memoryboost.domain.entity.email.MemberEmailRepository;
+import com.memoryboost.domain.entity.member.Member;
+import com.memoryboost.domain.entity.member.MemberRepository;
 import com.memoryboost.domain.entity.order.*;
 import com.memoryboost.domain.entity.payment.bank.NoPassbook;
 import com.memoryboost.domain.entity.payment.bank.NoPassbookRepository;
@@ -17,18 +23,9 @@ import com.memoryboost.domain.entity.refund.Refund;
 import com.memoryboost.domain.entity.refund.RefundRepository;
 import com.memoryboost.domain.vo.member.MemberCustomVO;
 import com.memoryboost.util.email.MemoryBoostMailTemplate;
-import com.memoryboost.domain.dto.member.memoryboost.request.MemberSaveRequestDTO;
-import com.memoryboost.domain.dto.member.sns.OAuthAttributesDTO;
-import com.memoryboost.domain.entity.email.MemberEmail;
-import com.memoryboost.domain.entity.email.MemberEmailRepository;
-import com.memoryboost.domain.entity.member.Member;
-import com.memoryboost.domain.entity.member.MemberRepository;
-import com.memoryboost.domain.vo.member.MemberOAuth2VO;
-import com.memoryboost.domain.vo.member.MemberVO;
 import com.memoryboost.util.email.MemoryBoostMailhandler;
 import com.memoryboost.util.email.MemoryBoostPwAuthCodeDelete;
 import com.memoryboost.util.email.MemoryBoostSignUpMailSenderThread;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -43,7 +40,6 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,8 +50,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Slf4j
 @Service
@@ -143,6 +137,7 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+
 
         OAuthAttributesDTO attributes = OAuthAttributesDTO.
                 of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
