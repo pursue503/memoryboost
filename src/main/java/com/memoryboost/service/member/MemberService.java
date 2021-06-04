@@ -57,7 +57,7 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
     //이메일 전송 객체
     @Autowired
-    private JavaMailSender javaMailSender;
+    private  JavaMailSender javaMailSender;
 
     //회원
     @Autowired
@@ -117,15 +117,15 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     //회원로그인
     @Override // 로그인관리.
     public UserDetails loadUserByUsername(String memberLoginId) throws UsernameNotFoundException {
-        Member member = memberRepository.findByMemberLoginIdAndMemberSns(memberLoginId,memoryboost);
+        Member member = memberRepository.findByMemberLoginIdAndMemberSns(memberLoginId, memoryboost);
 
-        if(member == null) throw new UsernameNotFoundException(memberLoginId);
+        if (member == null) throw new UsernameNotFoundException(memberLoginId);
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(member.getRoleKey()));
 
 //        return new MemberVO(member,authorities);
-        return new MemberCustomVO(member,authorities);
+        return new MemberCustomVO(member, authorities);
     }
 
     //SNS 외부 로그인 처리
@@ -137,12 +137,12 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
-
+        log.info(oAuth2User.getAttributes().toString());
 
         OAuthAttributesDTO attributes = OAuthAttributesDTO.
                 of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        Member member = saveOrUpdate(attributes,registrationId);
+        Member member = saveOrUpdate(attributes, registrationId);
 
 //        return new MemberOAuth2VO(member,
 //                Collections.singleton(new SimpleGrantedAuthority(member.getRoleKey())),
@@ -155,11 +155,11 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
     }
 
-    private Member saveOrUpdate(OAuthAttributesDTO attributes , String registrationId) {
+    private Member saveOrUpdate(OAuthAttributesDTO attributes, String registrationId) {
 
         //registrationId = sns 구분
         log.info(attributes.getMemberSnsId() + "");
-        Member member = memberRepository.findByMemberSnsIdAndMemberSns(attributes.getMemberSnsId(),registrationId)
+        Member member = memberRepository.findByMemberSnsIdAndMemberSns(attributes.getMemberSnsId(), registrationId)
                 .map(entity -> entity.snsUpdate(attributes.getMemberName()))//정보 업데이트
                 .orElse(attributes.toEntity()); // 존재하지않으면 DTO 정보로 build
 
@@ -177,9 +177,9 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
     //회원가입 트랜잭션 실행 , 한번에여기서 메일보내기까지 실행
     @Transactional
-    public boolean signUp(MemberSaveRequestDTO saveRequestDto)  {
+    public boolean signUp(MemberSaveRequestDTO saveRequestDto) {
 
-        if(!saveRequestDto.patternCheck()){  // 정규식에 일치하면 true , ! 반전해서 일치하면 false if문 패스
+        if (!saveRequestDto.patternCheck()) {  // 정규식에 일치하면 true , ! 반전해서 일치하면 false if문 패스
             return false;
         }
         saveRequestDto.setMemberPw(passwordEncoder.encode(saveRequestDto.getMemberPw()));
@@ -187,8 +187,8 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         Member member = memberRepository.save(saveRequestDto.toEntity());
 
         MemberEmail memberEmail = memberEmailRepository.save(new MemberEmail().builder()
-        .memberId(member)
-        .emailCode(mailTemplate.createRandomCode(12)).build());
+                .memberId(member)
+                .emailCode(mailTemplate.createRandomCode(12)).build());
 
         try {
             MemoryBoostMailhandler mailhandler = new MemoryBoostMailhandler(javaMailSender);
@@ -212,10 +212,10 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
         Optional<Object> member = memberRepository.findById(memberid).map(entity ->
                 emailRepository.countByEmailNoAndMemberIdAndEmailCode(emailNo, entity, emailCode) == 1 ?
-                entity.emailAuthCompleteAndMemberStUpdate() : entity);
-        try{
+                        entity.emailAuthCompleteAndMemberStUpdate() : entity);
+        try {
             Member memberEntity = (Member) member.get();
-            if(memberEntity.isMemberSt()) { // 위에서 email 코드가 일치하면 true가됨
+            if (memberEntity.isMemberSt()) { // 위에서 email 코드가 일치하면 true가됨
                 MemberEmail memberEmail = memberEmailRepository.findById(emailNo).get();
                 memberEmailRepository.delete(memberEmail);
                 return true;
@@ -227,13 +227,13 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         }
 
     }
-    
+
     //SNS 접속자 정보 업데이트
     @Transactional
-    public Boolean snsMemberInfoUpdate(Authentication authentication,MemberSNSInfoUpdateRequestDTO updateRequestDTO){
+    public Boolean snsMemberInfoUpdate(Authentication authentication, MemberSNSInfoUpdateRequestDTO updateRequestDTO) {
         //업데이트
 
-        if(!updateRequestDTO.patternCheck()) { // 정규식 맞으면 true ! 반전
+        if (!updateRequestDTO.patternCheck()) { // 정규식 맞으면 true ! 반전
             return false;
         }
 
@@ -246,13 +246,13 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
         return true;
     }
-    
+
     //회원아이디찾기
     @Transactional(readOnly = true) //읽기전용이라 사용을안하겠음.
     public List<MemberFindByLoginIdResponseDTO> memberFindByLoginId(String memberEmail) {
         //email 과 sns 구분으로 아이디를찾음
         List<MemberFindByLoginIdResponseDTO> findByLoginIdResponseDTOList = new ArrayList<>();
-        List<Member> memberList = memberRepository.findMemberLoginId(memberEmail,memoryboost);
+        List<Member> memberList = memberRepository.findMemberLoginId(memberEmail, memoryboost);
 
         for (Member member : memberList) {
             findByLoginIdResponseDTOList.add(new MemberFindByLoginIdResponseDTO(member));
@@ -262,18 +262,18 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
     //비밀번호 찾기 아이디 존재유무
     @Transactional(readOnly = true) // 읽기전용 SELECT
-    public boolean memberExistenceCheck(String memberLoginId,String memberEmail) {
-        return memberRepository.countByMemberLoginIdAndMemberEmail(memberLoginId,memberEmail) == 1 ? true : false;
+    public boolean memberExistenceCheck(String memberLoginId, String memberEmail) {
+        return memberRepository.countByMemberLoginIdAndMemberEmail(memberLoginId, memberEmail) == 1 ? true : false;
     }
 
     //인증코드 생성 + 전송
     @Transactional
     public boolean memberFindByPwAuthCodeSend(String memberLoginId, String memberEmail) {
 
-        MemberEmail emailEntity =  memberEmailRepository.save(new MemberEmail().builder()
-        .memberId(memberRepository.findByMemberLoginIdAndMemberSns(memberLoginId,memoryboost)).emailCode(mailTemplate.createRandomCode(6)).build());
+        MemberEmail emailEntity = memberEmailRepository.save(new MemberEmail().builder()
+                .memberId(memberRepository.findByMemberLoginIdAndMemberSns(memberLoginId, memoryboost)).emailCode(mailTemplate.createRandomCode(6)).build());
 
-        try{
+        try {
             MemoryBoostMailhandler mailhandler = new MemoryBoostMailhandler(javaMailSender);
             mailhandler.setTo(memberEmail); // 받는사람 회원이메일
             mailhandler.setSubject("Memoryboost 비밀번호 찾기 인증번호");
@@ -281,7 +281,7 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
             mailhandler.send();
 
             //메일전송후 3분뒤 메일삭제
-            Thread thread = new Thread(new MemoryBoostPwAuthCodeDelete(memberEmailRepository,emailEntity));
+            Thread thread = new Thread(new MemoryBoostPwAuthCodeDelete(memberEmailRepository, emailEntity));
             thread.start();
         } catch (MessagingException e) {
             return false;
@@ -290,17 +290,17 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     }
 
     @Transactional
-    public boolean findByMemberPw(String memberLoginId, String emailCode){
+    public boolean findByMemberPw(String memberLoginId, String emailCode) {
 
-        Member member = memberRepository.findByMemberLoginIdAndMemberSns(memberLoginId,memoryboost);
+        Member member = memberRepository.findByMemberLoginIdAndMemberSns(memberLoginId, memoryboost);
 
-        boolean flag = memberEmailRepository.countByMemberIdAndEmailCode(member,emailCode) == 1 ? true : false;
+        boolean flag = memberEmailRepository.countByMemberIdAndEmailCode(member, emailCode) == 1 ? true : false;
 
-        if(flag) {
+        if (flag) {
             String changePw = mailTemplate.createRandomCode(12);
             member.memberPwChange(passwordEncoder.encode(changePw));
 
-            try{
+            try {
                 MemoryBoostMailhandler mailhandler = new MemoryBoostMailhandler(javaMailSender);
                 mailhandler.setTo(member.getMemberEmail()); // 받는사람 회원이메일
                 mailhandler.setSubject("Memoryboost 비밀번호 찾기");
@@ -316,15 +316,16 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
     }
 
     //마이페이지 회원정보수정 비밀번호확인
-    public boolean mypagePasswordConfirm(Long memberId, String memberPw ) {
+    public boolean mypagePasswordConfirm(Long memberId, String memberPw) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new NullPointerException("아이디가 존재 하지 않습니다."));
-        return passwordEncoder.matches(memberPw,member.getMemberPw());
+        return passwordEncoder.matches(memberPw, member.getMemberPw());
     }
+
     //회원정보 업데이트
     @Transactional
     public boolean memberUpdate(Authentication authentication, MemberUpdateRequestDTO updateRequestDTO) {
 
-        if(!updateRequestDTO.patternCheck()) {
+        if (!updateRequestDTO.patternCheck()) {
             return false;
         }
 
@@ -333,7 +334,7 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
         Member member = memberRepository.findById(memberCustomVO.getMemberId()).orElseThrow(() -> new NullPointerException("아이디가 존재 하지 않습니다."));
 
-        member.memberUpdate(updateRequestDTO,passwordEncoder);
+        member.memberUpdate(updateRequestDTO, passwordEncoder);
 
         return true;
     }
@@ -346,19 +347,19 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
         //게시판 삭제 시작
         List<Post> postList = memberRepository.findByMemberPostAll(member);
-        for(Post post : postList) {
+        for (Post post : postList) {
             //이미지삭제
             List<PostImage> postImageList = memberRepository.findByMemberPostImageAll(post);
-            for(PostImage postImage : postImageList) {
+            for (PostImage postImage : postImageList) {
                 File file = new File(postImage.getPostRealPath());
-                if(file.exists()) {
+                if (file.exists()) {
                     file.delete();
                 }
                 postImageRepository.delete(postImage);
             }
             //댓글 삭제
-            List<PostReply> postReplyList = memberRepository.findByMemberPostReplyAll(post,member);
-            for(PostReply postReply : postReplyList) {
+            List<PostReply> postReplyList = memberRepository.findByMemberPostReplyAll(post, member);
+            for (PostReply postReply : postReplyList) {
                 postReplyRepository.delete(postReply);
             }
             postRepository.delete(post);
@@ -366,34 +367,34 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
 
         //댓글만 작성한 사람일수도 있으니 댓글삭제 시작
         List<PostReply> postReplyList = memberRepository.findByMemberPostReplyOnly(member);
-        for(PostReply postReply : postReplyList) {
+        for (PostReply postReply : postReplyList) {
             postReplyRepository.delete(postReply);
         }
 
         //주문쪽 삭제 시작
         List<Order> orderList = memberRepository.findByMemberOrderAll(member);
 
-        for(Order order : orderList) {
-            if(order.getOrderPaymentGb() == 0) { //카카오
+        for (Order order : orderList) {
+            if (order.getOrderPaymentGb() == 0) { //카카오
                 KaKaoPayment kaKaoPayment = memberRepository.findByMemberOrderKaKaoPayment(order);
                 kaKaoPaymentRepository.delete(kaKaoPayment);
             } else { // 1 무통장
                 NoPassbook noPassbook = memberRepository.findByMemberNoPassBook(order);
                 noPassbookRepository.delete(noPassbook);
             }
-            
-            if(order.getOrderSt() == 6) { // 6 환불
+
+            if (order.getOrderSt() == 6) { // 6 환불
                 List<Refund> refundList = memberRepository.findByMemberRefundAll(order);
-                for(Refund refund : refundList) {
+                for (Refund refund : refundList) {
                     refundRepository.delete(refund);
                 }
             }
-            
+
             DeliveryInformation deliveryInformation = memberRepository.findByMemberOrderDeliveryInformation(order);
             deliveryInformationRepository.delete(deliveryInformation);
 
             List<OrderList> orderDetailList = memberRepository.findByMemberOrderListAll(order);
-            for(OrderList orderDetail : orderDetailList) {
+            for (OrderList orderDetail : orderDetailList) {
                 orderListRepository.delete(orderDetail);
             }
 
@@ -403,19 +404,19 @@ public class MemberService implements UserDetailsService, OAuth2UserService<OAut
         //장바 구니 삭제
         List<Cart> cartList = memberRepository.findByMemberCartAll(member);
 
-        for(Cart cart : cartList) {
+        for (Cart cart : cartList) {
             cartRepository.delete(cart);
         }
 
         //리뷰삭제
         List<ProductReview> productReviewList = memberRepository.findByMemberProductReviewAll(member);
 
-        for(ProductReview productReview : productReviewList) {
+        for (ProductReview productReview : productReviewList) {
             productReviewRepository.delete(productReview);
         }
 
         List<MemberEmail> memberEmailList = memberRepository.findByMemberAuthCodeAll(member);
-        for(MemberEmail memberEmail : memberEmailList) {
+        for (MemberEmail memberEmail : memberEmailList) {
             emailRepository.delete(memberEmail);
         }
 
