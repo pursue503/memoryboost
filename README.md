@@ -1,4 +1,4 @@
-# [memoryboost](https://memoryboost.kr) ( 서비스 종로 , 2021-06-08 )
+# [memoryboost](https://memoryboost.kr) ( 서비스 종료 , 2021-06-08 )
 
 ## 개요
 MemoryBoost 는 심플하게 제작된 컴퓨터 주변기기 및 컴퓨터 부품 판매 사이트 입니다.   
