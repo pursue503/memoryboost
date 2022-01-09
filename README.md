@@ -58,4 +58,11 @@ MemoryBoost 는 심플하게 제작된 컴퓨터 주변기기 및 컴퓨터 부�
  + Back-end : [조재현](https://github.com/pursue503)
  + deploy : [조재현](https://github.com/pursue503)
  
+ ## 홈페이지 이미지
  
+![image](https://user-images.githubusercontent.com/60679453/148692961-55cf5e76-da3d-498a-9a8d-8693a79654ae.png)
+<br><br>
+![image](https://user-images.githubusercontent.com/60679453/148692980-017fa790-d520-472c-8b2f-f26175481658.png)   
+<br><br>
+![image](https://user-images.githubusercontent.com/60679453/148692987-f611e2aa-58e2-4783-b289-0858bd112dd1.png)   
+
